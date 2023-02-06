@@ -47,117 +47,117 @@ cmake_ninja_workdir = /home/stiveman1/CLionProjects/Sakaar-SmartContract/cmake-b
 #############################################
 # Order-only phony target for Sakaar_SmartContract_lib
 
-build cmake_object_order_depends_target_Sakaar_SmartContract_lib: phony || cmake_object_order_depends_target_Sakaar_CryptoBase_lib cmake_object_order_depends_target_Sakaar_CryptoCode_lib cmake_object_order_depends_target_Sakaar_HashCode_lib cmake_object_order_depends_target_Sakaar_Memory_lib cmake_object_order_depends_target_Sakaar_Network_lib cmake_object_order_depends_target_Sakaar_Struct_lib cmake_object_order_depends_target_Sakaar_lib
+build cmake_object_order_depends_target_Sakaar_SmartContract_lib: phony || cmake_object_order_depends_target_Sakaar_CryptoBase_lib cmake_object_order_depends_target_Sakaar_CryptoCode_lib cmake_object_order_depends_target_Sakaar_HashCode_lib cmake_object_order_depends_target_Sakaar_Memory_lib cmake_object_order_depends_target_Sakaar_Network_lib cmake_object_order_depends_target_Sakaar_Struct_lib
 
 build CMakeFiles/Sakaar_SmartContract_lib.dir/src/tk_tokenize.c.o: C_COMPILER__Sakaar_SmartContract_lib_Debug /home/stiveman1/CLionProjects/Sakaar-SmartContract/src/tk_tokenize.c || cmake_object_order_depends_target_Sakaar_SmartContract_lib
   DEP_FILE = CMakeFiles/Sakaar_SmartContract_lib.dir/src/tk_tokenize.c.o.d
   FLAGS = -g -fdiagnostics-color=always -std=gnu99
-  INCLUDES = -I/home/stiveman1/CLionProjects/Sakaar-SmartContract/include -I/home/stiveman1/CLionProjects/Sakaar-SmartContract/src -I/home/stiveman1/CLionProjects/Sakaar-SmartContract/lib/Sakaar-Memory/include -I/home/stiveman1/CLionProjects/Sakaar-SmartContract/lib/Sakaar-Struct/include -I/home/stiveman1/CLionProjects/Sakaar-SmartContract/lib/Sakaar-CryptoCode/include -I/home/stiveman1/CLionProjects/Sakaar-SmartContract/lib/Sakaar-HashCode/include -I/home/stiveman1/CLionProjects/Sakaar-SmartContract/lib/Sakaar-CryptoBase/include -I/home/stiveman1/CLionProjects/Sakaar-SmartContract/lib/Sakaar-NetWork/include -I/home/stiveman1/CLionProjects/Sakaar-SmartContract/lib/Sakaar/include
+  INCLUDES = -I/home/stiveman1/CLionProjects/Sakaar-SmartContract/include -I/home/stiveman1/CLionProjects/Sakaar-SmartContract/src -I/home/stiveman1/CLionProjects/Sakaar-SmartContract/lib/Sakaar-Memory/include -I/home/stiveman1/CLionProjects/Sakaar-SmartContract/lib/Sakaar-Struct/include -I/home/stiveman1/CLionProjects/Sakaar-SmartContract/lib/Sakaar-CryptoCode/include -I/home/stiveman1/CLionProjects/Sakaar-SmartContract/lib/Sakaar-HashCode/include -I/home/stiveman1/CLionProjects/Sakaar-SmartContract/lib/Sakaar-CryptoBase/include -I/home/stiveman1/CLionProjects/Sakaar-SmartContract/lib/Sakaar-NetWork/include
   OBJECT_DIR = CMakeFiles/Sakaar_SmartContract_lib.dir
   OBJECT_FILE_DIR = CMakeFiles/Sakaar_SmartContract_lib.dir/src
 
 build CMakeFiles/Sakaar_SmartContract_lib.dir/src/an_analize/an_expr.c.o: C_COMPILER__Sakaar_SmartContract_lib_Debug /home/stiveman1/CLionProjects/Sakaar-SmartContract/src/an_analize/an_expr.c || cmake_object_order_depends_target_Sakaar_SmartContract_lib
   DEP_FILE = CMakeFiles/Sakaar_SmartContract_lib.dir/src/an_analize/an_expr.c.o.d
   FLAGS = -g -fdiagnostics-color=always -std=gnu99
-  INCLUDES = -I/home/stiveman1/CLionProjects/Sakaar-SmartContract/include -I/home/stiveman1/CLionProjects/Sakaar-SmartContract/src -I/home/stiveman1/CLionProjects/Sakaar-SmartContract/lib/Sakaar-Memory/include -I/home/stiveman1/CLionProjects/Sakaar-SmartContract/lib/Sakaar-Struct/include -I/home/stiveman1/CLionProjects/Sakaar-SmartContract/lib/Sakaar-CryptoCode/include -I/home/stiveman1/CLionProjects/Sakaar-SmartContract/lib/Sakaar-HashCode/include -I/home/stiveman1/CLionProjects/Sakaar-SmartContract/lib/Sakaar-CryptoBase/include -I/home/stiveman1/CLionProjects/Sakaar-SmartContract/lib/Sakaar-NetWork/include -I/home/stiveman1/CLionProjects/Sakaar-SmartContract/lib/Sakaar/include
+  INCLUDES = -I/home/stiveman1/CLionProjects/Sakaar-SmartContract/include -I/home/stiveman1/CLionProjects/Sakaar-SmartContract/src -I/home/stiveman1/CLionProjects/Sakaar-SmartContract/lib/Sakaar-Memory/include -I/home/stiveman1/CLionProjects/Sakaar-SmartContract/lib/Sakaar-Struct/include -I/home/stiveman1/CLionProjects/Sakaar-SmartContract/lib/Sakaar-CryptoCode/include -I/home/stiveman1/CLionProjects/Sakaar-SmartContract/lib/Sakaar-HashCode/include -I/home/stiveman1/CLionProjects/Sakaar-SmartContract/lib/Sakaar-CryptoBase/include -I/home/stiveman1/CLionProjects/Sakaar-SmartContract/lib/Sakaar-NetWork/include
   OBJECT_DIR = CMakeFiles/Sakaar_SmartContract_lib.dir
   OBJECT_FILE_DIR = CMakeFiles/Sakaar_SmartContract_lib.dir/src/an_analize
 
 build CMakeFiles/Sakaar_SmartContract_lib.dir/src/an_analize/an_oper.c.o: C_COMPILER__Sakaar_SmartContract_lib_Debug /home/stiveman1/CLionProjects/Sakaar-SmartContract/src/an_analize/an_oper.c || cmake_object_order_depends_target_Sakaar_SmartContract_lib
   DEP_FILE = CMakeFiles/Sakaar_SmartContract_lib.dir/src/an_analize/an_oper.c.o.d
   FLAGS = -g -fdiagnostics-color=always -std=gnu99
-  INCLUDES = -I/home/stiveman1/CLionProjects/Sakaar-SmartContract/include -I/home/stiveman1/CLionProjects/Sakaar-SmartContract/src -I/home/stiveman1/CLionProjects/Sakaar-SmartContract/lib/Sakaar-Memory/include -I/home/stiveman1/CLionProjects/Sakaar-SmartContract/lib/Sakaar-Struct/include -I/home/stiveman1/CLionProjects/Sakaar-SmartContract/lib/Sakaar-CryptoCode/include -I/home/stiveman1/CLionProjects/Sakaar-SmartContract/lib/Sakaar-HashCode/include -I/home/stiveman1/CLionProjects/Sakaar-SmartContract/lib/Sakaar-CryptoBase/include -I/home/stiveman1/CLionProjects/Sakaar-SmartContract/lib/Sakaar-NetWork/include -I/home/stiveman1/CLionProjects/Sakaar-SmartContract/lib/Sakaar/include
+  INCLUDES = -I/home/stiveman1/CLionProjects/Sakaar-SmartContract/include -I/home/stiveman1/CLionProjects/Sakaar-SmartContract/src -I/home/stiveman1/CLionProjects/Sakaar-SmartContract/lib/Sakaar-Memory/include -I/home/stiveman1/CLionProjects/Sakaar-SmartContract/lib/Sakaar-Struct/include -I/home/stiveman1/CLionProjects/Sakaar-SmartContract/lib/Sakaar-CryptoCode/include -I/home/stiveman1/CLionProjects/Sakaar-SmartContract/lib/Sakaar-HashCode/include -I/home/stiveman1/CLionProjects/Sakaar-SmartContract/lib/Sakaar-CryptoBase/include -I/home/stiveman1/CLionProjects/Sakaar-SmartContract/lib/Sakaar-NetWork/include
   OBJECT_DIR = CMakeFiles/Sakaar_SmartContract_lib.dir
   OBJECT_FILE_DIR = CMakeFiles/Sakaar_SmartContract_lib.dir/src/an_analize
 
 build CMakeFiles/Sakaar_SmartContract_lib.dir/src/an_analize/an_stmt.c.o: C_COMPILER__Sakaar_SmartContract_lib_Debug /home/stiveman1/CLionProjects/Sakaar-SmartContract/src/an_analize/an_stmt.c || cmake_object_order_depends_target_Sakaar_SmartContract_lib
   DEP_FILE = CMakeFiles/Sakaar_SmartContract_lib.dir/src/an_analize/an_stmt.c.o.d
   FLAGS = -g -fdiagnostics-color=always -std=gnu99
-  INCLUDES = -I/home/stiveman1/CLionProjects/Sakaar-SmartContract/include -I/home/stiveman1/CLionProjects/Sakaar-SmartContract/src -I/home/stiveman1/CLionProjects/Sakaar-SmartContract/lib/Sakaar-Memory/include -I/home/stiveman1/CLionProjects/Sakaar-SmartContract/lib/Sakaar-Struct/include -I/home/stiveman1/CLionProjects/Sakaar-SmartContract/lib/Sakaar-CryptoCode/include -I/home/stiveman1/CLionProjects/Sakaar-SmartContract/lib/Sakaar-HashCode/include -I/home/stiveman1/CLionProjects/Sakaar-SmartContract/lib/Sakaar-CryptoBase/include -I/home/stiveman1/CLionProjects/Sakaar-SmartContract/lib/Sakaar-NetWork/include -I/home/stiveman1/CLionProjects/Sakaar-SmartContract/lib/Sakaar/include
+  INCLUDES = -I/home/stiveman1/CLionProjects/Sakaar-SmartContract/include -I/home/stiveman1/CLionProjects/Sakaar-SmartContract/src -I/home/stiveman1/CLionProjects/Sakaar-SmartContract/lib/Sakaar-Memory/include -I/home/stiveman1/CLionProjects/Sakaar-SmartContract/lib/Sakaar-Struct/include -I/home/stiveman1/CLionProjects/Sakaar-SmartContract/lib/Sakaar-CryptoCode/include -I/home/stiveman1/CLionProjects/Sakaar-SmartContract/lib/Sakaar-HashCode/include -I/home/stiveman1/CLionProjects/Sakaar-SmartContract/lib/Sakaar-CryptoBase/include -I/home/stiveman1/CLionProjects/Sakaar-SmartContract/lib/Sakaar-NetWork/include
   OBJECT_DIR = CMakeFiles/Sakaar_SmartContract_lib.dir
   OBJECT_FILE_DIR = CMakeFiles/Sakaar_SmartContract_lib.dir/src/an_analize
 
 build CMakeFiles/Sakaar_SmartContract_lib.dir/src/op_operations/op_temp.c.o: C_COMPILER__Sakaar_SmartContract_lib_Debug /home/stiveman1/CLionProjects/Sakaar-SmartContract/src/op_operations/op_temp.c || cmake_object_order_depends_target_Sakaar_SmartContract_lib
   DEP_FILE = CMakeFiles/Sakaar_SmartContract_lib.dir/src/op_operations/op_temp.c.o.d
   FLAGS = -g -fdiagnostics-color=always -std=gnu99
-  INCLUDES = -I/home/stiveman1/CLionProjects/Sakaar-SmartContract/include -I/home/stiveman1/CLionProjects/Sakaar-SmartContract/src -I/home/stiveman1/CLionProjects/Sakaar-SmartContract/lib/Sakaar-Memory/include -I/home/stiveman1/CLionProjects/Sakaar-SmartContract/lib/Sakaar-Struct/include -I/home/stiveman1/CLionProjects/Sakaar-SmartContract/lib/Sakaar-CryptoCode/include -I/home/stiveman1/CLionProjects/Sakaar-SmartContract/lib/Sakaar-HashCode/include -I/home/stiveman1/CLionProjects/Sakaar-SmartContract/lib/Sakaar-CryptoBase/include -I/home/stiveman1/CLionProjects/Sakaar-SmartContract/lib/Sakaar-NetWork/include -I/home/stiveman1/CLionProjects/Sakaar-SmartContract/lib/Sakaar/include
+  INCLUDES = -I/home/stiveman1/CLionProjects/Sakaar-SmartContract/include -I/home/stiveman1/CLionProjects/Sakaar-SmartContract/src -I/home/stiveman1/CLionProjects/Sakaar-SmartContract/lib/Sakaar-Memory/include -I/home/stiveman1/CLionProjects/Sakaar-SmartContract/lib/Sakaar-Struct/include -I/home/stiveman1/CLionProjects/Sakaar-SmartContract/lib/Sakaar-CryptoCode/include -I/home/stiveman1/CLionProjects/Sakaar-SmartContract/lib/Sakaar-HashCode/include -I/home/stiveman1/CLionProjects/Sakaar-SmartContract/lib/Sakaar-CryptoBase/include -I/home/stiveman1/CLionProjects/Sakaar-SmartContract/lib/Sakaar-NetWork/include
   OBJECT_DIR = CMakeFiles/Sakaar_SmartContract_lib.dir
   OBJECT_FILE_DIR = CMakeFiles/Sakaar_SmartContract_lib.dir/src/op_operations
 
 build CMakeFiles/Sakaar_SmartContract_lib.dir/src/sc_structs/an_node.c.o: C_COMPILER__Sakaar_SmartContract_lib_Debug /home/stiveman1/CLionProjects/Sakaar-SmartContract/src/sc_structs/an_node.c || cmake_object_order_depends_target_Sakaar_SmartContract_lib
   DEP_FILE = CMakeFiles/Sakaar_SmartContract_lib.dir/src/sc_structs/an_node.c.o.d
   FLAGS = -g -fdiagnostics-color=always -std=gnu99
-  INCLUDES = -I/home/stiveman1/CLionProjects/Sakaar-SmartContract/include -I/home/stiveman1/CLionProjects/Sakaar-SmartContract/src -I/home/stiveman1/CLionProjects/Sakaar-SmartContract/lib/Sakaar-Memory/include -I/home/stiveman1/CLionProjects/Sakaar-SmartContract/lib/Sakaar-Struct/include -I/home/stiveman1/CLionProjects/Sakaar-SmartContract/lib/Sakaar-CryptoCode/include -I/home/stiveman1/CLionProjects/Sakaar-SmartContract/lib/Sakaar-HashCode/include -I/home/stiveman1/CLionProjects/Sakaar-SmartContract/lib/Sakaar-CryptoBase/include -I/home/stiveman1/CLionProjects/Sakaar-SmartContract/lib/Sakaar-NetWork/include -I/home/stiveman1/CLionProjects/Sakaar-SmartContract/lib/Sakaar/include
+  INCLUDES = -I/home/stiveman1/CLionProjects/Sakaar-SmartContract/include -I/home/stiveman1/CLionProjects/Sakaar-SmartContract/src -I/home/stiveman1/CLionProjects/Sakaar-SmartContract/lib/Sakaar-Memory/include -I/home/stiveman1/CLionProjects/Sakaar-SmartContract/lib/Sakaar-Struct/include -I/home/stiveman1/CLionProjects/Sakaar-SmartContract/lib/Sakaar-CryptoCode/include -I/home/stiveman1/CLionProjects/Sakaar-SmartContract/lib/Sakaar-HashCode/include -I/home/stiveman1/CLionProjects/Sakaar-SmartContract/lib/Sakaar-CryptoBase/include -I/home/stiveman1/CLionProjects/Sakaar-SmartContract/lib/Sakaar-NetWork/include
   OBJECT_DIR = CMakeFiles/Sakaar_SmartContract_lib.dir
   OBJECT_FILE_DIR = CMakeFiles/Sakaar_SmartContract_lib.dir/src/sc_structs
 
 build CMakeFiles/Sakaar_SmartContract_lib.dir/src/sc_structs/an_parser.c.o: C_COMPILER__Sakaar_SmartContract_lib_Debug /home/stiveman1/CLionProjects/Sakaar-SmartContract/src/sc_structs/an_parser.c || cmake_object_order_depends_target_Sakaar_SmartContract_lib
   DEP_FILE = CMakeFiles/Sakaar_SmartContract_lib.dir/src/sc_structs/an_parser.c.o.d
   FLAGS = -g -fdiagnostics-color=always -std=gnu99
-  INCLUDES = -I/home/stiveman1/CLionProjects/Sakaar-SmartContract/include -I/home/stiveman1/CLionProjects/Sakaar-SmartContract/src -I/home/stiveman1/CLionProjects/Sakaar-SmartContract/lib/Sakaar-Memory/include -I/home/stiveman1/CLionProjects/Sakaar-SmartContract/lib/Sakaar-Struct/include -I/home/stiveman1/CLionProjects/Sakaar-SmartContract/lib/Sakaar-CryptoCode/include -I/home/stiveman1/CLionProjects/Sakaar-SmartContract/lib/Sakaar-HashCode/include -I/home/stiveman1/CLionProjects/Sakaar-SmartContract/lib/Sakaar-CryptoBase/include -I/home/stiveman1/CLionProjects/Sakaar-SmartContract/lib/Sakaar-NetWork/include -I/home/stiveman1/CLionProjects/Sakaar-SmartContract/lib/Sakaar/include
+  INCLUDES = -I/home/stiveman1/CLionProjects/Sakaar-SmartContract/include -I/home/stiveman1/CLionProjects/Sakaar-SmartContract/src -I/home/stiveman1/CLionProjects/Sakaar-SmartContract/lib/Sakaar-Memory/include -I/home/stiveman1/CLionProjects/Sakaar-SmartContract/lib/Sakaar-Struct/include -I/home/stiveman1/CLionProjects/Sakaar-SmartContract/lib/Sakaar-CryptoCode/include -I/home/stiveman1/CLionProjects/Sakaar-SmartContract/lib/Sakaar-HashCode/include -I/home/stiveman1/CLionProjects/Sakaar-SmartContract/lib/Sakaar-CryptoBase/include -I/home/stiveman1/CLionProjects/Sakaar-SmartContract/lib/Sakaar-NetWork/include
   OBJECT_DIR = CMakeFiles/Sakaar_SmartContract_lib.dir
   OBJECT_FILE_DIR = CMakeFiles/Sakaar_SmartContract_lib.dir/src/sc_structs
 
 build CMakeFiles/Sakaar_SmartContract_lib.dir/src/sc_structs/op_block.c.o: C_COMPILER__Sakaar_SmartContract_lib_Debug /home/stiveman1/CLionProjects/Sakaar-SmartContract/src/sc_structs/op_block.c || cmake_object_order_depends_target_Sakaar_SmartContract_lib
   DEP_FILE = CMakeFiles/Sakaar_SmartContract_lib.dir/src/sc_structs/op_block.c.o.d
   FLAGS = -g -fdiagnostics-color=always -std=gnu99
-  INCLUDES = -I/home/stiveman1/CLionProjects/Sakaar-SmartContract/include -I/home/stiveman1/CLionProjects/Sakaar-SmartContract/src -I/home/stiveman1/CLionProjects/Sakaar-SmartContract/lib/Sakaar-Memory/include -I/home/stiveman1/CLionProjects/Sakaar-SmartContract/lib/Sakaar-Struct/include -I/home/stiveman1/CLionProjects/Sakaar-SmartContract/lib/Sakaar-CryptoCode/include -I/home/stiveman1/CLionProjects/Sakaar-SmartContract/lib/Sakaar-HashCode/include -I/home/stiveman1/CLionProjects/Sakaar-SmartContract/lib/Sakaar-CryptoBase/include -I/home/stiveman1/CLionProjects/Sakaar-SmartContract/lib/Sakaar-NetWork/include -I/home/stiveman1/CLionProjects/Sakaar-SmartContract/lib/Sakaar/include
+  INCLUDES = -I/home/stiveman1/CLionProjects/Sakaar-SmartContract/include -I/home/stiveman1/CLionProjects/Sakaar-SmartContract/src -I/home/stiveman1/CLionProjects/Sakaar-SmartContract/lib/Sakaar-Memory/include -I/home/stiveman1/CLionProjects/Sakaar-SmartContract/lib/Sakaar-Struct/include -I/home/stiveman1/CLionProjects/Sakaar-SmartContract/lib/Sakaar-CryptoCode/include -I/home/stiveman1/CLionProjects/Sakaar-SmartContract/lib/Sakaar-HashCode/include -I/home/stiveman1/CLionProjects/Sakaar-SmartContract/lib/Sakaar-CryptoBase/include -I/home/stiveman1/CLionProjects/Sakaar-SmartContract/lib/Sakaar-NetWork/include
   OBJECT_DIR = CMakeFiles/Sakaar_SmartContract_lib.dir
   OBJECT_FILE_DIR = CMakeFiles/Sakaar_SmartContract_lib.dir/src/sc_structs
 
 build CMakeFiles/Sakaar_SmartContract_lib.dir/src/sc_structs/op_state.c.o: C_COMPILER__Sakaar_SmartContract_lib_Debug /home/stiveman1/CLionProjects/Sakaar-SmartContract/src/sc_structs/op_state.c || cmake_object_order_depends_target_Sakaar_SmartContract_lib
   DEP_FILE = CMakeFiles/Sakaar_SmartContract_lib.dir/src/sc_structs/op_state.c.o.d
   FLAGS = -g -fdiagnostics-color=always -std=gnu99
-  INCLUDES = -I/home/stiveman1/CLionProjects/Sakaar-SmartContract/include -I/home/stiveman1/CLionProjects/Sakaar-SmartContract/src -I/home/stiveman1/CLionProjects/Sakaar-SmartContract/lib/Sakaar-Memory/include -I/home/stiveman1/CLionProjects/Sakaar-SmartContract/lib/Sakaar-Struct/include -I/home/stiveman1/CLionProjects/Sakaar-SmartContract/lib/Sakaar-CryptoCode/include -I/home/stiveman1/CLionProjects/Sakaar-SmartContract/lib/Sakaar-HashCode/include -I/home/stiveman1/CLionProjects/Sakaar-SmartContract/lib/Sakaar-CryptoBase/include -I/home/stiveman1/CLionProjects/Sakaar-SmartContract/lib/Sakaar-NetWork/include -I/home/stiveman1/CLionProjects/Sakaar-SmartContract/lib/Sakaar/include
+  INCLUDES = -I/home/stiveman1/CLionProjects/Sakaar-SmartContract/include -I/home/stiveman1/CLionProjects/Sakaar-SmartContract/src -I/home/stiveman1/CLionProjects/Sakaar-SmartContract/lib/Sakaar-Memory/include -I/home/stiveman1/CLionProjects/Sakaar-SmartContract/lib/Sakaar-Struct/include -I/home/stiveman1/CLionProjects/Sakaar-SmartContract/lib/Sakaar-CryptoCode/include -I/home/stiveman1/CLionProjects/Sakaar-SmartContract/lib/Sakaar-HashCode/include -I/home/stiveman1/CLionProjects/Sakaar-SmartContract/lib/Sakaar-CryptoBase/include -I/home/stiveman1/CLionProjects/Sakaar-SmartContract/lib/Sakaar-NetWork/include
   OBJECT_DIR = CMakeFiles/Sakaar_SmartContract_lib.dir
   OBJECT_FILE_DIR = CMakeFiles/Sakaar_SmartContract_lib.dir/src/sc_structs
 
 build CMakeFiles/Sakaar_SmartContract_lib.dir/src/sc_structs/tk_parser.c.o: C_COMPILER__Sakaar_SmartContract_lib_Debug /home/stiveman1/CLionProjects/Sakaar-SmartContract/src/sc_structs/tk_parser.c || cmake_object_order_depends_target_Sakaar_SmartContract_lib
   DEP_FILE = CMakeFiles/Sakaar_SmartContract_lib.dir/src/sc_structs/tk_parser.c.o.d
   FLAGS = -g -fdiagnostics-color=always -std=gnu99
-  INCLUDES = -I/home/stiveman1/CLionProjects/Sakaar-SmartContract/include -I/home/stiveman1/CLionProjects/Sakaar-SmartContract/src -I/home/stiveman1/CLionProjects/Sakaar-SmartContract/lib/Sakaar-Memory/include -I/home/stiveman1/CLionProjects/Sakaar-SmartContract/lib/Sakaar-Struct/include -I/home/stiveman1/CLionProjects/Sakaar-SmartContract/lib/Sakaar-CryptoCode/include -I/home/stiveman1/CLionProjects/Sakaar-SmartContract/lib/Sakaar-HashCode/include -I/home/stiveman1/CLionProjects/Sakaar-SmartContract/lib/Sakaar-CryptoBase/include -I/home/stiveman1/CLionProjects/Sakaar-SmartContract/lib/Sakaar-NetWork/include -I/home/stiveman1/CLionProjects/Sakaar-SmartContract/lib/Sakaar/include
+  INCLUDES = -I/home/stiveman1/CLionProjects/Sakaar-SmartContract/include -I/home/stiveman1/CLionProjects/Sakaar-SmartContract/src -I/home/stiveman1/CLionProjects/Sakaar-SmartContract/lib/Sakaar-Memory/include -I/home/stiveman1/CLionProjects/Sakaar-SmartContract/lib/Sakaar-Struct/include -I/home/stiveman1/CLionProjects/Sakaar-SmartContract/lib/Sakaar-CryptoCode/include -I/home/stiveman1/CLionProjects/Sakaar-SmartContract/lib/Sakaar-HashCode/include -I/home/stiveman1/CLionProjects/Sakaar-SmartContract/lib/Sakaar-CryptoBase/include -I/home/stiveman1/CLionProjects/Sakaar-SmartContract/lib/Sakaar-NetWork/include
   OBJECT_DIR = CMakeFiles/Sakaar_SmartContract_lib.dir
   OBJECT_FILE_DIR = CMakeFiles/Sakaar_SmartContract_lib.dir/src/sc_structs
 
 build CMakeFiles/Sakaar_SmartContract_lib.dir/src/sc_structs/tk_token.c.o: C_COMPILER__Sakaar_SmartContract_lib_Debug /home/stiveman1/CLionProjects/Sakaar-SmartContract/src/sc_structs/tk_token.c || cmake_object_order_depends_target_Sakaar_SmartContract_lib
   DEP_FILE = CMakeFiles/Sakaar_SmartContract_lib.dir/src/sc_structs/tk_token.c.o.d
   FLAGS = -g -fdiagnostics-color=always -std=gnu99
-  INCLUDES = -I/home/stiveman1/CLionProjects/Sakaar-SmartContract/include -I/home/stiveman1/CLionProjects/Sakaar-SmartContract/src -I/home/stiveman1/CLionProjects/Sakaar-SmartContract/lib/Sakaar-Memory/include -I/home/stiveman1/CLionProjects/Sakaar-SmartContract/lib/Sakaar-Struct/include -I/home/stiveman1/CLionProjects/Sakaar-SmartContract/lib/Sakaar-CryptoCode/include -I/home/stiveman1/CLionProjects/Sakaar-SmartContract/lib/Sakaar-HashCode/include -I/home/stiveman1/CLionProjects/Sakaar-SmartContract/lib/Sakaar-CryptoBase/include -I/home/stiveman1/CLionProjects/Sakaar-SmartContract/lib/Sakaar-NetWork/include -I/home/stiveman1/CLionProjects/Sakaar-SmartContract/lib/Sakaar/include
+  INCLUDES = -I/home/stiveman1/CLionProjects/Sakaar-SmartContract/include -I/home/stiveman1/CLionProjects/Sakaar-SmartContract/src -I/home/stiveman1/CLionProjects/Sakaar-SmartContract/lib/Sakaar-Memory/include -I/home/stiveman1/CLionProjects/Sakaar-SmartContract/lib/Sakaar-Struct/include -I/home/stiveman1/CLionProjects/Sakaar-SmartContract/lib/Sakaar-CryptoCode/include -I/home/stiveman1/CLionProjects/Sakaar-SmartContract/lib/Sakaar-HashCode/include -I/home/stiveman1/CLionProjects/Sakaar-SmartContract/lib/Sakaar-CryptoBase/include -I/home/stiveman1/CLionProjects/Sakaar-SmartContract/lib/Sakaar-NetWork/include
   OBJECT_DIR = CMakeFiles/Sakaar_SmartContract_lib.dir
   OBJECT_FILE_DIR = CMakeFiles/Sakaar_SmartContract_lib.dir/src/sc_structs
 
 build CMakeFiles/Sakaar_SmartContract_lib.dir/src/tk_tokenize/tk_identifier.c.o: C_COMPILER__Sakaar_SmartContract_lib_Debug /home/stiveman1/CLionProjects/Sakaar-SmartContract/src/tk_tokenize/tk_identifier.c || cmake_object_order_depends_target_Sakaar_SmartContract_lib
   DEP_FILE = CMakeFiles/Sakaar_SmartContract_lib.dir/src/tk_tokenize/tk_identifier.c.o.d
   FLAGS = -g -fdiagnostics-color=always -std=gnu99
-  INCLUDES = -I/home/stiveman1/CLionProjects/Sakaar-SmartContract/include -I/home/stiveman1/CLionProjects/Sakaar-SmartContract/src -I/home/stiveman1/CLionProjects/Sakaar-SmartContract/lib/Sakaar-Memory/include -I/home/stiveman1/CLionProjects/Sakaar-SmartContract/lib/Sakaar-Struct/include -I/home/stiveman1/CLionProjects/Sakaar-SmartContract/lib/Sakaar-CryptoCode/include -I/home/stiveman1/CLionProjects/Sakaar-SmartContract/lib/Sakaar-HashCode/include -I/home/stiveman1/CLionProjects/Sakaar-SmartContract/lib/Sakaar-CryptoBase/include -I/home/stiveman1/CLionProjects/Sakaar-SmartContract/lib/Sakaar-NetWork/include -I/home/stiveman1/CLionProjects/Sakaar-SmartContract/lib/Sakaar/include
+  INCLUDES = -I/home/stiveman1/CLionProjects/Sakaar-SmartContract/include -I/home/stiveman1/CLionProjects/Sakaar-SmartContract/src -I/home/stiveman1/CLionProjects/Sakaar-SmartContract/lib/Sakaar-Memory/include -I/home/stiveman1/CLionProjects/Sakaar-SmartContract/lib/Sakaar-Struct/include -I/home/stiveman1/CLionProjects/Sakaar-SmartContract/lib/Sakaar-CryptoCode/include -I/home/stiveman1/CLionProjects/Sakaar-SmartContract/lib/Sakaar-HashCode/include -I/home/stiveman1/CLionProjects/Sakaar-SmartContract/lib/Sakaar-CryptoBase/include -I/home/stiveman1/CLionProjects/Sakaar-SmartContract/lib/Sakaar-NetWork/include
   OBJECT_DIR = CMakeFiles/Sakaar_SmartContract_lib.dir
   OBJECT_FILE_DIR = CMakeFiles/Sakaar_SmartContract_lib.dir/src/tk_tokenize
 
 build CMakeFiles/Sakaar_SmartContract_lib.dir/src/tk_tokenize/tk_integer.c.o: C_COMPILER__Sakaar_SmartContract_lib_Debug /home/stiveman1/CLionProjects/Sakaar-SmartContract/src/tk_tokenize/tk_integer.c || cmake_object_order_depends_target_Sakaar_SmartContract_lib
   DEP_FILE = CMakeFiles/Sakaar_SmartContract_lib.dir/src/tk_tokenize/tk_integer.c.o.d
   FLAGS = -g -fdiagnostics-color=always -std=gnu99
-  INCLUDES = -I/home/stiveman1/CLionProjects/Sakaar-SmartContract/include -I/home/stiveman1/CLionProjects/Sakaar-SmartContract/src -I/home/stiveman1/CLionProjects/Sakaar-SmartContract/lib/Sakaar-Memory/include -I/home/stiveman1/CLionProjects/Sakaar-SmartContract/lib/Sakaar-Struct/include -I/home/stiveman1/CLionProjects/Sakaar-SmartContract/lib/Sakaar-CryptoCode/include -I/home/stiveman1/CLionProjects/Sakaar-SmartContract/lib/Sakaar-HashCode/include -I/home/stiveman1/CLionProjects/Sakaar-SmartContract/lib/Sakaar-CryptoBase/include -I/home/stiveman1/CLionProjects/Sakaar-SmartContract/lib/Sakaar-NetWork/include -I/home/stiveman1/CLionProjects/Sakaar-SmartContract/lib/Sakaar/include
+  INCLUDES = -I/home/stiveman1/CLionProjects/Sakaar-SmartContract/include -I/home/stiveman1/CLionProjects/Sakaar-SmartContract/src -I/home/stiveman1/CLionProjects/Sakaar-SmartContract/lib/Sakaar-Memory/include -I/home/stiveman1/CLionProjects/Sakaar-SmartContract/lib/Sakaar-Struct/include -I/home/stiveman1/CLionProjects/Sakaar-SmartContract/lib/Sakaar-CryptoCode/include -I/home/stiveman1/CLionProjects/Sakaar-SmartContract/lib/Sakaar-HashCode/include -I/home/stiveman1/CLionProjects/Sakaar-SmartContract/lib/Sakaar-CryptoBase/include -I/home/stiveman1/CLionProjects/Sakaar-SmartContract/lib/Sakaar-NetWork/include
   OBJECT_DIR = CMakeFiles/Sakaar_SmartContract_lib.dir
   OBJECT_FILE_DIR = CMakeFiles/Sakaar_SmartContract_lib.dir/src/tk_tokenize
 
 build CMakeFiles/Sakaar_SmartContract_lib.dir/src/tk_tokenize/tk_keyword.c.o: C_COMPILER__Sakaar_SmartContract_lib_Debug /home/stiveman1/CLionProjects/Sakaar-SmartContract/src/tk_tokenize/tk_keyword.c || cmake_object_order_depends_target_Sakaar_SmartContract_lib
   DEP_FILE = CMakeFiles/Sakaar_SmartContract_lib.dir/src/tk_tokenize/tk_keyword.c.o.d
   FLAGS = -g -fdiagnostics-color=always -std=gnu99
-  INCLUDES = -I/home/stiveman1/CLionProjects/Sakaar-SmartContract/include -I/home/stiveman1/CLionProjects/Sakaar-SmartContract/src -I/home/stiveman1/CLionProjects/Sakaar-SmartContract/lib/Sakaar-Memory/include -I/home/stiveman1/CLionProjects/Sakaar-SmartContract/lib/Sakaar-Struct/include -I/home/stiveman1/CLionProjects/Sakaar-SmartContract/lib/Sakaar-CryptoCode/include -I/home/stiveman1/CLionProjects/Sakaar-SmartContract/lib/Sakaar-HashCode/include -I/home/stiveman1/CLionProjects/Sakaar-SmartContract/lib/Sakaar-CryptoBase/include -I/home/stiveman1/CLionProjects/Sakaar-SmartContract/lib/Sakaar-NetWork/include -I/home/stiveman1/CLionProjects/Sakaar-SmartContract/lib/Sakaar/include
+  INCLUDES = -I/home/stiveman1/CLionProjects/Sakaar-SmartContract/include -I/home/stiveman1/CLionProjects/Sakaar-SmartContract/src -I/home/stiveman1/CLionProjects/Sakaar-SmartContract/lib/Sakaar-Memory/include -I/home/stiveman1/CLionProjects/Sakaar-SmartContract/lib/Sakaar-Struct/include -I/home/stiveman1/CLionProjects/Sakaar-SmartContract/lib/Sakaar-CryptoCode/include -I/home/stiveman1/CLionProjects/Sakaar-SmartContract/lib/Sakaar-HashCode/include -I/home/stiveman1/CLionProjects/Sakaar-SmartContract/lib/Sakaar-CryptoBase/include -I/home/stiveman1/CLionProjects/Sakaar-SmartContract/lib/Sakaar-NetWork/include
   OBJECT_DIR = CMakeFiles/Sakaar_SmartContract_lib.dir
   OBJECT_FILE_DIR = CMakeFiles/Sakaar_SmartContract_lib.dir/src/tk_tokenize
 
 build CMakeFiles/Sakaar_SmartContract_lib.dir/src/tk_tokenize/tk_special.c.o: C_COMPILER__Sakaar_SmartContract_lib_Debug /home/stiveman1/CLionProjects/Sakaar-SmartContract/src/tk_tokenize/tk_special.c || cmake_object_order_depends_target_Sakaar_SmartContract_lib
   DEP_FILE = CMakeFiles/Sakaar_SmartContract_lib.dir/src/tk_tokenize/tk_special.c.o.d
   FLAGS = -g -fdiagnostics-color=always -std=gnu99
-  INCLUDES = -I/home/stiveman1/CLionProjects/Sakaar-SmartContract/include -I/home/stiveman1/CLionProjects/Sakaar-SmartContract/src -I/home/stiveman1/CLionProjects/Sakaar-SmartContract/lib/Sakaar-Memory/include -I/home/stiveman1/CLionProjects/Sakaar-SmartContract/lib/Sakaar-Struct/include -I/home/stiveman1/CLionProjects/Sakaar-SmartContract/lib/Sakaar-CryptoCode/include -I/home/stiveman1/CLionProjects/Sakaar-SmartContract/lib/Sakaar-HashCode/include -I/home/stiveman1/CLionProjects/Sakaar-SmartContract/lib/Sakaar-CryptoBase/include -I/home/stiveman1/CLionProjects/Sakaar-SmartContract/lib/Sakaar-NetWork/include -I/home/stiveman1/CLionProjects/Sakaar-SmartContract/lib/Sakaar/include
+  INCLUDES = -I/home/stiveman1/CLionProjects/Sakaar-SmartContract/include -I/home/stiveman1/CLionProjects/Sakaar-SmartContract/src -I/home/stiveman1/CLionProjects/Sakaar-SmartContract/lib/Sakaar-Memory/include -I/home/stiveman1/CLionProjects/Sakaar-SmartContract/lib/Sakaar-Struct/include -I/home/stiveman1/CLionProjects/Sakaar-SmartContract/lib/Sakaar-CryptoCode/include -I/home/stiveman1/CLionProjects/Sakaar-SmartContract/lib/Sakaar-HashCode/include -I/home/stiveman1/CLionProjects/Sakaar-SmartContract/lib/Sakaar-CryptoBase/include -I/home/stiveman1/CLionProjects/Sakaar-SmartContract/lib/Sakaar-NetWork/include
   OBJECT_DIR = CMakeFiles/Sakaar_SmartContract_lib.dir
   OBJECT_FILE_DIR = CMakeFiles/Sakaar_SmartContract_lib.dir/src/tk_tokenize
 
 build CMakeFiles/Sakaar_SmartContract_lib.dir/src/tk_tokenize/tk_string.c.o: C_COMPILER__Sakaar_SmartContract_lib_Debug /home/stiveman1/CLionProjects/Sakaar-SmartContract/src/tk_tokenize/tk_string.c || cmake_object_order_depends_target_Sakaar_SmartContract_lib
   DEP_FILE = CMakeFiles/Sakaar_SmartContract_lib.dir/src/tk_tokenize/tk_string.c.o.d
   FLAGS = -g -fdiagnostics-color=always -std=gnu99
-  INCLUDES = -I/home/stiveman1/CLionProjects/Sakaar-SmartContract/include -I/home/stiveman1/CLionProjects/Sakaar-SmartContract/src -I/home/stiveman1/CLionProjects/Sakaar-SmartContract/lib/Sakaar-Memory/include -I/home/stiveman1/CLionProjects/Sakaar-SmartContract/lib/Sakaar-Struct/include -I/home/stiveman1/CLionProjects/Sakaar-SmartContract/lib/Sakaar-CryptoCode/include -I/home/stiveman1/CLionProjects/Sakaar-SmartContract/lib/Sakaar-HashCode/include -I/home/stiveman1/CLionProjects/Sakaar-SmartContract/lib/Sakaar-CryptoBase/include -I/home/stiveman1/CLionProjects/Sakaar-SmartContract/lib/Sakaar-NetWork/include -I/home/stiveman1/CLionProjects/Sakaar-SmartContract/lib/Sakaar/include
+  INCLUDES = -I/home/stiveman1/CLionProjects/Sakaar-SmartContract/include -I/home/stiveman1/CLionProjects/Sakaar-SmartContract/src -I/home/stiveman1/CLionProjects/Sakaar-SmartContract/lib/Sakaar-Memory/include -I/home/stiveman1/CLionProjects/Sakaar-SmartContract/lib/Sakaar-Struct/include -I/home/stiveman1/CLionProjects/Sakaar-SmartContract/lib/Sakaar-CryptoCode/include -I/home/stiveman1/CLionProjects/Sakaar-SmartContract/lib/Sakaar-HashCode/include -I/home/stiveman1/CLionProjects/Sakaar-SmartContract/lib/Sakaar-CryptoBase/include -I/home/stiveman1/CLionProjects/Sakaar-SmartContract/lib/Sakaar-NetWork/include
   OBJECT_DIR = CMakeFiles/Sakaar_SmartContract_lib.dir
   OBJECT_FILE_DIR = CMakeFiles/Sakaar_SmartContract_lib.dir/src/tk_tokenize
 
@@ -169,7 +169,7 @@ build CMakeFiles/Sakaar_SmartContract_lib.dir/src/tk_tokenize/tk_string.c.o: C_C
 #############################################
 # Link the static library libSakaar_SmartContract_lib.a
 
-build libSakaar_SmartContract_lib.a: C_STATIC_LIBRARY_LINKER__Sakaar_SmartContract_lib_Debug CMakeFiles/Sakaar_SmartContract_lib.dir/src/tk_tokenize.c.o CMakeFiles/Sakaar_SmartContract_lib.dir/src/an_analize/an_expr.c.o CMakeFiles/Sakaar_SmartContract_lib.dir/src/an_analize/an_oper.c.o CMakeFiles/Sakaar_SmartContract_lib.dir/src/an_analize/an_stmt.c.o CMakeFiles/Sakaar_SmartContract_lib.dir/src/op_operations/op_temp.c.o CMakeFiles/Sakaar_SmartContract_lib.dir/src/sc_structs/an_node.c.o CMakeFiles/Sakaar_SmartContract_lib.dir/src/sc_structs/an_parser.c.o CMakeFiles/Sakaar_SmartContract_lib.dir/src/sc_structs/op_block.c.o CMakeFiles/Sakaar_SmartContract_lib.dir/src/sc_structs/op_state.c.o CMakeFiles/Sakaar_SmartContract_lib.dir/src/sc_structs/tk_parser.c.o CMakeFiles/Sakaar_SmartContract_lib.dir/src/sc_structs/tk_token.c.o CMakeFiles/Sakaar_SmartContract_lib.dir/src/tk_tokenize/tk_identifier.c.o CMakeFiles/Sakaar_SmartContract_lib.dir/src/tk_tokenize/tk_integer.c.o CMakeFiles/Sakaar_SmartContract_lib.dir/src/tk_tokenize/tk_keyword.c.o CMakeFiles/Sakaar_SmartContract_lib.dir/src/tk_tokenize/tk_special.c.o CMakeFiles/Sakaar_SmartContract_lib.dir/src/tk_tokenize/tk_string.c.o || lib/Sakaar-CryptoBase/libSakaar_CryptoBase_lib.a lib/Sakaar-CryptoCode/libSakaar_CryptoCode_lib.a lib/Sakaar-HashCode/libSakaar_HashCode_lib.a lib/Sakaar-Memory/libSakaar_Memory_lib.a lib/Sakaar-NetWork/libSakaar_Network_lib.a lib/Sakaar-Struct/libSakaar_Struct_lib.a lib/Sakaar/libSakaar_lib.a
+build libSakaar_SmartContract_lib.a: C_STATIC_LIBRARY_LINKER__Sakaar_SmartContract_lib_Debug CMakeFiles/Sakaar_SmartContract_lib.dir/src/tk_tokenize.c.o CMakeFiles/Sakaar_SmartContract_lib.dir/src/an_analize/an_expr.c.o CMakeFiles/Sakaar_SmartContract_lib.dir/src/an_analize/an_oper.c.o CMakeFiles/Sakaar_SmartContract_lib.dir/src/an_analize/an_stmt.c.o CMakeFiles/Sakaar_SmartContract_lib.dir/src/op_operations/op_temp.c.o CMakeFiles/Sakaar_SmartContract_lib.dir/src/sc_structs/an_node.c.o CMakeFiles/Sakaar_SmartContract_lib.dir/src/sc_structs/an_parser.c.o CMakeFiles/Sakaar_SmartContract_lib.dir/src/sc_structs/op_block.c.o CMakeFiles/Sakaar_SmartContract_lib.dir/src/sc_structs/op_state.c.o CMakeFiles/Sakaar_SmartContract_lib.dir/src/sc_structs/tk_parser.c.o CMakeFiles/Sakaar_SmartContract_lib.dir/src/sc_structs/tk_token.c.o CMakeFiles/Sakaar_SmartContract_lib.dir/src/tk_tokenize/tk_identifier.c.o CMakeFiles/Sakaar_SmartContract_lib.dir/src/tk_tokenize/tk_integer.c.o CMakeFiles/Sakaar_SmartContract_lib.dir/src/tk_tokenize/tk_keyword.c.o CMakeFiles/Sakaar_SmartContract_lib.dir/src/tk_tokenize/tk_special.c.o CMakeFiles/Sakaar_SmartContract_lib.dir/src/tk_tokenize/tk_string.c.o || lib/Sakaar-CryptoBase/libSakaar_CryptoBase_lib.a lib/Sakaar-CryptoCode/libSakaar_CryptoCode_lib.a lib/Sakaar-HashCode/libSakaar_HashCode_lib.a lib/Sakaar-Memory/libSakaar_Memory_lib.a lib/Sakaar-NetWork/libSakaar_Network_lib.a lib/Sakaar-Struct/libSakaar_Struct_lib.a
   LANGUAGE_COMPILE_FLAGS = -g
   OBJECT_DIR = CMakeFiles/Sakaar_SmartContract_lib.dir
   POST_BUILD = :
@@ -184,12 +184,12 @@ build libSakaar_SmartContract_lib.a: C_STATIC_LIBRARY_LINKER__Sakaar_SmartContra
 #############################################
 # Order-only phony target for Sakaar_SmartContract
 
-build cmake_object_order_depends_target_Sakaar_SmartContract: phony || cmake_object_order_depends_target_Sakaar_CryptoBase_lib cmake_object_order_depends_target_Sakaar_CryptoCode_lib cmake_object_order_depends_target_Sakaar_HashCode_lib cmake_object_order_depends_target_Sakaar_Memory_lib cmake_object_order_depends_target_Sakaar_Network_lib cmake_object_order_depends_target_Sakaar_SmartContract_lib cmake_object_order_depends_target_Sakaar_Struct_lib cmake_object_order_depends_target_Sakaar_lib
+build cmake_object_order_depends_target_Sakaar_SmartContract: phony || cmake_object_order_depends_target_Sakaar_CryptoBase_lib cmake_object_order_depends_target_Sakaar_CryptoCode_lib cmake_object_order_depends_target_Sakaar_HashCode_lib cmake_object_order_depends_target_Sakaar_Memory_lib cmake_object_order_depends_target_Sakaar_Network_lib cmake_object_order_depends_target_Sakaar_SmartContract_lib cmake_object_order_depends_target_Sakaar_Struct_lib
 
 build CMakeFiles/Sakaar_SmartContract.dir/main.c.o: C_COMPILER__Sakaar_SmartContract_Debug /home/stiveman1/CLionProjects/Sakaar-SmartContract/main.c || cmake_object_order_depends_target_Sakaar_SmartContract
   DEP_FILE = CMakeFiles/Sakaar_SmartContract.dir/main.c.o.d
   FLAGS = -g -fdiagnostics-color=always -std=gnu99
-  INCLUDES = -I/home/stiveman1/CLionProjects/Sakaar-SmartContract/include -I/home/stiveman1/CLionProjects/Sakaar-SmartContract/lib/Sakaar-Memory/include -I/home/stiveman1/CLionProjects/Sakaar-SmartContract/lib/Sakaar-Struct/include -I/home/stiveman1/CLionProjects/Sakaar-SmartContract/lib/Sakaar-CryptoCode/include -I/home/stiveman1/CLionProjects/Sakaar-SmartContract/lib/Sakaar-HashCode/include -I/home/stiveman1/CLionProjects/Sakaar-SmartContract/lib/Sakaar-CryptoBase/include -I/home/stiveman1/CLionProjects/Sakaar-SmartContract/lib/Sakaar-NetWork/include -I/home/stiveman1/CLionProjects/Sakaar-SmartContract/lib/Sakaar/include
+  INCLUDES = -I/home/stiveman1/CLionProjects/Sakaar-SmartContract/include -I/home/stiveman1/CLionProjects/Sakaar-SmartContract/lib/Sakaar-Memory/include -I/home/stiveman1/CLionProjects/Sakaar-SmartContract/lib/Sakaar-Struct/include -I/home/stiveman1/CLionProjects/Sakaar-SmartContract/lib/Sakaar-CryptoCode/include -I/home/stiveman1/CLionProjects/Sakaar-SmartContract/lib/Sakaar-HashCode/include -I/home/stiveman1/CLionProjects/Sakaar-SmartContract/lib/Sakaar-CryptoBase/include -I/home/stiveman1/CLionProjects/Sakaar-SmartContract/lib/Sakaar-NetWork/include
   OBJECT_DIR = CMakeFiles/Sakaar_SmartContract.dir
   OBJECT_FILE_DIR = CMakeFiles/Sakaar_SmartContract.dir
 
@@ -201,10 +201,10 @@ build CMakeFiles/Sakaar_SmartContract.dir/main.c.o: C_COMPILER__Sakaar_SmartCont
 #############################################
 # Link the executable Sakaar_SmartContract
 
-build Sakaar_SmartContract: C_EXECUTABLE_LINKER__Sakaar_SmartContract_Debug CMakeFiles/Sakaar_SmartContract.dir/main.c.o | libSakaar_SmartContract_lib.a lib/Sakaar/libSakaar_lib.a lib/Sakaar-CryptoBase/libSakaar_CryptoBase_lib.a lib/Sakaar-CryptoCode/libSakaar_CryptoCode_lib.a lib/Sakaar-HashCode/libSakaar_HashCode_lib.a lib/Sakaar-NetWork/libSakaar_Network_lib.a lib/Sakaar-Struct/libSakaar_Struct_lib.a lib/Sakaar-Memory/libSakaar_Memory_lib.a || lib/Sakaar-CryptoBase/libSakaar_CryptoBase_lib.a lib/Sakaar-CryptoCode/libSakaar_CryptoCode_lib.a lib/Sakaar-HashCode/libSakaar_HashCode_lib.a lib/Sakaar-Memory/libSakaar_Memory_lib.a lib/Sakaar-NetWork/libSakaar_Network_lib.a lib/Sakaar-Struct/libSakaar_Struct_lib.a lib/Sakaar/libSakaar_lib.a libSakaar_SmartContract_lib.a
+build Sakaar_SmartContract: C_EXECUTABLE_LINKER__Sakaar_SmartContract_Debug CMakeFiles/Sakaar_SmartContract.dir/main.c.o | libSakaar_SmartContract_lib.a lib/Sakaar-CryptoBase/libSakaar_CryptoBase_lib.a lib/Sakaar-CryptoCode/libSakaar_CryptoCode_lib.a lib/Sakaar-HashCode/libSakaar_HashCode_lib.a lib/Sakaar-NetWork/libSakaar_Network_lib.a lib/Sakaar-Struct/libSakaar_Struct_lib.a lib/Sakaar-Memory/libSakaar_Memory_lib.a || lib/Sakaar-CryptoBase/libSakaar_CryptoBase_lib.a lib/Sakaar-CryptoCode/libSakaar_CryptoCode_lib.a lib/Sakaar-HashCode/libSakaar_HashCode_lib.a lib/Sakaar-Memory/libSakaar_Memory_lib.a lib/Sakaar-NetWork/libSakaar_Network_lib.a lib/Sakaar-Struct/libSakaar_Struct_lib.a libSakaar_SmartContract_lib.a
   FLAGS = -g
-  LINK_LIBRARIES = -Wl,-rpath,/home/stiveman1/CLionProjects/Sakaar-SmartContract/lib/Sakaar-Memory:/home/stiveman1/CLionProjects/Sakaar-SmartContract/lib/Sakaar-Struct:/home/stiveman1/CLionProjects/Sakaar-SmartContract/lib/Sakaar-CryptoCode:/home/stiveman1/CLionProjects/Sakaar-SmartContract/lib/Sakaar-HashCode:/home/stiveman1/CLionProjects/Sakaar-SmartContract/lib/Sakaar-CryptoBase:/home/stiveman1/CLionProjects/Sakaar-SmartContract/lib/Sakaar-NetWork:/home/stiveman1/CLionProjects/Sakaar-SmartContract/lib/Sakaar  libSakaar_SmartContract_lib.a  -lSakaar_Ecc_lib  lib/Sakaar/libSakaar_lib.a  lib/Sakaar-CryptoBase/libSakaar_CryptoBase_lib.a  lib/Sakaar-CryptoCode/libSakaar_CryptoCode_lib.a  lib/Sakaar-HashCode/libSakaar_HashCode_lib.a  lib/Sakaar-NetWork/libSakaar_Network_lib.a  lib/Sakaar-Struct/libSakaar_Struct_lib.a  lib/Sakaar-Memory/libSakaar_Memory_lib.a  -lgmp  -lgmpxx
-  LINK_PATH = -L/home/stiveman1/CLionProjects/Sakaar-SmartContract/lib/Sakaar-Memory   -L/home/stiveman1/CLionProjects/Sakaar-SmartContract/lib/Sakaar-Struct   -L/home/stiveman1/CLionProjects/Sakaar-SmartContract/lib/Sakaar-CryptoCode   -L/home/stiveman1/CLionProjects/Sakaar-SmartContract/lib/Sakaar-HashCode   -L/home/stiveman1/CLionProjects/Sakaar-SmartContract/lib/Sakaar-CryptoBase   -L/home/stiveman1/CLionProjects/Sakaar-SmartContract/lib/Sakaar-NetWork   -L/home/stiveman1/CLionProjects/Sakaar-SmartContract/lib/Sakaar
+  LINK_LIBRARIES = -Wl,-rpath,/home/stiveman1/CLionProjects/Sakaar-SmartContract/lib/Sakaar-Memory:/home/stiveman1/CLionProjects/Sakaar-SmartContract/lib/Sakaar-Struct:/home/stiveman1/CLionProjects/Sakaar-SmartContract/lib/Sakaar-CryptoCode:/home/stiveman1/CLionProjects/Sakaar-SmartContract/lib/Sakaar-HashCode:/home/stiveman1/CLionProjects/Sakaar-SmartContract/lib/Sakaar-CryptoBase:/home/stiveman1/CLionProjects/Sakaar-SmartContract/lib/Sakaar-NetWork  libSakaar_SmartContract_lib.a  lib/Sakaar-CryptoBase/libSakaar_CryptoBase_lib.a  lib/Sakaar-CryptoCode/libSakaar_CryptoCode_lib.a  lib/Sakaar-HashCode/libSakaar_HashCode_lib.a  lib/Sakaar-NetWork/libSakaar_Network_lib.a  lib/Sakaar-Struct/libSakaar_Struct_lib.a  lib/Sakaar-Memory/libSakaar_Memory_lib.a  -lgmp  -lgmpxx
+  LINK_PATH = -L/home/stiveman1/CLionProjects/Sakaar-SmartContract/lib/Sakaar-Memory   -L/home/stiveman1/CLionProjects/Sakaar-SmartContract/lib/Sakaar-Struct   -L/home/stiveman1/CLionProjects/Sakaar-SmartContract/lib/Sakaar-CryptoCode   -L/home/stiveman1/CLionProjects/Sakaar-SmartContract/lib/Sakaar-HashCode   -L/home/stiveman1/CLionProjects/Sakaar-SmartContract/lib/Sakaar-CryptoBase   -L/home/stiveman1/CLionProjects/Sakaar-SmartContract/lib/Sakaar-NetWork
   OBJECT_DIR = CMakeFiles/Sakaar_SmartContract.dir
   POST_BUILD = :
   PRE_LINK = :
@@ -966,278 +966,7 @@ build lib/Sakaar-NetWork/CMakeFiles/rebuild_cache.util: CUSTOM_COMMAND
 build lib/Sakaar-NetWork/rebuild_cache: phony lib/Sakaar-NetWork/CMakeFiles/rebuild_cache.util
 
 # =============================================================================
-# Write statements declared in CMakeLists.txt:
-# /home/stiveman1/CLionProjects/Sakaar-SmartContract/CMakeLists.txt
-# =============================================================================
-
-# =============================================================================
-# Object build statements for STATIC_LIBRARY target Sakaar_lib
-
-
-#############################################
-# Order-only phony target for Sakaar_lib
-
-build cmake_object_order_depends_target_Sakaar_lib: phony || cmake_object_order_depends_target_Sakaar_CryptoBase_lib cmake_object_order_depends_target_Sakaar_CryptoCode_lib cmake_object_order_depends_target_Sakaar_HashCode_lib cmake_object_order_depends_target_Sakaar_Memory_lib cmake_object_order_depends_target_Sakaar_Network_lib cmake_object_order_depends_target_Sakaar_Struct_lib
-
-build lib/Sakaar/CMakeFiles/Sakaar_lib.dir/src/sakaar/account.c.o: C_COMPILER__Sakaar_lib_Debug /home/stiveman1/CLionProjects/Sakaar-SmartContract/lib/Sakaar/src/sakaar/account.c || cmake_object_order_depends_target_Sakaar_lib
-  DEP_FILE = lib/Sakaar/CMakeFiles/Sakaar_lib.dir/src/sakaar/account.c.o.d
-  FLAGS = -g -fdiagnostics-color=always -std=gnu99
-  INCLUDES = -I/home/stiveman1/CLionProjects/Sakaar-SmartContract/lib/Sakaar/include -I/home/stiveman1/CLionProjects/Sakaar-SmartContract/lib/Sakaar/src -I/home/stiveman1/CLionProjects/Sakaar-SmartContract/lib/Sakaar-Struct/include -I/home/stiveman1/CLionProjects/Sakaar-SmartContract/lib/Sakaar-Memory/include -I/home/stiveman1/CLionProjects/Sakaar-SmartContract/lib/Sakaar-CryptoBase/include -I/home/stiveman1/CLionProjects/Sakaar-SmartContract/lib/Sakaar-CryptoCode/include -I/home/stiveman1/CLionProjects/Sakaar-SmartContract/lib/Sakaar-HashCode/include -I/home/stiveman1/CLionProjects/Sakaar-SmartContract/lib/Sakaar-NetWork/include
-  OBJECT_DIR = lib/Sakaar/CMakeFiles/Sakaar_lib.dir
-  OBJECT_FILE_DIR = lib/Sakaar/CMakeFiles/Sakaar_lib.dir/src/sakaar
-
-build lib/Sakaar/CMakeFiles/Sakaar_lib.dir/src/sakaar/account_connections.c.o: C_COMPILER__Sakaar_lib_Debug /home/stiveman1/CLionProjects/Sakaar-SmartContract/lib/Sakaar/src/sakaar/account_connections.c || cmake_object_order_depends_target_Sakaar_lib
-  DEP_FILE = lib/Sakaar/CMakeFiles/Sakaar_lib.dir/src/sakaar/account_connections.c.o.d
-  FLAGS = -g -fdiagnostics-color=always -std=gnu99
-  INCLUDES = -I/home/stiveman1/CLionProjects/Sakaar-SmartContract/lib/Sakaar/include -I/home/stiveman1/CLionProjects/Sakaar-SmartContract/lib/Sakaar/src -I/home/stiveman1/CLionProjects/Sakaar-SmartContract/lib/Sakaar-Struct/include -I/home/stiveman1/CLionProjects/Sakaar-SmartContract/lib/Sakaar-Memory/include -I/home/stiveman1/CLionProjects/Sakaar-SmartContract/lib/Sakaar-CryptoBase/include -I/home/stiveman1/CLionProjects/Sakaar-SmartContract/lib/Sakaar-CryptoCode/include -I/home/stiveman1/CLionProjects/Sakaar-SmartContract/lib/Sakaar-HashCode/include -I/home/stiveman1/CLionProjects/Sakaar-SmartContract/lib/Sakaar-NetWork/include
-  OBJECT_DIR = lib/Sakaar/CMakeFiles/Sakaar_lib.dir
-  OBJECT_FILE_DIR = lib/Sakaar/CMakeFiles/Sakaar_lib.dir/src/sakaar
-
-build lib/Sakaar/CMakeFiles/Sakaar_lib.dir/src/sakaar/activated_accounts.c.o: C_COMPILER__Sakaar_lib_Debug /home/stiveman1/CLionProjects/Sakaar-SmartContract/lib/Sakaar/src/sakaar/activated_accounts.c || cmake_object_order_depends_target_Sakaar_lib
-  DEP_FILE = lib/Sakaar/CMakeFiles/Sakaar_lib.dir/src/sakaar/activated_accounts.c.o.d
-  FLAGS = -g -fdiagnostics-color=always -std=gnu99
-  INCLUDES = -I/home/stiveman1/CLionProjects/Sakaar-SmartContract/lib/Sakaar/include -I/home/stiveman1/CLionProjects/Sakaar-SmartContract/lib/Sakaar/src -I/home/stiveman1/CLionProjects/Sakaar-SmartContract/lib/Sakaar-Struct/include -I/home/stiveman1/CLionProjects/Sakaar-SmartContract/lib/Sakaar-Memory/include -I/home/stiveman1/CLionProjects/Sakaar-SmartContract/lib/Sakaar-CryptoBase/include -I/home/stiveman1/CLionProjects/Sakaar-SmartContract/lib/Sakaar-CryptoCode/include -I/home/stiveman1/CLionProjects/Sakaar-SmartContract/lib/Sakaar-HashCode/include -I/home/stiveman1/CLionProjects/Sakaar-SmartContract/lib/Sakaar-NetWork/include
-  OBJECT_DIR = lib/Sakaar/CMakeFiles/Sakaar_lib.dir
-  OBJECT_FILE_DIR = lib/Sakaar/CMakeFiles/Sakaar_lib.dir/src/sakaar
-
-build lib/Sakaar/CMakeFiles/Sakaar_lib.dir/src/sakaar/block.c.o: C_COMPILER__Sakaar_lib_Debug /home/stiveman1/CLionProjects/Sakaar-SmartContract/lib/Sakaar/src/sakaar/block.c || cmake_object_order_depends_target_Sakaar_lib
-  DEP_FILE = lib/Sakaar/CMakeFiles/Sakaar_lib.dir/src/sakaar/block.c.o.d
-  FLAGS = -g -fdiagnostics-color=always -std=gnu99
-  INCLUDES = -I/home/stiveman1/CLionProjects/Sakaar-SmartContract/lib/Sakaar/include -I/home/stiveman1/CLionProjects/Sakaar-SmartContract/lib/Sakaar/src -I/home/stiveman1/CLionProjects/Sakaar-SmartContract/lib/Sakaar-Struct/include -I/home/stiveman1/CLionProjects/Sakaar-SmartContract/lib/Sakaar-Memory/include -I/home/stiveman1/CLionProjects/Sakaar-SmartContract/lib/Sakaar-CryptoBase/include -I/home/stiveman1/CLionProjects/Sakaar-SmartContract/lib/Sakaar-CryptoCode/include -I/home/stiveman1/CLionProjects/Sakaar-SmartContract/lib/Sakaar-HashCode/include -I/home/stiveman1/CLionProjects/Sakaar-SmartContract/lib/Sakaar-NetWork/include
-  OBJECT_DIR = lib/Sakaar/CMakeFiles/Sakaar_lib.dir
-  OBJECT_FILE_DIR = lib/Sakaar/CMakeFiles/Sakaar_lib.dir/src/sakaar
-
-build lib/Sakaar/CMakeFiles/Sakaar_lib.dir/src/sakaar/block_check.c.o: C_COMPILER__Sakaar_lib_Debug /home/stiveman1/CLionProjects/Sakaar-SmartContract/lib/Sakaar/src/sakaar/block_check.c || cmake_object_order_depends_target_Sakaar_lib
-  DEP_FILE = lib/Sakaar/CMakeFiles/Sakaar_lib.dir/src/sakaar/block_check.c.o.d
-  FLAGS = -g -fdiagnostics-color=always -std=gnu99
-  INCLUDES = -I/home/stiveman1/CLionProjects/Sakaar-SmartContract/lib/Sakaar/include -I/home/stiveman1/CLionProjects/Sakaar-SmartContract/lib/Sakaar/src -I/home/stiveman1/CLionProjects/Sakaar-SmartContract/lib/Sakaar-Struct/include -I/home/stiveman1/CLionProjects/Sakaar-SmartContract/lib/Sakaar-Memory/include -I/home/stiveman1/CLionProjects/Sakaar-SmartContract/lib/Sakaar-CryptoBase/include -I/home/stiveman1/CLionProjects/Sakaar-SmartContract/lib/Sakaar-CryptoCode/include -I/home/stiveman1/CLionProjects/Sakaar-SmartContract/lib/Sakaar-HashCode/include -I/home/stiveman1/CLionProjects/Sakaar-SmartContract/lib/Sakaar-NetWork/include
-  OBJECT_DIR = lib/Sakaar/CMakeFiles/Sakaar_lib.dir
-  OBJECT_FILE_DIR = lib/Sakaar/CMakeFiles/Sakaar_lib.dir/src/sakaar
-
-build lib/Sakaar/CMakeFiles/Sakaar_lib.dir/src/sakaar/block_history.c.o: C_COMPILER__Sakaar_lib_Debug /home/stiveman1/CLionProjects/Sakaar-SmartContract/lib/Sakaar/src/sakaar/block_history.c || cmake_object_order_depends_target_Sakaar_lib
-  DEP_FILE = lib/Sakaar/CMakeFiles/Sakaar_lib.dir/src/sakaar/block_history.c.o.d
-  FLAGS = -g -fdiagnostics-color=always -std=gnu99
-  INCLUDES = -I/home/stiveman1/CLionProjects/Sakaar-SmartContract/lib/Sakaar/include -I/home/stiveman1/CLionProjects/Sakaar-SmartContract/lib/Sakaar/src -I/home/stiveman1/CLionProjects/Sakaar-SmartContract/lib/Sakaar-Struct/include -I/home/stiveman1/CLionProjects/Sakaar-SmartContract/lib/Sakaar-Memory/include -I/home/stiveman1/CLionProjects/Sakaar-SmartContract/lib/Sakaar-CryptoBase/include -I/home/stiveman1/CLionProjects/Sakaar-SmartContract/lib/Sakaar-CryptoCode/include -I/home/stiveman1/CLionProjects/Sakaar-SmartContract/lib/Sakaar-HashCode/include -I/home/stiveman1/CLionProjects/Sakaar-SmartContract/lib/Sakaar-NetWork/include
-  OBJECT_DIR = lib/Sakaar/CMakeFiles/Sakaar_lib.dir
-  OBJECT_FILE_DIR = lib/Sakaar/CMakeFiles/Sakaar_lib.dir/src/sakaar
-
-build lib/Sakaar/CMakeFiles/Sakaar_lib.dir/src/sakaar/block_smart.c.o: C_COMPILER__Sakaar_lib_Debug /home/stiveman1/CLionProjects/Sakaar-SmartContract/lib/Sakaar/src/sakaar/block_smart.c || cmake_object_order_depends_target_Sakaar_lib
-  DEP_FILE = lib/Sakaar/CMakeFiles/Sakaar_lib.dir/src/sakaar/block_smart.c.o.d
-  FLAGS = -g -fdiagnostics-color=always -std=gnu99
-  INCLUDES = -I/home/stiveman1/CLionProjects/Sakaar-SmartContract/lib/Sakaar/include -I/home/stiveman1/CLionProjects/Sakaar-SmartContract/lib/Sakaar/src -I/home/stiveman1/CLionProjects/Sakaar-SmartContract/lib/Sakaar-Struct/include -I/home/stiveman1/CLionProjects/Sakaar-SmartContract/lib/Sakaar-Memory/include -I/home/stiveman1/CLionProjects/Sakaar-SmartContract/lib/Sakaar-CryptoBase/include -I/home/stiveman1/CLionProjects/Sakaar-SmartContract/lib/Sakaar-CryptoCode/include -I/home/stiveman1/CLionProjects/Sakaar-SmartContract/lib/Sakaar-HashCode/include -I/home/stiveman1/CLionProjects/Sakaar-SmartContract/lib/Sakaar-NetWork/include
-  OBJECT_DIR = lib/Sakaar/CMakeFiles/Sakaar_lib.dir
-  OBJECT_FILE_DIR = lib/Sakaar/CMakeFiles/Sakaar_lib.dir/src/sakaar
-
-build lib/Sakaar/CMakeFiles/Sakaar_lib.dir/src/sakaar/config.c.o: C_COMPILER__Sakaar_lib_Debug /home/stiveman1/CLionProjects/Sakaar-SmartContract/lib/Sakaar/src/sakaar/config.c || cmake_object_order_depends_target_Sakaar_lib
-  DEP_FILE = lib/Sakaar/CMakeFiles/Sakaar_lib.dir/src/sakaar/config.c.o.d
-  FLAGS = -g -fdiagnostics-color=always -std=gnu99
-  INCLUDES = -I/home/stiveman1/CLionProjects/Sakaar-SmartContract/lib/Sakaar/include -I/home/stiveman1/CLionProjects/Sakaar-SmartContract/lib/Sakaar/src -I/home/stiveman1/CLionProjects/Sakaar-SmartContract/lib/Sakaar-Struct/include -I/home/stiveman1/CLionProjects/Sakaar-SmartContract/lib/Sakaar-Memory/include -I/home/stiveman1/CLionProjects/Sakaar-SmartContract/lib/Sakaar-CryptoBase/include -I/home/stiveman1/CLionProjects/Sakaar-SmartContract/lib/Sakaar-CryptoCode/include -I/home/stiveman1/CLionProjects/Sakaar-SmartContract/lib/Sakaar-HashCode/include -I/home/stiveman1/CLionProjects/Sakaar-SmartContract/lib/Sakaar-NetWork/include
-  OBJECT_DIR = lib/Sakaar/CMakeFiles/Sakaar_lib.dir
-  OBJECT_FILE_DIR = lib/Sakaar/CMakeFiles/Sakaar_lib.dir/src/sakaar
-
-build lib/Sakaar/CMakeFiles/Sakaar_lib.dir/src/sakaar/currency.c.o: C_COMPILER__Sakaar_lib_Debug /home/stiveman1/CLionProjects/Sakaar-SmartContract/lib/Sakaar/src/sakaar/currency.c || cmake_object_order_depends_target_Sakaar_lib
-  DEP_FILE = lib/Sakaar/CMakeFiles/Sakaar_lib.dir/src/sakaar/currency.c.o.d
-  FLAGS = -g -fdiagnostics-color=always -std=gnu99
-  INCLUDES = -I/home/stiveman1/CLionProjects/Sakaar-SmartContract/lib/Sakaar/include -I/home/stiveman1/CLionProjects/Sakaar-SmartContract/lib/Sakaar/src -I/home/stiveman1/CLionProjects/Sakaar-SmartContract/lib/Sakaar-Struct/include -I/home/stiveman1/CLionProjects/Sakaar-SmartContract/lib/Sakaar-Memory/include -I/home/stiveman1/CLionProjects/Sakaar-SmartContract/lib/Sakaar-CryptoBase/include -I/home/stiveman1/CLionProjects/Sakaar-SmartContract/lib/Sakaar-CryptoCode/include -I/home/stiveman1/CLionProjects/Sakaar-SmartContract/lib/Sakaar-HashCode/include -I/home/stiveman1/CLionProjects/Sakaar-SmartContract/lib/Sakaar-NetWork/include
-  OBJECT_DIR = lib/Sakaar/CMakeFiles/Sakaar_lib.dir
-  OBJECT_FILE_DIR = lib/Sakaar/CMakeFiles/Sakaar_lib.dir/src/sakaar
-
-build lib/Sakaar/CMakeFiles/Sakaar_lib.dir/src/sakaar/generation.c.o: C_COMPILER__Sakaar_lib_Debug /home/stiveman1/CLionProjects/Sakaar-SmartContract/lib/Sakaar/src/sakaar/generation.c || cmake_object_order_depends_target_Sakaar_lib
-  DEP_FILE = lib/Sakaar/CMakeFiles/Sakaar_lib.dir/src/sakaar/generation.c.o.d
-  FLAGS = -g -fdiagnostics-color=always -std=gnu99
-  INCLUDES = -I/home/stiveman1/CLionProjects/Sakaar-SmartContract/lib/Sakaar/include -I/home/stiveman1/CLionProjects/Sakaar-SmartContract/lib/Sakaar/src -I/home/stiveman1/CLionProjects/Sakaar-SmartContract/lib/Sakaar-Struct/include -I/home/stiveman1/CLionProjects/Sakaar-SmartContract/lib/Sakaar-Memory/include -I/home/stiveman1/CLionProjects/Sakaar-SmartContract/lib/Sakaar-CryptoBase/include -I/home/stiveman1/CLionProjects/Sakaar-SmartContract/lib/Sakaar-CryptoCode/include -I/home/stiveman1/CLionProjects/Sakaar-SmartContract/lib/Sakaar-HashCode/include -I/home/stiveman1/CLionProjects/Sakaar-SmartContract/lib/Sakaar-NetWork/include
-  OBJECT_DIR = lib/Sakaar/CMakeFiles/Sakaar_lib.dir
-  OBJECT_FILE_DIR = lib/Sakaar/CMakeFiles/Sakaar_lib.dir/src/sakaar
-
-build lib/Sakaar/CMakeFiles/Sakaar_lib.dir/src/sakaar/pre_transaction.c.o: C_COMPILER__Sakaar_lib_Debug /home/stiveman1/CLionProjects/Sakaar-SmartContract/lib/Sakaar/src/sakaar/pre_transaction.c || cmake_object_order_depends_target_Sakaar_lib
-  DEP_FILE = lib/Sakaar/CMakeFiles/Sakaar_lib.dir/src/sakaar/pre_transaction.c.o.d
-  FLAGS = -g -fdiagnostics-color=always -std=gnu99
-  INCLUDES = -I/home/stiveman1/CLionProjects/Sakaar-SmartContract/lib/Sakaar/include -I/home/stiveman1/CLionProjects/Sakaar-SmartContract/lib/Sakaar/src -I/home/stiveman1/CLionProjects/Sakaar-SmartContract/lib/Sakaar-Struct/include -I/home/stiveman1/CLionProjects/Sakaar-SmartContract/lib/Sakaar-Memory/include -I/home/stiveman1/CLionProjects/Sakaar-SmartContract/lib/Sakaar-CryptoBase/include -I/home/stiveman1/CLionProjects/Sakaar-SmartContract/lib/Sakaar-CryptoCode/include -I/home/stiveman1/CLionProjects/Sakaar-SmartContract/lib/Sakaar-HashCode/include -I/home/stiveman1/CLionProjects/Sakaar-SmartContract/lib/Sakaar-NetWork/include
-  OBJECT_DIR = lib/Sakaar/CMakeFiles/Sakaar_lib.dir
-  OBJECT_FILE_DIR = lib/Sakaar/CMakeFiles/Sakaar_lib.dir/src/sakaar
-
-build lib/Sakaar/CMakeFiles/Sakaar_lib.dir/src/sakaar/transaction.c.o: C_COMPILER__Sakaar_lib_Debug /home/stiveman1/CLionProjects/Sakaar-SmartContract/lib/Sakaar/src/sakaar/transaction.c || cmake_object_order_depends_target_Sakaar_lib
-  DEP_FILE = lib/Sakaar/CMakeFiles/Sakaar_lib.dir/src/sakaar/transaction.c.o.d
-  FLAGS = -g -fdiagnostics-color=always -std=gnu99
-  INCLUDES = -I/home/stiveman1/CLionProjects/Sakaar-SmartContract/lib/Sakaar/include -I/home/stiveman1/CLionProjects/Sakaar-SmartContract/lib/Sakaar/src -I/home/stiveman1/CLionProjects/Sakaar-SmartContract/lib/Sakaar-Struct/include -I/home/stiveman1/CLionProjects/Sakaar-SmartContract/lib/Sakaar-Memory/include -I/home/stiveman1/CLionProjects/Sakaar-SmartContract/lib/Sakaar-CryptoBase/include -I/home/stiveman1/CLionProjects/Sakaar-SmartContract/lib/Sakaar-CryptoCode/include -I/home/stiveman1/CLionProjects/Sakaar-SmartContract/lib/Sakaar-HashCode/include -I/home/stiveman1/CLionProjects/Sakaar-SmartContract/lib/Sakaar-NetWork/include
-  OBJECT_DIR = lib/Sakaar/CMakeFiles/Sakaar_lib.dir
-  OBJECT_FILE_DIR = lib/Sakaar/CMakeFiles/Sakaar_lib.dir/src/sakaar
-
-build lib/Sakaar/CMakeFiles/Sakaar_lib.dir/src/sakaar/wallet.c.o: C_COMPILER__Sakaar_lib_Debug /home/stiveman1/CLionProjects/Sakaar-SmartContract/lib/Sakaar/src/sakaar/wallet.c || cmake_object_order_depends_target_Sakaar_lib
-  DEP_FILE = lib/Sakaar/CMakeFiles/Sakaar_lib.dir/src/sakaar/wallet.c.o.d
-  FLAGS = -g -fdiagnostics-color=always -std=gnu99
-  INCLUDES = -I/home/stiveman1/CLionProjects/Sakaar-SmartContract/lib/Sakaar/include -I/home/stiveman1/CLionProjects/Sakaar-SmartContract/lib/Sakaar/src -I/home/stiveman1/CLionProjects/Sakaar-SmartContract/lib/Sakaar-Struct/include -I/home/stiveman1/CLionProjects/Sakaar-SmartContract/lib/Sakaar-Memory/include -I/home/stiveman1/CLionProjects/Sakaar-SmartContract/lib/Sakaar-CryptoBase/include -I/home/stiveman1/CLionProjects/Sakaar-SmartContract/lib/Sakaar-CryptoCode/include -I/home/stiveman1/CLionProjects/Sakaar-SmartContract/lib/Sakaar-HashCode/include -I/home/stiveman1/CLionProjects/Sakaar-SmartContract/lib/Sakaar-NetWork/include
-  OBJECT_DIR = lib/Sakaar/CMakeFiles/Sakaar_lib.dir
-  OBJECT_FILE_DIR = lib/Sakaar/CMakeFiles/Sakaar_lib.dir/src/sakaar
-
-build lib/Sakaar/CMakeFiles/Sakaar_lib.dir/src/sakaar/wallet_data.c.o: C_COMPILER__Sakaar_lib_Debug /home/stiveman1/CLionProjects/Sakaar-SmartContract/lib/Sakaar/src/sakaar/wallet_data.c || cmake_object_order_depends_target_Sakaar_lib
-  DEP_FILE = lib/Sakaar/CMakeFiles/Sakaar_lib.dir/src/sakaar/wallet_data.c.o.d
-  FLAGS = -g -fdiagnostics-color=always -std=gnu99
-  INCLUDES = -I/home/stiveman1/CLionProjects/Sakaar-SmartContract/lib/Sakaar/include -I/home/stiveman1/CLionProjects/Sakaar-SmartContract/lib/Sakaar/src -I/home/stiveman1/CLionProjects/Sakaar-SmartContract/lib/Sakaar-Struct/include -I/home/stiveman1/CLionProjects/Sakaar-SmartContract/lib/Sakaar-Memory/include -I/home/stiveman1/CLionProjects/Sakaar-SmartContract/lib/Sakaar-CryptoBase/include -I/home/stiveman1/CLionProjects/Sakaar-SmartContract/lib/Sakaar-CryptoCode/include -I/home/stiveman1/CLionProjects/Sakaar-SmartContract/lib/Sakaar-HashCode/include -I/home/stiveman1/CLionProjects/Sakaar-SmartContract/lib/Sakaar-NetWork/include
-  OBJECT_DIR = lib/Sakaar/CMakeFiles/Sakaar_lib.dir
-  OBJECT_FILE_DIR = lib/Sakaar/CMakeFiles/Sakaar_lib.dir/src/sakaar
-
-build lib/Sakaar/CMakeFiles/Sakaar_lib.dir/src/sakaar/wallet_smart.c.o: C_COMPILER__Sakaar_lib_Debug /home/stiveman1/CLionProjects/Sakaar-SmartContract/lib/Sakaar/src/sakaar/wallet_smart.c || cmake_object_order_depends_target_Sakaar_lib
-  DEP_FILE = lib/Sakaar/CMakeFiles/Sakaar_lib.dir/src/sakaar/wallet_smart.c.o.d
-  FLAGS = -g -fdiagnostics-color=always -std=gnu99
-  INCLUDES = -I/home/stiveman1/CLionProjects/Sakaar-SmartContract/lib/Sakaar/include -I/home/stiveman1/CLionProjects/Sakaar-SmartContract/lib/Sakaar/src -I/home/stiveman1/CLionProjects/Sakaar-SmartContract/lib/Sakaar-Struct/include -I/home/stiveman1/CLionProjects/Sakaar-SmartContract/lib/Sakaar-Memory/include -I/home/stiveman1/CLionProjects/Sakaar-SmartContract/lib/Sakaar-CryptoBase/include -I/home/stiveman1/CLionProjects/Sakaar-SmartContract/lib/Sakaar-CryptoCode/include -I/home/stiveman1/CLionProjects/Sakaar-SmartContract/lib/Sakaar-HashCode/include -I/home/stiveman1/CLionProjects/Sakaar-SmartContract/lib/Sakaar-NetWork/include
-  OBJECT_DIR = lib/Sakaar/CMakeFiles/Sakaar_lib.dir
-  OBJECT_FILE_DIR = lib/Sakaar/CMakeFiles/Sakaar_lib.dir/src/sakaar
-
-build lib/Sakaar/CMakeFiles/Sakaar_lib.dir/src/sakaar/block_smart/account_activate.c.o: C_COMPILER__Sakaar_lib_Debug /home/stiveman1/CLionProjects/Sakaar-SmartContract/lib/Sakaar/src/sakaar/block_smart/account_activate.c || cmake_object_order_depends_target_Sakaar_lib
-  DEP_FILE = lib/Sakaar/CMakeFiles/Sakaar_lib.dir/src/sakaar/block_smart/account_activate.c.o.d
-  FLAGS = -g -fdiagnostics-color=always -std=gnu99
-  INCLUDES = -I/home/stiveman1/CLionProjects/Sakaar-SmartContract/lib/Sakaar/include -I/home/stiveman1/CLionProjects/Sakaar-SmartContract/lib/Sakaar/src -I/home/stiveman1/CLionProjects/Sakaar-SmartContract/lib/Sakaar-Struct/include -I/home/stiveman1/CLionProjects/Sakaar-SmartContract/lib/Sakaar-Memory/include -I/home/stiveman1/CLionProjects/Sakaar-SmartContract/lib/Sakaar-CryptoBase/include -I/home/stiveman1/CLionProjects/Sakaar-SmartContract/lib/Sakaar-CryptoCode/include -I/home/stiveman1/CLionProjects/Sakaar-SmartContract/lib/Sakaar-HashCode/include -I/home/stiveman1/CLionProjects/Sakaar-SmartContract/lib/Sakaar-NetWork/include
-  OBJECT_DIR = lib/Sakaar/CMakeFiles/Sakaar_lib.dir
-  OBJECT_FILE_DIR = lib/Sakaar/CMakeFiles/Sakaar_lib.dir/src/sakaar/block_smart
-
-build lib/Sakaar/CMakeFiles/Sakaar_lib.dir/src/sakaar/block_smart/account_create.c.o: C_COMPILER__Sakaar_lib_Debug /home/stiveman1/CLionProjects/Sakaar-SmartContract/lib/Sakaar/src/sakaar/block_smart/account_create.c || cmake_object_order_depends_target_Sakaar_lib
-  DEP_FILE = lib/Sakaar/CMakeFiles/Sakaar_lib.dir/src/sakaar/block_smart/account_create.c.o.d
-  FLAGS = -g -fdiagnostics-color=always -std=gnu99
-  INCLUDES = -I/home/stiveman1/CLionProjects/Sakaar-SmartContract/lib/Sakaar/include -I/home/stiveman1/CLionProjects/Sakaar-SmartContract/lib/Sakaar/src -I/home/stiveman1/CLionProjects/Sakaar-SmartContract/lib/Sakaar-Struct/include -I/home/stiveman1/CLionProjects/Sakaar-SmartContract/lib/Sakaar-Memory/include -I/home/stiveman1/CLionProjects/Sakaar-SmartContract/lib/Sakaar-CryptoBase/include -I/home/stiveman1/CLionProjects/Sakaar-SmartContract/lib/Sakaar-CryptoCode/include -I/home/stiveman1/CLionProjects/Sakaar-SmartContract/lib/Sakaar-HashCode/include -I/home/stiveman1/CLionProjects/Sakaar-SmartContract/lib/Sakaar-NetWork/include
-  OBJECT_DIR = lib/Sakaar/CMakeFiles/Sakaar_lib.dir
-  OBJECT_FILE_DIR = lib/Sakaar/CMakeFiles/Sakaar_lib.dir/src/sakaar/block_smart
-
-build lib/Sakaar/CMakeFiles/Sakaar_lib.dir/src/sakaar/block_smart/account_deactivate.c.o: C_COMPILER__Sakaar_lib_Debug /home/stiveman1/CLionProjects/Sakaar-SmartContract/lib/Sakaar/src/sakaar/block_smart/account_deactivate.c || cmake_object_order_depends_target_Sakaar_lib
-  DEP_FILE = lib/Sakaar/CMakeFiles/Sakaar_lib.dir/src/sakaar/block_smart/account_deactivate.c.o.d
-  FLAGS = -g -fdiagnostics-color=always -std=gnu99
-  INCLUDES = -I/home/stiveman1/CLionProjects/Sakaar-SmartContract/lib/Sakaar/include -I/home/stiveman1/CLionProjects/Sakaar-SmartContract/lib/Sakaar/src -I/home/stiveman1/CLionProjects/Sakaar-SmartContract/lib/Sakaar-Struct/include -I/home/stiveman1/CLionProjects/Sakaar-SmartContract/lib/Sakaar-Memory/include -I/home/stiveman1/CLionProjects/Sakaar-SmartContract/lib/Sakaar-CryptoBase/include -I/home/stiveman1/CLionProjects/Sakaar-SmartContract/lib/Sakaar-CryptoCode/include -I/home/stiveman1/CLionProjects/Sakaar-SmartContract/lib/Sakaar-HashCode/include -I/home/stiveman1/CLionProjects/Sakaar-SmartContract/lib/Sakaar-NetWork/include
-  OBJECT_DIR = lib/Sakaar/CMakeFiles/Sakaar_lib.dir
-  OBJECT_FILE_DIR = lib/Sakaar/CMakeFiles/Sakaar_lib.dir/src/sakaar/block_smart
-
-build lib/Sakaar/CMakeFiles/Sakaar_lib.dir/src/sakaar/block_smart/account_freeze.c.o: C_COMPILER__Sakaar_lib_Debug /home/stiveman1/CLionProjects/Sakaar-SmartContract/lib/Sakaar/src/sakaar/block_smart/account_freeze.c || cmake_object_order_depends_target_Sakaar_lib
-  DEP_FILE = lib/Sakaar/CMakeFiles/Sakaar_lib.dir/src/sakaar/block_smart/account_freeze.c.o.d
-  FLAGS = -g -fdiagnostics-color=always -std=gnu99
-  INCLUDES = -I/home/stiveman1/CLionProjects/Sakaar-SmartContract/lib/Sakaar/include -I/home/stiveman1/CLionProjects/Sakaar-SmartContract/lib/Sakaar/src -I/home/stiveman1/CLionProjects/Sakaar-SmartContract/lib/Sakaar-Struct/include -I/home/stiveman1/CLionProjects/Sakaar-SmartContract/lib/Sakaar-Memory/include -I/home/stiveman1/CLionProjects/Sakaar-SmartContract/lib/Sakaar-CryptoBase/include -I/home/stiveman1/CLionProjects/Sakaar-SmartContract/lib/Sakaar-CryptoCode/include -I/home/stiveman1/CLionProjects/Sakaar-SmartContract/lib/Sakaar-HashCode/include -I/home/stiveman1/CLionProjects/Sakaar-SmartContract/lib/Sakaar-NetWork/include
-  OBJECT_DIR = lib/Sakaar/CMakeFiles/Sakaar_lib.dir
-  OBJECT_FILE_DIR = lib/Sakaar/CMakeFiles/Sakaar_lib.dir/src/sakaar/block_smart
-
-build lib/Sakaar/CMakeFiles/Sakaar_lib.dir/src/sakaar/block_smart/currency_create.c.o: C_COMPILER__Sakaar_lib_Debug /home/stiveman1/CLionProjects/Sakaar-SmartContract/lib/Sakaar/src/sakaar/block_smart/currency_create.c || cmake_object_order_depends_target_Sakaar_lib
-  DEP_FILE = lib/Sakaar/CMakeFiles/Sakaar_lib.dir/src/sakaar/block_smart/currency_create.c.o.d
-  FLAGS = -g -fdiagnostics-color=always -std=gnu99
-  INCLUDES = -I/home/stiveman1/CLionProjects/Sakaar-SmartContract/lib/Sakaar/include -I/home/stiveman1/CLionProjects/Sakaar-SmartContract/lib/Sakaar/src -I/home/stiveman1/CLionProjects/Sakaar-SmartContract/lib/Sakaar-Struct/include -I/home/stiveman1/CLionProjects/Sakaar-SmartContract/lib/Sakaar-Memory/include -I/home/stiveman1/CLionProjects/Sakaar-SmartContract/lib/Sakaar-CryptoBase/include -I/home/stiveman1/CLionProjects/Sakaar-SmartContract/lib/Sakaar-CryptoCode/include -I/home/stiveman1/CLionProjects/Sakaar-SmartContract/lib/Sakaar-HashCode/include -I/home/stiveman1/CLionProjects/Sakaar-SmartContract/lib/Sakaar-NetWork/include
-  OBJECT_DIR = lib/Sakaar/CMakeFiles/Sakaar_lib.dir
-  OBJECT_FILE_DIR = lib/Sakaar/CMakeFiles/Sakaar_lib.dir/src/sakaar/block_smart
-
-build lib/Sakaar/CMakeFiles/Sakaar_lib.dir/src/sakaar/block_smart/wallet_connect.c.o: C_COMPILER__Sakaar_lib_Debug /home/stiveman1/CLionProjects/Sakaar-SmartContract/lib/Sakaar/src/sakaar/block_smart/wallet_connect.c || cmake_object_order_depends_target_Sakaar_lib
-  DEP_FILE = lib/Sakaar/CMakeFiles/Sakaar_lib.dir/src/sakaar/block_smart/wallet_connect.c.o.d
-  FLAGS = -g -fdiagnostics-color=always -std=gnu99
-  INCLUDES = -I/home/stiveman1/CLionProjects/Sakaar-SmartContract/lib/Sakaar/include -I/home/stiveman1/CLionProjects/Sakaar-SmartContract/lib/Sakaar/src -I/home/stiveman1/CLionProjects/Sakaar-SmartContract/lib/Sakaar-Struct/include -I/home/stiveman1/CLionProjects/Sakaar-SmartContract/lib/Sakaar-Memory/include -I/home/stiveman1/CLionProjects/Sakaar-SmartContract/lib/Sakaar-CryptoBase/include -I/home/stiveman1/CLionProjects/Sakaar-SmartContract/lib/Sakaar-CryptoCode/include -I/home/stiveman1/CLionProjects/Sakaar-SmartContract/lib/Sakaar-HashCode/include -I/home/stiveman1/CLionProjects/Sakaar-SmartContract/lib/Sakaar-NetWork/include
-  OBJECT_DIR = lib/Sakaar/CMakeFiles/Sakaar_lib.dir
-  OBJECT_FILE_DIR = lib/Sakaar/CMakeFiles/Sakaar_lib.dir/src/sakaar/block_smart
-
-build lib/Sakaar/CMakeFiles/Sakaar_lib.dir/src/sakaar/block_smart/wallet_disconnect.c.o: C_COMPILER__Sakaar_lib_Debug /home/stiveman1/CLionProjects/Sakaar-SmartContract/lib/Sakaar/src/sakaar/block_smart/wallet_disconnect.c || cmake_object_order_depends_target_Sakaar_lib
-  DEP_FILE = lib/Sakaar/CMakeFiles/Sakaar_lib.dir/src/sakaar/block_smart/wallet_disconnect.c.o.d
-  FLAGS = -g -fdiagnostics-color=always -std=gnu99
-  INCLUDES = -I/home/stiveman1/CLionProjects/Sakaar-SmartContract/lib/Sakaar/include -I/home/stiveman1/CLionProjects/Sakaar-SmartContract/lib/Sakaar/src -I/home/stiveman1/CLionProjects/Sakaar-SmartContract/lib/Sakaar-Struct/include -I/home/stiveman1/CLionProjects/Sakaar-SmartContract/lib/Sakaar-Memory/include -I/home/stiveman1/CLionProjects/Sakaar-SmartContract/lib/Sakaar-CryptoBase/include -I/home/stiveman1/CLionProjects/Sakaar-SmartContract/lib/Sakaar-CryptoCode/include -I/home/stiveman1/CLionProjects/Sakaar-SmartContract/lib/Sakaar-HashCode/include -I/home/stiveman1/CLionProjects/Sakaar-SmartContract/lib/Sakaar-NetWork/include
-  OBJECT_DIR = lib/Sakaar/CMakeFiles/Sakaar_lib.dir
-  OBJECT_FILE_DIR = lib/Sakaar/CMakeFiles/Sakaar_lib.dir/src/sakaar/block_smart
-
-build lib/Sakaar/CMakeFiles/Sakaar_lib.dir/src/sakaar/generation/account_username.c.o: C_COMPILER__Sakaar_lib_Debug /home/stiveman1/CLionProjects/Sakaar-SmartContract/lib/Sakaar/src/sakaar/generation/account_username.c || cmake_object_order_depends_target_Sakaar_lib
-  DEP_FILE = lib/Sakaar/CMakeFiles/Sakaar_lib.dir/src/sakaar/generation/account_username.c.o.d
-  FLAGS = -g -fdiagnostics-color=always -std=gnu99
-  INCLUDES = -I/home/stiveman1/CLionProjects/Sakaar-SmartContract/lib/Sakaar/include -I/home/stiveman1/CLionProjects/Sakaar-SmartContract/lib/Sakaar/src -I/home/stiveman1/CLionProjects/Sakaar-SmartContract/lib/Sakaar-Struct/include -I/home/stiveman1/CLionProjects/Sakaar-SmartContract/lib/Sakaar-Memory/include -I/home/stiveman1/CLionProjects/Sakaar-SmartContract/lib/Sakaar-CryptoBase/include -I/home/stiveman1/CLionProjects/Sakaar-SmartContract/lib/Sakaar-CryptoCode/include -I/home/stiveman1/CLionProjects/Sakaar-SmartContract/lib/Sakaar-HashCode/include -I/home/stiveman1/CLionProjects/Sakaar-SmartContract/lib/Sakaar-NetWork/include
-  OBJECT_DIR = lib/Sakaar/CMakeFiles/Sakaar_lib.dir
-  OBJECT_FILE_DIR = lib/Sakaar/CMakeFiles/Sakaar_lib.dir/src/sakaar/generation
-
-build lib/Sakaar/CMakeFiles/Sakaar_lib.dir/src/sakaar/generation/block_create.c.o: C_COMPILER__Sakaar_lib_Debug /home/stiveman1/CLionProjects/Sakaar-SmartContract/lib/Sakaar/src/sakaar/generation/block_create.c || cmake_object_order_depends_target_Sakaar_lib
-  DEP_FILE = lib/Sakaar/CMakeFiles/Sakaar_lib.dir/src/sakaar/generation/block_create.c.o.d
-  FLAGS = -g -fdiagnostics-color=always -std=gnu99
-  INCLUDES = -I/home/stiveman1/CLionProjects/Sakaar-SmartContract/lib/Sakaar/include -I/home/stiveman1/CLionProjects/Sakaar-SmartContract/lib/Sakaar/src -I/home/stiveman1/CLionProjects/Sakaar-SmartContract/lib/Sakaar-Struct/include -I/home/stiveman1/CLionProjects/Sakaar-SmartContract/lib/Sakaar-Memory/include -I/home/stiveman1/CLionProjects/Sakaar-SmartContract/lib/Sakaar-CryptoBase/include -I/home/stiveman1/CLionProjects/Sakaar-SmartContract/lib/Sakaar-CryptoCode/include -I/home/stiveman1/CLionProjects/Sakaar-SmartContract/lib/Sakaar-HashCode/include -I/home/stiveman1/CLionProjects/Sakaar-SmartContract/lib/Sakaar-NetWork/include
-  OBJECT_DIR = lib/Sakaar/CMakeFiles/Sakaar_lib.dir
-  OBJECT_FILE_DIR = lib/Sakaar/CMakeFiles/Sakaar_lib.dir/src/sakaar/generation
-
-build lib/Sakaar/CMakeFiles/Sakaar_lib.dir/src/sakaar/generation/block_result.c.o: C_COMPILER__Sakaar_lib_Debug /home/stiveman1/CLionProjects/Sakaar-SmartContract/lib/Sakaar/src/sakaar/generation/block_result.c || cmake_object_order_depends_target_Sakaar_lib
-  DEP_FILE = lib/Sakaar/CMakeFiles/Sakaar_lib.dir/src/sakaar/generation/block_result.c.o.d
-  FLAGS = -g -fdiagnostics-color=always -std=gnu99
-  INCLUDES = -I/home/stiveman1/CLionProjects/Sakaar-SmartContract/lib/Sakaar/include -I/home/stiveman1/CLionProjects/Sakaar-SmartContract/lib/Sakaar/src -I/home/stiveman1/CLionProjects/Sakaar-SmartContract/lib/Sakaar-Struct/include -I/home/stiveman1/CLionProjects/Sakaar-SmartContract/lib/Sakaar-Memory/include -I/home/stiveman1/CLionProjects/Sakaar-SmartContract/lib/Sakaar-CryptoBase/include -I/home/stiveman1/CLionProjects/Sakaar-SmartContract/lib/Sakaar-CryptoCode/include -I/home/stiveman1/CLionProjects/Sakaar-SmartContract/lib/Sakaar-HashCode/include -I/home/stiveman1/CLionProjects/Sakaar-SmartContract/lib/Sakaar-NetWork/include
-  OBJECT_DIR = lib/Sakaar/CMakeFiles/Sakaar_lib.dir
-  OBJECT_FILE_DIR = lib/Sakaar/CMakeFiles/Sakaar_lib.dir/src/sakaar/generation
-
-build lib/Sakaar/CMakeFiles/Sakaar_lib.dir/src/sakaar/generation/wallet_create.c.o: C_COMPILER__Sakaar_lib_Debug /home/stiveman1/CLionProjects/Sakaar-SmartContract/lib/Sakaar/src/sakaar/generation/wallet_create.c || cmake_object_order_depends_target_Sakaar_lib
-  DEP_FILE = lib/Sakaar/CMakeFiles/Sakaar_lib.dir/src/sakaar/generation/wallet_create.c.o.d
-  FLAGS = -g -fdiagnostics-color=always -std=gnu99
-  INCLUDES = -I/home/stiveman1/CLionProjects/Sakaar-SmartContract/lib/Sakaar/include -I/home/stiveman1/CLionProjects/Sakaar-SmartContract/lib/Sakaar/src -I/home/stiveman1/CLionProjects/Sakaar-SmartContract/lib/Sakaar-Struct/include -I/home/stiveman1/CLionProjects/Sakaar-SmartContract/lib/Sakaar-Memory/include -I/home/stiveman1/CLionProjects/Sakaar-SmartContract/lib/Sakaar-CryptoBase/include -I/home/stiveman1/CLionProjects/Sakaar-SmartContract/lib/Sakaar-CryptoCode/include -I/home/stiveman1/CLionProjects/Sakaar-SmartContract/lib/Sakaar-HashCode/include -I/home/stiveman1/CLionProjects/Sakaar-SmartContract/lib/Sakaar-NetWork/include
-  OBJECT_DIR = lib/Sakaar/CMakeFiles/Sakaar_lib.dir
-  OBJECT_FILE_DIR = lib/Sakaar/CMakeFiles/Sakaar_lib.dir/src/sakaar/generation
-
-
-# =============================================================================
-# Link build statements for STATIC_LIBRARY target Sakaar_lib
-
-
-#############################################
-# Link the static library lib/Sakaar/libSakaar_lib.a
-
-build lib/Sakaar/libSakaar_lib.a: C_STATIC_LIBRARY_LINKER__Sakaar_lib_Debug lib/Sakaar/CMakeFiles/Sakaar_lib.dir/src/sakaar/account.c.o lib/Sakaar/CMakeFiles/Sakaar_lib.dir/src/sakaar/account_connections.c.o lib/Sakaar/CMakeFiles/Sakaar_lib.dir/src/sakaar/activated_accounts.c.o lib/Sakaar/CMakeFiles/Sakaar_lib.dir/src/sakaar/block.c.o lib/Sakaar/CMakeFiles/Sakaar_lib.dir/src/sakaar/block_check.c.o lib/Sakaar/CMakeFiles/Sakaar_lib.dir/src/sakaar/block_history.c.o lib/Sakaar/CMakeFiles/Sakaar_lib.dir/src/sakaar/block_smart.c.o lib/Sakaar/CMakeFiles/Sakaar_lib.dir/src/sakaar/config.c.o lib/Sakaar/CMakeFiles/Sakaar_lib.dir/src/sakaar/currency.c.o lib/Sakaar/CMakeFiles/Sakaar_lib.dir/src/sakaar/generation.c.o lib/Sakaar/CMakeFiles/Sakaar_lib.dir/src/sakaar/pre_transaction.c.o lib/Sakaar/CMakeFiles/Sakaar_lib.dir/src/sakaar/transaction.c.o lib/Sakaar/CMakeFiles/Sakaar_lib.dir/src/sakaar/wallet.c.o lib/Sakaar/CMakeFiles/Sakaar_lib.dir/src/sakaar/wallet_data.c.o lib/Sakaar/CMakeFiles/Sakaar_lib.dir/src/sakaar/wallet_smart.c.o lib/Sakaar/CMakeFiles/Sakaar_lib.dir/src/sakaar/block_smart/account_activate.c.o lib/Sakaar/CMakeFiles/Sakaar_lib.dir/src/sakaar/block_smart/account_create.c.o lib/Sakaar/CMakeFiles/Sakaar_lib.dir/src/sakaar/block_smart/account_deactivate.c.o lib/Sakaar/CMakeFiles/Sakaar_lib.dir/src/sakaar/block_smart/account_freeze.c.o lib/Sakaar/CMakeFiles/Sakaar_lib.dir/src/sakaar/block_smart/currency_create.c.o lib/Sakaar/CMakeFiles/Sakaar_lib.dir/src/sakaar/block_smart/wallet_connect.c.o lib/Sakaar/CMakeFiles/Sakaar_lib.dir/src/sakaar/block_smart/wallet_disconnect.c.o lib/Sakaar/CMakeFiles/Sakaar_lib.dir/src/sakaar/generation/account_username.c.o lib/Sakaar/CMakeFiles/Sakaar_lib.dir/src/sakaar/generation/block_create.c.o lib/Sakaar/CMakeFiles/Sakaar_lib.dir/src/sakaar/generation/block_result.c.o lib/Sakaar/CMakeFiles/Sakaar_lib.dir/src/sakaar/generation/wallet_create.c.o || lib/Sakaar-CryptoBase/libSakaar_CryptoBase_lib.a lib/Sakaar-CryptoCode/libSakaar_CryptoCode_lib.a lib/Sakaar-HashCode/libSakaar_HashCode_lib.a lib/Sakaar-Memory/libSakaar_Memory_lib.a lib/Sakaar-NetWork/libSakaar_Network_lib.a lib/Sakaar-Struct/libSakaar_Struct_lib.a
-  LANGUAGE_COMPILE_FLAGS = -g
-  OBJECT_DIR = lib/Sakaar/CMakeFiles/Sakaar_lib.dir
-  POST_BUILD = :
-  PRE_LINK = :
-  TARGET_FILE = lib/Sakaar/libSakaar_lib.a
-  TARGET_PDB = Sakaar_lib.a.dbg
-
-# =============================================================================
-# Object build statements for EXECUTABLE target Sakaar
-
-
-#############################################
-# Order-only phony target for Sakaar
-
-build cmake_object_order_depends_target_Sakaar: phony || cmake_object_order_depends_target_Sakaar_CryptoBase_lib cmake_object_order_depends_target_Sakaar_CryptoCode_lib cmake_object_order_depends_target_Sakaar_HashCode_lib cmake_object_order_depends_target_Sakaar_Memory_lib cmake_object_order_depends_target_Sakaar_Network_lib cmake_object_order_depends_target_Sakaar_Struct_lib cmake_object_order_depends_target_Sakaar_lib
-
-build lib/Sakaar/CMakeFiles/Sakaar.dir/main.c.o: C_COMPILER__Sakaar_Debug /home/stiveman1/CLionProjects/Sakaar-SmartContract/lib/Sakaar/main.c || cmake_object_order_depends_target_Sakaar
-  DEP_FILE = lib/Sakaar/CMakeFiles/Sakaar.dir/main.c.o.d
-  FLAGS = -g -fdiagnostics-color=always -std=gnu99
-  INCLUDES = -I/home/stiveman1/CLionProjects/Sakaar-SmartContract/lib/Sakaar/include -I/home/stiveman1/CLionProjects/Sakaar-SmartContract/lib/Sakaar-Struct/include -I/home/stiveman1/CLionProjects/Sakaar-SmartContract/lib/Sakaar-Memory/include -I/home/stiveman1/CLionProjects/Sakaar-SmartContract/lib/Sakaar-CryptoBase/include -I/home/stiveman1/CLionProjects/Sakaar-SmartContract/lib/Sakaar-CryptoCode/include -I/home/stiveman1/CLionProjects/Sakaar-SmartContract/lib/Sakaar-HashCode/include -I/home/stiveman1/CLionProjects/Sakaar-SmartContract/lib/Sakaar-NetWork/include
-  OBJECT_DIR = lib/Sakaar/CMakeFiles/Sakaar.dir
-  OBJECT_FILE_DIR = lib/Sakaar/CMakeFiles/Sakaar.dir
-
-
-# =============================================================================
-# Link build statements for EXECUTABLE target Sakaar
-
-
-#############################################
-# Link the executable lib/Sakaar/Sakaar
-
-build lib/Sakaar/Sakaar: C_EXECUTABLE_LINKER__Sakaar_Debug lib/Sakaar/CMakeFiles/Sakaar.dir/main.c.o | lib/Sakaar/libSakaar_lib.a lib/Sakaar-CryptoBase/libSakaar_CryptoBase_lib.a lib/Sakaar-CryptoCode/libSakaar_CryptoCode_lib.a lib/Sakaar-HashCode/libSakaar_HashCode_lib.a lib/Sakaar-NetWork/libSakaar_Network_lib.a lib/Sakaar-Struct/libSakaar_Struct_lib.a lib/Sakaar-Memory/libSakaar_Memory_lib.a || lib/Sakaar-CryptoBase/libSakaar_CryptoBase_lib.a lib/Sakaar-CryptoCode/libSakaar_CryptoCode_lib.a lib/Sakaar-HashCode/libSakaar_HashCode_lib.a lib/Sakaar-Memory/libSakaar_Memory_lib.a lib/Sakaar-NetWork/libSakaar_Network_lib.a lib/Sakaar-Struct/libSakaar_Struct_lib.a lib/Sakaar/libSakaar_lib.a
-  FLAGS = -g
-  LINK_LIBRARIES = -Wl,-rpath,/home/stiveman1/CLionProjects/Sakaar-SmartContract/lib/Sakaar-Memory:/home/stiveman1/CLionProjects/Sakaar-SmartContract/lib/Sakaar-Struct:/home/stiveman1/CLionProjects/Sakaar-SmartContract/lib/Sakaar-CryptoCode:/home/stiveman1/CLionProjects/Sakaar-SmartContract/lib/Sakaar-HashCode:/home/stiveman1/CLionProjects/Sakaar-SmartContract/lib/Sakaar-CryptoBase:/home/stiveman1/CLionProjects/Sakaar-SmartContract/lib/Sakaar-NetWork  lib/Sakaar/libSakaar_lib.a  lib/Sakaar-CryptoBase/libSakaar_CryptoBase_lib.a  lib/Sakaar-CryptoCode/libSakaar_CryptoCode_lib.a  lib/Sakaar-HashCode/libSakaar_HashCode_lib.a  lib/Sakaar-NetWork/libSakaar_Network_lib.a  lib/Sakaar-Struct/libSakaar_Struct_lib.a  lib/Sakaar-Memory/libSakaar_Memory_lib.a  -lgmp  -lgmpxx
-  LINK_PATH = -L/home/stiveman1/CLionProjects/Sakaar-SmartContract/lib/Sakaar-Memory   -L/home/stiveman1/CLionProjects/Sakaar-SmartContract/lib/Sakaar-Struct   -L/home/stiveman1/CLionProjects/Sakaar-SmartContract/lib/Sakaar-CryptoCode   -L/home/stiveman1/CLionProjects/Sakaar-SmartContract/lib/Sakaar-HashCode   -L/home/stiveman1/CLionProjects/Sakaar-SmartContract/lib/Sakaar-CryptoBase   -L/home/stiveman1/CLionProjects/Sakaar-SmartContract/lib/Sakaar-NetWork
-  OBJECT_DIR = lib/Sakaar/CMakeFiles/Sakaar.dir
-  POST_BUILD = :
-  PRE_LINK = :
-  TARGET_FILE = lib/Sakaar/Sakaar
-  TARGET_PDB = Sakaar.dbg
-
-
-#############################################
-# Utility command for edit_cache
-
-build lib/Sakaar/CMakeFiles/edit_cache.util: CUSTOM_COMMAND
-  COMMAND = cd /home/stiveman1/CLionProjects/Sakaar-SmartContract/cmake-build-debug/lib/Sakaar && /home/stiveman1/.local/share/JetBrains/Toolbox/apps/CLion/ch-0/223.7571.171/bin/cmake/linux/bin/cmake -E echo No\ interactive\ CMake\ dialog\ available.
-  DESC = No interactive CMake dialog available...
-  restat = 1
-
-build lib/Sakaar/edit_cache: phony lib/Sakaar/CMakeFiles/edit_cache.util
-
-
-#############################################
-# Utility command for rebuild_cache
-
-build lib/Sakaar/CMakeFiles/rebuild_cache.util: CUSTOM_COMMAND
-  COMMAND = cd /home/stiveman1/CLionProjects/Sakaar-SmartContract/cmake-build-debug/lib/Sakaar && /home/stiveman1/.local/share/JetBrains/Toolbox/apps/CLion/ch-0/223.7571.171/bin/cmake/linux/bin/cmake --regenerate-during-build -S/home/stiveman1/CLionProjects/Sakaar-SmartContract -B/home/stiveman1/CLionProjects/Sakaar-SmartContract/cmake-build-debug
-  DESC = Running CMake to regenerate build system...
-  pool = console
-  restat = 1
-
-build lib/Sakaar/rebuild_cache: phony lib/Sakaar/CMakeFiles/rebuild_cache.util
-
-# =============================================================================
 # Target aliases.
-
-build Sakaar: phony lib/Sakaar/Sakaar
 
 build Sakaar_CryptoBase: phony lib/Sakaar-CryptoBase/Sakaar_CryptoBase
 
@@ -1265,8 +994,6 @@ build Sakaar_Struct: phony lib/Sakaar-Struct/Sakaar_Struct
 
 build Sakaar_Struct_lib: phony lib/Sakaar-Struct/libSakaar_Struct_lib.a
 
-build Sakaar_lib: phony lib/Sakaar/libSakaar_lib.a
-
 build libSakaar_CryptoBase_lib.a: phony lib/Sakaar-CryptoBase/libSakaar_CryptoBase_lib.a
 
 build libSakaar_CryptoCode_lib.a: phony lib/Sakaar-CryptoCode/libSakaar_CryptoCode_lib.a
@@ -1279,8 +1006,6 @@ build libSakaar_Network_lib.a: phony lib/Sakaar-NetWork/libSakaar_Network_lib.a
 
 build libSakaar_Struct_lib.a: phony lib/Sakaar-Struct/libSakaar_Struct_lib.a
 
-build libSakaar_lib.a: phony lib/Sakaar/libSakaar_lib.a
-
 # =============================================================================
 # Folder targets.
 
@@ -1289,14 +1014,7 @@ build libSakaar_lib.a: phony lib/Sakaar/libSakaar_lib.a
 #############################################
 # Folder: /home/stiveman1/CLionProjects/Sakaar-SmartContract/cmake-build-debug
 
-build all: phony libSakaar_SmartContract_lib.a Sakaar_SmartContract lib/Sakaar-Memory/all lib/Sakaar-Struct/all lib/Sakaar-CryptoCode/all lib/Sakaar-HashCode/all lib/Sakaar-CryptoBase/all lib/Sakaar-NetWork/all lib/Sakaar/all
-
-# =============================================================================
-
-#############################################
-# Folder: /home/stiveman1/CLionProjects/Sakaar-SmartContract/cmake-build-debug/lib/Sakaar
-
-build lib/Sakaar/all: phony lib/Sakaar/libSakaar_lib.a lib/Sakaar/Sakaar
+build all: phony libSakaar_SmartContract_lib.a Sakaar_SmartContract lib/Sakaar-Memory/all lib/Sakaar-Struct/all lib/Sakaar-CryptoCode/all lib/Sakaar-HashCode/all lib/Sakaar-CryptoBase/all lib/Sakaar-NetWork/all
 
 # =============================================================================
 
@@ -1347,14 +1065,14 @@ build lib/Sakaar-Struct/all: phony lib/Sakaar-Struct/libSakaar_Struct_lib.a lib/
 #############################################
 # Re-run CMake if any of its inputs changed.
 
-build build.ninja: RERUN_CMAKE | /home/stiveman1/.local/share/JetBrains/Toolbox/apps/CLion/ch-0/223.7571.171/bin/cmake/linux/share/cmake-3.24/Modules/CMakeCInformation.cmake /home/stiveman1/.local/share/JetBrains/Toolbox/apps/CLion/ch-0/223.7571.171/bin/cmake/linux/share/cmake-3.24/Modules/CMakeCommonLanguageInclude.cmake /home/stiveman1/.local/share/JetBrains/Toolbox/apps/CLion/ch-0/223.7571.171/bin/cmake/linux/share/cmake-3.24/Modules/CMakeGenericSystem.cmake /home/stiveman1/.local/share/JetBrains/Toolbox/apps/CLion/ch-0/223.7571.171/bin/cmake/linux/share/cmake-3.24/Modules/CMakeInitializeConfigs.cmake /home/stiveman1/.local/share/JetBrains/Toolbox/apps/CLion/ch-0/223.7571.171/bin/cmake/linux/share/cmake-3.24/Modules/CMakeLanguageInformation.cmake /home/stiveman1/.local/share/JetBrains/Toolbox/apps/CLion/ch-0/223.7571.171/bin/cmake/linux/share/cmake-3.24/Modules/CMakeSystemSpecificInformation.cmake /home/stiveman1/.local/share/JetBrains/Toolbox/apps/CLion/ch-0/223.7571.171/bin/cmake/linux/share/cmake-3.24/Modules/CMakeSystemSpecificInitialize.cmake /home/stiveman1/.local/share/JetBrains/Toolbox/apps/CLion/ch-0/223.7571.171/bin/cmake/linux/share/cmake-3.24/Modules/Compiler/CMakeCommonCompilerMacros.cmake /home/stiveman1/.local/share/JetBrains/Toolbox/apps/CLion/ch-0/223.7571.171/bin/cmake/linux/share/cmake-3.24/Modules/Compiler/GNU-C.cmake /home/stiveman1/.local/share/JetBrains/Toolbox/apps/CLion/ch-0/223.7571.171/bin/cmake/linux/share/cmake-3.24/Modules/Compiler/GNU.cmake /home/stiveman1/.local/share/JetBrains/Toolbox/apps/CLion/ch-0/223.7571.171/bin/cmake/linux/share/cmake-3.24/Modules/Platform/Linux-GNU-C.cmake /home/stiveman1/.local/share/JetBrains/Toolbox/apps/CLion/ch-0/223.7571.171/bin/cmake/linux/share/cmake-3.24/Modules/Platform/Linux-GNU.cmake /home/stiveman1/.local/share/JetBrains/Toolbox/apps/CLion/ch-0/223.7571.171/bin/cmake/linux/share/cmake-3.24/Modules/Platform/Linux.cmake /home/stiveman1/.local/share/JetBrains/Toolbox/apps/CLion/ch-0/223.7571.171/bin/cmake/linux/share/cmake-3.24/Modules/Platform/UnixPaths.cmake /home/stiveman1/CLionProjects/Sakaar-SmartContract/CMakeLists.txt /home/stiveman1/CLionProjects/Sakaar-SmartContract/lib/Sakaar-CryptoBase/CMakeLists.txt /home/stiveman1/CLionProjects/Sakaar-SmartContract/lib/Sakaar-CryptoCode/CMakeLists.txt /home/stiveman1/CLionProjects/Sakaar-SmartContract/lib/Sakaar-HashCode/CMakeLists.txt /home/stiveman1/CLionProjects/Sakaar-SmartContract/lib/Sakaar-Memory/CMakeLists.txt /home/stiveman1/CLionProjects/Sakaar-SmartContract/lib/Sakaar-NetWork/CMakeLists.txt /home/stiveman1/CLionProjects/Sakaar-SmartContract/lib/Sakaar-Struct/CMakeLists.txt /home/stiveman1/CLionProjects/Sakaar-SmartContract/lib/Sakaar-Struct/cmake/FindGMP.cmake /home/stiveman1/CLionProjects/Sakaar-SmartContract/lib/Sakaar/CMakeLists.txt CMakeCache.txt CMakeFiles/3.24.2/CMakeCCompiler.cmake CMakeFiles/3.24.2/CMakeSystem.cmake
+build build.ninja: RERUN_CMAKE | /home/stiveman1/.local/share/JetBrains/Toolbox/apps/CLion/ch-0/223.7571.171/bin/cmake/linux/share/cmake-3.24/Modules/CMakeCInformation.cmake /home/stiveman1/.local/share/JetBrains/Toolbox/apps/CLion/ch-0/223.7571.171/bin/cmake/linux/share/cmake-3.24/Modules/CMakeCommonLanguageInclude.cmake /home/stiveman1/.local/share/JetBrains/Toolbox/apps/CLion/ch-0/223.7571.171/bin/cmake/linux/share/cmake-3.24/Modules/CMakeGenericSystem.cmake /home/stiveman1/.local/share/JetBrains/Toolbox/apps/CLion/ch-0/223.7571.171/bin/cmake/linux/share/cmake-3.24/Modules/CMakeInitializeConfigs.cmake /home/stiveman1/.local/share/JetBrains/Toolbox/apps/CLion/ch-0/223.7571.171/bin/cmake/linux/share/cmake-3.24/Modules/CMakeLanguageInformation.cmake /home/stiveman1/.local/share/JetBrains/Toolbox/apps/CLion/ch-0/223.7571.171/bin/cmake/linux/share/cmake-3.24/Modules/CMakeSystemSpecificInformation.cmake /home/stiveman1/.local/share/JetBrains/Toolbox/apps/CLion/ch-0/223.7571.171/bin/cmake/linux/share/cmake-3.24/Modules/CMakeSystemSpecificInitialize.cmake /home/stiveman1/.local/share/JetBrains/Toolbox/apps/CLion/ch-0/223.7571.171/bin/cmake/linux/share/cmake-3.24/Modules/Compiler/CMakeCommonCompilerMacros.cmake /home/stiveman1/.local/share/JetBrains/Toolbox/apps/CLion/ch-0/223.7571.171/bin/cmake/linux/share/cmake-3.24/Modules/Compiler/GNU-C.cmake /home/stiveman1/.local/share/JetBrains/Toolbox/apps/CLion/ch-0/223.7571.171/bin/cmake/linux/share/cmake-3.24/Modules/Compiler/GNU.cmake /home/stiveman1/.local/share/JetBrains/Toolbox/apps/CLion/ch-0/223.7571.171/bin/cmake/linux/share/cmake-3.24/Modules/Platform/Linux-GNU-C.cmake /home/stiveman1/.local/share/JetBrains/Toolbox/apps/CLion/ch-0/223.7571.171/bin/cmake/linux/share/cmake-3.24/Modules/Platform/Linux-GNU.cmake /home/stiveman1/.local/share/JetBrains/Toolbox/apps/CLion/ch-0/223.7571.171/bin/cmake/linux/share/cmake-3.24/Modules/Platform/Linux.cmake /home/stiveman1/.local/share/JetBrains/Toolbox/apps/CLion/ch-0/223.7571.171/bin/cmake/linux/share/cmake-3.24/Modules/Platform/UnixPaths.cmake /home/stiveman1/CLionProjects/Sakaar-SmartContract/CMakeLists.txt /home/stiveman1/CLionProjects/Sakaar-SmartContract/lib/Sakaar-CryptoBase/CMakeLists.txt /home/stiveman1/CLionProjects/Sakaar-SmartContract/lib/Sakaar-CryptoCode/CMakeLists.txt /home/stiveman1/CLionProjects/Sakaar-SmartContract/lib/Sakaar-HashCode/CMakeLists.txt /home/stiveman1/CLionProjects/Sakaar-SmartContract/lib/Sakaar-Memory/CMakeLists.txt /home/stiveman1/CLionProjects/Sakaar-SmartContract/lib/Sakaar-NetWork/CMakeLists.txt /home/stiveman1/CLionProjects/Sakaar-SmartContract/lib/Sakaar-Struct/CMakeLists.txt /home/stiveman1/CLionProjects/Sakaar-SmartContract/lib/Sakaar-Struct/cmake/FindGMP.cmake CMakeCache.txt CMakeFiles/3.24.2/CMakeCCompiler.cmake CMakeFiles/3.24.2/CMakeSystem.cmake
   pool = console
 
 
 #############################################
 # A missing CMake input file is not an error.
 
-build /home/stiveman1/.local/share/JetBrains/Toolbox/apps/CLion/ch-0/223.7571.171/bin/cmake/linux/share/cmake-3.24/Modules/CMakeCInformation.cmake /home/stiveman1/.local/share/JetBrains/Toolbox/apps/CLion/ch-0/223.7571.171/bin/cmake/linux/share/cmake-3.24/Modules/CMakeCommonLanguageInclude.cmake /home/stiveman1/.local/share/JetBrains/Toolbox/apps/CLion/ch-0/223.7571.171/bin/cmake/linux/share/cmake-3.24/Modules/CMakeGenericSystem.cmake /home/stiveman1/.local/share/JetBrains/Toolbox/apps/CLion/ch-0/223.7571.171/bin/cmake/linux/share/cmake-3.24/Modules/CMakeInitializeConfigs.cmake /home/stiveman1/.local/share/JetBrains/Toolbox/apps/CLion/ch-0/223.7571.171/bin/cmake/linux/share/cmake-3.24/Modules/CMakeLanguageInformation.cmake /home/stiveman1/.local/share/JetBrains/Toolbox/apps/CLion/ch-0/223.7571.171/bin/cmake/linux/share/cmake-3.24/Modules/CMakeSystemSpecificInformation.cmake /home/stiveman1/.local/share/JetBrains/Toolbox/apps/CLion/ch-0/223.7571.171/bin/cmake/linux/share/cmake-3.24/Modules/CMakeSystemSpecificInitialize.cmake /home/stiveman1/.local/share/JetBrains/Toolbox/apps/CLion/ch-0/223.7571.171/bin/cmake/linux/share/cmake-3.24/Modules/Compiler/CMakeCommonCompilerMacros.cmake /home/stiveman1/.local/share/JetBrains/Toolbox/apps/CLion/ch-0/223.7571.171/bin/cmake/linux/share/cmake-3.24/Modules/Compiler/GNU-C.cmake /home/stiveman1/.local/share/JetBrains/Toolbox/apps/CLion/ch-0/223.7571.171/bin/cmake/linux/share/cmake-3.24/Modules/Compiler/GNU.cmake /home/stiveman1/.local/share/JetBrains/Toolbox/apps/CLion/ch-0/223.7571.171/bin/cmake/linux/share/cmake-3.24/Modules/Platform/Linux-GNU-C.cmake /home/stiveman1/.local/share/JetBrains/Toolbox/apps/CLion/ch-0/223.7571.171/bin/cmake/linux/share/cmake-3.24/Modules/Platform/Linux-GNU.cmake /home/stiveman1/.local/share/JetBrains/Toolbox/apps/CLion/ch-0/223.7571.171/bin/cmake/linux/share/cmake-3.24/Modules/Platform/Linux.cmake /home/stiveman1/.local/share/JetBrains/Toolbox/apps/CLion/ch-0/223.7571.171/bin/cmake/linux/share/cmake-3.24/Modules/Platform/UnixPaths.cmake /home/stiveman1/CLionProjects/Sakaar-SmartContract/CMakeLists.txt /home/stiveman1/CLionProjects/Sakaar-SmartContract/lib/Sakaar-CryptoBase/CMakeLists.txt /home/stiveman1/CLionProjects/Sakaar-SmartContract/lib/Sakaar-CryptoCode/CMakeLists.txt /home/stiveman1/CLionProjects/Sakaar-SmartContract/lib/Sakaar-HashCode/CMakeLists.txt /home/stiveman1/CLionProjects/Sakaar-SmartContract/lib/Sakaar-Memory/CMakeLists.txt /home/stiveman1/CLionProjects/Sakaar-SmartContract/lib/Sakaar-NetWork/CMakeLists.txt /home/stiveman1/CLionProjects/Sakaar-SmartContract/lib/Sakaar-Struct/CMakeLists.txt /home/stiveman1/CLionProjects/Sakaar-SmartContract/lib/Sakaar-Struct/cmake/FindGMP.cmake /home/stiveman1/CLionProjects/Sakaar-SmartContract/lib/Sakaar/CMakeLists.txt CMakeCache.txt CMakeFiles/3.24.2/CMakeCCompiler.cmake CMakeFiles/3.24.2/CMakeSystem.cmake: phony
+build /home/stiveman1/.local/share/JetBrains/Toolbox/apps/CLion/ch-0/223.7571.171/bin/cmake/linux/share/cmake-3.24/Modules/CMakeCInformation.cmake /home/stiveman1/.local/share/JetBrains/Toolbox/apps/CLion/ch-0/223.7571.171/bin/cmake/linux/share/cmake-3.24/Modules/CMakeCommonLanguageInclude.cmake /home/stiveman1/.local/share/JetBrains/Toolbox/apps/CLion/ch-0/223.7571.171/bin/cmake/linux/share/cmake-3.24/Modules/CMakeGenericSystem.cmake /home/stiveman1/.local/share/JetBrains/Toolbox/apps/CLion/ch-0/223.7571.171/bin/cmake/linux/share/cmake-3.24/Modules/CMakeInitializeConfigs.cmake /home/stiveman1/.local/share/JetBrains/Toolbox/apps/CLion/ch-0/223.7571.171/bin/cmake/linux/share/cmake-3.24/Modules/CMakeLanguageInformation.cmake /home/stiveman1/.local/share/JetBrains/Toolbox/apps/CLion/ch-0/223.7571.171/bin/cmake/linux/share/cmake-3.24/Modules/CMakeSystemSpecificInformation.cmake /home/stiveman1/.local/share/JetBrains/Toolbox/apps/CLion/ch-0/223.7571.171/bin/cmake/linux/share/cmake-3.24/Modules/CMakeSystemSpecificInitialize.cmake /home/stiveman1/.local/share/JetBrains/Toolbox/apps/CLion/ch-0/223.7571.171/bin/cmake/linux/share/cmake-3.24/Modules/Compiler/CMakeCommonCompilerMacros.cmake /home/stiveman1/.local/share/JetBrains/Toolbox/apps/CLion/ch-0/223.7571.171/bin/cmake/linux/share/cmake-3.24/Modules/Compiler/GNU-C.cmake /home/stiveman1/.local/share/JetBrains/Toolbox/apps/CLion/ch-0/223.7571.171/bin/cmake/linux/share/cmake-3.24/Modules/Compiler/GNU.cmake /home/stiveman1/.local/share/JetBrains/Toolbox/apps/CLion/ch-0/223.7571.171/bin/cmake/linux/share/cmake-3.24/Modules/Platform/Linux-GNU-C.cmake /home/stiveman1/.local/share/JetBrains/Toolbox/apps/CLion/ch-0/223.7571.171/bin/cmake/linux/share/cmake-3.24/Modules/Platform/Linux-GNU.cmake /home/stiveman1/.local/share/JetBrains/Toolbox/apps/CLion/ch-0/223.7571.171/bin/cmake/linux/share/cmake-3.24/Modules/Platform/Linux.cmake /home/stiveman1/.local/share/JetBrains/Toolbox/apps/CLion/ch-0/223.7571.171/bin/cmake/linux/share/cmake-3.24/Modules/Platform/UnixPaths.cmake /home/stiveman1/CLionProjects/Sakaar-SmartContract/CMakeLists.txt /home/stiveman1/CLionProjects/Sakaar-SmartContract/lib/Sakaar-CryptoBase/CMakeLists.txt /home/stiveman1/CLionProjects/Sakaar-SmartContract/lib/Sakaar-CryptoCode/CMakeLists.txt /home/stiveman1/CLionProjects/Sakaar-SmartContract/lib/Sakaar-HashCode/CMakeLists.txt /home/stiveman1/CLionProjects/Sakaar-SmartContract/lib/Sakaar-Memory/CMakeLists.txt /home/stiveman1/CLionProjects/Sakaar-SmartContract/lib/Sakaar-NetWork/CMakeLists.txt /home/stiveman1/CLionProjects/Sakaar-SmartContract/lib/Sakaar-Struct/CMakeLists.txt /home/stiveman1/CLionProjects/Sakaar-SmartContract/lib/Sakaar-Struct/cmake/FindGMP.cmake CMakeCache.txt CMakeFiles/3.24.2/CMakeCCompiler.cmake CMakeFiles/3.24.2/CMakeSystem.cmake: phony
 
 
 #############################################

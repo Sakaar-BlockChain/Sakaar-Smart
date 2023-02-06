@@ -13,8 +13,7 @@
 						3,
 						4,
 						5,
-						6,
-						7
+						6
 					],
 					"jsonFile" : "directory-.-Debug-f5ebdc15457944623624.json",
 					"minimumCMakeVersion" : 
@@ -25,8 +24,8 @@
 					"source" : ".",
 					"targetIndexes" : 
 					[
-						11,
-						12
+						10,
+						11
 					]
 				},
 				{
@@ -41,8 +40,8 @@
 					"source" : "lib/Sakaar-Memory",
 					"targetIndexes" : 
 					[
-						7,
-						8
+						6,
+						7
 					]
 				},
 				{
@@ -57,8 +56,8 @@
 					"source" : "lib/Sakaar-Struct",
 					"targetIndexes" : 
 					[
-						13,
-						14
+						12,
+						13
 					]
 				},
 				{
@@ -73,8 +72,8 @@
 					"source" : "lib/Sakaar-CryptoCode",
 					"targetIndexes" : 
 					[
-						3,
-						4
+						2,
+						3
 					]
 				},
 				{
@@ -89,8 +88,8 @@
 					"source" : "lib/Sakaar-HashCode",
 					"targetIndexes" : 
 					[
-						5,
-						6
+						4,
+						5
 					]
 				},
 				{
@@ -105,8 +104,8 @@
 					"source" : "lib/Sakaar-CryptoBase",
 					"targetIndexes" : 
 					[
-						1,
-						2
+						0,
+						1
 					]
 				},
 				{
@@ -121,24 +120,8 @@
 					"source" : "lib/Sakaar-NetWork",
 					"targetIndexes" : 
 					[
-						9,
-						10
-					]
-				},
-				{
-					"build" : "lib/Sakaar",
-					"jsonFile" : "directory-lib.Sakaar-Debug-b84aee3b805748d568ef.json",
-					"minimumCMakeVersion" : 
-					{
-						"string" : "3.22"
-					},
-					"parentIndex" : 0,
-					"projectIndex" : 7,
-					"source" : "lib/Sakaar",
-					"targetIndexes" : 
-					[
-						0,
-						15
+						8,
+						9
 					]
 				}
 			],
@@ -153,8 +136,7 @@
 						3,
 						4,
 						5,
-						6,
-						7
+						6
 					],
 					"directoryIndexes" : 
 					[
@@ -163,8 +145,8 @@
 					"name" : "Sakaar_SmartContract",
 					"targetIndexes" : 
 					[
-						11,
-						12
+						10,
+						11
 					]
 				},
 				{
@@ -176,8 +158,8 @@
 					"parentIndex" : 0,
 					"targetIndexes" : 
 					[
-						7,
-						8
+						6,
+						7
 					]
 				},
 				{
@@ -189,8 +171,8 @@
 					"parentIndex" : 0,
 					"targetIndexes" : 
 					[
-						13,
-						14
+						12,
+						13
 					]
 				},
 				{
@@ -202,8 +184,8 @@
 					"parentIndex" : 0,
 					"targetIndexes" : 
 					[
-						3,
-						4
+						2,
+						3
 					]
 				},
 				{
@@ -215,8 +197,8 @@
 					"parentIndex" : 0,
 					"targetIndexes" : 
 					[
-						5,
-						6
+						4,
+						5
 					]
 				},
 				{
@@ -228,8 +210,8 @@
 					"parentIndex" : 0,
 					"targetIndexes" : 
 					[
-						1,
-						2
+						0,
+						1
 					]
 				},
 				{
@@ -241,33 +223,13 @@
 					"parentIndex" : 0,
 					"targetIndexes" : 
 					[
-						9,
-						10
-					]
-				},
-				{
-					"directoryIndexes" : 
-					[
-						7
-					],
-					"name" : "Sakaar",
-					"parentIndex" : 0,
-					"targetIndexes" : 
-					[
-						0,
-						15
+						8,
+						9
 					]
 				}
 			],
 			"targets" : 
 			[
-				{
-					"directoryIndex" : 7,
-					"id" : "Sakaar::@e9ded1dff449a2749081",
-					"jsonFile" : "target-Sakaar-Debug-0e294898fcfbfc97fa8a.json",
-					"name" : "Sakaar",
-					"projectIndex" : 7
-				},
 				{
 					"directoryIndex" : 5,
 					"id" : "Sakaar_CryptoBase::@c8a6f4b370824bddb11f",
@@ -341,14 +303,14 @@
 				{
 					"directoryIndex" : 0,
 					"id" : "Sakaar_SmartContract::@6890427a1f51a3e7e1df",
-					"jsonFile" : "target-Sakaar_SmartContract-Debug-d12328f0bc41ec8b2757.json",
+					"jsonFile" : "target-Sakaar_SmartContract-Debug-1676d7fb985c67e4115e.json",
 					"name" : "Sakaar_SmartContract",
 					"projectIndex" : 0
 				},
 				{
 					"directoryIndex" : 0,
 					"id" : "Sakaar_SmartContract_lib::@6890427a1f51a3e7e1df",
-					"jsonFile" : "target-Sakaar_SmartContract_lib-Debug-5d8dc38a3f070aa26660.json",
+					"jsonFile" : "target-Sakaar_SmartContract_lib-Debug-d0358b10e82a66f8a488.json",
 					"name" : "Sakaar_SmartContract_lib",
 					"projectIndex" : 0
 				},
@@ -365,13 +327,6 @@
 					"jsonFile" : "target-Sakaar_Struct_lib-Debug-5f995705b7ef2138ff79.json",
 					"name" : "Sakaar_Struct_lib",
 					"projectIndex" : 2
-				},
-				{
-					"directoryIndex" : 7,
-					"id" : "Sakaar_lib::@e9ded1dff449a2749081",
-					"jsonFile" : "target-Sakaar_lib-Debug-707d639eba2b379ac7c4.json",
-					"name" : "Sakaar_lib",
-					"projectIndex" : 7
 				}
 			]
 		}
