@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="VcsDirectoryMappings">
+    <mapping directory="$PROJECT_DIR$" vcs="Git" />
+    <mapping directory="$PROJECT_DIR$/lib/Sakaar" vcs="Git" />
+    <mapping directory="$PROJECT_DIR$/lib/Sakaar-CryptoBase" vcs="Git" />
+    <mapping directory="$PROJECT_DIR$/lib/Sakaar-CryptoCode" vcs="Git" />
+    <mapping directory="$PROJECT_DIR$/lib/Sakaar-HashCode" vcs="Git" />
+    <mapping directory="$PROJECT_DIR$/lib/Sakaar-NetWork" vcs="Git" />
+    <mapping directory="$PROJECT_DIR$/lib/Sakaar-Struct" vcs="Git" />
+    <mapping directory="$PROJECT_DIR$/lib/Sakaar-Struct/lib/Sakaar-Memory" vcs="Git" />
+  </component>
+</project>

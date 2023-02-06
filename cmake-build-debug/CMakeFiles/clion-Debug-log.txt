@@ -1,0 +1,20 @@
+/home/stiveman1/.local/share/JetBrains/Toolbox/apps/CLion/ch-0/223.7571.171/bin/cmake/linux/bin/cmake -DCMAKE_BUILD_TYPE=Debug -DCMAKE_MAKE_PROGRAM=/home/stiveman1/.local/share/JetBrains/Toolbox/apps/CLion/ch-0/223.7571.171/bin/ninja/linux/ninja -G Ninja -S /home/stiveman1/CLionProjects/Sakaar-SmartContract -B /home/stiveman1/CLionProjects/Sakaar-SmartContract/cmake-build-debug
+-- Connected: Sakaar_Memory_lib
+-- Connected: Sakaar_Memory_lib
+-- /home/stiveman1/CLionProjects/Sakaar-SmartContract/lib/Sakaar-Struct/cmake
+-- Found GMP: /usr/lib/x86_64-linux-gnu/libgmp.so
+-- Connected: Sakaar_Struct_lib
+-- Connected: Sakaar_Struct_lib
+-- Connected: Sakaar_CryptoCode_lib
+-- Connected: Sakaar_CryptoCode_lib
+-- Connected: Sakaar_HashCode_lib
+-- Connected: Sakaar_HashCode_lib
+-- Connected: Sakaar_CryptoBase_lib
+-- Connected: Sakaar_CryptoBase_lib
+-- Connected: Sakaar_Network_lib
+-- Connected: Sakaar_Network_lib
+-- Connected: Sakaar_lib
+-- Connected: Sakaar_Struct_lib
+-- Configuring done
+-- Generating done
+-- Build files have been written to: /home/stiveman1/CLionProjects/Sakaar-SmartContract/cmake-build-debug

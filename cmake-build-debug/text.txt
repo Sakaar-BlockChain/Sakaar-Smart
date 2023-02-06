@@ -1,0 +1,11 @@
+class A{
+    func __init__(self, a) {
+        self.a = a;
+    }
+    func lol(self, a) {
+        return self.a + a;
+    }
+}
+a = A(16);
+b = a.lol(1);
+b;

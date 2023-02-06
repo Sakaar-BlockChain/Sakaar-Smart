@@ -1,0 +1,376 @@
+{
+	"archive" : {},
+	"artifacts" : 
+	[
+		{
+			"path" : "lib/Sakaar/libSakaar_lib.a"
+		}
+	],
+	"backtrace" : 1,
+	"backtraceGraph" : 
+	{
+		"commands" : 
+		[
+			"add_library",
+			"target_link_libraries",
+			"target_include_directories"
+		],
+		"files" : 
+		[
+			"lib/Sakaar/CMakeLists.txt"
+		],
+		"nodes" : 
+		[
+			{
+				"file" : 0
+			},
+			{
+				"command" : 0,
+				"file" : 0,
+				"line" : 27,
+				"parent" : 0
+			},
+			{
+				"command" : 1,
+				"file" : 0,
+				"line" : 34,
+				"parent" : 0
+			},
+			{
+				"command" : 1,
+				"file" : 0,
+				"line" : 35,
+				"parent" : 0
+			},
+			{
+				"command" : 1,
+				"file" : 0,
+				"line" : 36,
+				"parent" : 0
+			},
+			{
+				"command" : 2,
+				"file" : 0,
+				"line" : 28,
+				"parent" : 0
+			}
+		]
+	},
+	"compileGroups" : 
+	[
+		{
+			"compileCommandFragments" : 
+			[
+				{
+					"fragment" : "-g -fdiagnostics-color=always"
+				},
+				{
+					"fragment" : "-std=gnu99"
+				}
+			],
+			"includes" : 
+			[
+				{
+					"backtrace" : 5,
+					"path" : "/home/stiveman1/CLionProjects/Sakaar-SmartContract/lib/Sakaar/include"
+				},
+				{
+					"backtrace" : 5,
+					"path" : "/home/stiveman1/CLionProjects/Sakaar-SmartContract/lib/Sakaar/src"
+				},
+				{
+					"backtrace" : 2,
+					"path" : "/home/stiveman1/CLionProjects/Sakaar-SmartContract/lib/Sakaar-Struct/include"
+				},
+				{
+					"backtrace" : 2,
+					"path" : "/home/stiveman1/CLionProjects/Sakaar-SmartContract/lib/Sakaar-Memory/include"
+				},
+				{
+					"backtrace" : 3,
+					"path" : "/home/stiveman1/CLionProjects/Sakaar-SmartContract/lib/Sakaar-CryptoBase/include"
+				},
+				{
+					"backtrace" : 3,
+					"path" : "/home/stiveman1/CLionProjects/Sakaar-SmartContract/lib/Sakaar-CryptoCode/include"
+				},
+				{
+					"backtrace" : 3,
+					"path" : "/home/stiveman1/CLionProjects/Sakaar-SmartContract/lib/Sakaar-HashCode/include"
+				},
+				{
+					"backtrace" : 4,
+					"path" : "/home/stiveman1/CLionProjects/Sakaar-SmartContract/lib/Sakaar-NetWork/include"
+				}
+			],
+			"language" : "C",
+			"languageStandard" : 
+			{
+				"backtraces" : 
+				[
+					1
+				],
+				"standard" : "99"
+			},
+			"sourceIndexes" : 
+			[
+				0,
+				1,
+				2,
+				3,
+				4,
+				5,
+				6,
+				7,
+				8,
+				9,
+				10,
+				11,
+				12,
+				13,
+				14,
+				15,
+				16,
+				17,
+				18,
+				19,
+				20,
+				21,
+				22,
+				23,
+				24,
+				25
+			]
+		}
+	],
+	"dependencies" : 
+	[
+		{
+			"backtrace" : 2,
+			"id" : "Sakaar_Memory_lib::@aaef30b3a02b6ca4a5dc"
+		},
+		{
+			"backtrace" : 2,
+			"id" : "Sakaar_Struct_lib::@b37452f6da5ebf067e1f"
+		},
+		{
+			"backtrace" : 3,
+			"id" : "Sakaar_CryptoCode_lib::@9ad6458c41595016e840"
+		},
+		{
+			"backtrace" : 3,
+			"id" : "Sakaar_HashCode_lib::@8afdd5007ef639ea9a91"
+		},
+		{
+			"backtrace" : 3,
+			"id" : "Sakaar_CryptoBase_lib::@c8a6f4b370824bddb11f"
+		},
+		{
+			"backtrace" : 4,
+			"id" : "Sakaar_Network_lib::@97904b9de55028595cd9"
+		}
+	],
+	"id" : "Sakaar_lib::@e9ded1dff449a2749081",
+	"name" : "Sakaar_lib",
+	"nameOnDisk" : "libSakaar_lib.a",
+	"paths" : 
+	{
+		"build" : "lib/Sakaar",
+		"source" : "lib/Sakaar"
+	},
+	"sourceGroups" : 
+	[
+		{
+			"name" : "Source Files",
+			"sourceIndexes" : 
+			[
+				0,
+				1,
+				2,
+				3,
+				4,
+				5,
+				6,
+				7,
+				8,
+				9,
+				10,
+				11,
+				12,
+				13,
+				14,
+				15,
+				16,
+				17,
+				18,
+				19,
+				20,
+				21,
+				22,
+				23,
+				24,
+				25
+			]
+		}
+	],
+	"sources" : 
+	[
+		{
+			"backtrace" : 1,
+			"compileGroupIndex" : 0,
+			"path" : "lib/Sakaar/src/sakaar/account.c",
+			"sourceGroupIndex" : 0
+		},
+		{
+			"backtrace" : 1,
+			"compileGroupIndex" : 0,
+			"path" : "lib/Sakaar/src/sakaar/account_connections.c",
+			"sourceGroupIndex" : 0
+		},
+		{
+			"backtrace" : 1,
+			"compileGroupIndex" : 0,
+			"path" : "lib/Sakaar/src/sakaar/activated_accounts.c",
+			"sourceGroupIndex" : 0
+		},
+		{
+			"backtrace" : 1,
+			"compileGroupIndex" : 0,
+			"path" : "lib/Sakaar/src/sakaar/block.c",
+			"sourceGroupIndex" : 0
+		},
+		{
+			"backtrace" : 1,
+			"compileGroupIndex" : 0,
+			"path" : "lib/Sakaar/src/sakaar/block_check.c",
+			"sourceGroupIndex" : 0
+		},
+		{
+			"backtrace" : 1,
+			"compileGroupIndex" : 0,
+			"path" : "lib/Sakaar/src/sakaar/block_history.c",
+			"sourceGroupIndex" : 0
+		},
+		{
+			"backtrace" : 1,
+			"compileGroupIndex" : 0,
+			"path" : "lib/Sakaar/src/sakaar/block_smart.c",
+			"sourceGroupIndex" : 0
+		},
+		{
+			"backtrace" : 1,
+			"compileGroupIndex" : 0,
+			"path" : "lib/Sakaar/src/sakaar/config.c",
+			"sourceGroupIndex" : 0
+		},
+		{
+			"backtrace" : 1,
+			"compileGroupIndex" : 0,
+			"path" : "lib/Sakaar/src/sakaar/currency.c",
+			"sourceGroupIndex" : 0
+		},
+		{
+			"backtrace" : 1,
+			"compileGroupIndex" : 0,
+			"path" : "lib/Sakaar/src/sakaar/generation.c",
+			"sourceGroupIndex" : 0
+		},
+		{
+			"backtrace" : 1,
+			"compileGroupIndex" : 0,
+			"path" : "lib/Sakaar/src/sakaar/pre_transaction.c",
+			"sourceGroupIndex" : 0
+		},
+		{
+			"backtrace" : 1,
+			"compileGroupIndex" : 0,
+			"path" : "lib/Sakaar/src/sakaar/transaction.c",
+			"sourceGroupIndex" : 0
+		},
+		{
+			"backtrace" : 1,
+			"compileGroupIndex" : 0,
+			"path" : "lib/Sakaar/src/sakaar/wallet.c",
+			"sourceGroupIndex" : 0
+		},
+		{
+			"backtrace" : 1,
+			"compileGroupIndex" : 0,
+			"path" : "lib/Sakaar/src/sakaar/wallet_data.c",
+			"sourceGroupIndex" : 0
+		},
+		{
+			"backtrace" : 1,
+			"compileGroupIndex" : 0,
+			"path" : "lib/Sakaar/src/sakaar/wallet_smart.c",
+			"sourceGroupIndex" : 0
+		},
+		{
+			"backtrace" : 1,
+			"compileGroupIndex" : 0,
+			"path" : "lib/Sakaar/src/sakaar/block_smart/account_activate.c",
+			"sourceGroupIndex" : 0
+		},
+		{
+			"backtrace" : 1,
+			"compileGroupIndex" : 0,
+			"path" : "lib/Sakaar/src/sakaar/block_smart/account_create.c",
+			"sourceGroupIndex" : 0
+		},
+		{
+			"backtrace" : 1,
+			"compileGroupIndex" : 0,
+			"path" : "lib/Sakaar/src/sakaar/block_smart/account_deactivate.c",
+			"sourceGroupIndex" : 0
+		},
+		{
+			"backtrace" : 1,
+			"compileGroupIndex" : 0,
+			"path" : "lib/Sakaar/src/sakaar/block_smart/account_freeze.c",
+			"sourceGroupIndex" : 0
+		},
+		{
+			"backtrace" : 1,
+			"compileGroupIndex" : 0,
+			"path" : "lib/Sakaar/src/sakaar/block_smart/currency_create.c",
+			"sourceGroupIndex" : 0
+		},
+		{
+			"backtrace" : 1,
+			"compileGroupIndex" : 0,
+			"path" : "lib/Sakaar/src/sakaar/block_smart/wallet_connect.c",
+			"sourceGroupIndex" : 0
+		},
+		{
+			"backtrace" : 1,
+			"compileGroupIndex" : 0,
+			"path" : "lib/Sakaar/src/sakaar/block_smart/wallet_disconnect.c",
+			"sourceGroupIndex" : 0
+		},
+		{
+			"backtrace" : 1,
+			"compileGroupIndex" : 0,
+			"path" : "lib/Sakaar/src/sakaar/generation/account_username.c",
+			"sourceGroupIndex" : 0
+		},
+		{
+			"backtrace" : 1,
+			"compileGroupIndex" : 0,
+			"path" : "lib/Sakaar/src/sakaar/generation/block_create.c",
+			"sourceGroupIndex" : 0
+		},
+		{
+			"backtrace" : 1,
+			"compileGroupIndex" : 0,
+			"path" : "lib/Sakaar/src/sakaar/generation/block_result.c",
+			"sourceGroupIndex" : 0
+		},
+		{
+			"backtrace" : 1,
+			"compileGroupIndex" : 0,
+			"path" : "lib/Sakaar/src/sakaar/generation/wallet_create.c",
+			"sourceGroupIndex" : 0
+		}
+	],
+	"type" : "STATIC_LIBRARY"
+}
