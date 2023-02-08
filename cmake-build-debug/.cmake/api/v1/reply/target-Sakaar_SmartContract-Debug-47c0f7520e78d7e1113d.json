@@ -67,9 +67,21 @@
 				"parent" : 0
 			},
 			{
+				"command" : 1,
+				"file" : 0,
+				"line" : 44,
+				"parent" : 0
+			},
+			{
 				"command" : 2,
 				"file" : 0,
 				"line" : 68,
+				"parent" : 0
+			},
+			{
+				"command" : 2,
+				"file" : 0,
+				"line" : 65,
 				"parent" : 0
 			},
 			{
@@ -115,7 +127,7 @@
 				"command" : 2,
 				"file" : 1,
 				"line" : 29,
-				"parent" : 15
+				"parent" : 17
 			}
 		]
 	},
@@ -134,32 +146,36 @@
 			"includes" : 
 			[
 				{
-					"backtrace" : 8,
+					"backtrace" : 9,
 					"path" : "/home/stiveman1/CLionProjects/Sakaar-SmartContract/include"
 				},
 				{
-					"backtrace" : 8,
+					"backtrace" : 9,
 					"path" : "/home/stiveman1/CLionProjects/Sakaar-SmartContract/lib/Sakaar-Memory/include"
 				},
 				{
-					"backtrace" : 8,
+					"backtrace" : 9,
 					"path" : "/home/stiveman1/CLionProjects/Sakaar-SmartContract/lib/Sakaar-Struct/include"
 				},
 				{
-					"backtrace" : 8,
+					"backtrace" : 9,
 					"path" : "/home/stiveman1/CLionProjects/Sakaar-SmartContract/lib/Sakaar-CryptoCode/include"
 				},
 				{
-					"backtrace" : 8,
+					"backtrace" : 9,
 					"path" : "/home/stiveman1/CLionProjects/Sakaar-SmartContract/lib/Sakaar-HashCode/include"
 				},
 				{
-					"backtrace" : 8,
+					"backtrace" : 9,
 					"path" : "/home/stiveman1/CLionProjects/Sakaar-SmartContract/lib/Sakaar-CryptoBase/include"
 				},
 				{
-					"backtrace" : 8,
+					"backtrace" : 9,
 					"path" : "/home/stiveman1/CLionProjects/Sakaar-SmartContract/lib/Sakaar-NetWork/include"
+				},
+				{
+					"backtrace" : 9,
+					"path" : "/home/stiveman1/CLionProjects/Sakaar-SmartContract/lib/Sakaar/include"
 				}
 			],
 			"language" : "C",
@@ -180,32 +196,36 @@
 	"dependencies" : 
 	[
 		{
-			"backtrace" : 8,
+			"backtrace" : 9,
 			"id" : "Sakaar_SmartContract_lib::@6890427a1f51a3e7e1df"
 		},
 		{
-			"backtrace" : 8,
+			"backtrace" : 9,
 			"id" : "Sakaar_Memory_lib::@aaef30b3a02b6ca4a5dc"
 		},
 		{
-			"backtrace" : 8,
+			"backtrace" : 9,
 			"id" : "Sakaar_Struct_lib::@b37452f6da5ebf067e1f"
 		},
 		{
-			"backtrace" : 8,
+			"backtrace" : 9,
 			"id" : "Sakaar_CryptoCode_lib::@9ad6458c41595016e840"
 		},
 		{
-			"backtrace" : 8,
+			"backtrace" : 9,
 			"id" : "Sakaar_HashCode_lib::@8afdd5007ef639ea9a91"
 		},
 		{
-			"backtrace" : 8,
+			"backtrace" : 9,
 			"id" : "Sakaar_CryptoBase_lib::@c8a6f4b370824bddb11f"
 		},
 		{
-			"backtrace" : 8,
+			"backtrace" : 9,
 			"id" : "Sakaar_Network_lib::@97904b9de55028595cd9"
+		},
+		{
+			"backtrace" : 9,
+			"id" : "Sakaar_lib::@e9ded1dff449a2749081"
 		}
 	],
 	"id" : "Sakaar_SmartContract::@6890427a1f51a3e7e1df",
@@ -252,51 +272,61 @@
 				"role" : "libraryPath"
 			},
 			{
-				"fragment" : "-Wl,-rpath,/home/stiveman1/CLionProjects/Sakaar-SmartContract/lib/Sakaar-Memory:/home/stiveman1/CLionProjects/Sakaar-SmartContract/lib/Sakaar-Struct:/home/stiveman1/CLionProjects/Sakaar-SmartContract/lib/Sakaar-CryptoCode:/home/stiveman1/CLionProjects/Sakaar-SmartContract/lib/Sakaar-HashCode:/home/stiveman1/CLionProjects/Sakaar-SmartContract/lib/Sakaar-CryptoBase:/home/stiveman1/CLionProjects/Sakaar-SmartContract/lib/Sakaar-NetWork",
-				"role" : "libraries"
+				"backtrace" : 8,
+				"fragment" : "-L/home/stiveman1/CLionProjects/Sakaar-SmartContract/lib/Sakaar",
+				"role" : "libraryPath"
 			},
 			{
-				"backtrace" : 8,
-				"fragment" : "libSakaar_SmartContract_lib.a",
+				"fragment" : "-Wl,-rpath,/home/stiveman1/CLionProjects/Sakaar-SmartContract/lib/Sakaar-Memory:/home/stiveman1/CLionProjects/Sakaar-SmartContract/lib/Sakaar-Struct:/home/stiveman1/CLionProjects/Sakaar-SmartContract/lib/Sakaar-CryptoCode:/home/stiveman1/CLionProjects/Sakaar-SmartContract/lib/Sakaar-HashCode:/home/stiveman1/CLionProjects/Sakaar-SmartContract/lib/Sakaar-CryptoBase:/home/stiveman1/CLionProjects/Sakaar-SmartContract/lib/Sakaar-NetWork:/home/stiveman1/CLionProjects/Sakaar-SmartContract/lib/Sakaar",
 				"role" : "libraries"
 			},
 			{
 				"backtrace" : 9,
-				"fragment" : "lib/Sakaar-CryptoBase/libSakaar_CryptoBase_lib.a",
+				"fragment" : "libSakaar_SmartContract_lib.a",
 				"role" : "libraries"
 			},
 			{
 				"backtrace" : 10,
-				"fragment" : "lib/Sakaar-CryptoCode/libSakaar_CryptoCode_lib.a",
+				"fragment" : "lib/Sakaar/libSakaar_lib.a",
 				"role" : "libraries"
 			},
 			{
 				"backtrace" : 11,
-				"fragment" : "lib/Sakaar-HashCode/libSakaar_HashCode_lib.a",
+				"fragment" : "lib/Sakaar-CryptoBase/libSakaar_CryptoBase_lib.a",
 				"role" : "libraries"
 			},
 			{
 				"backtrace" : 12,
-				"fragment" : "lib/Sakaar-NetWork/libSakaar_Network_lib.a",
+				"fragment" : "lib/Sakaar-CryptoCode/libSakaar_CryptoCode_lib.a",
 				"role" : "libraries"
 			},
 			{
 				"backtrace" : 13,
-				"fragment" : "lib/Sakaar-Struct/libSakaar_Struct_lib.a",
+				"fragment" : "lib/Sakaar-HashCode/libSakaar_HashCode_lib.a",
 				"role" : "libraries"
 			},
 			{
 				"backtrace" : 14,
+				"fragment" : "lib/Sakaar-NetWork/libSakaar_Network_lib.a",
+				"role" : "libraries"
+			},
+			{
+				"backtrace" : 15,
+				"fragment" : "lib/Sakaar-Struct/libSakaar_Struct_lib.a",
+				"role" : "libraries"
+			},
+			{
+				"backtrace" : 16,
 				"fragment" : "lib/Sakaar-Memory/libSakaar_Memory_lib.a",
 				"role" : "libraries"
 			},
 			{
-				"backtrace" : 16,
+				"backtrace" : 18,
 				"fragment" : "-lgmp",
 				"role" : "libraries"
 			},
 			{
-				"backtrace" : 16,
+				"backtrace" : 18,
 				"fragment" : "-lgmpxx",
 				"role" : "libraries"
 			}

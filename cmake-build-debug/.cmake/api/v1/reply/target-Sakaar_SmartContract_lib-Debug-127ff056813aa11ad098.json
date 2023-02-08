@@ -1,0 +1,328 @@
+{
+	"archive" : {},
+	"artifacts" : 
+	[
+		{
+			"path" : "libSakaar_SmartContract_lib.a"
+		}
+	],
+	"backtrace" : 1,
+	"backtraceGraph" : 
+	{
+		"commands" : 
+		[
+			"add_library",
+			"target_link_libraries",
+			"target_include_directories"
+		],
+		"files" : 
+		[
+			"CMakeLists.txt"
+		],
+		"nodes" : 
+		[
+			{
+				"file" : 0
+			},
+			{
+				"command" : 0,
+				"file" : 0,
+				"line" : 52,
+				"parent" : 0
+			},
+			{
+				"command" : 1,
+				"file" : 0,
+				"line" : 59,
+				"parent" : 0
+			},
+			{
+				"command" : 1,
+				"file" : 0,
+				"line" : 60,
+				"parent" : 0
+			},
+			{
+				"command" : 1,
+				"file" : 0,
+				"line" : 61,
+				"parent" : 0
+			},
+			{
+				"command" : 1,
+				"file" : 0,
+				"line" : 62,
+				"parent" : 0
+			},
+			{
+				"command" : 1,
+				"file" : 0,
+				"line" : 63,
+				"parent" : 0
+			},
+			{
+				"command" : 1,
+				"file" : 0,
+				"line" : 64,
+				"parent" : 0
+			},
+			{
+				"command" : 1,
+				"file" : 0,
+				"line" : 65,
+				"parent" : 0
+			},
+			{
+				"command" : 2,
+				"file" : 0,
+				"line" : 53,
+				"parent" : 0
+			}
+		]
+	},
+	"compileGroups" : 
+	[
+		{
+			"compileCommandFragments" : 
+			[
+				{
+					"fragment" : "-g -fdiagnostics-color=always"
+				},
+				{
+					"fragment" : "-std=gnu99"
+				}
+			],
+			"includes" : 
+			[
+				{
+					"backtrace" : 9,
+					"path" : "/home/stiveman1/CLionProjects/Sakaar-SmartContract/include"
+				},
+				{
+					"backtrace" : 9,
+					"path" : "/home/stiveman1/CLionProjects/Sakaar-SmartContract/src"
+				},
+				{
+					"backtrace" : 2,
+					"path" : "/home/stiveman1/CLionProjects/Sakaar-SmartContract/lib/Sakaar-Memory/include"
+				},
+				{
+					"backtrace" : 3,
+					"path" : "/home/stiveman1/CLionProjects/Sakaar-SmartContract/lib/Sakaar-Struct/include"
+				},
+				{
+					"backtrace" : 4,
+					"path" : "/home/stiveman1/CLionProjects/Sakaar-SmartContract/lib/Sakaar-CryptoCode/include"
+				},
+				{
+					"backtrace" : 5,
+					"path" : "/home/stiveman1/CLionProjects/Sakaar-SmartContract/lib/Sakaar-HashCode/include"
+				},
+				{
+					"backtrace" : 6,
+					"path" : "/home/stiveman1/CLionProjects/Sakaar-SmartContract/lib/Sakaar-CryptoBase/include"
+				},
+				{
+					"backtrace" : 7,
+					"path" : "/home/stiveman1/CLionProjects/Sakaar-SmartContract/lib/Sakaar-NetWork/include"
+				},
+				{
+					"backtrace" : 8,
+					"path" : "/home/stiveman1/CLionProjects/Sakaar-SmartContract/lib/Sakaar/include"
+				}
+			],
+			"language" : "C",
+			"languageStandard" : 
+			{
+				"backtraces" : 
+				[
+					1
+				],
+				"standard" : "99"
+			},
+			"sourceIndexes" : 
+			[
+				0,
+				1,
+				2,
+				3,
+				4,
+				5,
+				6,
+				7,
+				8,
+				9,
+				10,
+				11,
+				12,
+				13,
+				14,
+				15
+			]
+		}
+	],
+	"dependencies" : 
+	[
+		{
+			"backtrace" : 2,
+			"id" : "Sakaar_Memory_lib::@aaef30b3a02b6ca4a5dc"
+		},
+		{
+			"backtrace" : 3,
+			"id" : "Sakaar_Struct_lib::@b37452f6da5ebf067e1f"
+		},
+		{
+			"backtrace" : 4,
+			"id" : "Sakaar_CryptoCode_lib::@9ad6458c41595016e840"
+		},
+		{
+			"backtrace" : 5,
+			"id" : "Sakaar_HashCode_lib::@8afdd5007ef639ea9a91"
+		},
+		{
+			"backtrace" : 6,
+			"id" : "Sakaar_CryptoBase_lib::@c8a6f4b370824bddb11f"
+		},
+		{
+			"backtrace" : 7,
+			"id" : "Sakaar_Network_lib::@97904b9de55028595cd9"
+		},
+		{
+			"backtrace" : 8,
+			"id" : "Sakaar_lib::@e9ded1dff449a2749081"
+		}
+	],
+	"id" : "Sakaar_SmartContract_lib::@6890427a1f51a3e7e1df",
+	"name" : "Sakaar_SmartContract_lib",
+	"nameOnDisk" : "libSakaar_SmartContract_lib.a",
+	"paths" : 
+	{
+		"build" : ".",
+		"source" : "."
+	},
+	"sourceGroups" : 
+	[
+		{
+			"name" : "Source Files",
+			"sourceIndexes" : 
+			[
+				0,
+				1,
+				2,
+				3,
+				4,
+				5,
+				6,
+				7,
+				8,
+				9,
+				10,
+				11,
+				12,
+				13,
+				14,
+				15
+			]
+		}
+	],
+	"sources" : 
+	[
+		{
+			"backtrace" : 1,
+			"compileGroupIndex" : 0,
+			"path" : "src/tk_tokenize.c",
+			"sourceGroupIndex" : 0
+		},
+		{
+			"backtrace" : 1,
+			"compileGroupIndex" : 0,
+			"path" : "src/an_analize/an_expr.c",
+			"sourceGroupIndex" : 0
+		},
+		{
+			"backtrace" : 1,
+			"compileGroupIndex" : 0,
+			"path" : "src/an_analize/an_oper.c",
+			"sourceGroupIndex" : 0
+		},
+		{
+			"backtrace" : 1,
+			"compileGroupIndex" : 0,
+			"path" : "src/an_analize/an_stmt.c",
+			"sourceGroupIndex" : 0
+		},
+		{
+			"backtrace" : 1,
+			"compileGroupIndex" : 0,
+			"path" : "src/op_operations/op_temp.c",
+			"sourceGroupIndex" : 0
+		},
+		{
+			"backtrace" : 1,
+			"compileGroupIndex" : 0,
+			"path" : "src/sc_structs/an_node.c",
+			"sourceGroupIndex" : 0
+		},
+		{
+			"backtrace" : 1,
+			"compileGroupIndex" : 0,
+			"path" : "src/sc_structs/an_parser.c",
+			"sourceGroupIndex" : 0
+		},
+		{
+			"backtrace" : 1,
+			"compileGroupIndex" : 0,
+			"path" : "src/sc_structs/op_block.c",
+			"sourceGroupIndex" : 0
+		},
+		{
+			"backtrace" : 1,
+			"compileGroupIndex" : 0,
+			"path" : "src/sc_structs/op_state.c",
+			"sourceGroupIndex" : 0
+		},
+		{
+			"backtrace" : 1,
+			"compileGroupIndex" : 0,
+			"path" : "src/sc_structs/tk_parser.c",
+			"sourceGroupIndex" : 0
+		},
+		{
+			"backtrace" : 1,
+			"compileGroupIndex" : 0,
+			"path" : "src/sc_structs/tk_token.c",
+			"sourceGroupIndex" : 0
+		},
+		{
+			"backtrace" : 1,
+			"compileGroupIndex" : 0,
+			"path" : "src/tk_tokenize/tk_identifier.c",
+			"sourceGroupIndex" : 0
+		},
+		{
+			"backtrace" : 1,
+			"compileGroupIndex" : 0,
+			"path" : "src/tk_tokenize/tk_integer.c",
+			"sourceGroupIndex" : 0
+		},
+		{
+			"backtrace" : 1,
+			"compileGroupIndex" : 0,
+			"path" : "src/tk_tokenize/tk_keyword.c",
+			"sourceGroupIndex" : 0
+		},
+		{
+			"backtrace" : 1,
+			"compileGroupIndex" : 0,
+			"path" : "src/tk_tokenize/tk_special.c",
+			"sourceGroupIndex" : 0
+		},
+		{
+			"backtrace" : 1,
+			"compileGroupIndex" : 0,
+			"path" : "src/tk_tokenize/tk_string.c",
+			"sourceGroupIndex" : 0
+		}
+	],
+	"type" : "STATIC_LIBRARY"
+}

@@ -102,6 +102,9 @@
 		},
 		{
 			"path" : "lib/Sakaar-NetWork/CMakeLists.txt"
+		},
+		{
+			"path" : "lib/Sakaar/CMakeLists.txt"
 		}
 	],
 	"kind" : "cmakeFiles",
