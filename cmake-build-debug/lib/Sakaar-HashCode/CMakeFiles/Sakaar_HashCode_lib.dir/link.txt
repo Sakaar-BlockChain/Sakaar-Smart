@@ -1,0 +1,2 @@
+C:\MinGW\bin\ar.exe qc libSakaar_HashCode_lib.a CMakeFiles/Sakaar_HashCode_lib.dir/src/hash_code.c.obj CMakeFiles/Sakaar_HashCode_lib.dir/src/hash_code/sha256.c.obj
+C:\MinGW\bin\ranlib.exe libSakaar_HashCode_lib.a

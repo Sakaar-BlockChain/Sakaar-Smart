@@ -1,0 +1,390 @@
+{
+	"configurations" : 
+	[
+		{
+			"directories" : 
+			[
+				{
+					"build" : ".",
+					"childIndexes" : 
+					[
+						1,
+						2,
+						3,
+						4,
+						5,
+						6,
+						7
+					],
+					"jsonFile" : "directory-.-Debug-d0094a50bb2071803777.json",
+					"minimumCMakeVersion" : 
+					{
+						"string" : "3.24"
+					},
+					"projectIndex" : 0,
+					"source" : ".",
+					"targetIndexes" : 
+					[
+						11,
+						12
+					]
+				},
+				{
+					"build" : "lib/Sakaar-Memory",
+					"jsonFile" : "directory-lib.Sakaar-Memory-Debug-f81c7f8092067b5b6ba1.json",
+					"minimumCMakeVersion" : 
+					{
+						"string" : "3.22"
+					},
+					"parentIndex" : 0,
+					"projectIndex" : 1,
+					"source" : "lib/Sakaar-Memory",
+					"targetIndexes" : 
+					[
+						7,
+						8
+					]
+				},
+				{
+					"build" : "lib/Sakaar-Struct",
+					"jsonFile" : "directory-lib.Sakaar-Struct-Debug-4d7f80caf8c42972033a.json",
+					"minimumCMakeVersion" : 
+					{
+						"string" : "3.22"
+					},
+					"parentIndex" : 0,
+					"projectIndex" : 2,
+					"source" : "lib/Sakaar-Struct",
+					"targetIndexes" : 
+					[
+						13,
+						14
+					]
+				},
+				{
+					"build" : "lib/Sakaar-CryptoCode",
+					"jsonFile" : "directory-lib.Sakaar-CryptoCode-Debug-96422c3edfcf9f9fe77a.json",
+					"minimumCMakeVersion" : 
+					{
+						"string" : "3.22"
+					},
+					"parentIndex" : 0,
+					"projectIndex" : 3,
+					"source" : "lib/Sakaar-CryptoCode",
+					"targetIndexes" : 
+					[
+						3,
+						4
+					]
+				},
+				{
+					"build" : "lib/Sakaar-HashCode",
+					"jsonFile" : "directory-lib.Sakaar-HashCode-Debug-f84ff10e4cad46f658d9.json",
+					"minimumCMakeVersion" : 
+					{
+						"string" : "3.22"
+					},
+					"parentIndex" : 0,
+					"projectIndex" : 4,
+					"source" : "lib/Sakaar-HashCode",
+					"targetIndexes" : 
+					[
+						5,
+						6
+					]
+				},
+				{
+					"build" : "lib/Sakaar-CryptoBase",
+					"jsonFile" : "directory-lib.Sakaar-CryptoBase-Debug-45296eb448ea65aa33ff.json",
+					"minimumCMakeVersion" : 
+					{
+						"string" : "3.22"
+					},
+					"parentIndex" : 0,
+					"projectIndex" : 5,
+					"source" : "lib/Sakaar-CryptoBase",
+					"targetIndexes" : 
+					[
+						1,
+						2
+					]
+				},
+				{
+					"build" : "lib/Sakaar-NetWork",
+					"jsonFile" : "directory-lib.Sakaar-NetWork-Debug-7679b7b0183380ed753a.json",
+					"minimumCMakeVersion" : 
+					{
+						"string" : "3.22"
+					},
+					"parentIndex" : 0,
+					"projectIndex" : 6,
+					"source" : "lib/Sakaar-Network",
+					"targetIndexes" : 
+					[
+						9,
+						10
+					]
+				},
+				{
+					"build" : "lib/Sakaar",
+					"jsonFile" : "directory-lib.Sakaar-Debug-3cf8742a4daf08a394e9.json",
+					"minimumCMakeVersion" : 
+					{
+						"string" : "3.22"
+					},
+					"parentIndex" : 0,
+					"projectIndex" : 7,
+					"source" : "lib/Sakaar",
+					"targetIndexes" : 
+					[
+						0,
+						15
+					]
+				}
+			],
+			"name" : "Debug",
+			"projects" : 
+			[
+				{
+					"childIndexes" : 
+					[
+						1,
+						2,
+						3,
+						4,
+						5,
+						6,
+						7
+					],
+					"directoryIndexes" : 
+					[
+						0
+					],
+					"name" : "Sakaar_SmartContract",
+					"targetIndexes" : 
+					[
+						11,
+						12
+					]
+				},
+				{
+					"directoryIndexes" : 
+					[
+						1
+					],
+					"name" : "Sakaar_Memory",
+					"parentIndex" : 0,
+					"targetIndexes" : 
+					[
+						7,
+						8
+					]
+				},
+				{
+					"directoryIndexes" : 
+					[
+						2
+					],
+					"name" : "Sakaar_Struct",
+					"parentIndex" : 0,
+					"targetIndexes" : 
+					[
+						13,
+						14
+					]
+				},
+				{
+					"directoryIndexes" : 
+					[
+						3
+					],
+					"name" : "Sakaar_CryptoCode",
+					"parentIndex" : 0,
+					"targetIndexes" : 
+					[
+						3,
+						4
+					]
+				},
+				{
+					"directoryIndexes" : 
+					[
+						4
+					],
+					"name" : "Sakaar_HashCode",
+					"parentIndex" : 0,
+					"targetIndexes" : 
+					[
+						5,
+						6
+					]
+				},
+				{
+					"directoryIndexes" : 
+					[
+						5
+					],
+					"name" : "Sakaar_CryptoBase",
+					"parentIndex" : 0,
+					"targetIndexes" : 
+					[
+						1,
+						2
+					]
+				},
+				{
+					"directoryIndexes" : 
+					[
+						6
+					],
+					"name" : "Sakaar_Network",
+					"parentIndex" : 0,
+					"targetIndexes" : 
+					[
+						9,
+						10
+					]
+				},
+				{
+					"directoryIndexes" : 
+					[
+						7
+					],
+					"name" : "Sakaar",
+					"parentIndex" : 0,
+					"targetIndexes" : 
+					[
+						0,
+						15
+					]
+				}
+			],
+			"targets" : 
+			[
+				{
+					"directoryIndex" : 7,
+					"id" : "Sakaar::@e9ded1dff449a2749081",
+					"jsonFile" : "target-Sakaar-Debug-8937ac4d191e60ad02a8.json",
+					"name" : "Sakaar",
+					"projectIndex" : 7
+				},
+				{
+					"directoryIndex" : 5,
+					"id" : "Sakaar_CryptoBase::@c8a6f4b370824bddb11f",
+					"jsonFile" : "target-Sakaar_CryptoBase-Debug-79a83431c6204e5b92c7.json",
+					"name" : "Sakaar_CryptoBase",
+					"projectIndex" : 5
+				},
+				{
+					"directoryIndex" : 5,
+					"id" : "Sakaar_CryptoBase_lib::@c8a6f4b370824bddb11f",
+					"jsonFile" : "target-Sakaar_CryptoBase_lib-Debug-309311967e31af2990bd.json",
+					"name" : "Sakaar_CryptoBase_lib",
+					"projectIndex" : 5
+				},
+				{
+					"directoryIndex" : 3,
+					"id" : "Sakaar_CryptoCode::@9ad6458c41595016e840",
+					"jsonFile" : "target-Sakaar_CryptoCode-Debug-e7df4c7c8553563884a1.json",
+					"name" : "Sakaar_CryptoCode",
+					"projectIndex" : 3
+				},
+				{
+					"directoryIndex" : 3,
+					"id" : "Sakaar_CryptoCode_lib::@9ad6458c41595016e840",
+					"jsonFile" : "target-Sakaar_CryptoCode_lib-Debug-93d675d8607bf223e297.json",
+					"name" : "Sakaar_CryptoCode_lib",
+					"projectIndex" : 3
+				},
+				{
+					"directoryIndex" : 4,
+					"id" : "Sakaar_HashCode::@8afdd5007ef639ea9a91",
+					"jsonFile" : "target-Sakaar_HashCode-Debug-08e27648e18bf25adccc.json",
+					"name" : "Sakaar_HashCode",
+					"projectIndex" : 4
+				},
+				{
+					"directoryIndex" : 4,
+					"id" : "Sakaar_HashCode_lib::@8afdd5007ef639ea9a91",
+					"jsonFile" : "target-Sakaar_HashCode_lib-Debug-8cc608fc644f86ee3ee0.json",
+					"name" : "Sakaar_HashCode_lib",
+					"projectIndex" : 4
+				},
+				{
+					"directoryIndex" : 1,
+					"id" : "Sakaar_Memory::@aaef30b3a02b6ca4a5dc",
+					"jsonFile" : "target-Sakaar_Memory-Debug-36bceaddce51ad21e73e.json",
+					"name" : "Sakaar_Memory",
+					"projectIndex" : 1
+				},
+				{
+					"directoryIndex" : 1,
+					"id" : "Sakaar_Memory_lib::@aaef30b3a02b6ca4a5dc",
+					"jsonFile" : "target-Sakaar_Memory_lib-Debug-b4eea053ea39189882af.json",
+					"name" : "Sakaar_Memory_lib",
+					"projectIndex" : 1
+				},
+				{
+					"directoryIndex" : 6,
+					"id" : "Sakaar_Network::@97904b9de55028595cd9",
+					"jsonFile" : "target-Sakaar_Network-Debug-f711f00dead0badcef7b.json",
+					"name" : "Sakaar_Network",
+					"projectIndex" : 6
+				},
+				{
+					"directoryIndex" : 6,
+					"id" : "Sakaar_Network_lib::@97904b9de55028595cd9",
+					"jsonFile" : "target-Sakaar_Network_lib-Debug-0039d77c7e792c77619e.json",
+					"name" : "Sakaar_Network_lib",
+					"projectIndex" : 6
+				},
+				{
+					"directoryIndex" : 0,
+					"id" : "Sakaar_SmartContract::@6890427a1f51a3e7e1df",
+					"jsonFile" : "target-Sakaar_SmartContract-Debug-9fc4290fc34c3e7b27ef.json",
+					"name" : "Sakaar_SmartContract",
+					"projectIndex" : 0
+				},
+				{
+					"directoryIndex" : 0,
+					"id" : "Sakaar_SmartContract_lib::@6890427a1f51a3e7e1df",
+					"jsonFile" : "target-Sakaar_SmartContract_lib-Debug-b774245ddcf2943cd3bc.json",
+					"name" : "Sakaar_SmartContract_lib",
+					"projectIndex" : 0
+				},
+				{
+					"directoryIndex" : 2,
+					"id" : "Sakaar_Struct::@b37452f6da5ebf067e1f",
+					"jsonFile" : "target-Sakaar_Struct-Debug-7c93a7c1039de7e95580.json",
+					"name" : "Sakaar_Struct",
+					"projectIndex" : 2
+				},
+				{
+					"directoryIndex" : 2,
+					"id" : "Sakaar_Struct_lib::@b37452f6da5ebf067e1f",
+					"jsonFile" : "target-Sakaar_Struct_lib-Debug-6dc2a542d8b193509d75.json",
+					"name" : "Sakaar_Struct_lib",
+					"projectIndex" : 2
+				},
+				{
+					"directoryIndex" : 7,
+					"id" : "Sakaar_lib::@e9ded1dff449a2749081",
+					"jsonFile" : "target-Sakaar_lib-Debug-8adfe944a4136c54beb9.json",
+					"name" : "Sakaar_lib",
+					"projectIndex" : 7
+				}
+			]
+		}
+	],
+	"kind" : "codemodel",
+	"paths" : 
+	{
+		"build" : "C:/Users/04024/Sakaar-Project/Sakaar-Smart/cmake-build-debug",
+		"source" : "C:/Users/04024/Sakaar-Project/Sakaar-Smart"
+	},
+	"version" : 
+	{
+		"major" : 2,
+		"minor" : 4
+	}
+}

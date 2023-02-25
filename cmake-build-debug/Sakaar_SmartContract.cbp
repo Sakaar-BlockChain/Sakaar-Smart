@@ -1,0 +1,1132 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CodeBlocks_project_file>
+	<FileVersion major="1" minor="6"/>
+	<Project>
+		<Option title="Sakaar_SmartContract"/>
+		<Option makefile_is_custom="1"/>
+		<Option compiler="gcc"/>
+		<Option virtualFolders="CMake Files\;CMake Files\lib\;CMake Files\lib\Sakaar\;CMake Files\lib\Sakaar-CryptoBase\;CMake Files\lib\Sakaar-CryptoCode\;CMake Files\lib\Sakaar-HashCode\;CMake Files\lib\Sakaar-Memory\;CMake Files\lib\Sakaar-Network\;CMake Files\lib\Sakaar-Struct\;CMake Files\lib\Sakaar-Struct\cmake\;"/>
+		<Build>
+			<Target title="all">
+				<Option working_dir="C:/Users/04024/Sakaar-Project/Sakaar-Smart/cmake-build-debug"/>
+				<Option type="4"/>
+				<MakeCommands>
+					<Build command="C:/MinGW/bin/mingw32-make.exe -f &quot;C:/Users/04024/Sakaar-Project/Sakaar-Smart/cmake-build-debug/Makefile&quot;  VERBOSE=1 all"/>
+					<CompileFile command="C:/MinGW/bin/mingw32-make.exe -f &quot;C:/Users/04024/Sakaar-Project/Sakaar-Smart/cmake-build-debug/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
+					<Clean command="C:/MinGW/bin/mingw32-make.exe -f &quot;C:/Users/04024/Sakaar-Project/Sakaar-Smart/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
+					<DistClean command="C:/MinGW/bin/mingw32-make.exe -f &quot;C:/Users/04024/Sakaar-Project/Sakaar-Smart/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
+				</MakeCommands>
+			</Target>
+			<Target title="Sakaar_SmartContract_lib">
+				<Option output="C:/Users/04024/Sakaar-Project/Sakaar-Smart/cmake-build-debug/libSakaar_SmartContract_lib.a" prefix_auto="0" extension_auto="0"/>
+				<Option working_dir="C:/Users/04024/Sakaar-Project/Sakaar-Smart/cmake-build-debug"/>
+				<Option object_output="./"/>
+				<Option type="2"/>
+				<Option compiler="gcc"/>
+				<Compiler>
+					<Add directory="C:/Users/04024/Sakaar-Project/Sakaar-Smart/include"/>
+					<Add directory="C:/Users/04024/Sakaar-Project/Sakaar-Smart/src"/>
+					<Add directory="C:/Users/04024/Sakaar-Project/Sakaar-Smart/lib/Sakaar-Memory/include"/>
+					<Add directory="C:/Users/04024/Sakaar-Project/Sakaar-Smart/lib/Sakaar-Struct/include"/>
+					<Add directory="C:/Users/04024/Sakaar-Project/Sakaar-Smart/lib/Sakaar-CryptoCode/include"/>
+					<Add directory="C:/Users/04024/Sakaar-Project/Sakaar-Smart/lib/Sakaar-HashCode/include"/>
+					<Add directory="C:/Users/04024/Sakaar-Project/Sakaar-Smart/lib/Sakaar-CryptoBase/include"/>
+					<Add directory="C:/Users/04024/Sakaar-Project/Sakaar-Smart/lib/Sakaar-Network/include"/>
+					<Add directory="C:/Users/04024/Sakaar-Project/Sakaar-Smart/lib/Sakaar/include"/>
+					<Add directory="c:\mingw\bin\../lib/gcc/mingw32/6.3.0/include"/>
+					<Add directory="c:\mingw\bin\../lib/gcc/mingw32/6.3.0/../../../../include"/>
+					<Add directory="c:\mingw\bin\../lib/gcc/mingw32/6.3.0/include-fixed"/>
+					<Add directory="c:\mingw\bin\../lib/gcc/mingw32/6.3.0/../../../../mingw32/include"/>
+				</Compiler>
+				<MakeCommands>
+					<Build command="C:/MinGW/bin/mingw32-make.exe -f &quot;C:/Users/04024/Sakaar-Project/Sakaar-Smart/cmake-build-debug/Makefile&quot;  VERBOSE=1 Sakaar_SmartContract_lib"/>
+					<CompileFile command="C:/MinGW/bin/mingw32-make.exe -f &quot;C:/Users/04024/Sakaar-Project/Sakaar-Smart/cmake-build-debug/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
+					<Clean command="C:/MinGW/bin/mingw32-make.exe -f &quot;C:/Users/04024/Sakaar-Project/Sakaar-Smart/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
+					<DistClean command="C:/MinGW/bin/mingw32-make.exe -f &quot;C:/Users/04024/Sakaar-Project/Sakaar-Smart/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
+				</MakeCommands>
+			</Target>
+			<Target title="Sakaar_SmartContract_lib/fast">
+				<Option output="C:/Users/04024/Sakaar-Project/Sakaar-Smart/cmake-build-debug/libSakaar_SmartContract_lib.a" prefix_auto="0" extension_auto="0"/>
+				<Option working_dir="C:/Users/04024/Sakaar-Project/Sakaar-Smart/cmake-build-debug"/>
+				<Option object_output="./"/>
+				<Option type="2"/>
+				<Option compiler="gcc"/>
+				<Compiler>
+					<Add directory="C:/Users/04024/Sakaar-Project/Sakaar-Smart/include"/>
+					<Add directory="C:/Users/04024/Sakaar-Project/Sakaar-Smart/src"/>
+					<Add directory="C:/Users/04024/Sakaar-Project/Sakaar-Smart/lib/Sakaar-Memory/include"/>
+					<Add directory="C:/Users/04024/Sakaar-Project/Sakaar-Smart/lib/Sakaar-Struct/include"/>
+					<Add directory="C:/Users/04024/Sakaar-Project/Sakaar-Smart/lib/Sakaar-CryptoCode/include"/>
+					<Add directory="C:/Users/04024/Sakaar-Project/Sakaar-Smart/lib/Sakaar-HashCode/include"/>
+					<Add directory="C:/Users/04024/Sakaar-Project/Sakaar-Smart/lib/Sakaar-CryptoBase/include"/>
+					<Add directory="C:/Users/04024/Sakaar-Project/Sakaar-Smart/lib/Sakaar-Network/include"/>
+					<Add directory="C:/Users/04024/Sakaar-Project/Sakaar-Smart/lib/Sakaar/include"/>
+					<Add directory="c:\mingw\bin\../lib/gcc/mingw32/6.3.0/include"/>
+					<Add directory="c:\mingw\bin\../lib/gcc/mingw32/6.3.0/../../../../include"/>
+					<Add directory="c:\mingw\bin\../lib/gcc/mingw32/6.3.0/include-fixed"/>
+					<Add directory="c:\mingw\bin\../lib/gcc/mingw32/6.3.0/../../../../mingw32/include"/>
+				</Compiler>
+				<MakeCommands>
+					<Build command="C:/MinGW/bin/mingw32-make.exe -f &quot;C:/Users/04024/Sakaar-Project/Sakaar-Smart/cmake-build-debug/Makefile&quot;  VERBOSE=1 Sakaar_SmartContract_lib/fast"/>
+					<CompileFile command="C:/MinGW/bin/mingw32-make.exe -f &quot;C:/Users/04024/Sakaar-Project/Sakaar-Smart/cmake-build-debug/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
+					<Clean command="C:/MinGW/bin/mingw32-make.exe -f &quot;C:/Users/04024/Sakaar-Project/Sakaar-Smart/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
+					<DistClean command="C:/MinGW/bin/mingw32-make.exe -f &quot;C:/Users/04024/Sakaar-Project/Sakaar-Smart/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
+				</MakeCommands>
+			</Target>
+			<Target title="Sakaar_SmartContract">
+				<Option output="C:/Users/04024/Sakaar-Project/Sakaar-Smart/cmake-build-debug/Sakaar_SmartContract.exe" prefix_auto="0" extension_auto="0"/>
+				<Option working_dir="C:/Users/04024/Sakaar-Project/Sakaar-Smart/cmake-build-debug"/>
+				<Option object_output="./"/>
+				<Option type="1"/>
+				<Option compiler="gcc"/>
+				<Compiler>
+					<Add directory="C:/Users/04024/Sakaar-Project/Sakaar-Smart/include"/>
+					<Add directory="C:/Users/04024/Sakaar-Project/Sakaar-Smart/lib/Sakaar-Memory/include"/>
+					<Add directory="C:/Users/04024/Sakaar-Project/Sakaar-Smart/lib/Sakaar-Struct/include"/>
+					<Add directory="C:/Users/04024/Sakaar-Project/Sakaar-Smart/lib/Sakaar-CryptoCode/include"/>
+					<Add directory="C:/Users/04024/Sakaar-Project/Sakaar-Smart/lib/Sakaar-HashCode/include"/>
+					<Add directory="C:/Users/04024/Sakaar-Project/Sakaar-Smart/lib/Sakaar-CryptoBase/include"/>
+					<Add directory="C:/Users/04024/Sakaar-Project/Sakaar-Smart/lib/Sakaar-Network/include"/>
+					<Add directory="C:/Users/04024/Sakaar-Project/Sakaar-Smart/lib/Sakaar/include"/>
+					<Add directory="c:\mingw\bin\../lib/gcc/mingw32/6.3.0/include"/>
+					<Add directory="c:\mingw\bin\../lib/gcc/mingw32/6.3.0/../../../../include"/>
+					<Add directory="c:\mingw\bin\../lib/gcc/mingw32/6.3.0/include-fixed"/>
+					<Add directory="c:\mingw\bin\../lib/gcc/mingw32/6.3.0/../../../../mingw32/include"/>
+				</Compiler>
+				<MakeCommands>
+					<Build command="C:/MinGW/bin/mingw32-make.exe -f &quot;C:/Users/04024/Sakaar-Project/Sakaar-Smart/cmake-build-debug/Makefile&quot;  VERBOSE=1 Sakaar_SmartContract"/>
+					<CompileFile command="C:/MinGW/bin/mingw32-make.exe -f &quot;C:/Users/04024/Sakaar-Project/Sakaar-Smart/cmake-build-debug/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
+					<Clean command="C:/MinGW/bin/mingw32-make.exe -f &quot;C:/Users/04024/Sakaar-Project/Sakaar-Smart/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
+					<DistClean command="C:/MinGW/bin/mingw32-make.exe -f &quot;C:/Users/04024/Sakaar-Project/Sakaar-Smart/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
+				</MakeCommands>
+			</Target>
+			<Target title="Sakaar_SmartContract/fast">
+				<Option output="C:/Users/04024/Sakaar-Project/Sakaar-Smart/cmake-build-debug/Sakaar_SmartContract.exe" prefix_auto="0" extension_auto="0"/>
+				<Option working_dir="C:/Users/04024/Sakaar-Project/Sakaar-Smart/cmake-build-debug"/>
+				<Option object_output="./"/>
+				<Option type="1"/>
+				<Option compiler="gcc"/>
+				<Compiler>
+					<Add directory="C:/Users/04024/Sakaar-Project/Sakaar-Smart/include"/>
+					<Add directory="C:/Users/04024/Sakaar-Project/Sakaar-Smart/lib/Sakaar-Memory/include"/>
+					<Add directory="C:/Users/04024/Sakaar-Project/Sakaar-Smart/lib/Sakaar-Struct/include"/>
+					<Add directory="C:/Users/04024/Sakaar-Project/Sakaar-Smart/lib/Sakaar-CryptoCode/include"/>
+					<Add directory="C:/Users/04024/Sakaar-Project/Sakaar-Smart/lib/Sakaar-HashCode/include"/>
+					<Add directory="C:/Users/04024/Sakaar-Project/Sakaar-Smart/lib/Sakaar-CryptoBase/include"/>
+					<Add directory="C:/Users/04024/Sakaar-Project/Sakaar-Smart/lib/Sakaar-Network/include"/>
+					<Add directory="C:/Users/04024/Sakaar-Project/Sakaar-Smart/lib/Sakaar/include"/>
+					<Add directory="c:\mingw\bin\../lib/gcc/mingw32/6.3.0/include"/>
+					<Add directory="c:\mingw\bin\../lib/gcc/mingw32/6.3.0/../../../../include"/>
+					<Add directory="c:\mingw\bin\../lib/gcc/mingw32/6.3.0/include-fixed"/>
+					<Add directory="c:\mingw\bin\../lib/gcc/mingw32/6.3.0/../../../../mingw32/include"/>
+				</Compiler>
+				<MakeCommands>
+					<Build command="C:/MinGW/bin/mingw32-make.exe -f &quot;C:/Users/04024/Sakaar-Project/Sakaar-Smart/cmake-build-debug/Makefile&quot;  VERBOSE=1 Sakaar_SmartContract/fast"/>
+					<CompileFile command="C:/MinGW/bin/mingw32-make.exe -f &quot;C:/Users/04024/Sakaar-Project/Sakaar-Smart/cmake-build-debug/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
+					<Clean command="C:/MinGW/bin/mingw32-make.exe -f &quot;C:/Users/04024/Sakaar-Project/Sakaar-Smart/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
+					<DistClean command="C:/MinGW/bin/mingw32-make.exe -f &quot;C:/Users/04024/Sakaar-Project/Sakaar-Smart/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
+				</MakeCommands>
+			</Target>
+			<Target title="edit_cache">
+				<Option working_dir="C:/Users/04024/Sakaar-Project/Sakaar-Smart/cmake-build-debug"/>
+				<Option type="4"/>
+				<MakeCommands>
+					<Build command="C:/MinGW/bin/mingw32-make.exe -f &quot;C:/Users/04024/Sakaar-Project/Sakaar-Smart/cmake-build-debug/Makefile&quot;  VERBOSE=1 edit_cache"/>
+					<CompileFile command="C:/MinGW/bin/mingw32-make.exe -f &quot;C:/Users/04024/Sakaar-Project/Sakaar-Smart/cmake-build-debug/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
+					<Clean command="C:/MinGW/bin/mingw32-make.exe -f &quot;C:/Users/04024/Sakaar-Project/Sakaar-Smart/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
+					<DistClean command="C:/MinGW/bin/mingw32-make.exe -f &quot;C:/Users/04024/Sakaar-Project/Sakaar-Smart/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
+				</MakeCommands>
+			</Target>
+			<Target title="rebuild_cache">
+				<Option working_dir="C:/Users/04024/Sakaar-Project/Sakaar-Smart/cmake-build-debug"/>
+				<Option type="4"/>
+				<MakeCommands>
+					<Build command="C:/MinGW/bin/mingw32-make.exe -f &quot;C:/Users/04024/Sakaar-Project/Sakaar-Smart/cmake-build-debug/Makefile&quot;  VERBOSE=1 rebuild_cache"/>
+					<CompileFile command="C:/MinGW/bin/mingw32-make.exe -f &quot;C:/Users/04024/Sakaar-Project/Sakaar-Smart/cmake-build-debug/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
+					<Clean command="C:/MinGW/bin/mingw32-make.exe -f &quot;C:/Users/04024/Sakaar-Project/Sakaar-Smart/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
+					<DistClean command="C:/MinGW/bin/mingw32-make.exe -f &quot;C:/Users/04024/Sakaar-Project/Sakaar-Smart/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
+				</MakeCommands>
+			</Target>
+			<Target title="Sakaar_Memory_lib">
+				<Option output="C:/Users/04024/Sakaar-Project/Sakaar-Smart/cmake-build-debug/lib/Sakaar-Memory/libSakaar_Memory_lib.a" prefix_auto="0" extension_auto="0"/>
+				<Option working_dir="C:/Users/04024/Sakaar-Project/Sakaar-Smart/cmake-build-debug/lib/Sakaar-Memory"/>
+				<Option object_output="./"/>
+				<Option type="2"/>
+				<Option compiler="gcc"/>
+				<Compiler>
+					<Add directory="C:/Users/04024/Sakaar-Project/Sakaar-Smart/lib/Sakaar-Memory/include"/>
+					<Add directory="C:/Users/04024/Sakaar-Project/Sakaar-Smart/lib/Sakaar-Memory/src"/>
+					<Add directory="c:\mingw\bin\../lib/gcc/mingw32/6.3.0/include"/>
+					<Add directory="c:\mingw\bin\../lib/gcc/mingw32/6.3.0/../../../../include"/>
+					<Add directory="c:\mingw\bin\../lib/gcc/mingw32/6.3.0/include-fixed"/>
+					<Add directory="c:\mingw\bin\../lib/gcc/mingw32/6.3.0/../../../../mingw32/include"/>
+				</Compiler>
+				<MakeCommands>
+					<Build command="C:/MinGW/bin/mingw32-make.exe -f &quot;C:/Users/04024/Sakaar-Project/Sakaar-Smart/cmake-build-debug/lib/Sakaar-Memory/Makefile&quot;  VERBOSE=1 Sakaar_Memory_lib"/>
+					<CompileFile command="C:/MinGW/bin/mingw32-make.exe -f &quot;C:/Users/04024/Sakaar-Project/Sakaar-Smart/cmake-build-debug/lib/Sakaar-Memory/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
+					<Clean command="C:/MinGW/bin/mingw32-make.exe -f &quot;C:/Users/04024/Sakaar-Project/Sakaar-Smart/cmake-build-debug/lib/Sakaar-Memory/Makefile&quot;  VERBOSE=1 clean"/>
+					<DistClean command="C:/MinGW/bin/mingw32-make.exe -f &quot;C:/Users/04024/Sakaar-Project/Sakaar-Smart/cmake-build-debug/lib/Sakaar-Memory/Makefile&quot;  VERBOSE=1 clean"/>
+				</MakeCommands>
+			</Target>
+			<Target title="Sakaar_Memory_lib/fast">
+				<Option output="C:/Users/04024/Sakaar-Project/Sakaar-Smart/cmake-build-debug/lib/Sakaar-Memory/libSakaar_Memory_lib.a" prefix_auto="0" extension_auto="0"/>
+				<Option working_dir="C:/Users/04024/Sakaar-Project/Sakaar-Smart/cmake-build-debug/lib/Sakaar-Memory"/>
+				<Option object_output="./"/>
+				<Option type="2"/>
+				<Option compiler="gcc"/>
+				<Compiler>
+					<Add directory="C:/Users/04024/Sakaar-Project/Sakaar-Smart/lib/Sakaar-Memory/include"/>
+					<Add directory="C:/Users/04024/Sakaar-Project/Sakaar-Smart/lib/Sakaar-Memory/src"/>
+					<Add directory="c:\mingw\bin\../lib/gcc/mingw32/6.3.0/include"/>
+					<Add directory="c:\mingw\bin\../lib/gcc/mingw32/6.3.0/../../../../include"/>
+					<Add directory="c:\mingw\bin\../lib/gcc/mingw32/6.3.0/include-fixed"/>
+					<Add directory="c:\mingw\bin\../lib/gcc/mingw32/6.3.0/../../../../mingw32/include"/>
+				</Compiler>
+				<MakeCommands>
+					<Build command="C:/MinGW/bin/mingw32-make.exe -f &quot;C:/Users/04024/Sakaar-Project/Sakaar-Smart/cmake-build-debug/lib/Sakaar-Memory/Makefile&quot;  VERBOSE=1 Sakaar_Memory_lib/fast"/>
+					<CompileFile command="C:/MinGW/bin/mingw32-make.exe -f &quot;C:/Users/04024/Sakaar-Project/Sakaar-Smart/cmake-build-debug/lib/Sakaar-Memory/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
+					<Clean command="C:/MinGW/bin/mingw32-make.exe -f &quot;C:/Users/04024/Sakaar-Project/Sakaar-Smart/cmake-build-debug/lib/Sakaar-Memory/Makefile&quot;  VERBOSE=1 clean"/>
+					<DistClean command="C:/MinGW/bin/mingw32-make.exe -f &quot;C:/Users/04024/Sakaar-Project/Sakaar-Smart/cmake-build-debug/lib/Sakaar-Memory/Makefile&quot;  VERBOSE=1 clean"/>
+				</MakeCommands>
+			</Target>
+			<Target title="Sakaar_Memory">
+				<Option output="C:/Users/04024/Sakaar-Project/Sakaar-Smart/cmake-build-debug/lib/Sakaar-Memory/Sakaar_Memory.exe" prefix_auto="0" extension_auto="0"/>
+				<Option working_dir="C:/Users/04024/Sakaar-Project/Sakaar-Smart/cmake-build-debug/lib/Sakaar-Memory"/>
+				<Option object_output="./"/>
+				<Option type="1"/>
+				<Option compiler="gcc"/>
+				<Compiler>
+					<Add directory="C:/Users/04024/Sakaar-Project/Sakaar-Smart/lib/Sakaar-Memory/include"/>
+					<Add directory="c:\mingw\bin\../lib/gcc/mingw32/6.3.0/include"/>
+					<Add directory="c:\mingw\bin\../lib/gcc/mingw32/6.3.0/../../../../include"/>
+					<Add directory="c:\mingw\bin\../lib/gcc/mingw32/6.3.0/include-fixed"/>
+					<Add directory="c:\mingw\bin\../lib/gcc/mingw32/6.3.0/../../../../mingw32/include"/>
+				</Compiler>
+				<MakeCommands>
+					<Build command="C:/MinGW/bin/mingw32-make.exe -f &quot;C:/Users/04024/Sakaar-Project/Sakaar-Smart/cmake-build-debug/lib/Sakaar-Memory/Makefile&quot;  VERBOSE=1 Sakaar_Memory"/>
+					<CompileFile command="C:/MinGW/bin/mingw32-make.exe -f &quot;C:/Users/04024/Sakaar-Project/Sakaar-Smart/cmake-build-debug/lib/Sakaar-Memory/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
+					<Clean command="C:/MinGW/bin/mingw32-make.exe -f &quot;C:/Users/04024/Sakaar-Project/Sakaar-Smart/cmake-build-debug/lib/Sakaar-Memory/Makefile&quot;  VERBOSE=1 clean"/>
+					<DistClean command="C:/MinGW/bin/mingw32-make.exe -f &quot;C:/Users/04024/Sakaar-Project/Sakaar-Smart/cmake-build-debug/lib/Sakaar-Memory/Makefile&quot;  VERBOSE=1 clean"/>
+				</MakeCommands>
+			</Target>
+			<Target title="Sakaar_Memory/fast">
+				<Option output="C:/Users/04024/Sakaar-Project/Sakaar-Smart/cmake-build-debug/lib/Sakaar-Memory/Sakaar_Memory.exe" prefix_auto="0" extension_auto="0"/>
+				<Option working_dir="C:/Users/04024/Sakaar-Project/Sakaar-Smart/cmake-build-debug/lib/Sakaar-Memory"/>
+				<Option object_output="./"/>
+				<Option type="1"/>
+				<Option compiler="gcc"/>
+				<Compiler>
+					<Add directory="C:/Users/04024/Sakaar-Project/Sakaar-Smart/lib/Sakaar-Memory/include"/>
+					<Add directory="c:\mingw\bin\../lib/gcc/mingw32/6.3.0/include"/>
+					<Add directory="c:\mingw\bin\../lib/gcc/mingw32/6.3.0/../../../../include"/>
+					<Add directory="c:\mingw\bin\../lib/gcc/mingw32/6.3.0/include-fixed"/>
+					<Add directory="c:\mingw\bin\../lib/gcc/mingw32/6.3.0/../../../../mingw32/include"/>
+				</Compiler>
+				<MakeCommands>
+					<Build command="C:/MinGW/bin/mingw32-make.exe -f &quot;C:/Users/04024/Sakaar-Project/Sakaar-Smart/cmake-build-debug/lib/Sakaar-Memory/Makefile&quot;  VERBOSE=1 Sakaar_Memory/fast"/>
+					<CompileFile command="C:/MinGW/bin/mingw32-make.exe -f &quot;C:/Users/04024/Sakaar-Project/Sakaar-Smart/cmake-build-debug/lib/Sakaar-Memory/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
+					<Clean command="C:/MinGW/bin/mingw32-make.exe -f &quot;C:/Users/04024/Sakaar-Project/Sakaar-Smart/cmake-build-debug/lib/Sakaar-Memory/Makefile&quot;  VERBOSE=1 clean"/>
+					<DistClean command="C:/MinGW/bin/mingw32-make.exe -f &quot;C:/Users/04024/Sakaar-Project/Sakaar-Smart/cmake-build-debug/lib/Sakaar-Memory/Makefile&quot;  VERBOSE=1 clean"/>
+				</MakeCommands>
+			</Target>
+			<Target title="Sakaar_Struct_lib">
+				<Option output="C:/Users/04024/Sakaar-Project/Sakaar-Smart/cmake-build-debug/lib/Sakaar-Struct/libSakaar_Struct_lib.a" prefix_auto="0" extension_auto="0"/>
+				<Option working_dir="C:/Users/04024/Sakaar-Project/Sakaar-Smart/cmake-build-debug/lib/Sakaar-Struct"/>
+				<Option object_output="./"/>
+				<Option type="2"/>
+				<Option compiler="gcc"/>
+				<Compiler>
+					<Add directory="C:/Users/04024/Sakaar-Project/Sakaar-Smart/lib/Sakaar-Struct/include"/>
+					<Add directory="C:/Users/04024/Sakaar-Project/Sakaar-Smart/lib/Sakaar-Struct/src"/>
+					<Add directory="C:/Users/04024/Sakaar-Project/Sakaar-Smart/lib/Sakaar-Memory/include"/>
+					<Add directory="c:\mingw\bin\../lib/gcc/mingw32/6.3.0/include"/>
+					<Add directory="c:\mingw\bin\../lib/gcc/mingw32/6.3.0/../../../../include"/>
+					<Add directory="c:\mingw\bin\../lib/gcc/mingw32/6.3.0/include-fixed"/>
+					<Add directory="c:\mingw\bin\../lib/gcc/mingw32/6.3.0/../../../../mingw32/include"/>
+				</Compiler>
+				<MakeCommands>
+					<Build command="C:/MinGW/bin/mingw32-make.exe -f &quot;C:/Users/04024/Sakaar-Project/Sakaar-Smart/cmake-build-debug/lib/Sakaar-Struct/Makefile&quot;  VERBOSE=1 Sakaar_Struct_lib"/>
+					<CompileFile command="C:/MinGW/bin/mingw32-make.exe -f &quot;C:/Users/04024/Sakaar-Project/Sakaar-Smart/cmake-build-debug/lib/Sakaar-Struct/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
+					<Clean command="C:/MinGW/bin/mingw32-make.exe -f &quot;C:/Users/04024/Sakaar-Project/Sakaar-Smart/cmake-build-debug/lib/Sakaar-Struct/Makefile&quot;  VERBOSE=1 clean"/>
+					<DistClean command="C:/MinGW/bin/mingw32-make.exe -f &quot;C:/Users/04024/Sakaar-Project/Sakaar-Smart/cmake-build-debug/lib/Sakaar-Struct/Makefile&quot;  VERBOSE=1 clean"/>
+				</MakeCommands>
+			</Target>
+			<Target title="Sakaar_Struct_lib/fast">
+				<Option output="C:/Users/04024/Sakaar-Project/Sakaar-Smart/cmake-build-debug/lib/Sakaar-Struct/libSakaar_Struct_lib.a" prefix_auto="0" extension_auto="0"/>
+				<Option working_dir="C:/Users/04024/Sakaar-Project/Sakaar-Smart/cmake-build-debug/lib/Sakaar-Struct"/>
+				<Option object_output="./"/>
+				<Option type="2"/>
+				<Option compiler="gcc"/>
+				<Compiler>
+					<Add directory="C:/Users/04024/Sakaar-Project/Sakaar-Smart/lib/Sakaar-Struct/include"/>
+					<Add directory="C:/Users/04024/Sakaar-Project/Sakaar-Smart/lib/Sakaar-Struct/src"/>
+					<Add directory="C:/Users/04024/Sakaar-Project/Sakaar-Smart/lib/Sakaar-Memory/include"/>
+					<Add directory="c:\mingw\bin\../lib/gcc/mingw32/6.3.0/include"/>
+					<Add directory="c:\mingw\bin\../lib/gcc/mingw32/6.3.0/../../../../include"/>
+					<Add directory="c:\mingw\bin\../lib/gcc/mingw32/6.3.0/include-fixed"/>
+					<Add directory="c:\mingw\bin\../lib/gcc/mingw32/6.3.0/../../../../mingw32/include"/>
+				</Compiler>
+				<MakeCommands>
+					<Build command="C:/MinGW/bin/mingw32-make.exe -f &quot;C:/Users/04024/Sakaar-Project/Sakaar-Smart/cmake-build-debug/lib/Sakaar-Struct/Makefile&quot;  VERBOSE=1 Sakaar_Struct_lib/fast"/>
+					<CompileFile command="C:/MinGW/bin/mingw32-make.exe -f &quot;C:/Users/04024/Sakaar-Project/Sakaar-Smart/cmake-build-debug/lib/Sakaar-Struct/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
+					<Clean command="C:/MinGW/bin/mingw32-make.exe -f &quot;C:/Users/04024/Sakaar-Project/Sakaar-Smart/cmake-build-debug/lib/Sakaar-Struct/Makefile&quot;  VERBOSE=1 clean"/>
+					<DistClean command="C:/MinGW/bin/mingw32-make.exe -f &quot;C:/Users/04024/Sakaar-Project/Sakaar-Smart/cmake-build-debug/lib/Sakaar-Struct/Makefile&quot;  VERBOSE=1 clean"/>
+				</MakeCommands>
+			</Target>
+			<Target title="Sakaar_Struct">
+				<Option output="C:/Users/04024/Sakaar-Project/Sakaar-Smart/cmake-build-debug/lib/Sakaar-Struct/Sakaar_Struct.exe" prefix_auto="0" extension_auto="0"/>
+				<Option working_dir="C:/Users/04024/Sakaar-Project/Sakaar-Smart/cmake-build-debug/lib/Sakaar-Struct"/>
+				<Option object_output="./"/>
+				<Option type="1"/>
+				<Option compiler="gcc"/>
+				<Compiler>
+					<Add directory="C:/Users/04024/Sakaar-Project/Sakaar-Smart/lib/Sakaar-Struct/include"/>
+					<Add directory="C:/Users/04024/Sakaar-Project/Sakaar-Smart/lib/Sakaar-Memory/include"/>
+					<Add directory="c:\mingw\bin\../lib/gcc/mingw32/6.3.0/include"/>
+					<Add directory="c:\mingw\bin\../lib/gcc/mingw32/6.3.0/../../../../include"/>
+					<Add directory="c:\mingw\bin\../lib/gcc/mingw32/6.3.0/include-fixed"/>
+					<Add directory="c:\mingw\bin\../lib/gcc/mingw32/6.3.0/../../../../mingw32/include"/>
+				</Compiler>
+				<MakeCommands>
+					<Build command="C:/MinGW/bin/mingw32-make.exe -f &quot;C:/Users/04024/Sakaar-Project/Sakaar-Smart/cmake-build-debug/lib/Sakaar-Struct/Makefile&quot;  VERBOSE=1 Sakaar_Struct"/>
+					<CompileFile command="C:/MinGW/bin/mingw32-make.exe -f &quot;C:/Users/04024/Sakaar-Project/Sakaar-Smart/cmake-build-debug/lib/Sakaar-Struct/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
+					<Clean command="C:/MinGW/bin/mingw32-make.exe -f &quot;C:/Users/04024/Sakaar-Project/Sakaar-Smart/cmake-build-debug/lib/Sakaar-Struct/Makefile&quot;  VERBOSE=1 clean"/>
+					<DistClean command="C:/MinGW/bin/mingw32-make.exe -f &quot;C:/Users/04024/Sakaar-Project/Sakaar-Smart/cmake-build-debug/lib/Sakaar-Struct/Makefile&quot;  VERBOSE=1 clean"/>
+				</MakeCommands>
+			</Target>
+			<Target title="Sakaar_Struct/fast">
+				<Option output="C:/Users/04024/Sakaar-Project/Sakaar-Smart/cmake-build-debug/lib/Sakaar-Struct/Sakaar_Struct.exe" prefix_auto="0" extension_auto="0"/>
+				<Option working_dir="C:/Users/04024/Sakaar-Project/Sakaar-Smart/cmake-build-debug/lib/Sakaar-Struct"/>
+				<Option object_output="./"/>
+				<Option type="1"/>
+				<Option compiler="gcc"/>
+				<Compiler>
+					<Add directory="C:/Users/04024/Sakaar-Project/Sakaar-Smart/lib/Sakaar-Struct/include"/>
+					<Add directory="C:/Users/04024/Sakaar-Project/Sakaar-Smart/lib/Sakaar-Memory/include"/>
+					<Add directory="c:\mingw\bin\../lib/gcc/mingw32/6.3.0/include"/>
+					<Add directory="c:\mingw\bin\../lib/gcc/mingw32/6.3.0/../../../../include"/>
+					<Add directory="c:\mingw\bin\../lib/gcc/mingw32/6.3.0/include-fixed"/>
+					<Add directory="c:\mingw\bin\../lib/gcc/mingw32/6.3.0/../../../../mingw32/include"/>
+				</Compiler>
+				<MakeCommands>
+					<Build command="C:/MinGW/bin/mingw32-make.exe -f &quot;C:/Users/04024/Sakaar-Project/Sakaar-Smart/cmake-build-debug/lib/Sakaar-Struct/Makefile&quot;  VERBOSE=1 Sakaar_Struct/fast"/>
+					<CompileFile command="C:/MinGW/bin/mingw32-make.exe -f &quot;C:/Users/04024/Sakaar-Project/Sakaar-Smart/cmake-build-debug/lib/Sakaar-Struct/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
+					<Clean command="C:/MinGW/bin/mingw32-make.exe -f &quot;C:/Users/04024/Sakaar-Project/Sakaar-Smart/cmake-build-debug/lib/Sakaar-Struct/Makefile&quot;  VERBOSE=1 clean"/>
+					<DistClean command="C:/MinGW/bin/mingw32-make.exe -f &quot;C:/Users/04024/Sakaar-Project/Sakaar-Smart/cmake-build-debug/lib/Sakaar-Struct/Makefile&quot;  VERBOSE=1 clean"/>
+				</MakeCommands>
+			</Target>
+			<Target title="Sakaar_CryptoCode_lib">
+				<Option output="C:/Users/04024/Sakaar-Project/Sakaar-Smart/cmake-build-debug/lib/Sakaar-CryptoCode/libSakaar_CryptoCode_lib.a" prefix_auto="0" extension_auto="0"/>
+				<Option working_dir="C:/Users/04024/Sakaar-Project/Sakaar-Smart/cmake-build-debug/lib/Sakaar-CryptoCode"/>
+				<Option object_output="./"/>
+				<Option type="2"/>
+				<Option compiler="gcc"/>
+				<Compiler>
+					<Add directory="C:/Users/04024/Sakaar-Project/Sakaar-Smart/lib/Sakaar-CryptoCode/include"/>
+					<Add directory="C:/Users/04024/Sakaar-Project/Sakaar-Smart/lib/Sakaar-CryptoCode/src"/>
+					<Add directory="C:/Users/04024/Sakaar-Project/Sakaar-Smart/lib/Sakaar-Struct/include"/>
+					<Add directory="C:/Users/04024/Sakaar-Project/Sakaar-Smart/lib/Sakaar-Memory/include"/>
+					<Add directory="c:\mingw\bin\../lib/gcc/mingw32/6.3.0/include"/>
+					<Add directory="c:\mingw\bin\../lib/gcc/mingw32/6.3.0/../../../../include"/>
+					<Add directory="c:\mingw\bin\../lib/gcc/mingw32/6.3.0/include-fixed"/>
+					<Add directory="c:\mingw\bin\../lib/gcc/mingw32/6.3.0/../../../../mingw32/include"/>
+				</Compiler>
+				<MakeCommands>
+					<Build command="C:/MinGW/bin/mingw32-make.exe -f &quot;C:/Users/04024/Sakaar-Project/Sakaar-Smart/cmake-build-debug/lib/Sakaar-CryptoCode/Makefile&quot;  VERBOSE=1 Sakaar_CryptoCode_lib"/>
+					<CompileFile command="C:/MinGW/bin/mingw32-make.exe -f &quot;C:/Users/04024/Sakaar-Project/Sakaar-Smart/cmake-build-debug/lib/Sakaar-CryptoCode/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
+					<Clean command="C:/MinGW/bin/mingw32-make.exe -f &quot;C:/Users/04024/Sakaar-Project/Sakaar-Smart/cmake-build-debug/lib/Sakaar-CryptoCode/Makefile&quot;  VERBOSE=1 clean"/>
+					<DistClean command="C:/MinGW/bin/mingw32-make.exe -f &quot;C:/Users/04024/Sakaar-Project/Sakaar-Smart/cmake-build-debug/lib/Sakaar-CryptoCode/Makefile&quot;  VERBOSE=1 clean"/>
+				</MakeCommands>
+			</Target>
+			<Target title="Sakaar_CryptoCode_lib/fast">
+				<Option output="C:/Users/04024/Sakaar-Project/Sakaar-Smart/cmake-build-debug/lib/Sakaar-CryptoCode/libSakaar_CryptoCode_lib.a" prefix_auto="0" extension_auto="0"/>
+				<Option working_dir="C:/Users/04024/Sakaar-Project/Sakaar-Smart/cmake-build-debug/lib/Sakaar-CryptoCode"/>
+				<Option object_output="./"/>
+				<Option type="2"/>
+				<Option compiler="gcc"/>
+				<Compiler>
+					<Add directory="C:/Users/04024/Sakaar-Project/Sakaar-Smart/lib/Sakaar-CryptoCode/include"/>
+					<Add directory="C:/Users/04024/Sakaar-Project/Sakaar-Smart/lib/Sakaar-CryptoCode/src"/>
+					<Add directory="C:/Users/04024/Sakaar-Project/Sakaar-Smart/lib/Sakaar-Struct/include"/>
+					<Add directory="C:/Users/04024/Sakaar-Project/Sakaar-Smart/lib/Sakaar-Memory/include"/>
+					<Add directory="c:\mingw\bin\../lib/gcc/mingw32/6.3.0/include"/>
+					<Add directory="c:\mingw\bin\../lib/gcc/mingw32/6.3.0/../../../../include"/>
+					<Add directory="c:\mingw\bin\../lib/gcc/mingw32/6.3.0/include-fixed"/>
+					<Add directory="c:\mingw\bin\../lib/gcc/mingw32/6.3.0/../../../../mingw32/include"/>
+				</Compiler>
+				<MakeCommands>
+					<Build command="C:/MinGW/bin/mingw32-make.exe -f &quot;C:/Users/04024/Sakaar-Project/Sakaar-Smart/cmake-build-debug/lib/Sakaar-CryptoCode/Makefile&quot;  VERBOSE=1 Sakaar_CryptoCode_lib/fast"/>
+					<CompileFile command="C:/MinGW/bin/mingw32-make.exe -f &quot;C:/Users/04024/Sakaar-Project/Sakaar-Smart/cmake-build-debug/lib/Sakaar-CryptoCode/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
+					<Clean command="C:/MinGW/bin/mingw32-make.exe -f &quot;C:/Users/04024/Sakaar-Project/Sakaar-Smart/cmake-build-debug/lib/Sakaar-CryptoCode/Makefile&quot;  VERBOSE=1 clean"/>
+					<DistClean command="C:/MinGW/bin/mingw32-make.exe -f &quot;C:/Users/04024/Sakaar-Project/Sakaar-Smart/cmake-build-debug/lib/Sakaar-CryptoCode/Makefile&quot;  VERBOSE=1 clean"/>
+				</MakeCommands>
+			</Target>
+			<Target title="Sakaar_CryptoCode">
+				<Option output="C:/Users/04024/Sakaar-Project/Sakaar-Smart/cmake-build-debug/lib/Sakaar-CryptoCode/Sakaar_CryptoCode.exe" prefix_auto="0" extension_auto="0"/>
+				<Option working_dir="C:/Users/04024/Sakaar-Project/Sakaar-Smart/cmake-build-debug/lib/Sakaar-CryptoCode"/>
+				<Option object_output="./"/>
+				<Option type="1"/>
+				<Option compiler="gcc"/>
+				<Compiler>
+					<Add directory="C:/Users/04024/Sakaar-Project/Sakaar-Smart/lib/Sakaar-CryptoCode/include"/>
+					<Add directory="C:/Users/04024/Sakaar-Project/Sakaar-Smart/lib/Sakaar-Struct/include"/>
+					<Add directory="C:/Users/04024/Sakaar-Project/Sakaar-Smart/lib/Sakaar-Memory/include"/>
+					<Add directory="c:\mingw\bin\../lib/gcc/mingw32/6.3.0/include"/>
+					<Add directory="c:\mingw\bin\../lib/gcc/mingw32/6.3.0/../../../../include"/>
+					<Add directory="c:\mingw\bin\../lib/gcc/mingw32/6.3.0/include-fixed"/>
+					<Add directory="c:\mingw\bin\../lib/gcc/mingw32/6.3.0/../../../../mingw32/include"/>
+				</Compiler>
+				<MakeCommands>
+					<Build command="C:/MinGW/bin/mingw32-make.exe -f &quot;C:/Users/04024/Sakaar-Project/Sakaar-Smart/cmake-build-debug/lib/Sakaar-CryptoCode/Makefile&quot;  VERBOSE=1 Sakaar_CryptoCode"/>
+					<CompileFile command="C:/MinGW/bin/mingw32-make.exe -f &quot;C:/Users/04024/Sakaar-Project/Sakaar-Smart/cmake-build-debug/lib/Sakaar-CryptoCode/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
+					<Clean command="C:/MinGW/bin/mingw32-make.exe -f &quot;C:/Users/04024/Sakaar-Project/Sakaar-Smart/cmake-build-debug/lib/Sakaar-CryptoCode/Makefile&quot;  VERBOSE=1 clean"/>
+					<DistClean command="C:/MinGW/bin/mingw32-make.exe -f &quot;C:/Users/04024/Sakaar-Project/Sakaar-Smart/cmake-build-debug/lib/Sakaar-CryptoCode/Makefile&quot;  VERBOSE=1 clean"/>
+				</MakeCommands>
+			</Target>
+			<Target title="Sakaar_CryptoCode/fast">
+				<Option output="C:/Users/04024/Sakaar-Project/Sakaar-Smart/cmake-build-debug/lib/Sakaar-CryptoCode/Sakaar_CryptoCode.exe" prefix_auto="0" extension_auto="0"/>
+				<Option working_dir="C:/Users/04024/Sakaar-Project/Sakaar-Smart/cmake-build-debug/lib/Sakaar-CryptoCode"/>
+				<Option object_output="./"/>
+				<Option type="1"/>
+				<Option compiler="gcc"/>
+				<Compiler>
+					<Add directory="C:/Users/04024/Sakaar-Project/Sakaar-Smart/lib/Sakaar-CryptoCode/include"/>
+					<Add directory="C:/Users/04024/Sakaar-Project/Sakaar-Smart/lib/Sakaar-Struct/include"/>
+					<Add directory="C:/Users/04024/Sakaar-Project/Sakaar-Smart/lib/Sakaar-Memory/include"/>
+					<Add directory="c:\mingw\bin\../lib/gcc/mingw32/6.3.0/include"/>
+					<Add directory="c:\mingw\bin\../lib/gcc/mingw32/6.3.0/../../../../include"/>
+					<Add directory="c:\mingw\bin\../lib/gcc/mingw32/6.3.0/include-fixed"/>
+					<Add directory="c:\mingw\bin\../lib/gcc/mingw32/6.3.0/../../../../mingw32/include"/>
+				</Compiler>
+				<MakeCommands>
+					<Build command="C:/MinGW/bin/mingw32-make.exe -f &quot;C:/Users/04024/Sakaar-Project/Sakaar-Smart/cmake-build-debug/lib/Sakaar-CryptoCode/Makefile&quot;  VERBOSE=1 Sakaar_CryptoCode/fast"/>
+					<CompileFile command="C:/MinGW/bin/mingw32-make.exe -f &quot;C:/Users/04024/Sakaar-Project/Sakaar-Smart/cmake-build-debug/lib/Sakaar-CryptoCode/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
+					<Clean command="C:/MinGW/bin/mingw32-make.exe -f &quot;C:/Users/04024/Sakaar-Project/Sakaar-Smart/cmake-build-debug/lib/Sakaar-CryptoCode/Makefile&quot;  VERBOSE=1 clean"/>
+					<DistClean command="C:/MinGW/bin/mingw32-make.exe -f &quot;C:/Users/04024/Sakaar-Project/Sakaar-Smart/cmake-build-debug/lib/Sakaar-CryptoCode/Makefile&quot;  VERBOSE=1 clean"/>
+				</MakeCommands>
+			</Target>
+			<Target title="Sakaar_HashCode_lib">
+				<Option output="C:/Users/04024/Sakaar-Project/Sakaar-Smart/cmake-build-debug/lib/Sakaar-HashCode/libSakaar_HashCode_lib.a" prefix_auto="0" extension_auto="0"/>
+				<Option working_dir="C:/Users/04024/Sakaar-Project/Sakaar-Smart/cmake-build-debug/lib/Sakaar-HashCode"/>
+				<Option object_output="./"/>
+				<Option type="2"/>
+				<Option compiler="gcc"/>
+				<Compiler>
+					<Add directory="C:/Users/04024/Sakaar-Project/Sakaar-Smart/lib/Sakaar-HashCode/include"/>
+					<Add directory="C:/Users/04024/Sakaar-Project/Sakaar-Smart/lib/Sakaar-HashCode/src"/>
+					<Add directory="C:/Users/04024/Sakaar-Project/Sakaar-Smart/lib/Sakaar-Struct/include"/>
+					<Add directory="C:/Users/04024/Sakaar-Project/Sakaar-Smart/lib/Sakaar-Memory/include"/>
+					<Add directory="c:\mingw\bin\../lib/gcc/mingw32/6.3.0/include"/>
+					<Add directory="c:\mingw\bin\../lib/gcc/mingw32/6.3.0/../../../../include"/>
+					<Add directory="c:\mingw\bin\../lib/gcc/mingw32/6.3.0/include-fixed"/>
+					<Add directory="c:\mingw\bin\../lib/gcc/mingw32/6.3.0/../../../../mingw32/include"/>
+				</Compiler>
+				<MakeCommands>
+					<Build command="C:/MinGW/bin/mingw32-make.exe -f &quot;C:/Users/04024/Sakaar-Project/Sakaar-Smart/cmake-build-debug/lib/Sakaar-HashCode/Makefile&quot;  VERBOSE=1 Sakaar_HashCode_lib"/>
+					<CompileFile command="C:/MinGW/bin/mingw32-make.exe -f &quot;C:/Users/04024/Sakaar-Project/Sakaar-Smart/cmake-build-debug/lib/Sakaar-HashCode/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
+					<Clean command="C:/MinGW/bin/mingw32-make.exe -f &quot;C:/Users/04024/Sakaar-Project/Sakaar-Smart/cmake-build-debug/lib/Sakaar-HashCode/Makefile&quot;  VERBOSE=1 clean"/>
+					<DistClean command="C:/MinGW/bin/mingw32-make.exe -f &quot;C:/Users/04024/Sakaar-Project/Sakaar-Smart/cmake-build-debug/lib/Sakaar-HashCode/Makefile&quot;  VERBOSE=1 clean"/>
+				</MakeCommands>
+			</Target>
+			<Target title="Sakaar_HashCode_lib/fast">
+				<Option output="C:/Users/04024/Sakaar-Project/Sakaar-Smart/cmake-build-debug/lib/Sakaar-HashCode/libSakaar_HashCode_lib.a" prefix_auto="0" extension_auto="0"/>
+				<Option working_dir="C:/Users/04024/Sakaar-Project/Sakaar-Smart/cmake-build-debug/lib/Sakaar-HashCode"/>
+				<Option object_output="./"/>
+				<Option type="2"/>
+				<Option compiler="gcc"/>
+				<Compiler>
+					<Add directory="C:/Users/04024/Sakaar-Project/Sakaar-Smart/lib/Sakaar-HashCode/include"/>
+					<Add directory="C:/Users/04024/Sakaar-Project/Sakaar-Smart/lib/Sakaar-HashCode/src"/>
+					<Add directory="C:/Users/04024/Sakaar-Project/Sakaar-Smart/lib/Sakaar-Struct/include"/>
+					<Add directory="C:/Users/04024/Sakaar-Project/Sakaar-Smart/lib/Sakaar-Memory/include"/>
+					<Add directory="c:\mingw\bin\../lib/gcc/mingw32/6.3.0/include"/>
+					<Add directory="c:\mingw\bin\../lib/gcc/mingw32/6.3.0/../../../../include"/>
+					<Add directory="c:\mingw\bin\../lib/gcc/mingw32/6.3.0/include-fixed"/>
+					<Add directory="c:\mingw\bin\../lib/gcc/mingw32/6.3.0/../../../../mingw32/include"/>
+				</Compiler>
+				<MakeCommands>
+					<Build command="C:/MinGW/bin/mingw32-make.exe -f &quot;C:/Users/04024/Sakaar-Project/Sakaar-Smart/cmake-build-debug/lib/Sakaar-HashCode/Makefile&quot;  VERBOSE=1 Sakaar_HashCode_lib/fast"/>
+					<CompileFile command="C:/MinGW/bin/mingw32-make.exe -f &quot;C:/Users/04024/Sakaar-Project/Sakaar-Smart/cmake-build-debug/lib/Sakaar-HashCode/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
+					<Clean command="C:/MinGW/bin/mingw32-make.exe -f &quot;C:/Users/04024/Sakaar-Project/Sakaar-Smart/cmake-build-debug/lib/Sakaar-HashCode/Makefile&quot;  VERBOSE=1 clean"/>
+					<DistClean command="C:/MinGW/bin/mingw32-make.exe -f &quot;C:/Users/04024/Sakaar-Project/Sakaar-Smart/cmake-build-debug/lib/Sakaar-HashCode/Makefile&quot;  VERBOSE=1 clean"/>
+				</MakeCommands>
+			</Target>
+			<Target title="Sakaar_HashCode">
+				<Option output="C:/Users/04024/Sakaar-Project/Sakaar-Smart/cmake-build-debug/lib/Sakaar-HashCode/Sakaar_HashCode.exe" prefix_auto="0" extension_auto="0"/>
+				<Option working_dir="C:/Users/04024/Sakaar-Project/Sakaar-Smart/cmake-build-debug/lib/Sakaar-HashCode"/>
+				<Option object_output="./"/>
+				<Option type="1"/>
+				<Option compiler="gcc"/>
+				<Compiler>
+					<Add directory="C:/Users/04024/Sakaar-Project/Sakaar-Smart/lib/Sakaar-HashCode/include"/>
+					<Add directory="C:/Users/04024/Sakaar-Project/Sakaar-Smart/lib/Sakaar-Struct/include"/>
+					<Add directory="C:/Users/04024/Sakaar-Project/Sakaar-Smart/lib/Sakaar-Memory/include"/>
+					<Add directory="c:\mingw\bin\../lib/gcc/mingw32/6.3.0/include"/>
+					<Add directory="c:\mingw\bin\../lib/gcc/mingw32/6.3.0/../../../../include"/>
+					<Add directory="c:\mingw\bin\../lib/gcc/mingw32/6.3.0/include-fixed"/>
+					<Add directory="c:\mingw\bin\../lib/gcc/mingw32/6.3.0/../../../../mingw32/include"/>
+				</Compiler>
+				<MakeCommands>
+					<Build command="C:/MinGW/bin/mingw32-make.exe -f &quot;C:/Users/04024/Sakaar-Project/Sakaar-Smart/cmake-build-debug/lib/Sakaar-HashCode/Makefile&quot;  VERBOSE=1 Sakaar_HashCode"/>
+					<CompileFile command="C:/MinGW/bin/mingw32-make.exe -f &quot;C:/Users/04024/Sakaar-Project/Sakaar-Smart/cmake-build-debug/lib/Sakaar-HashCode/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
+					<Clean command="C:/MinGW/bin/mingw32-make.exe -f &quot;C:/Users/04024/Sakaar-Project/Sakaar-Smart/cmake-build-debug/lib/Sakaar-HashCode/Makefile&quot;  VERBOSE=1 clean"/>
+					<DistClean command="C:/MinGW/bin/mingw32-make.exe -f &quot;C:/Users/04024/Sakaar-Project/Sakaar-Smart/cmake-build-debug/lib/Sakaar-HashCode/Makefile&quot;  VERBOSE=1 clean"/>
+				</MakeCommands>
+			</Target>
+			<Target title="Sakaar_HashCode/fast">
+				<Option output="C:/Users/04024/Sakaar-Project/Sakaar-Smart/cmake-build-debug/lib/Sakaar-HashCode/Sakaar_HashCode.exe" prefix_auto="0" extension_auto="0"/>
+				<Option working_dir="C:/Users/04024/Sakaar-Project/Sakaar-Smart/cmake-build-debug/lib/Sakaar-HashCode"/>
+				<Option object_output="./"/>
+				<Option type="1"/>
+				<Option compiler="gcc"/>
+				<Compiler>
+					<Add directory="C:/Users/04024/Sakaar-Project/Sakaar-Smart/lib/Sakaar-HashCode/include"/>
+					<Add directory="C:/Users/04024/Sakaar-Project/Sakaar-Smart/lib/Sakaar-Struct/include"/>
+					<Add directory="C:/Users/04024/Sakaar-Project/Sakaar-Smart/lib/Sakaar-Memory/include"/>
+					<Add directory="c:\mingw\bin\../lib/gcc/mingw32/6.3.0/include"/>
+					<Add directory="c:\mingw\bin\../lib/gcc/mingw32/6.3.0/../../../../include"/>
+					<Add directory="c:\mingw\bin\../lib/gcc/mingw32/6.3.0/include-fixed"/>
+					<Add directory="c:\mingw\bin\../lib/gcc/mingw32/6.3.0/../../../../mingw32/include"/>
+				</Compiler>
+				<MakeCommands>
+					<Build command="C:/MinGW/bin/mingw32-make.exe -f &quot;C:/Users/04024/Sakaar-Project/Sakaar-Smart/cmake-build-debug/lib/Sakaar-HashCode/Makefile&quot;  VERBOSE=1 Sakaar_HashCode/fast"/>
+					<CompileFile command="C:/MinGW/bin/mingw32-make.exe -f &quot;C:/Users/04024/Sakaar-Project/Sakaar-Smart/cmake-build-debug/lib/Sakaar-HashCode/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
+					<Clean command="C:/MinGW/bin/mingw32-make.exe -f &quot;C:/Users/04024/Sakaar-Project/Sakaar-Smart/cmake-build-debug/lib/Sakaar-HashCode/Makefile&quot;  VERBOSE=1 clean"/>
+					<DistClean command="C:/MinGW/bin/mingw32-make.exe -f &quot;C:/Users/04024/Sakaar-Project/Sakaar-Smart/cmake-build-debug/lib/Sakaar-HashCode/Makefile&quot;  VERBOSE=1 clean"/>
+				</MakeCommands>
+			</Target>
+			<Target title="Sakaar_CryptoBase_lib">
+				<Option output="C:/Users/04024/Sakaar-Project/Sakaar-Smart/cmake-build-debug/lib/Sakaar-CryptoBase/libSakaar_CryptoBase_lib.a" prefix_auto="0" extension_auto="0"/>
+				<Option working_dir="C:/Users/04024/Sakaar-Project/Sakaar-Smart/cmake-build-debug/lib/Sakaar-CryptoBase"/>
+				<Option object_output="./"/>
+				<Option type="2"/>
+				<Option compiler="gcc"/>
+				<Compiler>
+					<Add directory="C:/Users/04024/Sakaar-Project/Sakaar-Smart/lib/Sakaar-CryptoBase/include"/>
+					<Add directory="C:/Users/04024/Sakaar-Project/Sakaar-Smart/lib/Sakaar-CryptoBase/src"/>
+					<Add directory="C:/Users/04024/Sakaar-Project/Sakaar-Smart/lib/Sakaar-Struct/include"/>
+					<Add directory="C:/Users/04024/Sakaar-Project/Sakaar-Smart/lib/Sakaar-Memory/include"/>
+					<Add directory="C:/Users/04024/Sakaar-Project/Sakaar-Smart/lib/Sakaar-CryptoCode/include"/>
+					<Add directory="C:/Users/04024/Sakaar-Project/Sakaar-Smart/lib/Sakaar-HashCode/include"/>
+					<Add directory="c:\mingw\bin\../lib/gcc/mingw32/6.3.0/include"/>
+					<Add directory="c:\mingw\bin\../lib/gcc/mingw32/6.3.0/../../../../include"/>
+					<Add directory="c:\mingw\bin\../lib/gcc/mingw32/6.3.0/include-fixed"/>
+					<Add directory="c:\mingw\bin\../lib/gcc/mingw32/6.3.0/../../../../mingw32/include"/>
+				</Compiler>
+				<MakeCommands>
+					<Build command="C:/MinGW/bin/mingw32-make.exe -f &quot;C:/Users/04024/Sakaar-Project/Sakaar-Smart/cmake-build-debug/lib/Sakaar-CryptoBase/Makefile&quot;  VERBOSE=1 Sakaar_CryptoBase_lib"/>
+					<CompileFile command="C:/MinGW/bin/mingw32-make.exe -f &quot;C:/Users/04024/Sakaar-Project/Sakaar-Smart/cmake-build-debug/lib/Sakaar-CryptoBase/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
+					<Clean command="C:/MinGW/bin/mingw32-make.exe -f &quot;C:/Users/04024/Sakaar-Project/Sakaar-Smart/cmake-build-debug/lib/Sakaar-CryptoBase/Makefile&quot;  VERBOSE=1 clean"/>
+					<DistClean command="C:/MinGW/bin/mingw32-make.exe -f &quot;C:/Users/04024/Sakaar-Project/Sakaar-Smart/cmake-build-debug/lib/Sakaar-CryptoBase/Makefile&quot;  VERBOSE=1 clean"/>
+				</MakeCommands>
+			</Target>
+			<Target title="Sakaar_CryptoBase_lib/fast">
+				<Option output="C:/Users/04024/Sakaar-Project/Sakaar-Smart/cmake-build-debug/lib/Sakaar-CryptoBase/libSakaar_CryptoBase_lib.a" prefix_auto="0" extension_auto="0"/>
+				<Option working_dir="C:/Users/04024/Sakaar-Project/Sakaar-Smart/cmake-build-debug/lib/Sakaar-CryptoBase"/>
+				<Option object_output="./"/>
+				<Option type="2"/>
+				<Option compiler="gcc"/>
+				<Compiler>
+					<Add directory="C:/Users/04024/Sakaar-Project/Sakaar-Smart/lib/Sakaar-CryptoBase/include"/>
+					<Add directory="C:/Users/04024/Sakaar-Project/Sakaar-Smart/lib/Sakaar-CryptoBase/src"/>
+					<Add directory="C:/Users/04024/Sakaar-Project/Sakaar-Smart/lib/Sakaar-Struct/include"/>
+					<Add directory="C:/Users/04024/Sakaar-Project/Sakaar-Smart/lib/Sakaar-Memory/include"/>
+					<Add directory="C:/Users/04024/Sakaar-Project/Sakaar-Smart/lib/Sakaar-CryptoCode/include"/>
+					<Add directory="C:/Users/04024/Sakaar-Project/Sakaar-Smart/lib/Sakaar-HashCode/include"/>
+					<Add directory="c:\mingw\bin\../lib/gcc/mingw32/6.3.0/include"/>
+					<Add directory="c:\mingw\bin\../lib/gcc/mingw32/6.3.0/../../../../include"/>
+					<Add directory="c:\mingw\bin\../lib/gcc/mingw32/6.3.0/include-fixed"/>
+					<Add directory="c:\mingw\bin\../lib/gcc/mingw32/6.3.0/../../../../mingw32/include"/>
+				</Compiler>
+				<MakeCommands>
+					<Build command="C:/MinGW/bin/mingw32-make.exe -f &quot;C:/Users/04024/Sakaar-Project/Sakaar-Smart/cmake-build-debug/lib/Sakaar-CryptoBase/Makefile&quot;  VERBOSE=1 Sakaar_CryptoBase_lib/fast"/>
+					<CompileFile command="C:/MinGW/bin/mingw32-make.exe -f &quot;C:/Users/04024/Sakaar-Project/Sakaar-Smart/cmake-build-debug/lib/Sakaar-CryptoBase/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
+					<Clean command="C:/MinGW/bin/mingw32-make.exe -f &quot;C:/Users/04024/Sakaar-Project/Sakaar-Smart/cmake-build-debug/lib/Sakaar-CryptoBase/Makefile&quot;  VERBOSE=1 clean"/>
+					<DistClean command="C:/MinGW/bin/mingw32-make.exe -f &quot;C:/Users/04024/Sakaar-Project/Sakaar-Smart/cmake-build-debug/lib/Sakaar-CryptoBase/Makefile&quot;  VERBOSE=1 clean"/>
+				</MakeCommands>
+			</Target>
+			<Target title="Sakaar_CryptoBase">
+				<Option output="C:/Users/04024/Sakaar-Project/Sakaar-Smart/cmake-build-debug/lib/Sakaar-CryptoBase/Sakaar_CryptoBase.exe" prefix_auto="0" extension_auto="0"/>
+				<Option working_dir="C:/Users/04024/Sakaar-Project/Sakaar-Smart/cmake-build-debug/lib/Sakaar-CryptoBase"/>
+				<Option object_output="./"/>
+				<Option type="1"/>
+				<Option compiler="gcc"/>
+				<Compiler>
+					<Add directory="C:/Users/04024/Sakaar-Project/Sakaar-Smart/lib/Sakaar-CryptoBase/include"/>
+					<Add directory="C:/Users/04024/Sakaar-Project/Sakaar-Smart/lib/Sakaar-Struct/include"/>
+					<Add directory="C:/Users/04024/Sakaar-Project/Sakaar-Smart/lib/Sakaar-Memory/include"/>
+					<Add directory="C:/Users/04024/Sakaar-Project/Sakaar-Smart/lib/Sakaar-CryptoCode/include"/>
+					<Add directory="C:/Users/04024/Sakaar-Project/Sakaar-Smart/lib/Sakaar-HashCode/include"/>
+					<Add directory="c:\mingw\bin\../lib/gcc/mingw32/6.3.0/include"/>
+					<Add directory="c:\mingw\bin\../lib/gcc/mingw32/6.3.0/../../../../include"/>
+					<Add directory="c:\mingw\bin\../lib/gcc/mingw32/6.3.0/include-fixed"/>
+					<Add directory="c:\mingw\bin\../lib/gcc/mingw32/6.3.0/../../../../mingw32/include"/>
+				</Compiler>
+				<MakeCommands>
+					<Build command="C:/MinGW/bin/mingw32-make.exe -f &quot;C:/Users/04024/Sakaar-Project/Sakaar-Smart/cmake-build-debug/lib/Sakaar-CryptoBase/Makefile&quot;  VERBOSE=1 Sakaar_CryptoBase"/>
+					<CompileFile command="C:/MinGW/bin/mingw32-make.exe -f &quot;C:/Users/04024/Sakaar-Project/Sakaar-Smart/cmake-build-debug/lib/Sakaar-CryptoBase/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
+					<Clean command="C:/MinGW/bin/mingw32-make.exe -f &quot;C:/Users/04024/Sakaar-Project/Sakaar-Smart/cmake-build-debug/lib/Sakaar-CryptoBase/Makefile&quot;  VERBOSE=1 clean"/>
+					<DistClean command="C:/MinGW/bin/mingw32-make.exe -f &quot;C:/Users/04024/Sakaar-Project/Sakaar-Smart/cmake-build-debug/lib/Sakaar-CryptoBase/Makefile&quot;  VERBOSE=1 clean"/>
+				</MakeCommands>
+			</Target>
+			<Target title="Sakaar_CryptoBase/fast">
+				<Option output="C:/Users/04024/Sakaar-Project/Sakaar-Smart/cmake-build-debug/lib/Sakaar-CryptoBase/Sakaar_CryptoBase.exe" prefix_auto="0" extension_auto="0"/>
+				<Option working_dir="C:/Users/04024/Sakaar-Project/Sakaar-Smart/cmake-build-debug/lib/Sakaar-CryptoBase"/>
+				<Option object_output="./"/>
+				<Option type="1"/>
+				<Option compiler="gcc"/>
+				<Compiler>
+					<Add directory="C:/Users/04024/Sakaar-Project/Sakaar-Smart/lib/Sakaar-CryptoBase/include"/>
+					<Add directory="C:/Users/04024/Sakaar-Project/Sakaar-Smart/lib/Sakaar-Struct/include"/>
+					<Add directory="C:/Users/04024/Sakaar-Project/Sakaar-Smart/lib/Sakaar-Memory/include"/>
+					<Add directory="C:/Users/04024/Sakaar-Project/Sakaar-Smart/lib/Sakaar-CryptoCode/include"/>
+					<Add directory="C:/Users/04024/Sakaar-Project/Sakaar-Smart/lib/Sakaar-HashCode/include"/>
+					<Add directory="c:\mingw\bin\../lib/gcc/mingw32/6.3.0/include"/>
+					<Add directory="c:\mingw\bin\../lib/gcc/mingw32/6.3.0/../../../../include"/>
+					<Add directory="c:\mingw\bin\../lib/gcc/mingw32/6.3.0/include-fixed"/>
+					<Add directory="c:\mingw\bin\../lib/gcc/mingw32/6.3.0/../../../../mingw32/include"/>
+				</Compiler>
+				<MakeCommands>
+					<Build command="C:/MinGW/bin/mingw32-make.exe -f &quot;C:/Users/04024/Sakaar-Project/Sakaar-Smart/cmake-build-debug/lib/Sakaar-CryptoBase/Makefile&quot;  VERBOSE=1 Sakaar_CryptoBase/fast"/>
+					<CompileFile command="C:/MinGW/bin/mingw32-make.exe -f &quot;C:/Users/04024/Sakaar-Project/Sakaar-Smart/cmake-build-debug/lib/Sakaar-CryptoBase/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
+					<Clean command="C:/MinGW/bin/mingw32-make.exe -f &quot;C:/Users/04024/Sakaar-Project/Sakaar-Smart/cmake-build-debug/lib/Sakaar-CryptoBase/Makefile&quot;  VERBOSE=1 clean"/>
+					<DistClean command="C:/MinGW/bin/mingw32-make.exe -f &quot;C:/Users/04024/Sakaar-Project/Sakaar-Smart/cmake-build-debug/lib/Sakaar-CryptoBase/Makefile&quot;  VERBOSE=1 clean"/>
+				</MakeCommands>
+			</Target>
+			<Target title="Sakaar_Network_lib">
+				<Option output="C:/Users/04024/Sakaar-Project/Sakaar-Smart/cmake-build-debug/lib/Sakaar-NetWork/libSakaar_Network_lib.a" prefix_auto="0" extension_auto="0"/>
+				<Option working_dir="C:/Users/04024/Sakaar-Project/Sakaar-Smart/cmake-build-debug/lib/Sakaar-NetWork"/>
+				<Option object_output="./"/>
+				<Option type="2"/>
+				<Option compiler="gcc"/>
+				<Compiler>
+					<Add directory="C:/Users/04024/Sakaar-Project/Sakaar-Smart/lib/Sakaar-Network/include"/>
+					<Add directory="C:/Users/04024/Sakaar-Project/Sakaar-Smart/lib/Sakaar-Network/src"/>
+					<Add directory="C:/Users/04024/Sakaar-Project/Sakaar-Smart/lib/Sakaar-Struct/include"/>
+					<Add directory="C:/Users/04024/Sakaar-Project/Sakaar-Smart/lib/Sakaar-Memory/include"/>
+					<Add directory="c:\mingw\bin\../lib/gcc/mingw32/6.3.0/include"/>
+					<Add directory="c:\mingw\bin\../lib/gcc/mingw32/6.3.0/../../../../include"/>
+					<Add directory="c:\mingw\bin\../lib/gcc/mingw32/6.3.0/include-fixed"/>
+					<Add directory="c:\mingw\bin\../lib/gcc/mingw32/6.3.0/../../../../mingw32/include"/>
+				</Compiler>
+				<MakeCommands>
+					<Build command="C:/MinGW/bin/mingw32-make.exe -f &quot;C:/Users/04024/Sakaar-Project/Sakaar-Smart/cmake-build-debug/lib/Sakaar-NetWork/Makefile&quot;  VERBOSE=1 Sakaar_Network_lib"/>
+					<CompileFile command="C:/MinGW/bin/mingw32-make.exe -f &quot;C:/Users/04024/Sakaar-Project/Sakaar-Smart/cmake-build-debug/lib/Sakaar-NetWork/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
+					<Clean command="C:/MinGW/bin/mingw32-make.exe -f &quot;C:/Users/04024/Sakaar-Project/Sakaar-Smart/cmake-build-debug/lib/Sakaar-NetWork/Makefile&quot;  VERBOSE=1 clean"/>
+					<DistClean command="C:/MinGW/bin/mingw32-make.exe -f &quot;C:/Users/04024/Sakaar-Project/Sakaar-Smart/cmake-build-debug/lib/Sakaar-NetWork/Makefile&quot;  VERBOSE=1 clean"/>
+				</MakeCommands>
+			</Target>
+			<Target title="Sakaar_Network_lib/fast">
+				<Option output="C:/Users/04024/Sakaar-Project/Sakaar-Smart/cmake-build-debug/lib/Sakaar-NetWork/libSakaar_Network_lib.a" prefix_auto="0" extension_auto="0"/>
+				<Option working_dir="C:/Users/04024/Sakaar-Project/Sakaar-Smart/cmake-build-debug/lib/Sakaar-NetWork"/>
+				<Option object_output="./"/>
+				<Option type="2"/>
+				<Option compiler="gcc"/>
+				<Compiler>
+					<Add directory="C:/Users/04024/Sakaar-Project/Sakaar-Smart/lib/Sakaar-Network/include"/>
+					<Add directory="C:/Users/04024/Sakaar-Project/Sakaar-Smart/lib/Sakaar-Network/src"/>
+					<Add directory="C:/Users/04024/Sakaar-Project/Sakaar-Smart/lib/Sakaar-Struct/include"/>
+					<Add directory="C:/Users/04024/Sakaar-Project/Sakaar-Smart/lib/Sakaar-Memory/include"/>
+					<Add directory="c:\mingw\bin\../lib/gcc/mingw32/6.3.0/include"/>
+					<Add directory="c:\mingw\bin\../lib/gcc/mingw32/6.3.0/../../../../include"/>
+					<Add directory="c:\mingw\bin\../lib/gcc/mingw32/6.3.0/include-fixed"/>
+					<Add directory="c:\mingw\bin\../lib/gcc/mingw32/6.3.0/../../../../mingw32/include"/>
+				</Compiler>
+				<MakeCommands>
+					<Build command="C:/MinGW/bin/mingw32-make.exe -f &quot;C:/Users/04024/Sakaar-Project/Sakaar-Smart/cmake-build-debug/lib/Sakaar-NetWork/Makefile&quot;  VERBOSE=1 Sakaar_Network_lib/fast"/>
+					<CompileFile command="C:/MinGW/bin/mingw32-make.exe -f &quot;C:/Users/04024/Sakaar-Project/Sakaar-Smart/cmake-build-debug/lib/Sakaar-NetWork/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
+					<Clean command="C:/MinGW/bin/mingw32-make.exe -f &quot;C:/Users/04024/Sakaar-Project/Sakaar-Smart/cmake-build-debug/lib/Sakaar-NetWork/Makefile&quot;  VERBOSE=1 clean"/>
+					<DistClean command="C:/MinGW/bin/mingw32-make.exe -f &quot;C:/Users/04024/Sakaar-Project/Sakaar-Smart/cmake-build-debug/lib/Sakaar-NetWork/Makefile&quot;  VERBOSE=1 clean"/>
+				</MakeCommands>
+			</Target>
+			<Target title="Sakaar_Network">
+				<Option output="C:/Users/04024/Sakaar-Project/Sakaar-Smart/cmake-build-debug/lib/Sakaar-NetWork/Sakaar_Network.exe" prefix_auto="0" extension_auto="0"/>
+				<Option working_dir="C:/Users/04024/Sakaar-Project/Sakaar-Smart/cmake-build-debug/lib/Sakaar-NetWork"/>
+				<Option object_output="./"/>
+				<Option type="1"/>
+				<Option compiler="gcc"/>
+				<Compiler>
+					<Add directory="C:/Users/04024/Sakaar-Project/Sakaar-Smart/lib/Sakaar-Network/include"/>
+					<Add directory="C:/Users/04024/Sakaar-Project/Sakaar-Smart/lib/Sakaar-Struct/include"/>
+					<Add directory="C:/Users/04024/Sakaar-Project/Sakaar-Smart/lib/Sakaar-Memory/include"/>
+					<Add directory="c:\mingw\bin\../lib/gcc/mingw32/6.3.0/include"/>
+					<Add directory="c:\mingw\bin\../lib/gcc/mingw32/6.3.0/../../../../include"/>
+					<Add directory="c:\mingw\bin\../lib/gcc/mingw32/6.3.0/include-fixed"/>
+					<Add directory="c:\mingw\bin\../lib/gcc/mingw32/6.3.0/../../../../mingw32/include"/>
+				</Compiler>
+				<MakeCommands>
+					<Build command="C:/MinGW/bin/mingw32-make.exe -f &quot;C:/Users/04024/Sakaar-Project/Sakaar-Smart/cmake-build-debug/lib/Sakaar-NetWork/Makefile&quot;  VERBOSE=1 Sakaar_Network"/>
+					<CompileFile command="C:/MinGW/bin/mingw32-make.exe -f &quot;C:/Users/04024/Sakaar-Project/Sakaar-Smart/cmake-build-debug/lib/Sakaar-NetWork/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
+					<Clean command="C:/MinGW/bin/mingw32-make.exe -f &quot;C:/Users/04024/Sakaar-Project/Sakaar-Smart/cmake-build-debug/lib/Sakaar-NetWork/Makefile&quot;  VERBOSE=1 clean"/>
+					<DistClean command="C:/MinGW/bin/mingw32-make.exe -f &quot;C:/Users/04024/Sakaar-Project/Sakaar-Smart/cmake-build-debug/lib/Sakaar-NetWork/Makefile&quot;  VERBOSE=1 clean"/>
+				</MakeCommands>
+			</Target>
+			<Target title="Sakaar_Network/fast">
+				<Option output="C:/Users/04024/Sakaar-Project/Sakaar-Smart/cmake-build-debug/lib/Sakaar-NetWork/Sakaar_Network.exe" prefix_auto="0" extension_auto="0"/>
+				<Option working_dir="C:/Users/04024/Sakaar-Project/Sakaar-Smart/cmake-build-debug/lib/Sakaar-NetWork"/>
+				<Option object_output="./"/>
+				<Option type="1"/>
+				<Option compiler="gcc"/>
+				<Compiler>
+					<Add directory="C:/Users/04024/Sakaar-Project/Sakaar-Smart/lib/Sakaar-Network/include"/>
+					<Add directory="C:/Users/04024/Sakaar-Project/Sakaar-Smart/lib/Sakaar-Struct/include"/>
+					<Add directory="C:/Users/04024/Sakaar-Project/Sakaar-Smart/lib/Sakaar-Memory/include"/>
+					<Add directory="c:\mingw\bin\../lib/gcc/mingw32/6.3.0/include"/>
+					<Add directory="c:\mingw\bin\../lib/gcc/mingw32/6.3.0/../../../../include"/>
+					<Add directory="c:\mingw\bin\../lib/gcc/mingw32/6.3.0/include-fixed"/>
+					<Add directory="c:\mingw\bin\../lib/gcc/mingw32/6.3.0/../../../../mingw32/include"/>
+				</Compiler>
+				<MakeCommands>
+					<Build command="C:/MinGW/bin/mingw32-make.exe -f &quot;C:/Users/04024/Sakaar-Project/Sakaar-Smart/cmake-build-debug/lib/Sakaar-NetWork/Makefile&quot;  VERBOSE=1 Sakaar_Network/fast"/>
+					<CompileFile command="C:/MinGW/bin/mingw32-make.exe -f &quot;C:/Users/04024/Sakaar-Project/Sakaar-Smart/cmake-build-debug/lib/Sakaar-NetWork/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
+					<Clean command="C:/MinGW/bin/mingw32-make.exe -f &quot;C:/Users/04024/Sakaar-Project/Sakaar-Smart/cmake-build-debug/lib/Sakaar-NetWork/Makefile&quot;  VERBOSE=1 clean"/>
+					<DistClean command="C:/MinGW/bin/mingw32-make.exe -f &quot;C:/Users/04024/Sakaar-Project/Sakaar-Smart/cmake-build-debug/lib/Sakaar-NetWork/Makefile&quot;  VERBOSE=1 clean"/>
+				</MakeCommands>
+			</Target>
+			<Target title="Sakaar_lib">
+				<Option output="C:/Users/04024/Sakaar-Project/Sakaar-Smart/cmake-build-debug/lib/Sakaar/libSakaar_lib.a" prefix_auto="0" extension_auto="0"/>
+				<Option working_dir="C:/Users/04024/Sakaar-Project/Sakaar-Smart/cmake-build-debug/lib/Sakaar"/>
+				<Option object_output="./"/>
+				<Option type="2"/>
+				<Option compiler="gcc"/>
+				<Compiler>
+					<Add directory="C:/Users/04024/Sakaar-Project/Sakaar-Smart/lib/Sakaar/include"/>
+					<Add directory="C:/Users/04024/Sakaar-Project/Sakaar-Smart/lib/Sakaar/src"/>
+					<Add directory="C:/Users/04024/Sakaar-Project/Sakaar-Smart/lib/Sakaar-Struct/include"/>
+					<Add directory="C:/Users/04024/Sakaar-Project/Sakaar-Smart/lib/Sakaar-Memory/include"/>
+					<Add directory="C:/Users/04024/Sakaar-Project/Sakaar-Smart/lib/Sakaar-CryptoBase/include"/>
+					<Add directory="C:/Users/04024/Sakaar-Project/Sakaar-Smart/lib/Sakaar-CryptoCode/include"/>
+					<Add directory="C:/Users/04024/Sakaar-Project/Sakaar-Smart/lib/Sakaar-HashCode/include"/>
+					<Add directory="C:/Users/04024/Sakaar-Project/Sakaar-Smart/lib/Sakaar-Network/include"/>
+					<Add directory="c:\mingw\bin\../lib/gcc/mingw32/6.3.0/include"/>
+					<Add directory="c:\mingw\bin\../lib/gcc/mingw32/6.3.0/../../../../include"/>
+					<Add directory="c:\mingw\bin\../lib/gcc/mingw32/6.3.0/include-fixed"/>
+					<Add directory="c:\mingw\bin\../lib/gcc/mingw32/6.3.0/../../../../mingw32/include"/>
+				</Compiler>
+				<MakeCommands>
+					<Build command="C:/MinGW/bin/mingw32-make.exe -f &quot;C:/Users/04024/Sakaar-Project/Sakaar-Smart/cmake-build-debug/lib/Sakaar/Makefile&quot;  VERBOSE=1 Sakaar_lib"/>
+					<CompileFile command="C:/MinGW/bin/mingw32-make.exe -f &quot;C:/Users/04024/Sakaar-Project/Sakaar-Smart/cmake-build-debug/lib/Sakaar/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
+					<Clean command="C:/MinGW/bin/mingw32-make.exe -f &quot;C:/Users/04024/Sakaar-Project/Sakaar-Smart/cmake-build-debug/lib/Sakaar/Makefile&quot;  VERBOSE=1 clean"/>
+					<DistClean command="C:/MinGW/bin/mingw32-make.exe -f &quot;C:/Users/04024/Sakaar-Project/Sakaar-Smart/cmake-build-debug/lib/Sakaar/Makefile&quot;  VERBOSE=1 clean"/>
+				</MakeCommands>
+			</Target>
+			<Target title="Sakaar_lib/fast">
+				<Option output="C:/Users/04024/Sakaar-Project/Sakaar-Smart/cmake-build-debug/lib/Sakaar/libSakaar_lib.a" prefix_auto="0" extension_auto="0"/>
+				<Option working_dir="C:/Users/04024/Sakaar-Project/Sakaar-Smart/cmake-build-debug/lib/Sakaar"/>
+				<Option object_output="./"/>
+				<Option type="2"/>
+				<Option compiler="gcc"/>
+				<Compiler>
+					<Add directory="C:/Users/04024/Sakaar-Project/Sakaar-Smart/lib/Sakaar/include"/>
+					<Add directory="C:/Users/04024/Sakaar-Project/Sakaar-Smart/lib/Sakaar/src"/>
+					<Add directory="C:/Users/04024/Sakaar-Project/Sakaar-Smart/lib/Sakaar-Struct/include"/>
+					<Add directory="C:/Users/04024/Sakaar-Project/Sakaar-Smart/lib/Sakaar-Memory/include"/>
+					<Add directory="C:/Users/04024/Sakaar-Project/Sakaar-Smart/lib/Sakaar-CryptoBase/include"/>
+					<Add directory="C:/Users/04024/Sakaar-Project/Sakaar-Smart/lib/Sakaar-CryptoCode/include"/>
+					<Add directory="C:/Users/04024/Sakaar-Project/Sakaar-Smart/lib/Sakaar-HashCode/include"/>
+					<Add directory="C:/Users/04024/Sakaar-Project/Sakaar-Smart/lib/Sakaar-Network/include"/>
+					<Add directory="c:\mingw\bin\../lib/gcc/mingw32/6.3.0/include"/>
+					<Add directory="c:\mingw\bin\../lib/gcc/mingw32/6.3.0/../../../../include"/>
+					<Add directory="c:\mingw\bin\../lib/gcc/mingw32/6.3.0/include-fixed"/>
+					<Add directory="c:\mingw\bin\../lib/gcc/mingw32/6.3.0/../../../../mingw32/include"/>
+				</Compiler>
+				<MakeCommands>
+					<Build command="C:/MinGW/bin/mingw32-make.exe -f &quot;C:/Users/04024/Sakaar-Project/Sakaar-Smart/cmake-build-debug/lib/Sakaar/Makefile&quot;  VERBOSE=1 Sakaar_lib/fast"/>
+					<CompileFile command="C:/MinGW/bin/mingw32-make.exe -f &quot;C:/Users/04024/Sakaar-Project/Sakaar-Smart/cmake-build-debug/lib/Sakaar/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
+					<Clean command="C:/MinGW/bin/mingw32-make.exe -f &quot;C:/Users/04024/Sakaar-Project/Sakaar-Smart/cmake-build-debug/lib/Sakaar/Makefile&quot;  VERBOSE=1 clean"/>
+					<DistClean command="C:/MinGW/bin/mingw32-make.exe -f &quot;C:/Users/04024/Sakaar-Project/Sakaar-Smart/cmake-build-debug/lib/Sakaar/Makefile&quot;  VERBOSE=1 clean"/>
+				</MakeCommands>
+			</Target>
+			<Target title="Sakaar">
+				<Option output="C:/Users/04024/Sakaar-Project/Sakaar-Smart/cmake-build-debug/lib/Sakaar/Sakaar.exe" prefix_auto="0" extension_auto="0"/>
+				<Option working_dir="C:/Users/04024/Sakaar-Project/Sakaar-Smart/cmake-build-debug/lib/Sakaar"/>
+				<Option object_output="./"/>
+				<Option type="1"/>
+				<Option compiler="gcc"/>
+				<Compiler>
+					<Add directory="C:/Users/04024/Sakaar-Project/Sakaar-Smart/lib/Sakaar/include"/>
+					<Add directory="C:/Users/04024/Sakaar-Project/Sakaar-Smart/lib/Sakaar-Struct/include"/>
+					<Add directory="C:/Users/04024/Sakaar-Project/Sakaar-Smart/lib/Sakaar-Memory/include"/>
+					<Add directory="C:/Users/04024/Sakaar-Project/Sakaar-Smart/lib/Sakaar-CryptoBase/include"/>
+					<Add directory="C:/Users/04024/Sakaar-Project/Sakaar-Smart/lib/Sakaar-CryptoCode/include"/>
+					<Add directory="C:/Users/04024/Sakaar-Project/Sakaar-Smart/lib/Sakaar-HashCode/include"/>
+					<Add directory="C:/Users/04024/Sakaar-Project/Sakaar-Smart/lib/Sakaar-Network/include"/>
+					<Add directory="c:\mingw\bin\../lib/gcc/mingw32/6.3.0/include"/>
+					<Add directory="c:\mingw\bin\../lib/gcc/mingw32/6.3.0/../../../../include"/>
+					<Add directory="c:\mingw\bin\../lib/gcc/mingw32/6.3.0/include-fixed"/>
+					<Add directory="c:\mingw\bin\../lib/gcc/mingw32/6.3.0/../../../../mingw32/include"/>
+				</Compiler>
+				<MakeCommands>
+					<Build command="C:/MinGW/bin/mingw32-make.exe -f &quot;C:/Users/04024/Sakaar-Project/Sakaar-Smart/cmake-build-debug/lib/Sakaar/Makefile&quot;  VERBOSE=1 Sakaar"/>
+					<CompileFile command="C:/MinGW/bin/mingw32-make.exe -f &quot;C:/Users/04024/Sakaar-Project/Sakaar-Smart/cmake-build-debug/lib/Sakaar/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
+					<Clean command="C:/MinGW/bin/mingw32-make.exe -f &quot;C:/Users/04024/Sakaar-Project/Sakaar-Smart/cmake-build-debug/lib/Sakaar/Makefile&quot;  VERBOSE=1 clean"/>
+					<DistClean command="C:/MinGW/bin/mingw32-make.exe -f &quot;C:/Users/04024/Sakaar-Project/Sakaar-Smart/cmake-build-debug/lib/Sakaar/Makefile&quot;  VERBOSE=1 clean"/>
+				</MakeCommands>
+			</Target>
+			<Target title="Sakaar/fast">
+				<Option output="C:/Users/04024/Sakaar-Project/Sakaar-Smart/cmake-build-debug/lib/Sakaar/Sakaar.exe" prefix_auto="0" extension_auto="0"/>
+				<Option working_dir="C:/Users/04024/Sakaar-Project/Sakaar-Smart/cmake-build-debug/lib/Sakaar"/>
+				<Option object_output="./"/>
+				<Option type="1"/>
+				<Option compiler="gcc"/>
+				<Compiler>
+					<Add directory="C:/Users/04024/Sakaar-Project/Sakaar-Smart/lib/Sakaar/include"/>
+					<Add directory="C:/Users/04024/Sakaar-Project/Sakaar-Smart/lib/Sakaar-Struct/include"/>
+					<Add directory="C:/Users/04024/Sakaar-Project/Sakaar-Smart/lib/Sakaar-Memory/include"/>
+					<Add directory="C:/Users/04024/Sakaar-Project/Sakaar-Smart/lib/Sakaar-CryptoBase/include"/>
+					<Add directory="C:/Users/04024/Sakaar-Project/Sakaar-Smart/lib/Sakaar-CryptoCode/include"/>
+					<Add directory="C:/Users/04024/Sakaar-Project/Sakaar-Smart/lib/Sakaar-HashCode/include"/>
+					<Add directory="C:/Users/04024/Sakaar-Project/Sakaar-Smart/lib/Sakaar-Network/include"/>
+					<Add directory="c:\mingw\bin\../lib/gcc/mingw32/6.3.0/include"/>
+					<Add directory="c:\mingw\bin\../lib/gcc/mingw32/6.3.0/../../../../include"/>
+					<Add directory="c:\mingw\bin\../lib/gcc/mingw32/6.3.0/include-fixed"/>
+					<Add directory="c:\mingw\bin\../lib/gcc/mingw32/6.3.0/../../../../mingw32/include"/>
+				</Compiler>
+				<MakeCommands>
+					<Build command="C:/MinGW/bin/mingw32-make.exe -f &quot;C:/Users/04024/Sakaar-Project/Sakaar-Smart/cmake-build-debug/lib/Sakaar/Makefile&quot;  VERBOSE=1 Sakaar/fast"/>
+					<CompileFile command="C:/MinGW/bin/mingw32-make.exe -f &quot;C:/Users/04024/Sakaar-Project/Sakaar-Smart/cmake-build-debug/lib/Sakaar/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
+					<Clean command="C:/MinGW/bin/mingw32-make.exe -f &quot;C:/Users/04024/Sakaar-Project/Sakaar-Smart/cmake-build-debug/lib/Sakaar/Makefile&quot;  VERBOSE=1 clean"/>
+					<DistClean command="C:/MinGW/bin/mingw32-make.exe -f &quot;C:/Users/04024/Sakaar-Project/Sakaar-Smart/cmake-build-debug/lib/Sakaar/Makefile&quot;  VERBOSE=1 clean"/>
+				</MakeCommands>
+			</Target>
+		</Build>
+		<Unit filename="C:/Users/04024/Sakaar-Project/Sakaar-Smart/lib/Sakaar-CryptoBase/main.c">
+			<Option target="Sakaar_CryptoBase"/>
+		</Unit>
+		<Unit filename="C:/Users/04024/Sakaar-Project/Sakaar-Smart/lib/Sakaar-CryptoBase/src/crypto_base.c">
+			<Option target="Sakaar_CryptoBase_lib"/>
+		</Unit>
+		<Unit filename="C:/Users/04024/Sakaar-Project/Sakaar-Smart/lib/Sakaar-CryptoBase/src/crypto_base/secp112r1.c">
+			<Option target="Sakaar_CryptoBase_lib"/>
+		</Unit>
+		<Unit filename="C:/Users/04024/Sakaar-Project/Sakaar-Smart/lib/Sakaar-CryptoBase/src/crypto_base/secp112r2.c">
+			<Option target="Sakaar_CryptoBase_lib"/>
+		</Unit>
+		<Unit filename="C:/Users/04024/Sakaar-Project/Sakaar-Smart/lib/Sakaar-CryptoBase/src/crypto_base/secp128r1.c">
+			<Option target="Sakaar_CryptoBase_lib"/>
+		</Unit>
+		<Unit filename="C:/Users/04024/Sakaar-Project/Sakaar-Smart/lib/Sakaar-CryptoBase/src/crypto_base/secp128r2.c">
+			<Option target="Sakaar_CryptoBase_lib"/>
+		</Unit>
+		<Unit filename="C:/Users/04024/Sakaar-Project/Sakaar-Smart/lib/Sakaar-CryptoBase/src/crypto_base/secp160k1.c">
+			<Option target="Sakaar_CryptoBase_lib"/>
+		</Unit>
+		<Unit filename="C:/Users/04024/Sakaar-Project/Sakaar-Smart/lib/Sakaar-CryptoBase/src/crypto_base/secp160r1.c">
+			<Option target="Sakaar_CryptoBase_lib"/>
+		</Unit>
+		<Unit filename="C:/Users/04024/Sakaar-Project/Sakaar-Smart/lib/Sakaar-CryptoBase/src/crypto_base/secp160r2.c">
+			<Option target="Sakaar_CryptoBase_lib"/>
+		</Unit>
+		<Unit filename="C:/Users/04024/Sakaar-Project/Sakaar-Smart/lib/Sakaar-CryptoBase/src/crypto_base/secp192k1.c">
+			<Option target="Sakaar_CryptoBase_lib"/>
+		</Unit>
+		<Unit filename="C:/Users/04024/Sakaar-Project/Sakaar-Smart/lib/Sakaar-CryptoBase/src/crypto_base/secp192r1.c">
+			<Option target="Sakaar_CryptoBase_lib"/>
+		</Unit>
+		<Unit filename="C:/Users/04024/Sakaar-Project/Sakaar-Smart/lib/Sakaar-CryptoBase/src/crypto_base/secp224k1.c">
+			<Option target="Sakaar_CryptoBase_lib"/>
+		</Unit>
+		<Unit filename="C:/Users/04024/Sakaar-Project/Sakaar-Smart/lib/Sakaar-CryptoBase/src/crypto_base/secp224r1.c">
+			<Option target="Sakaar_CryptoBase_lib"/>
+		</Unit>
+		<Unit filename="C:/Users/04024/Sakaar-Project/Sakaar-Smart/lib/Sakaar-CryptoBase/src/crypto_base/secp256k1.c">
+			<Option target="Sakaar_CryptoBase_lib"/>
+		</Unit>
+		<Unit filename="C:/Users/04024/Sakaar-Project/Sakaar-Smart/lib/Sakaar-CryptoBase/src/crypto_base/secp256r1.c">
+			<Option target="Sakaar_CryptoBase_lib"/>
+		</Unit>
+		<Unit filename="C:/Users/04024/Sakaar-Project/Sakaar-Smart/lib/Sakaar-CryptoBase/src/crypto_base/secp384r1.c">
+			<Option target="Sakaar_CryptoBase_lib"/>
+		</Unit>
+		<Unit filename="C:/Users/04024/Sakaar-Project/Sakaar-Smart/lib/Sakaar-CryptoBase/src/crypto_base/secp521r1.c">
+			<Option target="Sakaar_CryptoBase_lib"/>
+		</Unit>
+		<Unit filename="C:/Users/04024/Sakaar-Project/Sakaar-Smart/lib/Sakaar-CryptoBase/src/ecc/ecc_curve.c">
+			<Option target="Sakaar_CryptoBase_lib"/>
+		</Unit>
+		<Unit filename="C:/Users/04024/Sakaar-Project/Sakaar-Smart/lib/Sakaar-CryptoBase/src/ecc/ecc_key.c">
+			<Option target="Sakaar_CryptoBase_lib"/>
+		</Unit>
+		<Unit filename="C:/Users/04024/Sakaar-Project/Sakaar-Smart/lib/Sakaar-CryptoBase/src/ecc/ecc_point.c">
+			<Option target="Sakaar_CryptoBase_lib"/>
+		</Unit>
+		<Unit filename="C:/Users/04024/Sakaar-Project/Sakaar-Smart/lib/Sakaar-CryptoBase/src/ecc/ecc_sign.c">
+			<Option target="Sakaar_CryptoBase_lib"/>
+		</Unit>
+		<Unit filename="C:/Users/04024/Sakaar-Project/Sakaar-Smart/lib/Sakaar-CryptoCode/include/crypto_code.h">
+			<Option target="Sakaar_CryptoCode"/>
+		</Unit>
+		<Unit filename="C:/Users/04024/Sakaar-Project/Sakaar-Smart/lib/Sakaar-CryptoCode/main.c">
+			<Option target="Sakaar_CryptoCode"/>
+		</Unit>
+		<Unit filename="C:/Users/04024/Sakaar-Project/Sakaar-Smart/lib/Sakaar-CryptoCode/src/crypto_code.c">
+			<Option target="Sakaar_CryptoCode_lib"/>
+			<Option target="Sakaar_CryptoCode"/>
+		</Unit>
+		<Unit filename="C:/Users/04024/Sakaar-Project/Sakaar-Smart/lib/Sakaar-CryptoCode/src/crypto_code/aes.c">
+			<Option target="Sakaar_CryptoCode_lib"/>
+			<Option target="Sakaar_CryptoCode"/>
+		</Unit>
+		<Unit filename="C:/Users/04024/Sakaar-Project/Sakaar-Smart/lib/Sakaar-HashCode/main.c">
+			<Option target="Sakaar_HashCode"/>
+		</Unit>
+		<Unit filename="C:/Users/04024/Sakaar-Project/Sakaar-Smart/lib/Sakaar-HashCode/src/hash_code.c">
+			<Option target="Sakaar_HashCode_lib"/>
+		</Unit>
+		<Unit filename="C:/Users/04024/Sakaar-Project/Sakaar-Smart/lib/Sakaar-HashCode/src/hash_code/sha256.c">
+			<Option target="Sakaar_HashCode_lib"/>
+		</Unit>
+		<Unit filename="C:/Users/04024/Sakaar-Project/Sakaar-Smart/lib/Sakaar-Memory/main.c">
+			<Option target="Sakaar_Memory"/>
+		</Unit>
+		<Unit filename="C:/Users/04024/Sakaar-Project/Sakaar-Smart/lib/Sakaar-Memory/src/memory.c">
+			<Option target="Sakaar_Memory_lib"/>
+		</Unit>
+		<Unit filename="C:/Users/04024/Sakaar-Project/Sakaar-Smart/lib/Sakaar-Network/main.c">
+			<Option target="Sakaar_Network"/>
+		</Unit>
+		<Unit filename="C:/Users/04024/Sakaar-Project/Sakaar-Smart/lib/Sakaar-Network/src/network/network_client.c">
+			<Option target="Sakaar_Network_lib"/>
+		</Unit>
+		<Unit filename="C:/Users/04024/Sakaar-Project/Sakaar-Smart/lib/Sakaar-Network/src/network/network_conf.c">
+			<Option target="Sakaar_Network_lib"/>
+		</Unit>
+		<Unit filename="C:/Users/04024/Sakaar-Project/Sakaar-Smart/lib/Sakaar-Network/src/network/network_p2p.c">
+			<Option target="Sakaar_Network_lib"/>
+		</Unit>
+		<Unit filename="C:/Users/04024/Sakaar-Project/Sakaar-Smart/lib/Sakaar-Network/src/network/network_server.c">
+			<Option target="Sakaar_Network_lib"/>
+		</Unit>
+		<Unit filename="C:/Users/04024/Sakaar-Project/Sakaar-Smart/lib/Sakaar-Struct/main.c">
+			<Option target="Sakaar_Struct"/>
+		</Unit>
+		<Unit filename="C:/Users/04024/Sakaar-Project/Sakaar-Smart/lib/Sakaar-Struct/src/basic/account.c">
+			<Option target="Sakaar_Struct_lib"/>
+		</Unit>
+		<Unit filename="C:/Users/04024/Sakaar-Project/Sakaar-Smart/lib/Sakaar-Struct/src/basic/account_connections.c">
+			<Option target="Sakaar_Struct_lib"/>
+		</Unit>
+		<Unit filename="C:/Users/04024/Sakaar-Project/Sakaar-Smart/lib/Sakaar-Struct/src/basic/activated_accounts.c">
+			<Option target="Sakaar_Struct_lib"/>
+		</Unit>
+		<Unit filename="C:/Users/04024/Sakaar-Project/Sakaar-Smart/lib/Sakaar-Struct/src/basic/block.c">
+			<Option target="Sakaar_Struct_lib"/>
+		</Unit>
+		<Unit filename="C:/Users/04024/Sakaar-Project/Sakaar-Smart/lib/Sakaar-Struct/src/basic/block_history.c">
+			<Option target="Sakaar_Struct_lib"/>
+		</Unit>
+		<Unit filename="C:/Users/04024/Sakaar-Project/Sakaar-Smart/lib/Sakaar-Struct/src/basic/currency.c">
+			<Option target="Sakaar_Struct_lib"/>
+		</Unit>
+		<Unit filename="C:/Users/04024/Sakaar-Project/Sakaar-Smart/lib/Sakaar-Struct/src/basic/generation.c">
+			<Option target="Sakaar_Struct_lib"/>
+		</Unit>
+		<Unit filename="C:/Users/04024/Sakaar-Project/Sakaar-Smart/lib/Sakaar-Struct/src/basic/pre_transaction.c">
+			<Option target="Sakaar_Struct_lib"/>
+		</Unit>
+		<Unit filename="C:/Users/04024/Sakaar-Project/Sakaar-Smart/lib/Sakaar-Struct/src/basic/transaction.c">
+			<Option target="Sakaar_Struct_lib"/>
+		</Unit>
+		<Unit filename="C:/Users/04024/Sakaar-Project/Sakaar-Smart/lib/Sakaar-Struct/src/basic/wallet.c">
+			<Option target="Sakaar_Struct_lib"/>
+		</Unit>
+		<Unit filename="C:/Users/04024/Sakaar-Project/Sakaar-Smart/lib/Sakaar-Struct/src/basic/wallet_data.c">
+			<Option target="Sakaar_Struct_lib"/>
+		</Unit>
+		<Unit filename="C:/Users/04024/Sakaar-Project/Sakaar-Smart/lib/Sakaar-Struct/src/basic/wallet_smart.c">
+			<Option target="Sakaar_Struct_lib"/>
+		</Unit>
+		<Unit filename="C:/Users/04024/Sakaar-Project/Sakaar-Smart/lib/Sakaar-Struct/src/struct/float.c">
+			<Option target="Sakaar_Struct_lib"/>
+		</Unit>
+		<Unit filename="C:/Users/04024/Sakaar-Project/Sakaar-Smart/lib/Sakaar-Struct/src/struct/integer.c">
+			<Option target="Sakaar_Struct_lib"/>
+		</Unit>
+		<Unit filename="C:/Users/04024/Sakaar-Project/Sakaar-Smart/lib/Sakaar-Struct/src/struct/list.c">
+			<Option target="Sakaar_Struct_lib"/>
+		</Unit>
+		<Unit filename="C:/Users/04024/Sakaar-Project/Sakaar-Smart/lib/Sakaar-Struct/src/struct/map.c">
+			<Option target="Sakaar_Struct_lib"/>
+		</Unit>
+		<Unit filename="C:/Users/04024/Sakaar-Project/Sakaar-Smart/lib/Sakaar-Struct/src/struct/object.c">
+			<Option target="Sakaar_Struct_lib"/>
+		</Unit>
+		<Unit filename="C:/Users/04024/Sakaar-Project/Sakaar-Smart/lib/Sakaar-Struct/src/struct/stack.c">
+			<Option target="Sakaar_Struct_lib"/>
+		</Unit>
+		<Unit filename="C:/Users/04024/Sakaar-Project/Sakaar-Smart/lib/Sakaar-Struct/src/struct/string.c">
+			<Option target="Sakaar_Struct_lib"/>
+		</Unit>
+		<Unit filename="C:/Users/04024/Sakaar-Project/Sakaar-Smart/lib/Sakaar-Struct/src/struct/sub/float_cpu.c">
+			<Option target="Sakaar_Struct_lib"/>
+		</Unit>
+		<Unit filename="C:/Users/04024/Sakaar-Project/Sakaar-Smart/lib/Sakaar-Struct/src/struct/sub/float_gmp.c">
+			<Option target="Sakaar_Struct_lib"/>
+		</Unit>
+		<Unit filename="C:/Users/04024/Sakaar-Project/Sakaar-Smart/lib/Sakaar-Struct/src/struct/sub/integer_cpu.c">
+			<Option target="Sakaar_Struct_lib"/>
+		</Unit>
+		<Unit filename="C:/Users/04024/Sakaar-Project/Sakaar-Smart/lib/Sakaar-Struct/src/struct/sub/integer_gmp.c">
+			<Option target="Sakaar_Struct_lib"/>
+		</Unit>
+		<Unit filename="C:/Users/04024/Sakaar-Project/Sakaar-Smart/lib/Sakaar-Struct/src/struct/tlv.c">
+			<Option target="Sakaar_Struct_lib"/>
+		</Unit>
+		<Unit filename="C:/Users/04024/Sakaar-Project/Sakaar-Smart/lib/Sakaar/main.c">
+			<Option target="Sakaar"/>
+		</Unit>
+		<Unit filename="C:/Users/04024/Sakaar-Project/Sakaar-Smart/lib/Sakaar/src/sakaar/account.c">
+			<Option target="Sakaar_lib"/>
+		</Unit>
+		<Unit filename="C:/Users/04024/Sakaar-Project/Sakaar-Smart/lib/Sakaar/src/sakaar/account_connections.c">
+			<Option target="Sakaar_lib"/>
+		</Unit>
+		<Unit filename="C:/Users/04024/Sakaar-Project/Sakaar-Smart/lib/Sakaar/src/sakaar/activated_accounts.c">
+			<Option target="Sakaar_lib"/>
+		</Unit>
+		<Unit filename="C:/Users/04024/Sakaar-Project/Sakaar-Smart/lib/Sakaar/src/sakaar/block.c">
+			<Option target="Sakaar_lib"/>
+		</Unit>
+		<Unit filename="C:/Users/04024/Sakaar-Project/Sakaar-Smart/lib/Sakaar/src/sakaar/block_check.c">
+			<Option target="Sakaar_lib"/>
+		</Unit>
+		<Unit filename="C:/Users/04024/Sakaar-Project/Sakaar-Smart/lib/Sakaar/src/sakaar/block_history.c">
+			<Option target="Sakaar_lib"/>
+		</Unit>
+		<Unit filename="C:/Users/04024/Sakaar-Project/Sakaar-Smart/lib/Sakaar/src/sakaar/block_smart.c">
+			<Option target="Sakaar_lib"/>
+		</Unit>
+		<Unit filename="C:/Users/04024/Sakaar-Project/Sakaar-Smart/lib/Sakaar/src/sakaar/block_smart/account_activate.c">
+			<Option target="Sakaar_lib"/>
+		</Unit>
+		<Unit filename="C:/Users/04024/Sakaar-Project/Sakaar-Smart/lib/Sakaar/src/sakaar/block_smart/account_create.c">
+			<Option target="Sakaar_lib"/>
+		</Unit>
+		<Unit filename="C:/Users/04024/Sakaar-Project/Sakaar-Smart/lib/Sakaar/src/sakaar/block_smart/account_deactivate.c">
+			<Option target="Sakaar_lib"/>
+		</Unit>
+		<Unit filename="C:/Users/04024/Sakaar-Project/Sakaar-Smart/lib/Sakaar/src/sakaar/block_smart/account_freeze.c">
+			<Option target="Sakaar_lib"/>
+		</Unit>
+		<Unit filename="C:/Users/04024/Sakaar-Project/Sakaar-Smart/lib/Sakaar/src/sakaar/block_smart/currency_create.c">
+			<Option target="Sakaar_lib"/>
+		</Unit>
+		<Unit filename="C:/Users/04024/Sakaar-Project/Sakaar-Smart/lib/Sakaar/src/sakaar/block_smart/wallet_connect.c">
+			<Option target="Sakaar_lib"/>
+		</Unit>
+		<Unit filename="C:/Users/04024/Sakaar-Project/Sakaar-Smart/lib/Sakaar/src/sakaar/block_smart/wallet_disconnect.c">
+			<Option target="Sakaar_lib"/>
+		</Unit>
+		<Unit filename="C:/Users/04024/Sakaar-Project/Sakaar-Smart/lib/Sakaar/src/sakaar/config.c">
+			<Option target="Sakaar_lib"/>
+		</Unit>
+		<Unit filename="C:/Users/04024/Sakaar-Project/Sakaar-Smart/lib/Sakaar/src/sakaar/currency.c">
+			<Option target="Sakaar_lib"/>
+		</Unit>
+		<Unit filename="C:/Users/04024/Sakaar-Project/Sakaar-Smart/lib/Sakaar/src/sakaar/generation.c">
+			<Option target="Sakaar_lib"/>
+		</Unit>
+		<Unit filename="C:/Users/04024/Sakaar-Project/Sakaar-Smart/lib/Sakaar/src/sakaar/generation/account_username.c">
+			<Option target="Sakaar_lib"/>
+		</Unit>
+		<Unit filename="C:/Users/04024/Sakaar-Project/Sakaar-Smart/lib/Sakaar/src/sakaar/generation/block_create.c">
+			<Option target="Sakaar_lib"/>
+		</Unit>
+		<Unit filename="C:/Users/04024/Sakaar-Project/Sakaar-Smart/lib/Sakaar/src/sakaar/generation/block_result.c">
+			<Option target="Sakaar_lib"/>
+		</Unit>
+		<Unit filename="C:/Users/04024/Sakaar-Project/Sakaar-Smart/lib/Sakaar/src/sakaar/generation/wallet_create.c">
+			<Option target="Sakaar_lib"/>
+		</Unit>
+		<Unit filename="C:/Users/04024/Sakaar-Project/Sakaar-Smart/lib/Sakaar/src/sakaar/transaction.c">
+			<Option target="Sakaar_lib"/>
+		</Unit>
+		<Unit filename="C:/Users/04024/Sakaar-Project/Sakaar-Smart/lib/Sakaar/src/sakaar/wallet.c">
+			<Option target="Sakaar_lib"/>
+		</Unit>
+		<Unit filename="C:/Users/04024/Sakaar-Project/Sakaar-Smart/lib/Sakaar/src/sakaar/wallet_data.c">
+			<Option target="Sakaar_lib"/>
+		</Unit>
+		<Unit filename="C:/Users/04024/Sakaar-Project/Sakaar-Smart/lib/Sakaar/src/sakaar/wallet_smart.c">
+			<Option target="Sakaar_lib"/>
+		</Unit>
+		<Unit filename="C:/Users/04024/Sakaar-Project/Sakaar-Smart/main.c">
+			<Option target="Sakaar_SmartContract"/>
+		</Unit>
+		<Unit filename="C:/Users/04024/Sakaar-Project/Sakaar-Smart/src/an_analize/an_expr.c">
+			<Option target="Sakaar_SmartContract_lib"/>
+		</Unit>
+		<Unit filename="C:/Users/04024/Sakaar-Project/Sakaar-Smart/src/an_analize/an_oper.c">
+			<Option target="Sakaar_SmartContract_lib"/>
+		</Unit>
+		<Unit filename="C:/Users/04024/Sakaar-Project/Sakaar-Smart/src/an_analize/an_stmt.c">
+			<Option target="Sakaar_SmartContract_lib"/>
+		</Unit>
+		<Unit filename="C:/Users/04024/Sakaar-Project/Sakaar-Smart/src/op_operations/op_temp.c">
+			<Option target="Sakaar_SmartContract_lib"/>
+		</Unit>
+		<Unit filename="C:/Users/04024/Sakaar-Project/Sakaar-Smart/src/sc_structs/an_node.c">
+			<Option target="Sakaar_SmartContract_lib"/>
+		</Unit>
+		<Unit filename="C:/Users/04024/Sakaar-Project/Sakaar-Smart/src/sc_structs/an_parser.c">
+			<Option target="Sakaar_SmartContract_lib"/>
+		</Unit>
+		<Unit filename="C:/Users/04024/Sakaar-Project/Sakaar-Smart/src/sc_structs/op_block.c">
+			<Option target="Sakaar_SmartContract_lib"/>
+		</Unit>
+		<Unit filename="C:/Users/04024/Sakaar-Project/Sakaar-Smart/src/sc_structs/op_state.c">
+			<Option target="Sakaar_SmartContract_lib"/>
+		</Unit>
+		<Unit filename="C:/Users/04024/Sakaar-Project/Sakaar-Smart/src/sc_structs/tk_parser.c">
+			<Option target="Sakaar_SmartContract_lib"/>
+		</Unit>
+		<Unit filename="C:/Users/04024/Sakaar-Project/Sakaar-Smart/src/sc_structs/tk_token.c">
+			<Option target="Sakaar_SmartContract_lib"/>
+		</Unit>
+		<Unit filename="C:/Users/04024/Sakaar-Project/Sakaar-Smart/src/tk_tokenize.c">
+			<Option target="Sakaar_SmartContract_lib"/>
+		</Unit>
+		<Unit filename="C:/Users/04024/Sakaar-Project/Sakaar-Smart/src/tk_tokenize/tk_identifier.c">
+			<Option target="Sakaar_SmartContract_lib"/>
+		</Unit>
+		<Unit filename="C:/Users/04024/Sakaar-Project/Sakaar-Smart/src/tk_tokenize/tk_integer.c">
+			<Option target="Sakaar_SmartContract_lib"/>
+		</Unit>
+		<Unit filename="C:/Users/04024/Sakaar-Project/Sakaar-Smart/src/tk_tokenize/tk_keyword.c">
+			<Option target="Sakaar_SmartContract_lib"/>
+		</Unit>
+		<Unit filename="C:/Users/04024/Sakaar-Project/Sakaar-Smart/src/tk_tokenize/tk_special.c">
+			<Option target="Sakaar_SmartContract_lib"/>
+		</Unit>
+		<Unit filename="C:/Users/04024/Sakaar-Project/Sakaar-Smart/src/tk_tokenize/tk_string.c">
+			<Option target="Sakaar_SmartContract_lib"/>
+		</Unit>
+		<Unit filename="C:/Users/04024/Sakaar-Project/Sakaar-Smart/CMakeLists.txt">
+			<Option virtualFolder="CMake Files\"/>
+		</Unit>
+		<Unit filename="C:/Users/04024/Sakaar-Project/Sakaar-Smart/lib/Sakaar/CMakeLists.txt">
+			<Option virtualFolder="CMake Files\lib\Sakaar\"/>
+		</Unit>
+		<Unit filename="C:/Users/04024/Sakaar-Project/Sakaar-Smart/lib/Sakaar-CryptoBase/CMakeLists.txt">
+			<Option virtualFolder="CMake Files\lib\Sakaar-CryptoBase\"/>
+		</Unit>
+		<Unit filename="C:/Users/04024/Sakaar-Project/Sakaar-Smart/lib/Sakaar-CryptoCode/CMakeLists.txt">
+			<Option virtualFolder="CMake Files\lib\Sakaar-CryptoCode\"/>
+		</Unit>
+		<Unit filename="C:/Users/04024/Sakaar-Project/Sakaar-Smart/lib/Sakaar-HashCode/CMakeLists.txt">
+			<Option virtualFolder="CMake Files\lib\Sakaar-HashCode\"/>
+		</Unit>
+		<Unit filename="C:/Users/04024/Sakaar-Project/Sakaar-Smart/lib/Sakaar-Memory/CMakeLists.txt">
+			<Option virtualFolder="CMake Files\lib\Sakaar-Memory\"/>
+		</Unit>
+		<Unit filename="C:/Users/04024/Sakaar-Project/Sakaar-Smart/lib/Sakaar-Network/CMakeLists.txt">
+			<Option virtualFolder="CMake Files\lib\Sakaar-Network\"/>
+		</Unit>
+		<Unit filename="C:/Users/04024/Sakaar-Project/Sakaar-Smart/lib/Sakaar-Struct/CMakeLists.txt">
+			<Option virtualFolder="CMake Files\lib\Sakaar-Struct\"/>
+		</Unit>
+		<Unit filename="C:/Users/04024/Sakaar-Project/Sakaar-Smart/lib/Sakaar-Struct/cmake/FindGMP.cmake">
+			<Option virtualFolder="CMake Files\lib\Sakaar-Struct\cmake\"/>
+		</Unit>
+	</Project>
+</CodeBlocks_project_file>

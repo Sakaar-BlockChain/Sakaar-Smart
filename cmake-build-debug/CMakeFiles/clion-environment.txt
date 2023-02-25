@@ -1,3 +1,4 @@
-ToolSet: 1.0 (local)Options: 
+ToolSet: 5.0 (local)@C:\MinGW
+Options: 
 
-Options:-DCMAKE_MAKE_PROGRAM=/home/stiveman1/.local/share/JetBrains/Toolbox/apps/CLion/ch-0/223.7571.171/bin/ninja/linux/ninja
+Options:

@@ -8,12 +8,19 @@ void tokenize_string(struct tk_token *token, struct tk_parser *parser){
         for (;pos < parser->str_size; pos++) {
             if ((pos == 0 || parser->data[pos - 1] != '\\') && parser->data[pos] == '"') break;
         }
+        if (parser->str_size == pos) {
+            string_set_str(parser->error_msg, "String started but did not end use for this \" ", 47);
+            return;
+        }
     } else {
         for (;pos < parser->str_size; pos++) {
             if ((pos == 0 || parser->data[pos - 1] != '\\') && parser->data[pos] == '\'') break;
         }
+        if (parser->str_size == pos) {
+            string_set_str(parser->error_msg, "String started but did not end use for this ' ", 47);
+            return;
+        }
     }
-    if (parser->str_size == pos) return;
 
     token->type = TokenType_String;
     tk_token_resize(token, pos - parser->position - 1);

@@ -6,8 +6,8 @@
     <mapping directory="$PROJECT_DIR$/lib/Sakaar-CryptoBase" vcs="Git" />
     <mapping directory="$PROJECT_DIR$/lib/Sakaar-CryptoCode" vcs="Git" />
     <mapping directory="$PROJECT_DIR$/lib/Sakaar-HashCode" vcs="Git" />
-    <mapping directory="$PROJECT_DIR$/lib/Sakaar-NetWork" vcs="Git" />
+    <mapping directory="$PROJECT_DIR$/lib/Sakaar-Memory" vcs="Git" />
+    <mapping directory="$PROJECT_DIR$/lib/Sakaar-Network" vcs="Git" />
     <mapping directory="$PROJECT_DIR$/lib/Sakaar-Struct" vcs="Git" />
-    <mapping directory="$PROJECT_DIR$/lib/Sakaar-Struct/lib/Sakaar-Memory" vcs="Git" />
   </component>
 </project>

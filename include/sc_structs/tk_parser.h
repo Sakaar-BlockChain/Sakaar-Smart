@@ -11,11 +11,14 @@ struct tk_parser{
     size_t str_size;
 
     size_t current_line;
+    size_t line_pos;
 
     char scope_buf[MaxBracketNesting];
     size_t scope_pos;
 
     struct list_st *list;
+
+    struct string_st *error_msg;
 };
 
 struct tk_parser *tk_parser_new();

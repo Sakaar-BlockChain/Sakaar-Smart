@@ -1,0 +1,3 @@
+C:\Users\04024\AppData\Local\JetBrains\Toolbox\apps\CLion\ch-0\223.8617.54\bin\cmake\win\x64\bin\cmake.exe -E rm -f CMakeFiles\Sakaar_SmartContract.dir/objects.a
+C:\MinGW\bin\ar.exe qc CMakeFiles\Sakaar_SmartContract.dir/objects.a @CMakeFiles\Sakaar_SmartContract.dir\objects1.rsp
+C:\MinGW\bin\gcc.exe -g -Wl,--whole-archive CMakeFiles\Sakaar_SmartContract.dir/objects.a -Wl,--no-whole-archive -o Sakaar_SmartContract.exe -Wl,--out-implib,libSakaar_SmartContract.dll.a -Wl,--major-image-version,0,--minor-image-version,0 @CMakeFiles\Sakaar_SmartContract.dir\linklibs.rsp

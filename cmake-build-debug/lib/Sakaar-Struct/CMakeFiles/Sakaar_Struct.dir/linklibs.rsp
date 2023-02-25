@@ -1,0 +1,1 @@
+  -L"C:/Users/04024/Sakaar-Project/Sakaar-Smart/lib/Sakaar-Memory"  libSakaar_Struct_lib.a "../Sakaar-Memory/libSakaar_Memory_lib.a" -lgmp -lgmpxx -lkernel32 -luser32 -lgdi32 -lwinspool -lshell32 -lole32 -loleaut32 -luuid -lcomdlg32 -ladvapi32 
