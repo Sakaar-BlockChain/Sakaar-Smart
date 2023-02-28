@@ -2,7 +2,6 @@
 #pragma ide diagnostic ignored "misc-no-recursion"
 
 #include "an_analize.h"
-#include "tk_tokenize.h"
 
 #define expr_cast(expr) { struct object_st *obj = object_new(); object_set_type(obj, AN_NODE_TYPE); \
 an_node_set(obj->data, expr); an_node_clear(expr); list_append((expr)->next, obj); object_free(obj); }
@@ -15,12 +14,38 @@ list_append((expr)->next, obj); expr_next = obj->data; object_free(obj);}
 struct tk_token *token = NULL;struct object_st *token_ptr = NULL;int result = 0;
 
 
+void annotated_stmt(struct an_parser *parser, struct an_node *expr) {
+    analyze_start
+    {
+        expr_add(expr)
+        ident_new_expr(parser, expr_next);
+        if (expr_next->type == ExprType_None) goto end;
+
+        expr->main_type = MainType_Stmt;
+        expr->type = StmtType_Annot;
+
+        parser_end goto end;
+        parser_get
+        if (token->type != TokenType_Special || token->subtype != Special_EQ) goto end;
+        parser->position++;
+        list_append(expr->tokens, token_ptr);
+
+        expr_add(expr)
+        or_test_oper(parser, expr_next);
+        if (expr_next->type == ExprType_None) goto end;
+
+        result = 1;
+    }
+    end:
+    analyze_end
+}
+
 void assignment_stmt(struct an_parser *parser, struct an_node *expr) {
     analyze_start
     {
         expr_add(expr)
         primary_expr(parser, expr_next);
-        if (expr_next->type != PrimType_Subscript && expr_next->type != PrimType_Identifier &&
+        if (expr_next->type != PrimType_Subscript && expr_next->type != PrimType_Ident_get &&
             expr_next->type != PrimType_Attrib)
             goto end;
 
@@ -63,7 +88,7 @@ void assignment_stmt(struct an_parser *parser, struct an_node *expr) {
             parser->position++;
             list_append(expr->tokens, token_ptr);
 
-            if (expr_next->type != PrimType_Subscript && expr_next->type != PrimType_Identifier &&
+            if (expr_next->type != PrimType_Subscript && expr_next->type != PrimType_Ident_get &&
                 expr_next->type != PrimType_Attrib)
                 goto end;
         }
@@ -151,6 +176,8 @@ void simple_stmt(struct an_parser *parser, struct an_node *expr) {
     if (expr->type != ExprType_None) return;
     continue_stmt(parser, expr);
     if (expr->type != ExprType_None) return;
+    annotated_stmt(parser, expr);
+    if (expr->type != ExprType_None) return;
     assignment_stmt(parser, expr);
     if (expr->type != ExprType_None) return;
     or_test_oper(parser, expr);
@@ -177,7 +204,6 @@ void stmt_list(struct an_parser *parser, struct an_node *expr) {
                 times = 1;
             }
             expr_add(expr)
-            list_append(expr->tokens, token_ptr);
         }
         result = 1;
     }
@@ -315,7 +341,7 @@ void extends_list(struct an_parser *parser, struct an_node *expr) {
 void parameter_list(struct an_parser *parser, struct an_node *expr) {
     analyze_start
     {
-        list_oper(parser, expr, Special_LSB, Special_RSB);
+        list_ident(parser, expr, Special_LSB, Special_RSB);
         if (expr->type != PrimType_List) goto end;
         expr->main_type = MainType_Stmt;
         expr->type = StmtType_Params;
@@ -337,7 +363,7 @@ void function_stmt(struct an_parser *parser, struct an_node *expr) {
         expr->type = StmtType_Func;
 
         expr_add(expr)
-        ident_expr(parser, expr_next);
+        ident_new_expr(parser, expr_next);
         if (expr_next->type == ExprType_None) goto end;
 
         expr_add(expr)
@@ -366,7 +392,7 @@ void class_stmt(struct an_parser *parser, struct an_node *expr) {
         expr->type = StmtType_Class;
 
         expr_add(expr)
-        ident_expr(parser, expr_next);
+        ident_new_expr(parser, expr_next);
         if (expr_next->type == ExprType_None) goto end;
 
         parser_get

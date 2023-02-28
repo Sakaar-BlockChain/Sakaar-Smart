@@ -1,5 +1,4 @@
 #include "an_analize.h"
-#include "tk_tokenize.h"
 
 #define expr_cast(expr) { struct object_st *obj = object_new(); object_set_type(obj, AN_NODE_TYPE); \
 an_node_set(obj->data, expr); an_node_clear(expr); list_append((expr)->next, obj); object_free(obj); }
@@ -344,6 +343,48 @@ void list_oper(struct an_parser *parser, struct an_node *expr, short start, shor
         expr_add(expr)
         while (parser->position < parser->list->size) {
             and_test_oper(parser, expr_next);
+            if (expr_next->type == ExprType_None) goto end;
+
+            parser_end break;
+            parser_get
+            if (token->type == TokenType_Special && token->subtype == end) {
+                parser->position++;
+                result = 1;
+                goto end;
+            }
+            if (token->type != TokenType_Special || token->subtype != Special_COMMA) break;
+            parser->position++;
+
+            parser_end break;
+            expr_add(expr)
+        }
+    }
+    end:
+    analyze_end
+}
+
+void list_ident(struct an_parser *parser, struct an_node *expr, short start, short end) {
+    analyze_start
+    {
+        parser_end goto end;
+        token = parser->list->data[parser->position]->data;
+        if (token->type != TokenType_Special || token->subtype != start) goto end;
+        parser->position++;
+
+        expr->main_type = MainType_Expr;
+        expr->type = PrimType_List;
+
+        parser_end goto end;
+        token = parser->list->data[parser->position]->data;
+        if (token->type == TokenType_Special && token->subtype == end) {
+            parser->position++;
+            result = 1;
+            goto end;
+        }
+
+        expr_add(expr)
+        while (parser->position < parser->list->size) {
+            ident_new_expr(parser, expr_next);
             if (expr_next->type == ExprType_None) goto end;
 
             parser_end break;

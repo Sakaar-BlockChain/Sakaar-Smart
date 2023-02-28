@@ -1,6 +1,5 @@
 #include "an_analize.h"
 #include "hash_code.h"
-#include "tk_tokenize.h"
 
 #define expr_cast(expr) { struct object_st *obj = object_new(); object_set_type(obj, AN_NODE_TYPE); \
 an_node_set(obj->data, expr); an_node_clear(expr); list_append((expr)->next, obj); object_free(obj); }
@@ -37,17 +36,27 @@ void scopes_expr(struct an_parser *parser, struct an_node *expr) {
 void list_expr(struct an_parser *parser, struct an_node *expr) {
     list_oper(parser, expr, Special_LSQB, Special_RSQB);
 }
-void ident_expr(struct an_parser *parser, struct an_node *expr) {
+void ident_get_expr(struct an_parser *parser, struct an_node *expr) {
     parser_end return;
     struct tk_token *token = parser->list->data[parser->position]->data;
     if (token->type != TokenType_Identifier) return;
     parser->position++;
-    expr->type = PrimType_Identifier;
+    expr->type = PrimType_Ident_get;
     expr->main_type = MainType_Expr;
     expr->data = object_new();
     object_set_type(expr->data, STRING_TYPE);
     string_set_str(expr->data->data, token->data, token->size);
-    sha256_code._code(expr->data->data, expr->data->data);
+}
+void ident_new_expr(struct an_parser *parser, struct an_node *expr) {
+    parser_end return;
+    struct tk_token *token = parser->list->data[parser->position]->data;
+    if (token->type != TokenType_Identifier) return;
+    parser->position++;
+    expr->type = PrimType_Ident_new;
+    expr->main_type = MainType_Expr;
+    expr->data = object_new();
+    object_set_type(expr->data, STRING_TYPE);
+    string_set_str(expr->data->data, token->data, token->size);
 }
 void bool_expr(struct an_parser *parser, struct an_node *expr) {
     parser_end return;
@@ -131,7 +140,7 @@ void literal_expr(struct an_parser *parser, struct an_node *expr) {
     list_expr(parser, expr);
 }
 void atom_expr(struct an_parser *parser, struct an_node *expr) {
-    ident_expr(parser, expr);
+    ident_get_expr(parser, expr);
     if (expr->type != ExprType_None) return;
     literal_expr(parser, expr);
     if (expr->type != ExprType_None) return;
@@ -155,7 +164,7 @@ void primary_expr(struct an_parser *parser, struct an_node *expr) {
                 expr->main_type = MainType_Expr;
                 expr_add(expr)
 
-                ident_expr(parser, expr_next);
+                ident_get_expr(parser, expr_next);
                 if (expr_next->type == ExprType_None) goto end;
 
                 continue;

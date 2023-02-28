@@ -13,14 +13,16 @@
 #define StmtType_Params         0x07
 #define StmtType_Func           0x08
 #define StmtType_Class          0x09
-#define StmtType_Assign         0x0a
-#define StmtType_Return         0x0b
-#define StmtType_Break          0x0c
-#define StmtType_Continue       0x0d
-#define StmtType_Import         0x0e
-#define StmtType_List           0x0f
-#define StmtType_Extends        0x10
+#define StmtType_Annot          0x0a
+#define StmtType_Assign         0x0b
+#define StmtType_Return         0x0c
+#define StmtType_Break          0x0d
+#define StmtType_Continue       0x0e
+#define StmtType_Import         0x0f
+#define StmtType_List           0x10
+#define StmtType_Extends        0x11
 
+void annotated_stmt(struct an_parser *, struct an_node *);
 void assignment_stmt(struct an_parser *, struct an_node *);
 void return_stmt(struct an_parser *, struct an_node *);
 void break_stmt(struct an_parser *, struct an_node *);

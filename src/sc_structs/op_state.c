@@ -40,10 +40,3 @@ void op_state_free(struct op_state *res) {
     if(res->return_obj != NULL) object_free(res->return_obj);
     skr_free(res);
 }
-
-void op_state_add_page(struct op_state *res){
-    stack_add_new(res->memory, MAP_TYPE);
-}
-void op_state_remove_page(struct op_state *res){
-    stack_pop(res->memory);
-}

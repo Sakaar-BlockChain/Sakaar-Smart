@@ -27,6 +27,8 @@ void comp_oper(struct an_parser *, struct an_node *);
 void not_test_oper(struct an_parser *, struct an_node *);
 void and_test_oper(struct an_parser *, struct an_node *);
 void or_test_oper(struct an_parser *, struct an_node *);
-void list_oper(struct an_parser *, struct an_node *, short start, short end);
+void list_oper(struct an_parser *, struct an_node *, short, short);
+
+void list_ident(struct an_parser *, struct an_node *, short, short);
 
 #endif //AN_OPER_H
