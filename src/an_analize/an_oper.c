@@ -10,7 +10,7 @@ list_append((expr)->next, obj); expr_next = obj->data; object_free(obj);}
 #define analyze_start size_t current_pointing = parser->position;struct an_node *expr_next = expr; \
 struct tk_token *token = NULL;struct object_st *token_ptr = NULL;int result = 0;
 
-void u_oper(struct an_parser *parser, struct an_node *expr) {
+void u_oper(struct sc_parser *parser, struct an_node *expr) {
     analyze_start
     {
         while (parser->position < parser->list->size) {
@@ -34,7 +34,7 @@ void u_oper(struct an_parser *parser, struct an_node *expr) {
     end:
     analyze_end
 }
-void m_oper(struct an_parser *parser, struct an_node *expr) {
+void m_oper(struct sc_parser *parser, struct an_node *expr) {
     analyze_start
     {
         int times = 0;
@@ -65,7 +65,7 @@ void m_oper(struct an_parser *parser, struct an_node *expr) {
     end:
     analyze_end
 }
-void a_oper(struct an_parser *parser, struct an_node *expr) {
+void a_oper(struct sc_parser *parser, struct an_node *expr) {
     analyze_start
     {
         int times = 0;
@@ -95,7 +95,7 @@ void a_oper(struct an_parser *parser, struct an_node *expr) {
     end:
     analyze_end
 }
-void shift_oper(struct an_parser *parser, struct an_node *expr) {
+void shift_oper(struct sc_parser *parser, struct an_node *expr) {
     analyze_start
     {
         int times = 0;
@@ -125,7 +125,7 @@ void shift_oper(struct an_parser *parser, struct an_node *expr) {
     end:
     analyze_end
 }
-void and_oper(struct an_parser *parser, struct an_node *expr) {
+void and_oper(struct sc_parser *parser, struct an_node *expr) {
     analyze_start
     {
         int times = 0;
@@ -153,7 +153,7 @@ void and_oper(struct an_parser *parser, struct an_node *expr) {
     end:
     analyze_end
 }
-void xor_oper(struct an_parser *parser, struct an_node *expr) {
+void xor_oper(struct sc_parser *parser, struct an_node *expr) {
     analyze_start
     {
         int times = 0;
@@ -181,7 +181,7 @@ void xor_oper(struct an_parser *parser, struct an_node *expr) {
     end:
     analyze_end
 }
-void or_oper(struct an_parser *parser, struct an_node *expr) {
+void or_oper(struct sc_parser *parser, struct an_node *expr) {
     analyze_start
     {
         int times = 0;
@@ -210,7 +210,7 @@ void or_oper(struct an_parser *parser, struct an_node *expr) {
     analyze_end
 }
 
-void comp_oper(struct an_parser *parser, struct an_node *expr) {
+void comp_oper(struct sc_parser *parser, struct an_node *expr) {
     analyze_start
     {
         int times = 0;
@@ -242,7 +242,7 @@ void comp_oper(struct an_parser *parser, struct an_node *expr) {
     end:
     analyze_end
 }
-void not_test_oper(struct an_parser *parser, struct an_node *expr) {
+void not_test_oper(struct sc_parser *parser, struct an_node *expr) {
     analyze_start
     {
         while (parser->position < parser->list->size) {
@@ -265,7 +265,7 @@ void not_test_oper(struct an_parser *parser, struct an_node *expr) {
     end:
     analyze_end
 }
-void and_test_oper(struct an_parser *parser, struct an_node *expr) {
+void and_test_oper(struct sc_parser *parser, struct an_node *expr) {
     analyze_start
     {
         int times = 0;
@@ -293,7 +293,7 @@ void and_test_oper(struct an_parser *parser, struct an_node *expr) {
     end:
     analyze_end
 }
-void or_test_oper(struct an_parser *parser, struct an_node *expr) {
+void or_test_oper(struct sc_parser *parser, struct an_node *expr) {
     analyze_start
     {
         int times = 0;
@@ -321,7 +321,7 @@ void or_test_oper(struct an_parser *parser, struct an_node *expr) {
     end:
     analyze_end
 }
-void list_oper(struct an_parser *parser, struct an_node *expr, short start, short end) {
+void list_oper(struct sc_parser *parser, struct an_node *expr, short start, short end) {
     analyze_start
     {
         parser_end goto end;
@@ -363,7 +363,7 @@ void list_oper(struct an_parser *parser, struct an_node *expr, short start, shor
     analyze_end
 }
 
-void list_ident(struct an_parser *parser, struct an_node *expr, short start, short end) {
+void list_ident(struct sc_parser *parser, struct an_node *expr, short start, short end) {
     analyze_start
     {
         parser_end goto end;

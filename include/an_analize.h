@@ -6,6 +6,6 @@
 #include "an_analize/an_expr.h"
 #include "tk_tokenize.h"
 
-void token_analyzer(struct an_parser *, struct an_node *);
+void token_analyzer(struct sc_parser *, struct an_node *);
 
 #endif //AN_ANALIZE_H

@@ -40,6 +40,6 @@
 // Keywords length 8
 #define KeyWord_CONTINUE        0x13
 
-void tokenize_keyword(struct tk_token *, struct tk_parser *);
+void tokenize_keyword(struct tk_token *, struct sc_parser *);
 
 #endif //TK_KEYWORD_H

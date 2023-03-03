@@ -4,8 +4,8 @@
 #endif
 
 
-struct tk_parser *tk_parser_new(){
-    struct tk_parser *res = skr_malloc(sizeof(struct tk_parser));
+struct sc_parser *sc_parser_new(){
+    struct sc_parser *res = skr_malloc(sizeof(struct sc_parser));
     res->data = NULL;
     res->position = res->str_size = res->line_pos = 0;
 
@@ -15,13 +15,13 @@ struct tk_parser *tk_parser_new(){
     res->error_msg = string_new();
     return res;
 }
-void tk_parser_set(struct tk_parser *res, const struct tk_parser *a){
-    tk_parser_clear(res);
+void sc_parser_set(struct sc_parser *res, const struct sc_parser *a){
+    sc_parser_clear(res);
     res->str_size = a->str_size;
     res->data = skr_malloc(res->str_size);
     memcpy(res->data, a->data, a->str_size);
 }
-void tk_parser_clear(struct tk_parser *res){
+void sc_parser_clear(struct sc_parser *res){
     if(res->data != NULL) skr_free(res->data);
     res->data = NULL;
     res->position = res->str_size = res->line_pos = 0;
@@ -31,21 +31,21 @@ void tk_parser_clear(struct tk_parser *res){
     list_clear(res->list);
     string_clear(res->error_msg);
 }
-void tk_parser_free(struct tk_parser *res){
+void sc_parser_free(struct sc_parser *res){
     if(res->data != NULL) skr_free(res->data);
     list_free(res->list);
     string_free(res->error_msg);
     skr_free(res);
 }
 
-void tk_parser_set_str(struct tk_parser *res, char *data, size_t size){
-    tk_parser_clear(res);
+void sc_parser_set_str(struct sc_parser *res, char *data, size_t size){
+    sc_parser_clear(res);
     res->str_size = size;
     res->data = skr_malloc(res->str_size);
     memcpy(res->data, data, size);
 }
-void tk_parser_set_file(struct tk_parser *res, char *file_path){
-    tk_parser_clear(res);
+void sc_parser_set_file(struct sc_parser *res, char *file_path){
+    sc_parser_clear(res);
 
     FILE *fp = fopen(file_path, "r");
     if (fp == NULL) return;

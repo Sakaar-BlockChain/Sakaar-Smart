@@ -7,7 +7,7 @@ an_node_set(obj->data, expr); an_node_clear(expr); list_append((expr)->next, obj
 list_append((expr)->next, obj); expr_next = obj->data; object_free(obj);}
 #define parser_end if (parser->list->size <= parser->position)
 
-void scopes_expr(struct an_parser *parser, struct an_node *expr) {
+void scopes_expr(struct sc_parser *parser, struct an_node *expr) {
     size_t current_pointing = parser->position;
     struct tk_token *token = NULL;
     int result = 0;
@@ -33,10 +33,10 @@ void scopes_expr(struct an_parser *parser, struct an_node *expr) {
         parser->position = current_pointing;
     }
 }
-void list_expr(struct an_parser *parser, struct an_node *expr) {
+void list_expr(struct sc_parser *parser, struct an_node *expr) {
     list_oper(parser, expr, Special_LSQB, Special_RSQB);
 }
-void ident_get_expr(struct an_parser *parser, struct an_node *expr) {
+void ident_get_expr(struct sc_parser *parser, struct an_node *expr) {
     parser_end return;
     struct tk_token *token = parser->list->data[parser->position]->data;
     if (token->type != TokenType_Identifier) return;
@@ -48,7 +48,7 @@ void ident_get_expr(struct an_parser *parser, struct an_node *expr) {
     string_set_str(expr->data->data, token->data, token->size);
     sha256_code._code(expr->data->data, expr->data->data);
 }
-void ident_new_expr(struct an_parser *parser, struct an_node *expr) {
+void ident_new_expr(struct sc_parser *parser, struct an_node *expr) {
     parser_end return;
     struct tk_token *token = parser->list->data[parser->position]->data;
     if (token->type != TokenType_Identifier) return;
@@ -60,7 +60,7 @@ void ident_new_expr(struct an_parser *parser, struct an_node *expr) {
     string_set_str(expr->data->data, token->data, token->size);
     sha256_code._code(expr->data->data, expr->data->data);
 }
-void bool_expr(struct an_parser *parser, struct an_node *expr) {
+void bool_expr(struct sc_parser *parser, struct an_node *expr) {
     parser_end return;
     struct tk_token *token = parser->list->data[parser->position]->data;
     if (token->type != TokenType_KeyWords || (token->subtype != KeyWord_FALSE && token->subtype != KeyWord_TRUE))
@@ -73,7 +73,7 @@ void bool_expr(struct an_parser *parser, struct an_node *expr) {
     if (token->subtype == KeyWord_FALSE) integer_set_ui(expr->data->data, 0);
     else integer_set_ui(expr->data->data, 1);
 }
-void number_expr(struct an_parser *parser, struct an_node *expr) {
+void number_expr(struct sc_parser *parser, struct an_node *expr) {
     parser_end return;
     struct tk_token *token = parser->list->data[parser->position]->data;
     if (token->type != TokenType_Int) return;
@@ -110,7 +110,7 @@ void number_expr(struct an_parser *parser, struct an_node *expr) {
         }
     }
 }
-void string_expr(struct an_parser *parser, struct an_node *expr) {
+void string_expr(struct sc_parser *parser, struct an_node *expr) {
     parser_end return;
     struct tk_token *token = parser->list->data[parser->position]->data;
     if (token->type != TokenType_String) return;
@@ -121,7 +121,7 @@ void string_expr(struct an_parser *parser, struct an_node *expr) {
     object_set_type(expr->data, STRING_TYPE);
     string_set_str(expr->data->data, token->data, token->size);
 }
-void null_expr(struct an_parser *parser, struct an_node *expr) {
+void null_expr(struct sc_parser *parser, struct an_node *expr) {
     parser_end return;
     struct tk_token *token = parser->list->data[parser->position]->data;
     if (token->type != TokenType_KeyWords || token->subtype != KeyWord_NONE) return;
@@ -130,7 +130,7 @@ void null_expr(struct an_parser *parser, struct an_node *expr) {
     expr->main_type = MainType_Expr;
     expr->data = object_new();
 }
-void literal_expr(struct an_parser *parser, struct an_node *expr) {
+void literal_expr(struct sc_parser *parser, struct an_node *expr) {
     null_expr(parser, expr);
     if (expr->type != ExprType_None) return;
     string_expr(parser, expr);
@@ -141,14 +141,14 @@ void literal_expr(struct an_parser *parser, struct an_node *expr) {
     if (expr->type != ExprType_None) return;
     list_expr(parser, expr);
 }
-void atom_expr(struct an_parser *parser, struct an_node *expr) {
+void atom_expr(struct sc_parser *parser, struct an_node *expr) {
     ident_get_expr(parser, expr);
     if (expr->type != ExprType_None) return;
     literal_expr(parser, expr);
     if (expr->type != ExprType_None) return;
     scopes_expr(parser, expr);
 }
-void primary_expr(struct an_parser *parser, struct an_node *expr) {
+void primary_expr(struct sc_parser *parser, struct an_node *expr) {
     size_t current_pointing = parser->position;
     struct an_node *expr_next = expr;
     struct tk_token *token = NULL;

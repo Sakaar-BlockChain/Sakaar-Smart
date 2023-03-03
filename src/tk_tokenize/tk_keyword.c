@@ -1,6 +1,6 @@
 #include "tk_tokenize.h"
 
-int tokenize_keyword_cmp(struct tk_parser *parser, const char *data, size_t size) {
+int tokenize_keyword_cmp(struct sc_parser *parser, const char *data, size_t size) {
     if(parser->str_size - parser->position < size) return 0;
     if(memcmp(&parser->data[parser->position], data, size) != 0) return 0;
     if (parser->str_size - parser->position >= size + 1 && IdentifierChar(parser->data[parser->position + size]))
@@ -9,23 +9,26 @@ int tokenize_keyword_cmp(struct tk_parser *parser, const char *data, size_t size
 }
 
 
-void tokenize_keyword(struct tk_token *token, struct tk_parser *parser) {
+void tokenize_keyword(struct tk_token *token, struct sc_parser *parser) {
     // Keywords length 2
     if (tokenize_keyword_cmp(parser, "do", 2)) {
         token->type = TokenType_KeyWords;
         token->subtype = KeyWord_DO;
+        tk_token_set_pos(token, parser->line_pos, parser->position);
         parser->position += 2;
         return;
     }
     if (tokenize_keyword_cmp(parser, "if", 2)) {
         token->type = TokenType_KeyWords;
         token->subtype = KeyWord_IF;
+        tk_token_set_pos(token, parser->line_pos, parser->position);
         parser->position += 2;
         return;
     }
     if (tokenize_keyword_cmp(parser, "in", 2)) {
         token->type = TokenType_KeyWords;
         token->subtype = KeyWord_IN;
+        tk_token_set_pos(token, parser->line_pos, parser->position);
         parser->position += 2;
         return;
     }
@@ -33,6 +36,7 @@ void tokenize_keyword(struct tk_token *token, struct tk_parser *parser) {
     if (tokenize_keyword_cmp(parser, "for", 3)) {
         token->type = TokenType_KeyWords;
         token->subtype = KeyWord_FOR;
+        tk_token_set_pos(token, parser->line_pos, parser->position);
         parser->position += 3;
         return;
     }
@@ -40,30 +44,35 @@ void tokenize_keyword(struct tk_token *token, struct tk_parser *parser) {
     if (tokenize_keyword_cmp(parser, "case", 4)) {
         token->type = TokenType_KeyWords;
         token->subtype = KeyWord_CASE;
+        tk_token_set_pos(token, parser->line_pos, parser->position);
         parser->position += 4;
         return;
     }
     if (tokenize_keyword_cmp(parser, "else", 4)) {
         token->type = TokenType_KeyWords;
         token->subtype = KeyWord_ELSE;
+        tk_token_set_pos(token, parser->line_pos, parser->position);
         parser->position += 4;
         return;
     }
     if (tokenize_keyword_cmp(parser, "None", 4)) {
         token->type = TokenType_KeyWords;
         token->subtype = KeyWord_NONE;
+        tk_token_set_pos(token, parser->line_pos, parser->position);
         parser->position += 4;
         return;
     }
     if (tokenize_keyword_cmp(parser, "True", 4)) {
         token->type = TokenType_KeyWords;
         token->subtype = KeyWord_TRUE;
+        tk_token_set_pos(token, parser->line_pos, parser->position);
         parser->position += 4;
         return;
     }
     if (tokenize_keyword_cmp(parser, "func", 4)) {
         token->type = TokenType_KeyWords;
         token->subtype = KeyWord_FUNC;
+        tk_token_set_pos(token, parser->line_pos, parser->position);
         parser->position += 4;
         return;
     }
@@ -71,24 +80,28 @@ void tokenize_keyword(struct tk_token *token, struct tk_parser *parser) {
     if (tokenize_keyword_cmp(parser, "break", 5)) {
         token->type = TokenType_KeyWords;
         token->subtype = KeyWord_BREAK;
+        tk_token_set_pos(token, parser->line_pos, parser->position);
         parser->position += 5;
         return;
     }
     if (tokenize_keyword_cmp(parser, "class", 5)) {
         token->type = TokenType_KeyWords;
         token->subtype = KeyWord_CLASS;
+        tk_token_set_pos(token, parser->line_pos, parser->position);
         parser->position += 5;
         return;
     }
     if (tokenize_keyword_cmp(parser, "while", 5)) {
         token->type = TokenType_KeyWords;
         token->subtype = KeyWord_WHILE;
+        tk_token_set_pos(token, parser->line_pos, parser->position);
         parser->position += 5;
         return;
     }
     if (tokenize_keyword_cmp(parser, "False", 5)) {
         token->type = TokenType_KeyWords;
         token->subtype = KeyWord_FALSE;
+        tk_token_set_pos(token, parser->line_pos, parser->position);
         parser->position += 5;
         return;
     }
@@ -96,24 +109,28 @@ void tokenize_keyword(struct tk_token *token, struct tk_parser *parser) {
     if (tokenize_keyword_cmp(parser, "public", 6)) {
         token->type = TokenType_KeyWords;
         token->subtype = KeyWord_PUBLIC;
+        tk_token_set_pos(token, parser->line_pos, parser->position);
         parser->position += 6;
         return;
     }
     if (tokenize_keyword_cmp(parser, "switch", 6)) {
         token->type = TokenType_KeyWords;
         token->subtype = KeyWord_SWITCH;
+        tk_token_set_pos(token, parser->line_pos, parser->position);
         parser->position += 6;
         return;
     }
     if (tokenize_keyword_cmp(parser, "static", 6)) {
         token->type = TokenType_KeyWords;
         token->subtype = KeyWord_STATIC;
+        tk_token_set_pos(token, parser->line_pos, parser->position);
         parser->position += 6;
         return;
     }
     if (tokenize_keyword_cmp(parser, "return", 6)) {
         token->type = TokenType_KeyWords;
         token->subtype = KeyWord_RETURN;
+        tk_token_set_pos(token, parser->line_pos, parser->position);
         parser->position += 6;
         return;
     }
@@ -121,6 +138,7 @@ void tokenize_keyword(struct tk_token *token, struct tk_parser *parser) {
     if (tokenize_keyword_cmp(parser, "private", 7)) {
         token->type = TokenType_KeyWords;
         token->subtype = KeyWord_PRIVATE;
+        tk_token_set_pos(token, parser->line_pos, parser->position);
         parser->position += 7;
         return;
     }
@@ -128,6 +146,7 @@ void tokenize_keyword(struct tk_token *token, struct tk_parser *parser) {
     if (tokenize_keyword_cmp(parser, "continue", 8)) {
         token->type = TokenType_KeyWords;
         token->subtype = KeyWord_CONTINUE;
+        tk_token_set_pos(token, parser->line_pos, parser->position);
         parser->position += 8;
         return;
     }

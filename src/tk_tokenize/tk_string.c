@@ -1,6 +1,6 @@
 #include "tk_tokenize.h"
 
-void tokenize_string(struct tk_token *token, struct tk_parser *parser){
+void tokenize_string(struct tk_token *token, struct sc_parser *parser){
     if(parser->data[parser->position] != '"' && parser->data[parser->position] != '\'') return;
 
     size_t pos = parser->position + 1;
@@ -25,5 +25,6 @@ void tokenize_string(struct tk_token *token, struct tk_parser *parser){
     token->type = TokenType_String;
     tk_token_resize(token, pos - parser->position - 1);
     memcpy(token->data, &parser->data[parser->position + 1], token->size);
+    tk_token_set_pos(token, parser->line_pos, parser->position);
     parser->position = pos + 1;
 }

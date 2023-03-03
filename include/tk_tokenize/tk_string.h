@@ -3,7 +3,6 @@
 
 #include "sc_structs.h"
 
-
-void tokenize_string(struct tk_token *, struct tk_parser *);
+void tokenize_string(struct tk_token *, struct sc_parser *);
 
 #endif //TK_STRING_H

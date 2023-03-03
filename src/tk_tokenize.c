@@ -1,6 +1,6 @@
 #include "tk_tokenize.h"
 
-void tokenize_parse(struct tk_token *token, struct tk_parser *parser){
+void tokenize_parse(struct tk_token *token, struct sc_parser *parser){
     tokenize_special(token, parser);
     if (token->type != TokenType_None) return;
     tokenize_string(token, parser);
@@ -12,7 +12,7 @@ void tokenize_parse(struct tk_token *token, struct tk_parser *parser){
     tokenize_identifier(token, parser);
 }
 
-void tokenize(struct tk_parser *parser) {
+void tokenize(struct sc_parser *parser) {
     parser->position = parser->current_line = 0;
     struct tk_token *token = tk_token_new();
     int comment_type = 0;

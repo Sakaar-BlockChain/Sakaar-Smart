@@ -117,10 +117,11 @@ short Special_ThreeChar(char c1, char c2, char c3) {
 }
 
 
-void tokenize_special(struct tk_token *token, struct tk_parser *parser) {
+void tokenize_special(struct tk_token *token, struct sc_parser *parser) {
     short result = Special_OneChar(parser->data[parser->position]);
     if (result != Special_None) {
         token->type = TokenType_Special;
+        tk_token_set_pos(token, parser->line_pos, parser->position);
 
         token->subtype = result;
         parser->position++;
