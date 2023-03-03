@@ -10,9 +10,10 @@ int tokenize_keyword_cmp(struct tk_parser *parser, const char *data, size_t size
 
 
 void tokenize_keyword(struct tk_token *token, struct tk_parser *parser) {
-    if (tokenize_keyword_cmp(parser, "in", 2)) {
+    // Keywords length 2
+    if (tokenize_keyword_cmp(parser, "do", 2)) {
         token->type = TokenType_KeyWords;
-        token->subtype = KeyWord_IN;
+        token->subtype = KeyWord_DO;
         parser->position += 2;
         return;
     }
@@ -22,24 +23,20 @@ void tokenize_keyword(struct tk_token *token, struct tk_parser *parser) {
         parser->position += 2;
         return;
     }
-    if (tokenize_keyword_cmp(parser, "do", 2)) {
+    if (tokenize_keyword_cmp(parser, "in", 2)) {
         token->type = TokenType_KeyWords;
-        token->subtype = KeyWord_DO;
+        token->subtype = KeyWord_IN;
         parser->position += 2;
         return;
     }
+    // Keywords length 3
     if (tokenize_keyword_cmp(parser, "for", 3)) {
         token->type = TokenType_KeyWords;
         token->subtype = KeyWord_FOR;
         parser->position += 3;
         return;
     }
-    if (tokenize_keyword_cmp(parser, "None", 4)) {
-        token->type = TokenType_KeyWords;
-        token->subtype = KeyWord_NULL;
-        parser->position += 4;
-        return;
-    }
+    // Keywords length 4
     if (tokenize_keyword_cmp(parser, "case", 4)) {
         token->type = TokenType_KeyWords;
         token->subtype = KeyWord_CASE;
@@ -52,9 +49,9 @@ void tokenize_keyword(struct tk_token *token, struct tk_parser *parser) {
         parser->position += 4;
         return;
     }
-    if (tokenize_keyword_cmp(parser, "func", 4)) {
+    if (tokenize_keyword_cmp(parser, "None", 4)) {
         token->type = TokenType_KeyWords;
-        token->subtype = KeyWord_FUNC;
+        token->subtype = KeyWord_NONE;
         parser->position += 4;
         return;
     }
@@ -64,9 +61,16 @@ void tokenize_keyword(struct tk_token *token, struct tk_parser *parser) {
         parser->position += 4;
         return;
     }
-    if (tokenize_keyword_cmp(parser, "False", 5)) {
+    if (tokenize_keyword_cmp(parser, "func", 4)) {
         token->type = TokenType_KeyWords;
-        token->subtype = KeyWord_FALSE;
+        token->subtype = KeyWord_FUNC;
+        parser->position += 4;
+        return;
+    }
+    // Keywords length 5
+    if (tokenize_keyword_cmp(parser, "break", 5)) {
+        token->type = TokenType_KeyWords;
+        token->subtype = KeyWord_BREAK;
         parser->position += 5;
         return;
     }
@@ -76,21 +80,22 @@ void tokenize_keyword(struct tk_token *token, struct tk_parser *parser) {
         parser->position += 5;
         return;
     }
-    if (tokenize_keyword_cmp(parser, "break", 5)) {
-        token->type = TokenType_KeyWords;
-        token->subtype = KeyWord_BREAK;
-        parser->position += 5;
-        return;
-    }
     if (tokenize_keyword_cmp(parser, "while", 5)) {
         token->type = TokenType_KeyWords;
         token->subtype = KeyWord_WHILE;
         parser->position += 5;
         return;
     }
-    if (tokenize_keyword_cmp(parser, "return", 6)) {
+    if (tokenize_keyword_cmp(parser, "False", 5)) {
         token->type = TokenType_KeyWords;
-        token->subtype = KeyWord_RETURN;
+        token->subtype = KeyWord_FALSE;
+        parser->position += 5;
+        return;
+    }
+    // Keywords length 6
+    if (tokenize_keyword_cmp(parser, "public", 6)) {
+        token->type = TokenType_KeyWords;
+        token->subtype = KeyWord_PUBLIC;
         parser->position += 6;
         return;
     }
@@ -106,6 +111,20 @@ void tokenize_keyword(struct tk_token *token, struct tk_parser *parser) {
         parser->position += 6;
         return;
     }
+    if (tokenize_keyword_cmp(parser, "return", 6)) {
+        token->type = TokenType_KeyWords;
+        token->subtype = KeyWord_RETURN;
+        parser->position += 6;
+        return;
+    }
+    // Keywords length 7
+    if (tokenize_keyword_cmp(parser, "private", 7)) {
+        token->type = TokenType_KeyWords;
+        token->subtype = KeyWord_PRIVATE;
+        parser->position += 7;
+        return;
+    }
+    // Keywords length 6
     if (tokenize_keyword_cmp(parser, "continue", 8)) {
         token->type = TokenType_KeyWords;
         token->subtype = KeyWord_CONTINUE;
