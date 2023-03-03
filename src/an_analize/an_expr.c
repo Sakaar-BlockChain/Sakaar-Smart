@@ -46,6 +46,7 @@ void ident_get_expr(struct an_parser *parser, struct an_node *expr) {
     expr->data = object_new();
     object_set_type(expr->data, STRING_TYPE);
     string_set_str(expr->data->data, token->data, token->size);
+    sha256_code._code(expr->data->data, expr->data->data);
 }
 void ident_new_expr(struct an_parser *parser, struct an_node *expr) {
     parser_end return;
@@ -57,6 +58,7 @@ void ident_new_expr(struct an_parser *parser, struct an_node *expr) {
     expr->data = object_new();
     object_set_type(expr->data, STRING_TYPE);
     string_set_str(expr->data->data, token->data, token->size);
+    sha256_code._code(expr->data->data, expr->data->data);
 }
 void bool_expr(struct an_parser *parser, struct an_node *expr) {
     parser_end return;
@@ -122,7 +124,7 @@ void string_expr(struct an_parser *parser, struct an_node *expr) {
 void null_expr(struct an_parser *parser, struct an_node *expr) {
     parser_end return;
     struct tk_token *token = parser->list->data[parser->position]->data;
-    if (token->type != TokenType_KeyWords || token->subtype != KeyWord_NULL) return;
+    if (token->type != TokenType_KeyWords || token->subtype != KeyWord_NONE) return;
     parser->position++;
     expr->type = PrimType_Literal;
     expr->main_type = MainType_Expr;
@@ -159,14 +161,20 @@ void primary_expr(struct an_parser *parser, struct an_node *expr) {
             if (token->type == TokenType_Special && token->subtype == Special_DOT) {
                 parser->position++;
 
-
+                expr_cast(expr)
                 expr->type = PrimType_Attrib;
                 expr->main_type = MainType_Expr;
                 expr_add(expr)
 
-                ident_get_expr(parser, expr_next);
-                if (expr_next->type == ExprType_None) goto end;
+                parser_end return;
+                token = parser->list->data[parser->position]->data;
+                if (token->type != TokenType_Identifier) return;
+                parser->position++;
 
+                expr->data = object_new();
+                object_set_type(expr->data, STRING_TYPE);
+                string_set_str(expr->data->data, token->data, token->size);
+                sha256_code._code(expr->data->data, expr->data->data);
                 continue;
             } else if (token->type == TokenType_Special && token->subtype == Special_LSQB) {
                 parser->position++;

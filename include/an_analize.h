@@ -4,6 +4,7 @@
 #include "an_analize/an_oper.h"
 #include "an_analize/an_stmt.h"
 #include "an_analize/an_expr.h"
+#include "tk_tokenize.h"
 
 void token_analyzer(struct an_parser *, struct an_node *);
 
