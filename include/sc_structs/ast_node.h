@@ -1,5 +1,5 @@
-#ifndef AN_NODE_H
-#define AN_NODE_H
+#ifndef AST_NODE_H
+#define AST_NODE_H
 
 #include "struct.h"
 
@@ -10,7 +10,7 @@
 #define MainType_Oper           0x02
 #define MainType_Stmt           0x03
 
-struct an_node{
+struct ast_node{
     short main_type;
     short type;
 
@@ -20,9 +20,9 @@ struct an_node{
 };
 
 
-struct an_node *an_node_new();
-void an_node_set(struct an_node *, const struct an_node *);
-void an_node_clear(struct an_node *);
-void an_node_free(struct an_node *);
+struct ast_node *ast_node_new();
+void ast_node_set(struct ast_node *, const struct ast_node *);
+void ast_node_clear(struct ast_node *);
+void ast_node_free(struct ast_node *);
 
-#endif //AN_NODE_H
+#endif //AST_NODE_H

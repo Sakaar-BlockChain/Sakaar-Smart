@@ -1,20 +1,20 @@
 #pragma clang diagnostic push
 #pragma ide diagnostic ignored "misc-no-recursion"
 
-#include "an_analize.h"
+#include "sn_syntax.h"
 
-#define expr_cast(expr) { struct object_st *obj = object_new(); object_set_type(obj, AN_NODE_TYPE); \
-an_node_set(obj->data, expr); an_node_clear(expr); list_append((expr)->next, obj); object_free(obj); }
-#define expr_add(expr) { struct object_st *obj = object_new(); object_set_type(obj, AN_NODE_TYPE); \
+#define expr_cast(expr) { struct object_st *obj = object_new(); object_set_type(obj, AST_NODE_TYPE); \
+ast_node_set(obj->data, expr); ast_node_clear(expr); list_append((expr)->next, obj); object_free(obj); }
+#define expr_add(expr) { struct object_st *obj = object_new(); object_set_type(obj, AST_NODE_TYPE); \
 list_append((expr)->next, obj); expr_next = obj->data; object_free(obj);}
 #define parser_end if (parser->list->size <= parser->position)
 #define parser_get token_ptr = parser->list->data[parser->position];token = parser->list->data[parser->position]->data;
-#define analyze_end if (!result) {an_node_clear(expr);parser->position = current_pointing;}
-#define analyze_start size_t current_pointing = parser->position;struct an_node *expr_next = expr; \
+#define analyze_end if (!result) {ast_node_clear(expr);parser->position = current_pointing;}
+#define analyze_start size_t current_pointing = parser->position;struct ast_node *expr_next = expr; \
 struct tk_token *token = NULL;struct object_st *token_ptr = NULL;int result = 0;
 
 
-void annotated_stmt(struct sc_parser *parser, struct an_node *expr) {
+void annotated_stmt(struct sc_parser *parser, struct ast_node *expr) {
     analyze_start
     {
         expr_add(expr)
@@ -39,7 +39,7 @@ void annotated_stmt(struct sc_parser *parser, struct an_node *expr) {
     end:
     analyze_end
 }
-void assignment_stmt(struct sc_parser *parser, struct an_node *expr) {
+void assignment_stmt(struct sc_parser *parser, struct ast_node *expr) {
     analyze_start
     {
         expr_add(expr)
@@ -95,7 +95,7 @@ void assignment_stmt(struct sc_parser *parser, struct an_node *expr) {
     end:
     analyze_end
 }
-void return_stmt(struct sc_parser *parser, struct an_node *expr) {
+void return_stmt(struct sc_parser *parser, struct ast_node *expr) {
     analyze_start
     {
         parser_end goto end;
@@ -121,7 +121,7 @@ void return_stmt(struct sc_parser *parser, struct an_node *expr) {
     end:
     analyze_end
 }
-void break_stmt(struct sc_parser *parser, struct an_node *expr) {
+void break_stmt(struct sc_parser *parser, struct ast_node *expr) {
     analyze_start
     {
         parser_end goto end;
@@ -136,7 +136,7 @@ void break_stmt(struct sc_parser *parser, struct an_node *expr) {
     end:
     analyze_end
 }
-void continue_stmt(struct sc_parser *parser, struct an_node *expr) {
+void continue_stmt(struct sc_parser *parser, struct ast_node *expr) {
     analyze_start
     {
         parser_end goto end;
@@ -151,7 +151,7 @@ void continue_stmt(struct sc_parser *parser, struct an_node *expr) {
     end:
     analyze_end
 }
-void simple_stmt(struct sc_parser *parser, struct an_node *expr) {
+void simple_stmt(struct sc_parser *parser, struct ast_node *expr) {
     return_stmt(parser, expr);
     if (expr->type != ExprType_None) return;
     break_stmt(parser, expr);
@@ -164,7 +164,7 @@ void simple_stmt(struct sc_parser *parser, struct an_node *expr) {
     if (expr->type != ExprType_None) return;
     or_test_oper(parser, expr);
 }
-void stmt_list(struct sc_parser *parser, struct an_node *expr) {
+void stmt_list(struct sc_parser *parser, struct ast_node *expr) {
     analyze_start
     {
         int times = 0;
@@ -192,7 +192,7 @@ void stmt_list(struct sc_parser *parser, struct an_node *expr) {
     analyze_end
 }
 
-void parameter_list(struct sc_parser *parser, struct an_node *expr) {
+void parameter_list(struct sc_parser *parser, struct ast_node *expr) {
     analyze_start
     {
         list_ident(parser, expr, Special_LSB, Special_RSB);
@@ -204,7 +204,7 @@ void parameter_list(struct sc_parser *parser, struct an_node *expr) {
     end:
     analyze_end
 }
-void extends_list(struct sc_parser *parser, struct an_node *expr) {
+void extends_list(struct sc_parser *parser, struct ast_node *expr) {
     analyze_start
     {
         list_oper(parser, expr, Special_LSB, Special_RSB);
@@ -217,7 +217,7 @@ void extends_list(struct sc_parser *parser, struct an_node *expr) {
     analyze_end
 }
 
-void function_stmt(struct sc_parser *parser, struct an_node *expr) {
+void function_stmt(struct sc_parser *parser, struct ast_node *expr) {
     analyze_start
     {
         parser_end goto end;
@@ -245,7 +245,7 @@ void function_stmt(struct sc_parser *parser, struct an_node *expr) {
     end:
     analyze_end
 }
-void public_function_stmt(struct sc_parser *parser, struct an_node *expr) {
+void public_function_stmt(struct sc_parser *parser, struct ast_node *expr) {
     analyze_start
     {
         parser_end goto end;
@@ -278,7 +278,7 @@ void public_function_stmt(struct sc_parser *parser, struct an_node *expr) {
     end:
     analyze_end
 }
-void static_function_stmt(struct sc_parser *parser, struct an_node *expr) {
+void static_function_stmt(struct sc_parser *parser, struct ast_node *expr) {
     analyze_start
     {
         parser_end goto end;
@@ -311,7 +311,7 @@ void static_function_stmt(struct sc_parser *parser, struct an_node *expr) {
     end:
     analyze_end
 }
-void private_function_stmt(struct sc_parser *parser, struct an_node *expr) {
+void private_function_stmt(struct sc_parser *parser, struct ast_node *expr) {
     analyze_start
     {
         parser_end goto end;
@@ -345,7 +345,7 @@ void private_function_stmt(struct sc_parser *parser, struct an_node *expr) {
     analyze_end
 }
 
-void if_stmt(struct sc_parser *parser, struct an_node *expr) {
+void if_stmt(struct sc_parser *parser, struct ast_node *expr) {
     analyze_start
     {
         parser_end goto end;
@@ -392,7 +392,7 @@ void if_stmt(struct sc_parser *parser, struct an_node *expr) {
     end:
     analyze_end
 }
-void while_stmt(struct sc_parser *parser, struct an_node *expr) {
+void while_stmt(struct sc_parser *parser, struct ast_node *expr) {
     analyze_start
     {
         parser_end goto end;
@@ -415,7 +415,7 @@ void while_stmt(struct sc_parser *parser, struct an_node *expr) {
     end:
     analyze_end
 }
-void do_while_stmt(struct sc_parser *parser, struct an_node *expr) {
+void do_while_stmt(struct sc_parser *parser, struct ast_node *expr) {
     analyze_start
     {
         parser_end goto end;
@@ -444,7 +444,7 @@ void do_while_stmt(struct sc_parser *parser, struct an_node *expr) {
     end:
     analyze_end
 }
-void class_stmt(struct sc_parser *parser, struct an_node *expr) {
+void class_stmt(struct sc_parser *parser, struct ast_node *expr) {
     analyze_start
     {
         parser_end goto end;
@@ -475,7 +475,7 @@ void class_stmt(struct sc_parser *parser, struct an_node *expr) {
     end:
     analyze_end
 }
-void compound_stmt(struct sc_parser *parser, struct an_node *expr) {
+void compound_stmt(struct sc_parser *parser, struct ast_node *expr) {
     function_stmt(parser, expr);
     if (expr->type != ExprType_None) return;
     public_function_stmt(parser, expr);
@@ -494,7 +494,7 @@ void compound_stmt(struct sc_parser *parser, struct an_node *expr) {
     class_stmt(parser, expr);
 }
 
-void statement(struct sc_parser *parser, struct an_node *expr) {
+void statement(struct sc_parser *parser, struct ast_node *expr) {
     compound_stmt(parser, expr);
     if (expr->type != ExprType_None) return;
     analyze_start
@@ -510,7 +510,7 @@ void statement(struct sc_parser *parser, struct an_node *expr) {
     end:
     analyze_end
 }
-void suite(struct sc_parser *parser, struct an_node *expr) {
+void suite(struct sc_parser *parser, struct ast_node *expr) {
     statement(parser, expr);
     if (expr->type != ExprType_None) return;
     analyze_start
@@ -554,7 +554,7 @@ void suite(struct sc_parser *parser, struct an_node *expr) {
     end:
     analyze_end
 }
-void token_analyzer(struct sc_parser *parser, struct an_node *expr) {
+void token_analyzer(struct sc_parser *parser, struct ast_node *expr) {
     parser->position = 0;
     analyze_start
     {
