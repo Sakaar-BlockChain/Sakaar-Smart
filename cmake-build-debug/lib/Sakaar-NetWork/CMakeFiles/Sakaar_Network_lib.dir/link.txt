@@ -1,2 +1,0 @@
-C:\MinGW\bin\ar.exe qc libSakaar_Network_lib.a CMakeFiles/Sakaar_Network_lib.dir/src/network/network_client.c.obj CMakeFiles/Sakaar_Network_lib.dir/src/network/network_conf.c.obj CMakeFiles/Sakaar_Network_lib.dir/src/network/network_p2p.c.obj CMakeFiles/Sakaar_Network_lib.dir/src/network/network_server.c.obj
-C:\MinGW\bin\ranlib.exe libSakaar_Network_lib.a

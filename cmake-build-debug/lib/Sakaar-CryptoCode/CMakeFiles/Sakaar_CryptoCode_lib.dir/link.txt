@@ -1,2 +1,0 @@
-C:\MinGW\bin\ar.exe qc libSakaar_CryptoCode_lib.a CMakeFiles/Sakaar_CryptoCode_lib.dir/src/crypto_code.c.obj CMakeFiles/Sakaar_CryptoCode_lib.dir/src/crypto_code/aes.c.obj
-C:\MinGW\bin\ranlib.exe libSakaar_CryptoCode_lib.a
