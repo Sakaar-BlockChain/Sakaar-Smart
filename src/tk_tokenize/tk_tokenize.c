@@ -13,24 +13,25 @@ void tokenize_parse(struct tk_token *token, struct sc_parser *parser){
 }
 
 void tokenize(struct sc_parser *parser) {
-    parser->position = parser->current_line = 0;
+    parser->pos = parser->line_num = parser->line_pos = 0;
     struct tk_token *token = tk_token_new();
     int comment_type = 0;
-    while (parser->position < parser->str_size) {
-        if (SpaceChar(parser->data[parser->position])) {
-            if (parser->data[parser->position] == '\n') {
+    while (parser->pos < parser->size) {
+        if (SpaceChar(parser->data[parser->pos])) {
+            if (parser->data[parser->pos] == '\n') {
                 if (comment_type == 1) comment_type = 0;
-                parser->current_line++;
+                parser->line_num++;
+                parser->line_pos = parser->pos + 1;
             }
-            parser->position++;
+            parser->pos++;
             continue;
         }
         if (comment_type != 0) {
-            if (comment_type == 2 && parser->data[parser->position] == '*' && parser->data[parser->position + 1] == '/') {
-                parser->position++;
+            if (comment_type == 2 && parser->data[parser->pos] == '*' && parser->data[parser->pos + 1] == '/') {
+                parser->pos++;
                 comment_type = 0;
             }
-            parser->position++;
+            parser->pos++;
             continue;
         }
         tokenize_parse(token, parser);

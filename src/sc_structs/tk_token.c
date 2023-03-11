@@ -9,13 +9,14 @@ struct tk_token *tk_token_new(){
 
     res->data = NULL;
     res->max_size = res->size = 0;
-    res->line = res->pos = 0;
+    res->line_num = res->line_pos = res->pos = 0;
     return res;
 }
 void tk_token_set(struct tk_token *res, const struct tk_token *a){
     res->type = a->type;
     res->subtype = a->subtype;
-    res->line = a->line;
+    res->line_num = a->line_num;
+    res->line_pos = a->line_pos;
     res->pos = a->pos;
 
     tk_token_resize(res, a->size);
@@ -24,7 +25,7 @@ void tk_token_set(struct tk_token *res, const struct tk_token *a){
 void tk_token_clear(struct tk_token *res){
     res->type = TokenType_None;
     res->subtype = TokenType_None;
-    res->line = res->pos = 0;
+    res->line_num = res->line_pos = res->pos = 0;
 
     tk_token_resize(res, 0);
 }
@@ -50,7 +51,8 @@ void tk_token_resize(struct tk_token *res, size_t size) {
     }
     res->size = size;
 }
-void tk_token_set_pos(struct tk_token *res, size_t line, size_t pos) {
-    res->line = line;
-    res->pos = pos;
+void tk_token_set_pos(struct tk_token *res, struct sc_parser *parser) {
+    res->line_num = parser->line_num;
+    res->line_pos = parser->line_pos;
+    res->pos = parser->pos;
 }

@@ -25,29 +25,29 @@
 
 #define StmtType_List           0x41
 
-void annotated_stmt(struct sc_parser *, struct ast_node *);
-void assignment_stmt(struct sc_parser *, struct ast_node *);
-void return_stmt(struct sc_parser *, struct ast_node *);
-void break_stmt(struct sc_parser *, struct ast_node *);
-void continue_stmt(struct sc_parser *, struct ast_node *);
-void simple_stmt(struct sc_parser *, struct ast_node *);
-void stmt_list(struct sc_parser *, struct ast_node *);
+char annotated_stmt(struct sc_parser *, struct ast_node *);
+char assignment_stmt(struct sc_parser *, struct ast_node *);
+char return_stmt(struct sc_parser *, struct ast_node *);
+char break_stmt(struct sc_parser *, struct ast_node *);
+char continue_stmt(struct sc_parser *, struct ast_node *);
+char simple_stmt(struct sc_parser *, struct ast_node *);
+char stmt_list(struct sc_parser *, struct ast_node *);
 
-void parameter_list(struct sc_parser *, struct ast_node *);
-void extends_list(struct sc_parser *, struct ast_node *);
+char parameter_list(struct sc_parser *, struct ast_node *);
+char extends_list(struct sc_parser *, struct ast_node *);
 
-void function_stmt(struct sc_parser *, struct ast_node *);
-void public_function_stmt(struct sc_parser *, struct ast_node *);
-void static_function_stmt(struct sc_parser *, struct ast_node *);
-void private_function_stmt(struct sc_parser *, struct ast_node *);
+char function_stmt(struct sc_parser *, struct ast_node *);
+char public_function_stmt(struct sc_parser *, struct ast_node *);
+char static_function_stmt(struct sc_parser *, struct ast_node *);
+char private_function_stmt(struct sc_parser *, struct ast_node *);
 
-void if_stmt(struct sc_parser *, struct ast_node *);
-void while_stmt(struct sc_parser *, struct ast_node *);
-void do_while_stmt(struct sc_parser *, struct ast_node *);
-void class_stmt(struct sc_parser *, struct ast_node *);
-void compound_stmt(struct sc_parser *, struct ast_node *);
+char if_stmt(struct sc_parser *, struct ast_node *);
+char while_stmt(struct sc_parser *, struct ast_node *);
+char do_while_stmt(struct sc_parser *, struct ast_node *);
+char class_stmt(struct sc_parser *, struct ast_node *);
+char compound_stmt(struct sc_parser *, struct ast_node *);
 
-void statement(struct sc_parser *, struct ast_node *);
-void suite(struct sc_parser *, struct ast_node *);
+char statement(struct sc_parser *, struct ast_node *);
+char suite(struct sc_parser *, struct ast_node *);
 
 #endif //AN_STMT_H

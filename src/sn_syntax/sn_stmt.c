@@ -7,19 +7,19 @@
 ast_node_set(obj->data, expr); ast_node_clear(expr); list_append((expr)->next, obj); object_free(obj); }
 #define expr_add(expr) { struct object_st *obj = object_new(); object_set_type(obj, AST_NODE_TYPE); \
 list_append((expr)->next, obj); expr_next = obj->data; object_free(obj);}
-#define parser_end if (parser->list->size <= parser->position)
-#define parser_get token_ptr = parser->list->data[parser->position];token = parser->list->data[parser->position]->data;
-#define analyze_end if (!result) {ast_node_clear(expr);parser->position = current_pointing;}
-#define analyze_start size_t current_pointing = parser->position;struct ast_node *expr_next = expr; \
-struct tk_token *token = NULL;struct object_st *token_ptr = NULL;int result = 0;
+#define parser_end if (parser->list->size <= parser->pos)
+#define parser_get token_ptr = parser->list->data[parser->pos];token = parser->list->data[parser->pos]->data;
+#define analyze_end if (result != SN_Status_Success) {ast_node_clear(expr);parser->error_pos = parser->pos;parser->pos = current_pointing;} return result;
+#define analyze_start size_t current_pointing = parser->pos;struct ast_node *expr_next = expr; \
+struct tk_token *token = NULL;struct object_st *token_ptr = NULL;char result = SN_Status_Nothing, sub_result;
 
 
-void annotated_stmt(struct sc_parser *parser, struct ast_node *expr) {
+char annotated_stmt(struct sc_parser *parser, struct ast_node *expr) {
     analyze_start
     {
         expr_add(expr)
-        ident_new_expr(parser, expr_next);
-        if (expr_next->type == ExprType_None) goto end;
+        sub_result = ident_new_expr(parser, expr_next);
+        if (sub_result != SN_Status_Success) goto end;
 
         expr->main_type = MainType_Stmt;
         expr->type = StmtType_Annot;
@@ -27,23 +27,24 @@ void annotated_stmt(struct sc_parser *parser, struct ast_node *expr) {
         parser_end goto end;
         parser_get
         if (token->type != TokenType_Special || token->subtype != Special_EQ) goto end;
-        parser->position++;
+        parser->pos++;
         list_append(expr->tokens, token_ptr);
 
         expr_add(expr)
-        or_test_oper(parser, expr_next);
-        if (expr_next->type == ExprType_None) goto end;
+        sub_result = or_test_oper(parser, expr_next);
+        if (sub_result != SN_Status_Success) goto end;
 
-        result = 1;
+        result = SN_Status_Success;
     }
     end:
     analyze_end
 }
-void assignment_stmt(struct sc_parser *parser, struct ast_node *expr) {
+char assignment_stmt(struct sc_parser *parser, struct ast_node *expr) {
     analyze_start
     {
         expr_add(expr)
-        primary_expr(parser, expr_next);
+        sub_result = primary_expr(parser, expr_next);
+        if (sub_result != SN_Status_Success) goto end;
         if (expr_next->type != PrimType_Subscript && expr_next->type != PrimType_Ident_get &&
             expr_next->type != PrimType_Attrib)
             goto end;
@@ -61,16 +62,16 @@ void assignment_stmt(struct sc_parser *parser, struct ast_node *expr) {
                 token->subtype != Special_EQ_XOR && token->subtype != Special_EQ_LSHIFT
                 && token->subtype != Special_EQ))
             goto end;
-        parser->position++;
+        parser->pos++;
         list_append(expr->tokens, token_ptr);
 
-        while (parser->position < parser->list->size) {
+        while (parser->pos < parser->list->size) {
             expr_add(expr)
-            or_test_oper(parser, expr_next);
-            if (expr_next->type == ExprType_None) goto end;
+            sub_result = or_test_oper(parser, expr_next);
+            if (sub_result != SN_Status_Success) goto end;
 
             parser_end {
-                result = 1;
+                result = SN_Status_Success;
                 goto end;
             }
             parser_get
@@ -81,10 +82,10 @@ void assignment_stmt(struct sc_parser *parser, struct ast_node *expr) {
                     token->subtype != Special_EQ_AND && token->subtype != Special_EQ_OR &&
                     token->subtype != Special_EQ_XOR && token->subtype != Special_EQ_LSHIFT
                     && token->subtype != Special_EQ)) {
-                result = 1;
+                result = SN_Status_Success;
                 goto end;
             }
-            parser->position++;
+            parser->pos++;
             list_append(expr->tokens, token_ptr);
 
             if (expr_next->type != PrimType_Subscript && expr_next->type != PrimType_Ident_get &&
@@ -95,13 +96,13 @@ void assignment_stmt(struct sc_parser *parser, struct ast_node *expr) {
     end:
     analyze_end
 }
-void return_stmt(struct sc_parser *parser, struct ast_node *expr) {
+char return_stmt(struct sc_parser *parser, struct ast_node *expr) {
     analyze_start
     {
         parser_end goto end;
         parser_get
         if (token->type != TokenType_KeyWords || token->subtype != KeyWord_RETURN) goto end;
-        parser->position++;
+        parser->pos++;
 
         expr->main_type = MainType_Stmt;
         expr->type = StmtType_Return;
@@ -109,73 +110,74 @@ void return_stmt(struct sc_parser *parser, struct ast_node *expr) {
         parser_end goto end;
         parser_get
         if (token->type == TokenType_Special && token->subtype == Special_SEMI) {
-            result = 1;
+            result = SN_Status_Success;
             goto end;
         }
 
         expr_add(expr)
-        or_test_oper(parser, expr_next);
-        if (expr_next->type == ExprType_None) goto end;
-        result = 1;
+        sub_result = or_test_oper(parser, expr_next);
+        if (sub_result != SN_Status_Success) goto end;
+        result = SN_Status_Success;
     }
     end:
     analyze_end
 }
-void break_stmt(struct sc_parser *parser, struct ast_node *expr) {
+char break_stmt(struct sc_parser *parser, struct ast_node *expr) {
     analyze_start
     {
         parser_end goto end;
         parser_get
         if (token->type != TokenType_KeyWords || token->subtype != KeyWord_BREAK) goto end;
-        parser->position++;
+        parser->pos++;
 
         expr->main_type = MainType_Stmt;
         expr->type = StmtType_Break;
-        result = 1;
+        result = SN_Status_Success;
     }
     end:
     analyze_end
 }
-void continue_stmt(struct sc_parser *parser, struct ast_node *expr) {
+char continue_stmt(struct sc_parser *parser, struct ast_node *expr) {
     analyze_start
     {
         parser_end goto end;
         parser_get
         if (token->type != TokenType_KeyWords || token->subtype != KeyWord_CONTINUE) goto end;
-        parser->position++;
+        parser->pos++;
 
         expr->main_type = MainType_Stmt;
         expr->type = StmtType_Continue;
-        result = 1;
+        result = SN_Status_Success;
     }
     end:
     analyze_end
 }
-void simple_stmt(struct sc_parser *parser, struct ast_node *expr) {
-    return_stmt(parser, expr);
-    if (expr->type != ExprType_None) return;
-    break_stmt(parser, expr);
-    if (expr->type != ExprType_None) return;
-    continue_stmt(parser, expr);
-    if (expr->type != ExprType_None) return;
-    annotated_stmt(parser, expr);
-    if (expr->type != ExprType_None) return;
-    assignment_stmt(parser, expr);
-    if (expr->type != ExprType_None) return;
-    or_test_oper(parser, expr);
+char simple_stmt(struct sc_parser *parser, struct ast_node *expr) {
+    char result = return_stmt(parser, expr);
+    if (result != SN_Status_Nothing) return result;
+    result = break_stmt(parser, expr);
+    if (result != SN_Status_Nothing) return result;
+    result = continue_stmt(parser, expr);
+    if (result != SN_Status_Nothing) return result;
+    result = annotated_stmt(parser, expr);
+    if (result != SN_Status_Nothing) return result;
+    result = assignment_stmt(parser, expr);
+    if (result != SN_Status_Nothing) return result;
+    result = or_test_oper(parser, expr);
+    return result;
 }
-void stmt_list(struct sc_parser *parser, struct ast_node *expr) {
+char stmt_list(struct sc_parser *parser, struct ast_node *expr) {
     analyze_start
     {
         int times = 0;
-        while (parser->position < parser->list->size) {
-            simple_stmt(parser, expr_next);
-            if (expr_next->type == ExprType_None) goto end;
+        while (parser->pos < parser->list->size) {
+            sub_result = simple_stmt(parser, expr_next);
+            if (sub_result != SN_Status_Success) goto end;
 
             parser_end break;
             parser_get
             if (token->type != TokenType_Special || token->subtype != Special_COMMA) break;
-            parser->position++;
+            parser->pos++;
 
             parser_end goto end;
             if (times == 0) {
@@ -186,317 +188,318 @@ void stmt_list(struct sc_parser *parser, struct ast_node *expr) {
             }
             expr_add(expr)
         }
-        result = 1;
+        result = SN_Status_Success;
     }
     end:
     analyze_end
 }
 
-void parameter_list(struct sc_parser *parser, struct ast_node *expr) {
+char parameter_list(struct sc_parser *parser, struct ast_node *expr) {
     analyze_start
     {
-        list_ident(parser, expr, Special_LSB, Special_RSB);
-        if (expr->type != PrimType_List) goto end;
+        sub_result = list_ident(parser, expr, Special_LSB, Special_RSB);
+        if (sub_result != SN_Status_Success) goto end;
         expr->main_type = MainType_Stmt;
         expr->type = StmtType_Params;
-        result = 1;
+        result = SN_Status_Success;
     }
     end:
     analyze_end
 }
-void extends_list(struct sc_parser *parser, struct ast_node *expr) {
+char extends_list(struct sc_parser *parser, struct ast_node *expr) {
     analyze_start
     {
-        list_oper(parser, expr, Special_LSB, Special_RSB);
-        if (expr->type != PrimType_List) goto end;
+        sub_result = list_oper(parser, expr, Special_LSB, Special_RSB);
+        if (sub_result != SN_Status_Success) goto end;
         expr->main_type = MainType_Stmt;
         expr->type = StmtType_Extends;
-        result = 1;
+        result = SN_Status_Success;
     }
     end:
     analyze_end
 }
 
-void function_stmt(struct sc_parser *parser, struct ast_node *expr) {
+char function_stmt(struct sc_parser *parser, struct ast_node *expr) {
     analyze_start
     {
         parser_end goto end;
         parser_get
         if (token->type != TokenType_KeyWords || token->subtype != KeyWord_FUNC) goto end;
-        parser->position++;
+        parser->pos++;
 
         expr->main_type = MainType_Stmt;
         expr->type = StmtType_Func;
 
         expr_add(expr)
-        ident_new_expr(parser, expr_next);
-        if (expr_next->type == ExprType_None) goto end;
+        sub_result = ident_new_expr(parser, expr_next);
+        if (sub_result != SN_Status_Success) goto end;
 
         expr_add(expr)
-        parameter_list(parser, expr_next);
-        if (expr_next->type == ExprType_None) goto end;
+        sub_result = parameter_list(parser, expr_next);
+        if (sub_result != SN_Status_Success) goto end;
 
         expr_add(expr)
-        suite(parser, expr_next);
-        if (expr_next->type == ExprType_None) goto end;
+        sub_result = suite(parser, expr_next);
+        if (sub_result != SN_Status_Success) goto end;
 
-        result = 1;
+        result = SN_Status_Success;
     }
     end:
     analyze_end
 }
-void public_function_stmt(struct sc_parser *parser, struct ast_node *expr) {
+char public_function_stmt(struct sc_parser *parser, struct ast_node *expr) {
     analyze_start
     {
         parser_end goto end;
         parser_get
         if (token->type != TokenType_KeyWords || token->subtype != KeyWord_PUBLIC) goto end;
-        parser->position++;
+        parser->pos++;
 
         parser_end goto end;
         parser_get
         if (token->type != TokenType_KeyWords || token->subtype != KeyWord_FUNC) goto end;
-        parser->position++;
+        parser->pos++;
 
         expr->main_type = MainType_Stmt;
         expr->type = StmtType_PUB_Func;
 
         expr_add(expr)
-        ident_new_expr(parser, expr_next);
-        if (expr_next->type == ExprType_None) goto end;
+        sub_result = ident_new_expr(parser, expr_next);
+        if (sub_result != SN_Status_Success) goto end;
 
         expr_add(expr)
-        parameter_list(parser, expr_next);
-        if (expr_next->type == ExprType_None) goto end;
+        sub_result = parameter_list(parser, expr_next);
+        if (sub_result != SN_Status_Success) goto end;
 
         expr_add(expr)
-        suite(parser, expr_next);
-        if (expr_next->type == ExprType_None) goto end;
+        sub_result = suite(parser, expr_next);
+        if (sub_result != SN_Status_Success) goto end;
 
-        result = 1;
+        result = SN_Status_Success;
     }
     end:
     analyze_end
 }
-void static_function_stmt(struct sc_parser *parser, struct ast_node *expr) {
+char static_function_stmt(struct sc_parser *parser, struct ast_node *expr) {
     analyze_start
     {
         parser_end goto end;
         parser_get
         if (token->type != TokenType_KeyWords || token->subtype != KeyWord_STATIC) goto end;
-        parser->position++;
+        parser->pos++;
 
         parser_end goto end;
         parser_get
         if (token->type != TokenType_KeyWords || token->subtype != KeyWord_FUNC) goto end;
-        parser->position++;
+        parser->pos++;
 
         expr->main_type = MainType_Stmt;
         expr->type = StmtType_STC_Func;
 
         expr_add(expr)
-        ident_new_expr(parser, expr_next);
-        if (expr_next->type == ExprType_None) goto end;
+        sub_result = ident_new_expr(parser, expr_next);
+        if (sub_result != SN_Status_Success) goto end;
 
         expr_add(expr)
-        parameter_list(parser, expr_next);
-        if (expr_next->type == ExprType_None) goto end;
+        sub_result = parameter_list(parser, expr_next);
+        if (sub_result != SN_Status_Success) goto end;
 
         expr_add(expr)
-        suite(parser, expr_next);
-        if (expr_next->type == ExprType_None) goto end;
+        sub_result = suite(parser, expr_next);
+        if (sub_result != SN_Status_Success) goto end;
 
-        result = 1;
+        result = SN_Status_Success;
     }
     end:
     analyze_end
 }
-void private_function_stmt(struct sc_parser *parser, struct ast_node *expr) {
+char private_function_stmt(struct sc_parser *parser, struct ast_node *expr) {
     analyze_start
     {
         parser_end goto end;
         parser_get
         if (token->type != TokenType_KeyWords || token->subtype != KeyWord_PRIVATE) goto end;
-        parser->position++;
+        parser->pos++;
 
         parser_end goto end;
         parser_get
         if (token->type != TokenType_KeyWords || token->subtype != KeyWord_FUNC) goto end;
-        parser->position++;
+        parser->pos++;
 
         expr->main_type = MainType_Stmt;
         expr->type = StmtType_PRI_Func;
 
         expr_add(expr)
-        ident_new_expr(parser, expr_next);
-        if (expr_next->type == ExprType_None) goto end;
+        sub_result = ident_new_expr(parser, expr_next);
+        if (sub_result != SN_Status_Success) goto end;
 
         expr_add(expr)
-        parameter_list(parser, expr_next);
-        if (expr_next->type == ExprType_None) goto end;
+        sub_result = parameter_list(parser, expr_next);
+        if (sub_result != SN_Status_Success) goto end;
 
         expr_add(expr)
-        suite(parser, expr_next);
-        if (expr_next->type == ExprType_None) goto end;
+        sub_result = suite(parser, expr_next);
+        if (sub_result != SN_Status_Success) goto end;
 
-        result = 1;
+        result = SN_Status_Success;
     }
     end:
     analyze_end
 }
 
-void if_stmt(struct sc_parser *parser, struct ast_node *expr) {
+char if_stmt(struct sc_parser *parser, struct ast_node *expr) {
     analyze_start
     {
         parser_end goto end;
         parser_get
         if (token->type != TokenType_KeyWords || token->subtype != KeyWord_IF) goto end;
-        parser->position++;
+        parser->pos++;
 
         expr->main_type = MainType_Stmt;
         expr->type = StmtType_If;
 
         expr_add(expr)
-        scopes_expr(parser, expr_next);
-        if (expr_next->type == ExprType_None) goto end;
+        sub_result = scopes_expr(parser, expr_next);
+        if (sub_result != SN_Status_Success) goto end;
 
         expr_add(expr)
-        suite(parser, expr_next);
-        if (expr_next->type == ExprType_None) goto end;
+        sub_result = suite(parser, expr_next);
+        if (sub_result != SN_Status_Success) goto end;
 
-        while (parser->position < parser->list->size) {
+        while (parser->pos < parser->list->size) {
             parser_get
             if (token->type != TokenType_KeyWords || token->subtype != KeyWord_ELSE) break;
-            parser->position++;
+            parser->pos++;
 
             parser_end goto end;
             parser_get
             if (token->type == TokenType_KeyWords && token->subtype == KeyWord_IF) {
-                parser->position++;
+                parser->pos++;
 
                 expr_add(expr)
-                scopes_expr(parser, expr_next);
-                if (expr_next->type == ExprType_None) goto end;
+                sub_result = scopes_expr(parser, expr_next);
+                if (sub_result != SN_Status_Success) goto end;
 
                 expr_add(expr)
-                suite(parser, expr_next);
-                if (expr_next->type == ExprType_None) goto end;
+                sub_result = suite(parser, expr_next);
+                if (sub_result != SN_Status_Success) goto end;
             } else {
                 expr_add(expr)
-                suite(parser, expr_next);
-                if (expr_next->type == ExprType_None) goto end;
+                sub_result = suite(parser, expr_next);
+                if (sub_result != SN_Status_Success) goto end;
             }
         }
-        result = 1;
+        result = SN_Status_Success;
     }
     end:
     analyze_end
 }
-void while_stmt(struct sc_parser *parser, struct ast_node *expr) {
+char while_stmt(struct sc_parser *parser, struct ast_node *expr) {
     analyze_start
     {
         parser_end goto end;
         parser_get
         if (token->type != TokenType_KeyWords || token->subtype != KeyWord_WHILE) goto end;
-        parser->position++;
+        parser->pos++;
 
         expr->main_type = MainType_Stmt;
         expr->type = StmtType_While;
 
         expr_add(expr)
-        scopes_expr(parser, expr_next);
-        if (expr_next->type == ExprType_None) goto end;
+        sub_result = scopes_expr(parser, expr_next);
+        if (sub_result != SN_Status_Success) goto end;
 
         expr_add(expr)
-        suite(parser, expr_next);
-        if (expr_next->type == ExprType_None) goto end;
-        result = 1;
+        sub_result = suite(parser, expr_next);
+        if (sub_result != SN_Status_Success) goto end;
+        result = SN_Status_Success;
     }
     end:
     analyze_end
 }
-void do_while_stmt(struct sc_parser *parser, struct ast_node *expr) {
+char do_while_stmt(struct sc_parser *parser, struct ast_node *expr) {
     analyze_start
     {
         parser_end goto end;
         parser_get
         if (token->type != TokenType_KeyWords || token->subtype != KeyWord_DO) goto end;
-        parser->position++;
+        parser->pos++;
 
         expr->main_type = MainType_Stmt;
         expr->type = StmtType_DoWhile;
 
         expr_add(expr)
-        suite(parser, expr_next);
-        if (expr_next->type == ExprType_None) goto end;
+        sub_result = suite(parser, expr_next);
+        if (sub_result != SN_Status_Success) goto end;
 
         parser_end goto end;
         parser_get
         if (token->type != TokenType_KeyWords || token->subtype != KeyWord_WHILE) goto end;
-        parser->position++;
+        parser->pos++;
 
         expr_add(expr)
-        scopes_expr(parser, expr_next);
-        if (expr_next->type == ExprType_None) goto end;
+        sub_result = scopes_expr(parser, expr_next);
+        if (sub_result != SN_Status_Success) goto end;
 
-        result = 1;
+        result = SN_Status_Success;
     }
     end:
     analyze_end
 }
-void class_stmt(struct sc_parser *parser, struct ast_node *expr) {
+char class_stmt(struct sc_parser *parser, struct ast_node *expr) {
     analyze_start
     {
         parser_end goto end;
         parser_get
         if (token->type != TokenType_KeyWords || token->subtype != KeyWord_CLASS) goto end;
-        parser->position++;
+        parser->pos++;
 
         expr->main_type = MainType_Stmt;
         expr->type = StmtType_Class;
 
         expr_add(expr)
-        ident_new_expr(parser, expr_next);
-        if (expr_next->type == ExprType_None) goto end;
+        sub_result = ident_new_expr(parser, expr_next);
+        if (sub_result != SN_Status_Success) goto end;
 
         parser_get
         if (token->type == TokenType_Special && token->subtype == Special_LSB) {
             expr_add(expr)
-            extends_list(parser, expr_next);
-            if (expr_next->type == ExprType_None) goto end;
+            sub_result = extends_list(parser, expr_next);
+            if (sub_result != SN_Status_Success) goto end;
         }
 
         expr_add(expr)
-        suite(parser, expr_next);
-        if (expr_next->type == ExprType_None) goto end;
+        sub_result = suite(parser, expr_next);
+        if (sub_result != SN_Status_Success) goto end;
 
-        result = 1;
+        result = SN_Status_Success;
     }
     end:
     analyze_end
 }
-void compound_stmt(struct sc_parser *parser, struct ast_node *expr) {
-    function_stmt(parser, expr);
-    if (expr->type != ExprType_None) return;
-    public_function_stmt(parser, expr);
-    if (expr->type != ExprType_None) return;
-    static_function_stmt(parser, expr);
-    if (expr->type != ExprType_None) return;
-    private_function_stmt(parser, expr);
-    if (expr->type != ExprType_None) return;
+char compound_stmt(struct sc_parser *parser, struct ast_node *expr) {
+    char result = function_stmt(parser, expr);
+    if (result != SN_Status_Nothing) return result;
+    result = public_function_stmt(parser, expr);
+    if (result != SN_Status_Nothing) return result;
+    result = static_function_stmt(parser, expr);
+    if (result != SN_Status_Nothing) return result;
+    result = private_function_stmt(parser, expr);
+    if (result != SN_Status_Nothing) return result;
 
-    if_stmt(parser, expr);
-    if (expr->type != ExprType_None) return;
-    while_stmt(parser, expr);
-    if (expr->type != ExprType_None) return;
-    do_while_stmt(parser, expr);
-    if (expr->type != ExprType_None) return;
-    class_stmt(parser, expr);
+    result = if_stmt(parser, expr);
+    if (result != SN_Status_Nothing) return result;
+    result = while_stmt(parser, expr);
+    if (result != SN_Status_Nothing) return result;
+    result = do_while_stmt(parser, expr);
+    if (result != SN_Status_Nothing) return result;
+    result = class_stmt(parser, expr);
+    return result;
 }
 
-void statement(struct sc_parser *parser, struct ast_node *expr) {
-    compound_stmt(parser, expr);
-    if (expr->type != ExprType_None) return;
+char statement(struct sc_parser *parser, struct ast_node *expr) {
+    char res = compound_stmt(parser, expr);
+    if (res != SN_Status_Nothing) return res;
     analyze_start
     {
         stmt_list(parser, expr);
@@ -504,46 +507,46 @@ void statement(struct sc_parser *parser, struct ast_node *expr) {
         parser_end goto end;
         parser_get
         if (token->type != TokenType_Special || token->subtype != Special_SEMI) goto end;
-        parser->position++;
-        result = 1;
+        parser->pos++;
+        result = SN_Status_Success;
     }
     end:
     analyze_end
 }
-void suite(struct sc_parser *parser, struct ast_node *expr) {
-    statement(parser, expr);
-    if (expr->type != ExprType_None) return;
+char suite(struct sc_parser *parser, struct ast_node *expr) {
+    char res = statement(parser, expr);
+    if (res != SN_Status_Nothing) return res;
     analyze_start
     {
         parser_end goto end;
-        token = parser->list->data[parser->position]->data;
+        token = parser->list->data[parser->pos]->data;
         if (token->type != TokenType_Special || token->subtype != Special_LCB) goto end;
-        parser->position++;
+        parser->pos++;
 
         expr->main_type = MainType_Stmt;
         expr->type = StmtType_List;
 
         parser_end goto end;
-        token = parser->list->data[parser->position]->data;
+        token = parser->list->data[parser->pos]->data;
         if (token->type == TokenType_Special && token->subtype == Special_RCB) {
-            parser->position++;
-            result = 1;
+            parser->pos++;
+            result = SN_Status_Success;
             goto end;
         }
 
         expr_add(expr)
-        while (parser->position < parser->list->size) {
+        while (parser->pos < parser->list->size) {
             parser_end break;
             parser_get
-            if (token->type == TokenType_Special || token->subtype == Special_LCB) suite(parser, expr_next);
-            else statement(parser, expr_next);
-            if (expr_next->type == ExprType_None) goto end;
+            if (token->type == TokenType_Special && token->subtype == Special_LCB) sub_result = suite(parser, expr_next);
+            else sub_result = statement(parser, expr_next);
+            if (sub_result != SN_Status_Success) goto end;
 
             parser_end break;
             parser_get
             if (token->type == TokenType_Special && token->subtype == Special_RCB) {
-                parser->position++;
-                result = 1;
+                parser->pos++;
+                result = SN_Status_Success;
                 goto end;
             }
 
@@ -554,21 +557,21 @@ void suite(struct sc_parser *parser, struct ast_node *expr) {
     end:
     analyze_end
 }
-void token_analyzer(struct sc_parser *parser, struct ast_node *expr) {
-    parser->position = 0;
+char token_analyzer(struct sc_parser *parser, struct ast_node *expr) {
+    parser->pos = 0;
     analyze_start
     {
         expr->main_type = MainType_Stmt;
         expr->type = StmtType_List;
 
         expr_add(expr)
-        while (parser->position < parser->list->size) {
-            suite(parser, expr_next);
-            if (expr_next->type == ExprType_None) goto end;
+        while (parser->pos < parser->list->size) {
+            sub_result = suite(parser, expr_next);
+            if (sub_result != SN_Status_Success) goto end;
             parser_end break;
             expr_add(expr)
         }
-        result = 1;
+        result = SN_Status_Success;
     }
     end:
     analyze_end

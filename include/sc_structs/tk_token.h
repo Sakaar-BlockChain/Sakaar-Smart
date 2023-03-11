@@ -24,7 +24,7 @@ struct tk_token{
     size_t size, max_size;
     char *data;
 
-    size_t pos, line;
+    size_t pos, line_num, line_pos;
 };
 
 
@@ -34,7 +34,7 @@ void tk_token_clear(struct tk_token *);
 void tk_token_free(struct tk_token *);
 
 void tk_token_resize(struct tk_token *, size_t);
-void tk_token_set_pos(struct tk_token *, size_t, size_t);
+void tk_token_set_pos(struct tk_token *, struct sc_parser *);
 
 
 

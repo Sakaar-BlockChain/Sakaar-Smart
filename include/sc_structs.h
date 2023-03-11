@@ -4,14 +4,13 @@
 #include "struct.h"
 
 #include "sc_structs/sc_parser.h"
+#include "sc_structs/op_state.h"
 
 #include "sc_structs/tk_token.h"
 #include "sc_structs/ast_node.h"
 #include "sc_structs/op_block.h"
 #include "sc_structs/op_func.h"
 #include "sc_structs/op_class.h"
-
-#include "sc_structs/op_state.h"
 
 
 #define TK_TOKEN_SIZE       sizeof(struct tk_token)

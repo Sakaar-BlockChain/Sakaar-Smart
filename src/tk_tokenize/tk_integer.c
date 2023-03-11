@@ -6,10 +6,10 @@
 #define CharInt_hex(c) (((c) >= '0' && (c) <= '9') || ((c) >= 'a' && (c) <= 'f') || ((c) >= 'A' && (c) <= 'F'))
 
 #define ErrInt {string_set_str(parser->error_msg, "Error while parsing integer", 27); return;}
-#define GetChar {pos++;if (pos == parser->str_size) ErrInt c = parser->data[pos];}
+#define GetChar {pos++;if (pos == parser->size) ErrInt c = parser->data[pos];}
 
 void tokenize_integer(struct tk_token *token, struct sc_parser *parser) {
-    size_t pos = parser->position;
+    size_t pos = parser->pos;
     if (CharInt_dec(parser->data[pos])) {
         char c = parser->data[pos];
         if (c == '0') {
@@ -25,8 +25,8 @@ void tokenize_integer(struct tk_token *token, struct sc_parser *parser) {
                 token->subtype = IntType_bin;
                 tk_token_resize(token, pos - zero_end);
                 memcpy(token->data, &parser->data[zero_end], token->size);
-                tk_token_set_pos(token, parser->line_pos, parser->position);
-                parser->position = pos;
+                tk_token_set_pos(token, parser);
+                parser->pos = pos;
             } else if (c == 'o' || c == 'O') {
                 GetChar
                 while(c == '_') GetChar
@@ -38,8 +38,8 @@ void tokenize_integer(struct tk_token *token, struct sc_parser *parser) {
                 token->subtype = IntType_oct;
                 tk_token_resize(token, pos - zero_end);
                 memcpy(token->data, &parser->data[zero_end], token->size);
-                tk_token_set_pos(token, parser->line_pos, parser->position);
-                parser->position = pos;
+                tk_token_set_pos(token, parser);
+                parser->pos = pos;
             } else if (c == 'x' || c == 'X') {
                 GetChar
                 while(c == '_') GetChar
@@ -51,8 +51,8 @@ void tokenize_integer(struct tk_token *token, struct sc_parser *parser) {
                 token->subtype = IntType_hex;
                 tk_token_resize(token, pos - zero_end);
                 memcpy(token->data, &parser->data[zero_end], token->size);
-                tk_token_set_pos(token, parser->line_pos, parser->position);
-                parser->position = pos;
+                tk_token_set_pos(token, parser);
+                parser->pos = pos;
             } else {
                 while(c == '0') GetChar
                 size_t zero_end = pos;
@@ -70,8 +70,8 @@ void tokenize_integer(struct tk_token *token, struct sc_parser *parser) {
                 token->type = TokenType_Int;
                 tk_token_resize(token, pos - zero_end);
                 memcpy(token->data, &parser->data[zero_end], token->size);
-                tk_token_set_pos(token, parser->line_pos, parser->position);
-                parser->position = pos;
+                tk_token_set_pos(token, parser);
+                parser->pos = pos;
             }
         } else {
             while(CharInt_dec(c)) GetChar
@@ -85,10 +85,10 @@ void tokenize_integer(struct tk_token *token, struct sc_parser *parser) {
             if(IdentifierStart(c)) ErrInt
 
             token->type = TokenType_Int;
-            tk_token_resize(token, pos - parser->position);
-            memcpy(token->data, &parser->data[parser->position], token->size);
-            tk_token_set_pos(token, parser->line_pos, parser->position);
-            parser->position = pos;
+            tk_token_resize(token, pos - parser->pos);
+            memcpy(token->data, &parser->data[parser->pos], token->size);
+            tk_token_set_pos(token, parser);
+            parser->pos = pos;
         }
     }
 }

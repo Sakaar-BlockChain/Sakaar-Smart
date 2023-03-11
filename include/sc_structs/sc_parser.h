@@ -7,11 +7,9 @@
 
 struct sc_parser{
     char *data;
-    size_t position;
-    size_t str_size;
+    size_t size, pos;
 
-    size_t current_line;
-    size_t line_pos;
+    size_t line_num, line_pos;
 
     char scope_buf[MaxBracketNesting];
     size_t scope_pos;
@@ -19,6 +17,7 @@ struct sc_parser{
     struct list_st *list;
 
     struct string_st *error_msg;
+    size_t error_pos;
 };
 
 struct sc_parser *sc_parser_new();

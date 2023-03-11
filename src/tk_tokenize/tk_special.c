@@ -118,24 +118,24 @@ short Special_ThreeChar(char c1, char c2, char c3) {
 
 
 void tokenize_special(struct tk_token *token, struct sc_parser *parser) {
-    short result = Special_OneChar(parser->data[parser->position]);
+    short result = Special_OneChar(parser->data[parser->pos]);
     if (result != Special_None) {
         token->type = TokenType_Special;
-        tk_token_set_pos(token, parser->line_pos, parser->position);
+        tk_token_set_pos(token, parser);
 
         token->subtype = result;
-        parser->position++;
+        parser->pos++;
 
-        result = Special_TwoChar(parser->data[parser->position - 1], parser->data[parser->position]);
+        result = Special_TwoChar(parser->data[parser->pos - 1], parser->data[parser->pos]);
         if (result != Special_None) {
             token->subtype = result;
-            parser->position++;
+            parser->pos++;
 
-            result = Special_ThreeChar(parser->data[parser->position - 2], parser->data[parser->position - 1],
-                                           parser->data[parser->position]);
+            result = Special_ThreeChar(parser->data[parser->pos - 2], parser->data[parser->pos - 1],
+                                           parser->data[parser->pos]);
             if (result != Special_None) {
                 token->subtype = result;
-                parser->position++;
+                parser->pos++;
             }
         }
     }

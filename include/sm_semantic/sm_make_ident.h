@@ -1,8 +1,6 @@
-//
-// Created by 04024 on 28.02.2023.
-//
+#ifndef SM_MAKE_IDENT_H
+#define SM_MAKE_IDENT_H
 
-#ifndef SAKAAR_SMARTCONTRACT_SM_MAKE_IDENT_H
-#define SAKAAR_SMARTCONTRACT_SM_MAKE_IDENT_H
+int scan_node(struct object_st *, short);
 
-#endif //SAKAAR_SMARTCONTRACT_SM_MAKE_IDENT_H
+#endif //SM_MAKE_IDENT_H
