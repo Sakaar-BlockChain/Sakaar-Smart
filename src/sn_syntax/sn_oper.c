@@ -10,11 +10,10 @@ list_append((expr)->next, obj); expr_next = obj->data; object_free(obj);}
 #define analyze_end \
 end:    if (result != SN_Status_Success) {ast_node_clear(expr);parser->pos = current_pointing;} return result; \
 sub:    result = sub_result; goto end; \
-eof:    result = SN_Status_EOF; parser->error_pos = parser->pos; goto end;
+eof:    result = SN_Status_EOF; parser->error_pos = parser->pos; goto end; \
+err:    result = SN_Status_Error; parser->error_pos = parser->pos; goto end;
 
-#define check_call(call) {sub_result = call; \
-if (sub_result == SN_Status_Nothing) goto end; \
-if (sub_result != SN_Status_Success) goto sub;}
+#define check_call(call, check) {sub_result = call; if (sub_result == SN_Status_Nothing) check if (sub_result != SN_Status_Success) goto sub;}
 
 char u_oper(struct sc_parser *parser, struct ast_node *expr) {
     analyze_start
@@ -34,7 +33,10 @@ char u_oper(struct sc_parser *parser, struct ast_node *expr) {
             expr->type = ExprType_U;
             expr->main_type = MainType_Oper;
         } else ast_node_clear(expr);
-        check_call(primary_expr(parser, expr_next))
+        check_call(primary_expr(parser, expr_next), {
+            if (expr_next == expr) goto end;
+            else goto err;
+        })
         result = SN_Status_Success;
     }
 analyze_end
@@ -44,7 +46,10 @@ char m_oper(struct sc_parser *parser, struct ast_node *expr) {
     {
         int times = 0;
         while (parser->pos < parser->list->size) {
-            check_call(u_oper(parser, expr_next))
+            check_call(u_oper(parser, expr_next), {
+                if (times == 0) goto end;
+                else goto err;
+            })
 
             parser_end break;
             parser_get
@@ -73,7 +78,10 @@ char a_oper(struct sc_parser *parser, struct ast_node *expr) {
     {
         int times = 0;
         while (parser->pos < parser->list->size) {
-            check_call(m_oper(parser, expr_next))
+            check_call(m_oper(parser, expr_next), {
+                if (times == 0) goto end;
+                else goto err;
+            })
 
             parser_end break;
             parser_get
@@ -101,7 +109,10 @@ char shift_oper(struct sc_parser *parser, struct ast_node *expr) {
     {
         int times = 0;
         while (parser->pos < parser->list->size) {
-            check_call(a_oper(parser, expr_next))
+            check_call(a_oper(parser, expr_next), {
+                if (times == 0) goto end;
+                else goto err;
+            })
 
             parser_end break;
             parser_get
@@ -129,7 +140,10 @@ char and_oper(struct sc_parser *parser, struct ast_node *expr) {
     {
         int times = 0;
         while (parser->pos < parser->list->size) {
-            check_call(shift_oper(parser, expr_next))
+            check_call(shift_oper(parser, expr_next), {
+                if (times == 0) goto end;
+                else goto err;
+            })
 
             parser_end break;
             parser_get
@@ -155,7 +169,10 @@ char xor_oper(struct sc_parser *parser, struct ast_node *expr) {
     {
         int times = 0;
         while (parser->pos < parser->list->size) {
-            check_call(and_oper(parser, expr_next))
+            check_call(and_oper(parser, expr_next), {
+                if (times == 0) goto end;
+                else goto err;
+            })
 
             parser_end break;
             parser_get
@@ -181,7 +198,10 @@ char or_oper(struct sc_parser *parser, struct ast_node *expr) {
     {
         int times = 0;
         while (parser->pos < parser->list->size) {
-            check_call(xor_oper(parser, expr_next))
+            check_call(xor_oper(parser, expr_next), {
+                if (times == 0) goto end;
+                else goto err;
+            })
 
             parser_end break;
             parser_get
@@ -208,7 +228,10 @@ char comp_oper(struct sc_parser *parser, struct ast_node *expr) {
     {
         int times = 0;
         while (parser->pos < parser->list->size) {
-            check_call(or_oper(parser, expr_next))
+            check_call(or_oper(parser, expr_next), {
+                if (times == 0) goto end;
+                else goto err;
+            })
 
             parser_end break;
             parser_get
@@ -249,7 +272,10 @@ char not_test_oper(struct sc_parser *parser, struct ast_node *expr) {
             expr->type = ExprType_NotTest;
             expr->main_type = MainType_Oper;
         } else ast_node_clear(expr);
-        check_call(comp_oper(parser, expr_next))
+        check_call(comp_oper(parser, expr_next), {
+            if (expr_next == expr) goto end;
+            else goto err;
+        })
         result = SN_Status_Success;
     }
 analyze_end
@@ -259,7 +285,10 @@ char and_test_oper(struct sc_parser *parser, struct ast_node *expr) {
     {
         int times = 0;
         while (parser->pos < parser->list->size) {
-            check_call(not_test_oper(parser, expr_next))
+            check_call(not_test_oper(parser, expr_next), {
+                if (times == 0) goto end;
+                else goto err;
+            })
 
             parser_end break;
             parser_get
@@ -285,7 +314,10 @@ char or_test_oper(struct sc_parser *parser, struct ast_node *expr) {
     {
         int times = 0;
         while (parser->pos < parser->list->size) {
-            check_call(and_test_oper(parser, expr_next))
+            check_call(and_test_oper(parser, expr_next), {
+                if (times == 0) goto end;
+                else goto err;
+            })
 
             parser_end break;
             parser_get
@@ -327,7 +359,7 @@ char list_oper(struct sc_parser *parser, struct ast_node *expr, short start, sho
 
         expr_add(expr)
         while (parser->pos < parser->list->size) {
-            check_call(or_test_oper(parser, expr_next))
+            check_call(or_test_oper(parser, expr_next), goto err;)
 
             parser_end break;
             parser_get
@@ -367,7 +399,7 @@ char list_ident(struct sc_parser *parser, struct ast_node *expr, short start, sh
 
         expr_add(expr)
         while (parser->pos < parser->list->size) {
-            check_call(ident_new_expr(parser, expr_next))
+            check_call(ident_new_expr(parser, expr_next), goto err;)
 
             parser_end break;
             parser_get

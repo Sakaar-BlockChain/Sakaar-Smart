@@ -6,39 +6,40 @@ ast_node_set(obj->data, expr); ast_node_clear(expr); list_append((expr)->next, o
 #define expr_add(expr) { struct object_st *obj = object_new(); object_set_type(obj, AST_NODE_TYPE); \
 list_append((expr)->next, obj); expr_next = obj->data; object_free(obj);}
 #define parser_end if (parser->list->size <= parser->pos)
+#define analyze_end \
+end:    if (result != SN_Status_Success) {ast_node_clear(expr);parser->pos = current_pointing;} return result; \
+sub:    result = sub_result; goto end; \
+eof:    result = SN_Status_EOF; parser->error_pos = parser->pos; goto end; \
+err:    result = SN_Status_Error; parser->error_pos = parser->pos; goto end;
+
+#define check_call(call, check) {sub_result = call; if (sub_result == SN_Status_Nothing) check if (sub_result != SN_Status_Success) goto sub;}
 
 char scopes_expr(struct sc_parser *parser, struct ast_node *expr) {
     size_t current_pointing = parser->pos;
     struct tk_token *token = NULL;
     char result = SN_Status_Nothing, sub_result;
     {
-        parser_end goto end;
+        parser_end goto eof;
         token = parser->list->data[parser->pos]->data;
         if (token->type != TokenType_Special || token->subtype != Special_LSB) goto end;
         parser->pos++;
 
-        sub_result = or_test_oper(parser, expr);
-        if (sub_result != SN_Status_Success) goto end;
+        check_call(or_test_oper(parser, expr), goto err;)
 
-        parser_end goto end;
+        parser_end goto eof;
         token = parser->list->data[parser->pos]->data;
-        if (token->type != TokenType_Special || token->subtype != Special_RSB) goto end;
+        if (token->type != TokenType_Special || token->subtype != Special_RSB) goto err;
         parser->pos++;
 
         result = SN_Status_Success;
     }
-    end:
-    if (result != SN_Status_Success) {
-        ast_node_clear(expr);
-        parser->pos = current_pointing;
-    }
-    return result;
+analyze_end
 }
 char list_expr(struct sc_parser *parser, struct ast_node *expr) {
     return list_oper(parser, expr, Special_LSQB, Special_RSQB);
 }
 char ident_get_expr(struct sc_parser *parser, struct ast_node *expr) {
-    parser_end return SN_Status_Nothing;
+    parser_end return SN_Status_EOF;
     struct tk_token *token = parser->list->data[parser->pos]->data;
     if (token->type != TokenType_Identifier) return SN_Status_Nothing;
     parser->pos++;
@@ -51,7 +52,7 @@ char ident_get_expr(struct sc_parser *parser, struct ast_node *expr) {
     return SN_Status_Success;
 }
 char ident_new_expr(struct sc_parser *parser, struct ast_node *expr) {
-    parser_end return SN_Status_Nothing;
+    parser_end return SN_Status_EOF;
     struct tk_token *token = parser->list->data[parser->pos]->data;
     if (token->type != TokenType_Identifier) return SN_Status_Nothing;
     parser->pos++;
@@ -64,7 +65,7 @@ char ident_new_expr(struct sc_parser *parser, struct ast_node *expr) {
     return SN_Status_Success;
 }
 char bool_expr(struct sc_parser *parser, struct ast_node *expr) {
-    parser_end return SN_Status_Nothing;
+    parser_end return SN_Status_EOF;
     struct tk_token *token = parser->list->data[parser->pos]->data;
     if (token->type != TokenType_KeyWords || (token->subtype != KeyWord_FALSE && token->subtype != KeyWord_TRUE))
         return SN_Status_Nothing;
@@ -78,7 +79,7 @@ char bool_expr(struct sc_parser *parser, struct ast_node *expr) {
     return SN_Status_Success;
 }
 char number_expr(struct sc_parser *parser, struct ast_node *expr) {
-    parser_end return SN_Status_Nothing;
+    parser_end return SN_Status_EOF;
     struct tk_token *token = parser->list->data[parser->pos]->data;
     if (token->type != TokenType_Int) return SN_Status_Nothing;
     parser->pos++;
@@ -116,7 +117,7 @@ char number_expr(struct sc_parser *parser, struct ast_node *expr) {
     return SN_Status_Success;
 }
 char string_expr(struct sc_parser *parser, struct ast_node *expr) {
-    parser_end return SN_Status_Nothing;
+    parser_end return SN_Status_EOF;
     struct tk_token *token = parser->list->data[parser->pos]->data;
     if (token->type != TokenType_String) return SN_Status_Nothing;
     parser->pos++;
@@ -128,7 +129,7 @@ char string_expr(struct sc_parser *parser, struct ast_node *expr) {
     return SN_Status_Success;
 }
 char null_expr(struct sc_parser *parser, struct ast_node *expr) {
-    parser_end return SN_Status_Nothing;
+    parser_end return SN_Status_EOF;
     struct tk_token *token = parser->list->data[parser->pos]->data;
     if (token->type != TokenType_KeyWords || token->subtype != KeyWord_NONE) return SN_Status_Nothing;
     parser->pos++;
@@ -163,8 +164,7 @@ char primary_expr(struct sc_parser *parser, struct ast_node *expr) {
     struct tk_token *token = NULL;
     char result = SN_Status_Nothing, sub_result;
     {
-        sub_result = atom_expr(parser, expr_next);
-        if (sub_result != SN_Status_Success) goto end;
+        check_call(atom_expr(parser, expr_next), goto end;)
         while(parser->pos < parser->list->size){
             token = parser->list->data[parser->pos]->data;
             if (token->type == TokenType_Special && token->subtype == Special_DOT) {
@@ -175,9 +175,9 @@ char primary_expr(struct sc_parser *parser, struct ast_node *expr) {
                 expr->main_type = MainType_Expr;
                 expr_add(expr)
 
-                parser_end goto end;
+                parser_end goto eof;
                 token = parser->list->data[parser->pos]->data;
-                if (token->type != TokenType_Identifier) goto end;
+                if (token->type != TokenType_Identifier) goto err;
                 parser->pos++;
 
                 expr->data = object_new();
@@ -193,12 +193,11 @@ char primary_expr(struct sc_parser *parser, struct ast_node *expr) {
                 expr->main_type = MainType_Expr;
                 expr_add(expr)
 
-                sub_result = or_test_oper(parser, expr_next);
-                if (sub_result != SN_Status_Success) goto end;
+                check_call(or_test_oper(parser, expr_next), goto err;)
 
-                parser_end goto end;
+                parser_end goto eof;
                 token = parser->list->data[parser->pos]->data;
-                if (token->type != TokenType_Special || token->subtype != Special_RSQB) goto end;
+                if (token->type != TokenType_Special || token->subtype != Special_RSQB) goto err;
                 parser->pos++;
 
                 continue;
@@ -208,8 +207,7 @@ char primary_expr(struct sc_parser *parser, struct ast_node *expr) {
                 expr->main_type = MainType_Expr;
                 expr_add(expr)
 
-                sub_result = list_oper(parser, expr_next, Special_LSB, Special_RSB);
-                if (sub_result != SN_Status_Success) goto end;
+                check_call(list_oper(parser, expr_next, Special_LSB, Special_RSB), goto err;)
 
                 continue;
             }
@@ -217,10 +215,5 @@ char primary_expr(struct sc_parser *parser, struct ast_node *expr) {
         }
         result = SN_Status_Success;
     }
-    end:
-    if (result != SN_Status_Success) {
-        ast_node_clear(expr);
-        parser->pos = current_pointing;
-    }
-    return result;
+analyze_end
 }
