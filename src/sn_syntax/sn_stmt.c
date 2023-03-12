@@ -92,6 +92,7 @@ char assignment_stmt(struct sc_parser *parser, struct ast_node *expr) {
                 expr_next->type != PrimType_Attrib)
                 goto err;
         }
+        goto err;
     }
 analyze_end
 }
@@ -193,7 +194,7 @@ analyze_end
 char parameter_list(struct sc_parser *parser, struct ast_node *expr) {
     analyze_start
     {
-        check_call(list_ident(parser, expr, Special_LSB, Special_RSB), goto end;)
+        check_call(list_ident(parser, expr), goto end;)
         expr->main_type = MainType_Stmt;
         expr->type = StmtType_Params;
         result = SN_Status_Success;
@@ -497,24 +498,21 @@ char suite(struct sc_parser *parser, struct ast_node *expr) {
             goto end;
         }
 
-        expr_add(expr)
         while (parser->pos < parser->list->size) {
-            parser_end break;
+            expr_add(expr)
             parser_get
             if (token->type == TokenType_Special && token->subtype == Special_LCB) check_call(suite(parser, expr_next), goto err;)
             else check_call(statement(parser, expr_next), goto err;)
 
-            parser_end break;
+            parser_end goto eof;
             parser_get
             if (token->type == TokenType_Special && token->subtype == Special_RCB) {
                 parser->pos++;
                 result = SN_Status_Success;
                 goto end;
             }
-
-            parser_end break;
-            expr_add(expr)
         }
+        goto err;
     }
 analyze_end
 }
@@ -525,11 +523,9 @@ char token_analyzer(struct sc_parser *parser, struct ast_node *expr) {
         expr->main_type = MainType_Stmt;
         expr->type = StmtType_List;
 
-        expr_add(expr)
         while (parser->pos < parser->list->size) {
-            check_call(suite(parser, expr_next), goto end;)
-            parser_end break;
             expr_add(expr)
+            check_call(suite(parser, expr_next), goto end;)
         }
         result = SN_Status_Success;
     }

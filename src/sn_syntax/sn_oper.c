@@ -264,7 +264,6 @@ char not_test_oper(struct sc_parser *parser, struct ast_node *expr) {
             if (token->type != TokenType_Special || token->subtype != Special_NOT) break;
             parser->pos++;
 
-            if (token->subtype == Special_ADD) continue;
             list_append(expr->tokens, token_ptr);
         }
         if (expr->tokens->size % 2 != 0) {
@@ -357,11 +356,11 @@ char list_oper(struct sc_parser *parser, struct ast_node *expr, short start, sho
             goto end;
         }
 
-        expr_add(expr)
         while (parser->pos < parser->list->size) {
+            expr_add(expr)
             check_call(or_test_oper(parser, expr_next), goto err;)
 
-            parser_end break;
+            parser_end goto eof;
             parser_get
             if (token->type == TokenType_Special && token->subtype == end) {
                 parser->pos++;
@@ -370,20 +369,18 @@ char list_oper(struct sc_parser *parser, struct ast_node *expr, short start, sho
             }
             if (token->type != TokenType_Special || token->subtype != Special_COMMA) break;
             parser->pos++;
-
-            parser_end break;
-            expr_add(expr)
         }
+        goto err;
     }
 analyze_end
 }
 
-char list_ident(struct sc_parser *parser, struct ast_node *expr, short start, short end) {
+char list_ident(struct sc_parser *parser, struct ast_node *expr) {
     analyze_start
     {
         parser_end goto eof;
         token = parser->list->data[parser->pos]->data;
-        if (token->type != TokenType_Special || token->subtype != start) goto end;
+        if (token->type != TokenType_Special || token->subtype != Special_LSB) goto end;
         parser->pos++;
 
         expr->main_type = MainType_Expr;
@@ -391,29 +388,27 @@ char list_ident(struct sc_parser *parser, struct ast_node *expr, short start, sh
 
         parser_end goto eof;
         token = parser->list->data[parser->pos]->data;
-        if (token->type == TokenType_Special && token->subtype == end) {
+        if (token->type == TokenType_Special && token->subtype == Special_RSB) {
             parser->pos++;
             result = SN_Status_Success;
             goto end;
         }
 
-        expr_add(expr)
         while (parser->pos < parser->list->size) {
+            expr_add(expr)
             check_call(ident_new_expr(parser, expr_next), goto err;)
 
-            parser_end break;
+            parser_end goto eof;
             parser_get
-            if (token->type == TokenType_Special && token->subtype == end) {
+            if (token->type == TokenType_Special && token->subtype == Special_RSB) {
                 parser->pos++;
                 result = SN_Status_Success;
                 goto end;
             }
             if (token->type != TokenType_Special || token->subtype != Special_COMMA) break;
             parser->pos++;
-
-            parser_end break;
-            expr_add(expr)
         }
+        goto err;
     }
 analyze_end
 }

@@ -29,6 +29,6 @@ char and_test_oper(struct sc_parser *, struct ast_node *);
 char or_test_oper(struct sc_parser *, struct ast_node *);
 char list_oper(struct sc_parser *, struct ast_node *, short, short);
 
-char list_ident(struct sc_parser *, struct ast_node *, short, short);
+char list_ident(struct sc_parser *, struct ast_node *);
 
 #endif //AN_OPER_H
