@@ -539,15 +539,17 @@ int main() {
     sc_parser_set_file(parser, "text.txt");
     tokenize(parser);
     if (string_is_null(parser->error_msg)) {
-        print_list(parser->list, 0);
+//        print_list(parser->list, 0);
 
         char res = token_analyzer(parser, expr_obj->data);
         printf("Result : %d\n", res);
-        if(res == SN_Status_Nothing){
+        if(res != SN_Status_Success){
+            printf("Error_pos : %d\n", parser->error_pos);
             struct tk_token *token = parser->list->data[parser->error_pos]->data;
+            print_token(token, 0);
 
             printf("\nLine %zu: \n", token->line_num + 1);
-            for (size_t i = parser->line_pos; i < parser->size; i++) {
+            for (size_t i = token->line_pos; i < parser->size; i++) {
                 if (parser->data[i] == '\n') break;
                 printf("%c", parser->data[i]);
             }
