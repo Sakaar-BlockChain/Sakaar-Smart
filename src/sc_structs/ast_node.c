@@ -7,6 +7,7 @@ struct ast_node *ast_node_new(){
     res->main_type = MainType_None;
     res->type = ExprType_None;
 
+    res->memory_pos = 0;
     res->data = NULL;
     res->next = list_new();
     res->tokens = list_new();
@@ -23,6 +24,8 @@ void ast_node_set(struct ast_node *res, const struct ast_node *a){
 void ast_node_clear(struct ast_node *res){
     res->main_type = MainType_None;
     res->type = ExprType_None;
+
+    res->memory_pos = 0;
     if(res->data != NULL) object_free(res->data);
     res->data = NULL;
     list_clear(res->next);

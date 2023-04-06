@@ -14,6 +14,8 @@ struct ast_node{
     short main_type;
     short type;
 
+    size_t memory_pos;
+
     struct object_st *data;
     struct list_st *next;
     struct list_st *tokens;

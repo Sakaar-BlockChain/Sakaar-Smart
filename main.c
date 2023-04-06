@@ -509,9 +509,6 @@ void print_stack(const struct stack_st *res, int size) {
 //        print_obj(res->data2, size + 2);
 //    }
 //}
-void print_map(const struct map_st *res, int size) {
-    printf("Map\n");
-}
 void print_obj(const struct object_st *res, int size) {
     printf("object : (%d)\n", res->counter);
     PRINT_PREF
@@ -525,7 +522,6 @@ void print_obj(const struct object_st *res, int size) {
     else if (res->type == TK_TOKEN_TYPE) return print_token(res->data, size + 2);
     else if (res->type == AST_NODE_TYPE) return print_node(res->data, size + 2);
 //    else if (res->type == OP_BLOCK_TYPE) return print_block(res->data, size + 2);
-    else if (res->type == MAP_TYPE) return print_map(res->data, size + 2);
 }
 
 //void run_smart_contract(struct op_state *state);
@@ -538,33 +534,7 @@ int main() {
 
     sc_parser_set_file(parser, "text.txt");
     tokenize(parser);
-    if (string_is_null(parser->error_msg)) {
-//        print_list(parser->list, 0);
-
-        char res = token_analyzer(parser, expr_obj->data);
-        printf("Result : %d\n", res);
-        if(res != SN_Status_Success){
-            printf("Error_pos : %d\n", parser->error_pos);
-            struct tk_token *token = parser->list->data[parser->error_pos]->data;
-            print_token(token, 0);
-
-            printf("\nLine %zu: \n", token->line_num + 1);
-            for (size_t i = token->line_pos; i < parser->size; i++) {
-                if (parser->data[i] == '\n') break;
-                printf("%c", parser->data[i]);
-            }
-            printf("\n");
-            for (size_t i = token->line_pos; i < token->pos; i++) printf(" ");
-            printf("^\n");
-        }else{
-            print_obj(expr_obj, 0);
-        }
-
-        {
-            int res1 = scan_node(expr_obj, 0);
-            printf("Result : %d\n", res1);
-        }
-    } else {
+    if (!string_is_null(parser->error_msg)) {
         printf("Error : ");
         for (int i = 0; i < parser->error_msg->size; i++) printf("%c", parser->error_msg->data[i]);
         printf("\nLine %zu: \n", parser->line_num + 1);
@@ -575,7 +545,31 @@ int main() {
         printf("\n");
         for (size_t i = parser->line_pos; i < parser->pos; i++) printf(" ");
         printf("^\n");
+        exit(1);
     }
+
+    char res = token_analyzer(parser, expr_obj->data);
+    printf("Result : %d\n", res);
+    if(res != SN_Status_Success){
+        printf("Error_pos : %d\n", parser->error_pos);
+        struct tk_token *token = parser->list->data[parser->error_pos]->data;
+        print_token(token, 0);
+
+        printf("\nLine %zu: \n", token->line_num + 1);
+        for (size_t i = token->line_pos; i < parser->size; i++) {
+            if (parser->data[i] == '\n') break;
+            printf("%c", parser->data[i]);
+        }
+        printf("\n");
+        for (size_t i = token->line_pos; i < token->pos; i++) printf(" ");
+        printf("^\n");
+        exit(1);
+    }
+
+    print_obj(expr_obj, 0);
+
+    int res1 = semantic_scan(expr_obj);
+    printf("Result : %d\n", res1);
 
     object_free(expr_obj);
     sc_parser_free(parser);

@@ -1,7 +1,6 @@
 #include "sc_structs.h"
 #include "sn_syntax.h"
 #include "hash_code.h"
-#include "tk_tokenize/tk_special.h"
 
 #define Convert_Bool            0x01
 #define Convert_Int             0x02
@@ -36,7 +35,7 @@
 
 //void run_an(struct op_state *state, struct object_st *object) {
 //    struct stack_st *code_operations = state->code_operations;
-//    struct an_node *node = object->data;
+//    struct ast_node *node = object->data;
 //
 //    if (node->main_type == MainType_Expr) {
 //        struct list_st *temp_list = node->next;
@@ -84,9 +83,9 @@
 //            case PrimType_Call: {
 //                stack_add_new(code_operations, OP_BLOCK_TYPE);
 //                ((struct op_block *) code_operations->top->data->data)->type = BlockType_Call;
-//                ((struct op_block *) code_operations->top->data->data)->count = (((struct an_node *) temp_list->data[1]->data)->next)->size;
+//                ((struct op_block *) code_operations->top->data->data)->count = (((struct ast_node *) temp_list->data[1]->data)->next)->size;
 //                stack_add(code_operations, temp_list->data[0]);
-//                temp_list = ((struct an_node *) temp_list->data[1]->data)->next;
+//                temp_list = ((struct ast_node *) temp_list->data[1]->data)->next;
 //                for (size_t i = 0; i < temp_list->size; i++) {
 //                    stack_add(code_operations, temp_list->data[i]);
 //                }
@@ -172,15 +171,6 @@
 //                stack_add(code_operations, temp_list->data[0]);
 //                break;
 //            }
-//            case StmtType_For:
-//                printf("StmtType_For ");
-//                break;
-//            case StmtType_ForHeader:
-//                printf("StmtType_ForHeader ");
-//                break;
-//            case StmtType_Try:
-//                printf("StmtType_Try ");
-//                break;
 //            case StmtType_Func: {
 //                stack_add_new(code_operations, OP_BLOCK_TYPE);
 //                ((struct op_block *) code_operations->top->data->data)->type = BlockType_Func;
@@ -241,9 +231,6 @@
 //                ((struct op_block *) code_operations->top->data->data)->type = BlockType_Continue;
 //                break;
 //            }
-//            case StmtType_Import:
-//                printf("StmtType_Import ");
-//                break;
 //            case StmtType_List: {
 //                for (size_t i = 0; i < temp_list->size; i++) {
 //
@@ -649,8 +636,8 @@
 //                    if (((struct op_block *) current_object->data)->type == BlockType_Delete_Temp &&
 //                        state->temp_memory->size > ((struct op_block *) current_object->data)->count)
 //                        stack_pop(state->temp_memory);
-//                } else if (current_object->type == AN_NODE_TYPE) {
-//                    if (((struct an_node *) current_object->data)->type == StmtType_While) {
+//                } else if (current_object->type == AST_NODE_TYPE) {
+//                    if (((struct ast_node *) current_object->data)->type == StmtType_While) {
 //                        break;
 //                    }// TODO for and do while loop continue
 //                }
@@ -666,8 +653,8 @@
 //                    if (((struct op_block *) current_object->data)->type == BlockType_Delete_Temp &&
 //                        state->temp_memory->size > ((struct op_block *) current_object->data)->count)
 //                        stack_pop(state->temp_memory);
-//                } else if (current_object->type == AN_NODE_TYPE) {
-//                    if (((struct an_node *) current_object->data)->type == StmtType_While) {
+//                } else if (current_object->type == AST_NODE_TYPE) {
+//                    if (((struct ast_node *) current_object->data)->type == StmtType_While) {
 //                        stack_pop(code_operations);
 //                        break;
 //                    }// TODO for and do while loop break
@@ -717,7 +704,7 @@
 //        }
 //        case BlockType_Attr: {
 //            struct object_st *res = NULL;
-//            struct string_st *ind_str = ((struct an_node *) block->data1->data)->data->data;
+//            struct string_st *ind_str = ((struct ast_node *) block->data1->data)->data->data;
 //            struct object_st *obj = object_copy(state->temp_memory->top->data);
 //            if (code_operations->top->data->type != OP_BLOCK_TYPE ||
 //                ((struct op_block *) code_operations->top->data->data)->type != BlockType_Call) {
@@ -793,11 +780,11 @@
 //                    res = map_set_elm(func->data, ind_str->data, ind_str->size);
 //                }
 //                if (res != NULL) {
-//                    struct list_st *temp_list = ((struct an_node *) res->data)->next;
+//                    struct list_st *temp_list = ((struct ast_node *) res->data)->next;
 //                    if (temp_list->size == block->count) {
 //                        ok = 1;
 //                        for (int i = 0; i < temp_list->size; i++) {
-//                            ind_temp = ((struct an_node *) temp_list->data[i]->data)->data->data;
+//                            ind_temp = ((struct ast_node *) temp_list->data[i]->data)->data->data;
 //                            elm = map_set_elm(state->memory->top->data->data, ind_temp->data, ind_temp->size);
 //                            object_set(elm, state->temp_memory->top->data);
 //                            stack_pop(state->temp_memory);
@@ -823,9 +810,9 @@
 //                    _res = map_set_elm(res->data, ind_str->data, ind_str->size);
 //                }
 //                if (res != NULL) {
-//                    struct list_st *temp_list = ((struct an_node *) _res->data)->next;
+//                    struct list_st *temp_list = ((struct ast_node *) _res->data)->next;
 //                    if (temp_list->size == block->count + 1) {
-//                        ind_temp = ((struct an_node *) temp_list->data[0]->data)->data->data;
+//                        ind_temp = ((struct ast_node *) temp_list->data[0]->data)->data->data;
 //                        elm = map_set_elm(state->memory->top->data->data, ind_temp->data, ind_temp->size);
 //                        state->return_obj = object_copy(elm);
 //                        object_set(elm, func);
@@ -835,7 +822,7 @@
 //                    if (temp_list->size == block->count + 1) {
 //                        ok = 1;
 //                        for (int i = 1; i < temp_list->size; i++) {
-//                            ind_temp = ((struct an_node *) temp_list->data[i]->data)->data->data;
+//                            ind_temp = ((struct ast_node *) temp_list->data[i]->data)->data->data;
 //                            elm = map_set_elm(state->memory->top->data->data, ind_temp->data, ind_temp->size);
 //                            object_set(elm, state->temp_memory->top->data);
 //                            stack_pop(state->temp_memory);
@@ -875,7 +862,7 @@
 //        current_object = object_copy(code_operations->top->data);
 //        stack_pop(code_operations);
 //
-//        if (current_object->type == AN_NODE_TYPE) {
+//        if (current_object->type == AST_NODE_TYPE) {
 //            run_an(state, current_object);
 //        }
 //        if (current_object->type == OP_BLOCK_TYPE) {

@@ -42,8 +42,8 @@ void op_state_free(struct op_state *res) {
 }
 
 void op_state_append(struct op_state *res) {
-    stack_add_new(res->memory, MAP_TYPE);
+    stack_add_new(res->memory, LIST_TYPE);
 }
-void op_state_remove(struct op_state *res) {
+void op_state_remove(struct op_state *res ) {
     stack_pop(res->memory);
 }
