@@ -1,6 +1,5 @@
 #include "sc_structs.h"
 #include "sn_syntax.h"
-#include "hash_code.h"
 
 #define Convert_Bool            0x01
 #define Convert_Int             0x02

@@ -1,5 +1,4 @@
 #include "sn_syntax.h"
-#include "hash_code.h"
 
 #define expr_cast(expr) { struct object_st *obj = object_new(); object_set_type(obj, AST_NODE_TYPE); \
 ast_node_set(obj->data, expr); ast_node_clear(expr); list_append((expr)->next, obj); object_free(obj); }
@@ -48,7 +47,6 @@ char ident_get_expr(struct sc_parser *parser, struct ast_node *expr) {
     expr->data = object_new();
     object_set_type(expr->data, STRING_TYPE);
     string_set_str(expr->data->data, token->data, token->size);
-    sha256_code._code(expr->data->data, expr->data->data);
     return SN_Status_Success;
 }
 char ident_new_expr(struct sc_parser *parser, struct ast_node *expr) {
@@ -61,7 +59,6 @@ char ident_new_expr(struct sc_parser *parser, struct ast_node *expr) {
     expr->data = object_new();
     object_set_type(expr->data, STRING_TYPE);
     string_set_str(expr->data->data, token->data, token->size);
-    sha256_code._code(expr->data->data, expr->data->data);
     return SN_Status_Success;
 }
 char bool_expr(struct sc_parser *parser, struct ast_node *expr) {
