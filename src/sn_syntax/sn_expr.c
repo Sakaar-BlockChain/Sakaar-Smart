@@ -180,7 +180,6 @@ char primary_expr(struct sc_parser *parser, struct ast_node *expr) {
                 expr->data = object_new();
                 object_set_type(expr->data, STRING_TYPE);
                 string_set_str(expr->data->data, token->data, token->size);
-                sha256_code._code(expr->data->data, expr->data->data);
                 continue;
             } else if (token->type == TokenType_Special && token->subtype == Special_LSQB) {
                 parser->pos++;
