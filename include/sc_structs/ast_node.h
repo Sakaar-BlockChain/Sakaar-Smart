@@ -14,13 +14,12 @@ struct ast_node{
     short main_type;
     short type;
 
-    size_t memory_pos;
-
     struct object_st *data;
+    struct op_closure *closure;
+
     struct list_st *next;
     struct list_st *tokens;
 };
-
 
 struct ast_node *ast_node_new();
 void ast_node_set(struct ast_node *, const struct ast_node *);

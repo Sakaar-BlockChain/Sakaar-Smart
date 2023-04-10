@@ -14,7 +14,7 @@ struct op_state{
 
     short flag;
 
-    struct stack_st *memory;
+    struct stack_st *stack_memory;
     struct stack_st *temp_memory;
     struct stack_st *code_operations;
 };

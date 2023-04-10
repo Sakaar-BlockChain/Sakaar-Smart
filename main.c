@@ -424,14 +424,6 @@ void print_list(const struct list_st *res, int size) {
         print_obj(res->data[i], size + 2);
     }
 }
-void print_stack(const struct stack_st *res, int size) {
-    printf("stack (%zu):\n", res->size);
-    for (struct stack_el *elm = res->top; elm != NULL; elm = elm->priv) {
-        PRINT_PREF
-        PRINT_NEXT(elm->priv != NULL)
-        print_obj(elm->data, size + 2);
-    }
-}
 //void print_block(const struct op_block *res, int size) {
 //    printf("block :");
 //    switch (res->type) {
@@ -509,8 +501,15 @@ void print_stack(const struct stack_st *res, int size) {
 //        print_obj(res->data2, size + 2);
 //    }
 //}
+void print_op_object(const struct op_object *res, int size) {
+    printf("op object : \n");
+}
 void print_obj(const struct object_st *res, int size) {
-    printf("object : (%d)\n", res->counter);
+    if (res == NULL) {
+        printf("None\n");
+        return;
+    }
+    printf("object : (%d) %p\n", res->counter, res);
     PRINT_PREF
     PRINT_NEXT(0)
     if (res->type == NONE_TYPE) printf("None\n");
@@ -521,6 +520,7 @@ void print_obj(const struct object_st *res, int size) {
     else if (res->type == LIST_TYPE) return print_list(res->data, size + 2);
     else if (res->type == TK_TOKEN_TYPE) return print_token(res->data, size + 2);
     else if (res->type == AST_NODE_TYPE) return print_node(res->data, size + 2);
+    else if (res->type == OP_OBJECT_TYPE) return print_op_object(res->data, size + 2);
 //    else if (res->type == OP_BLOCK_TYPE) return print_block(res->data, size + 2);
 }
 
@@ -570,6 +570,8 @@ int main() {
 
     int res1 = semantic_scan(expr_obj);
     printf("Result : %d\n", res1);
+
+    print_obj(expr_obj, 0);
 
     object_free(expr_obj);
     sc_parser_free(parser);

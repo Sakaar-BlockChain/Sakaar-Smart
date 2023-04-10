@@ -1,3 +1,4 @@
+#include <stdio.h>
 #include "sc_structs.h"
 #include "sn_syntax.h"
 

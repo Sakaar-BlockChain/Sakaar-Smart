@@ -5,6 +5,7 @@
 
 #include "sc_structs/sc_parser.h"
 #include "sc_structs/op_state.h"
+#include "sc_structs/op_closure.h"
 
 #include "sc_structs/tk_token.h"
 #include "sc_structs/ast_node.h"
@@ -21,7 +22,7 @@
 #define TK_TOKEN_OP     (struct object_op) {METHOD_NEW &tk_token_new, METHOD_SET &tk_token_set, METHOD_CLEAR &tk_token_clear, METHOD_FREE &tk_token_free, NULL}
 #define AST_NODE_OP     (struct object_op) {METHOD_NEW &ast_node_new, METHOD_SET &ast_node_set, METHOD_CLEAR &ast_node_clear, METHOD_FREE &ast_node_free, NULL}
 #define OP_BLOCK_OP     (struct object_op) {METHOD_NEW &op_block_new, METHOD_SET &op_block_set, METHOD_CLEAR &op_block_clear, METHOD_FREE &op_block_free, NULL}
-#define OP_OBJECT       (struct object_op) {METHOD_NEW &op_object_new, METHOD_SET &op_object_set, METHOD_CLEAR &op_object_clear, METHOD_FREE &op_object_free, NULL}
+#define OP_OBJECT_OP    (struct object_op) {METHOD_NEW &op_object_new, METHOD_SET &op_object_set, METHOD_CLEAR &op_object_clear, METHOD_FREE &op_object_free, NULL}
 
 
 extern struct object_type tk_token_type;

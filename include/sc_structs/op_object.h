@@ -12,11 +12,16 @@ struct op_object{
 
     struct object_st *data;
 
+    // Class Object
     struct object_st *class;
     struct list_st *attr;
 
-    struct object_st *args;
+    // Function
+    struct list_st *args;
     struct object_st *body;
+
+    // Closure
+    struct op_closure *closure;
 };
 
 struct op_object *op_object_new();

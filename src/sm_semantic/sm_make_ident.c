@@ -8,10 +8,9 @@
 
 
 struct sm_state {
-    struct list_st *memory_list;
-
-    struct stack_st *memory_stack;
-    struct stack_st *expr_stack;
+    struct list_st *memory_frame;
+    struct list_st *memory_closure;
+    struct list_st *expr_stack;
 
     int type;
     int error;
@@ -22,37 +21,81 @@ struct sm_state *sm_state_new() {
     res->type = ScopeType_None;
     res->error = 0;
 
-    res->memory_list = list_new();
-
-    res->memory_stack = stack_new();
-    res->expr_stack = stack_new();
+    res->memory_frame = list_new();
+    res->memory_closure = list_new();
+    res->expr_stack = list_new();
     return res;
 }
 
 void sm_state_free(struct sm_state *res) {
-    list_free(res->memory_list);
-    stack_free(res->memory_stack);
-    stack_free(res->expr_stack);
+    list_free(res->memory_frame);
+    list_free(res->memory_closure);
+    list_free(res->expr_stack);
     skr_free(res);
 }
 
-void sm_state_save_type(struct sm_state *res) {
-    stack_add_new(res->expr_stack, INTEGER_TYPE);
-    integer_set_si(res->expr_stack->top->data->data, res->type);
+void sm_state_save_type(struct sm_state *res, struct object_st *obj) {
+    list_add_new(res->expr_stack, INTEGER_TYPE);
+    integer_set_si(list_get_last(res->expr_stack)->data, res->type);
 
-    stack_add_new(res->memory_stack, INTEGER_TYPE);
-    integer_set_ui(res->memory_stack->top->data->data, res->memory_list->size);
+    list_add_new(res->memory_frame, LIST_TYPE);
+    list_append(res->memory_closure, obj);
 }
 
-size_t sm_state_add(struct sm_state *res, struct object_st *obj){
-    list_append(res->memory_list, obj);
-    return res->memory_list->size;
+void sm_state_remove_frame(struct sm_state *res) {
+    list_remove_last(res->memory_frame);
+    list_remove_last(res->memory_closure);
 }
-size_t sm_state_find(struct sm_state *res, struct object_st *obj){
-    for(size_t i = res->memory_list->size; i > 0; i--){
-        if(object_cmp(res->memory_list->data[i - 1], obj) == 0) return i;
+
+struct object_st *sm_state_set_ident(struct sm_state *res, struct object_st *obj) {
+    struct list_st *list = list_get_last(res->memory_frame)->data;
+    for (size_t i = 0; i < list->size; i++) {
+        if (string_cmp(((struct op_object *)list->data[i]->data)->name, obj->data) == 0) {
+            return object_copy(list->data[i]);
+        }
     }
-    return 0;
+    list_add_new(list, OP_OBJECT_TYPE);
+    op_object_set_name(list_get_last(list)->data, obj->data);
+    return object_copy(list_get_last(list));
+}
+
+struct object_st *sm_state_get_ident(struct sm_state *res, struct object_st *obj) {
+    struct list_st *list;
+    struct ast_node *node;
+
+    size_t i = res->memory_frame->size;
+    struct object_st *ptr = NULL;
+
+    for (; i > 0; i--) {
+        list = res->memory_frame->data[i - 1]->data;
+        for (size_t j = 0; j < list->size; j++) {
+            if (string_cmp(((struct op_object *)list->data[j]->data)->name, obj->data) == 0) {
+                ptr = list->data[j];
+                break;
+            }
+        }
+        if(ptr != NULL) break;
+    }
+
+    if(ptr == NULL) return NULL;
+
+    for (; i < res->memory_frame->size; i++){
+        list = res->memory_frame->data[i]->data;
+        node = res->memory_closure->data[i]->data;
+
+        struct object_st *new_obj = object_new();
+        object_set_type(new_obj, OP_OBJECT_TYPE);
+        op_object_set_name(new_obj->data, obj->data);
+
+        op_closure_closure_append(node->closure, new_obj, ptr);
+        list_append(list, new_obj);
+
+        object_free(new_obj);
+
+        ptr = new_obj;
+    }
+
+    return object_copy(ptr);
 }
 
 void semantic_scan_fields(struct sm_state *state, struct object_st *obj) {
@@ -60,16 +103,20 @@ void semantic_scan_fields(struct sm_state *state, struct object_st *obj) {
 
     if (node->main_type == MainType_Expr) {
         switch (node->type) {
-            case PrimType_Ident_get:{
-                node->memory_pos = sm_state_find(state, node->data);
-                if(node->memory_pos == 0) {
+            case PrimType_Ident_get: {
+                struct object_st *res = sm_state_get_ident(state, node->data);
+                if (res == NULL) {
                     state->error = -1;
                     return;
                 }
+                object_free(node->data);
+                node->data = res;
                 return;
             }
             case PrimType_Ident_new: {
-                node->memory_pos = sm_state_add(state, node->data);
+                struct object_st *res = sm_state_set_ident(state, node->data);
+                object_free(node->data);
+                node->data = res;
                 return;
             }
         }
@@ -104,26 +151,27 @@ void semantic_scan_fields(struct sm_state *state, struct object_st *obj) {
                     return;
                 }
             case StmtType_Func:
-                sm_state_save_type(state);
+                sm_state_save_type(state, obj);
+
                 state->type = ScopeType_Func;
                 break;
             case StmtType_Class:
-                sm_state_save_type(state);
+                sm_state_save_type(state, obj);
                 state->type |= ScopeType_Class;
                 break;
             case StmtType_While:
             case StmtType_DoWhile:
-                sm_state_save_type(state);
+                sm_state_save_type(state, obj);
                 state->type |= ScopeType_Loop;
                 break;
             case StmtType_List:
-                sm_state_save_type(state);
+                sm_state_save_type(state, obj);
                 break;
         }
     }
 
-    for (size_t i=0;i<node->next->size;i++){
-        stack_add(state->expr_stack, node->next->data[node->next->size - i - 1]);
+    for (size_t i = 0; i < node->next->size; i++) {
+        list_append(state->expr_stack, node->next->data[node->next->size - i - 1]);
     }
 
 }
@@ -132,22 +180,17 @@ int semantic_scan(struct object_st *expr_obj) {
     struct sm_state *state = sm_state_new();
     struct object_st *obj;
 
-    stack_add(state->expr_stack, expr_obj);
+    list_append(state->expr_stack, expr_obj);
     while (state->expr_stack->size) {
-        obj = object_copy(state->expr_stack->top->data);
-        stack_pop(state->expr_stack);
+        obj = object_copy(list_get_last(state->expr_stack));
+        list_remove_last(state->expr_stack);
 
         if (obj->type == AST_NODE_TYPE) {
             semantic_scan_fields(state, obj);
             if (state->error != 0) return state->error;
         } else if (obj->type == INTEGER_TYPE) {
             state->type = integer_get_si(obj->data);
-            object_free(obj);
-
-            obj = object_copy(state->memory_stack->top->data);
-            stack_pop(state->memory_stack);
-
-            list_resize(state->memory_list, integer_get_ui(obj->data));
+            sm_state_remove_frame(state);
         }
 
         object_free(obj);
