@@ -14,14 +14,14 @@ struct op_state{
 
     short flag;
 
-    struct stack_st *stack_memory;
-    struct stack_st *temp_memory;
-    struct stack_st *code_operations;
+    struct object_st *frame_memory;
+    struct list_st *stack_memory;
+    struct list_st *temp_memory;
+
+    struct list_st *code_operations;
 };
 
 struct op_state *op_state_new();
-void op_state_set(struct op_state *, const struct op_state *);
-void op_state_clear(struct op_state *);
 void op_state_free(struct op_state *);
 
 void op_state_append(struct op_state *);

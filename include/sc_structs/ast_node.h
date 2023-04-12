@@ -15,7 +15,7 @@ struct ast_node{
     short type;
 
     struct object_st *data;
-    struct op_closure *closure;
+    struct object_st *closure;
 
     struct list_st *next;
     struct list_st *tokens;

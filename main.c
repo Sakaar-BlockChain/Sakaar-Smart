@@ -402,18 +402,23 @@ void print_node(const struct ast_node *res, int size) {
     printf("\n");
     if (res->data != NULL) {
         PRINT_PREF
-        PRINT_NEXT(!list_is_null(res->tokens) || !list_is_null(res->next))
+        PRINT_NEXT(!list_is_null(res->tokens) || !list_is_null(res->next) || res->closure != NULL)
         print_obj(res->data, size + 2);
     }
     if (!list_is_null(res->tokens)) {
         PRINT_PREF
-        PRINT_NEXT(!list_is_null(res->next))
+        PRINT_NEXT(!list_is_null(res->next) || res->closure != NULL)
         print_list(res->tokens, size + 2);
     }
     if (!list_is_null(res->next)) {
         PRINT_PREF
-        PRINT_NEXT(0)
+        PRINT_NEXT(res->closure != NULL)
         print_list(res->next, size + 2);
+    }
+    if (res->closure != NULL) {
+        PRINT_PREF
+        PRINT_NEXT(0)
+        print_obj(res->closure, size + 2);
     }
 }
 void print_list(const struct list_st *res, int size) {
@@ -424,85 +429,47 @@ void print_list(const struct list_st *res, int size) {
         print_obj(res->data[i], size + 2);
     }
 }
-//void print_block(const struct op_block *res, int size) {
-//    printf("block :");
-//    switch (res->type) {
-//        case BlockType_None:
-//            printf("BlockType_None ");
-//            break;
-//        case BlockType_Convert:
-//            printf("BlockType_Convert ");
-//            switch (res->subtype) {
-//                case Convert_Bool:
-//                    printf("Convert_Bool ");
-//                    break;
-//                case Convert_Int:
-//                    printf("Convert_Int ");
-//                    break;
-//                case Convert_Float:
-//                    printf("Convert_Float ");
-//                    break;
-//                case Convert_Str:
-//                    printf("Convert_Str ");
-//                    break;
-//            }
-//            break;
-//        case BlockType_Arithmetic:
-//            printf("BlockType_Arithmetic ");
-//            break;
-//        case BlockType_If_not:
-//            printf("BlockType_If_not ");
-//            break;
-//        case BlockType_If_not_del:
-//            printf("BlockType_If_not_del ");
-//            break;
-//        case BlockType_If:
-//            printf("BlockType_If ");
-//            break;
-//        case BlockType_If_del:
-//            printf("BlockType_If_del ");
-//            break;
-//
-//        case BlockType_Put:
-//            printf("BlockType_Put ");
-//            break;
-//        case BlockType_Delete_Temp:
-//            printf("BlockType_Delete_Temp ");
-//            break;
-//        case BlockType_Continue:
-//            printf("BlockType_Continue ");
-//            break;
-//        case BlockType_Break:
-//            printf("BlockType_Break ");
-//            break;
-//
-//        case BlockType_List:
-//            printf("BlockType_List ");
-//            break;
-//        case BlockType_Attr:
-//            printf("BlockType_Attr ");
-//            break;
-//        case BlockType_Func:
-//            printf("BlockType_Func ");
-//            break;
-//        case BlockType_Call:
-//            printf("BlockType_Call ");
-//            break;
-//    }
-//    printf("%zu\n", res->count);
-//    if(res->data1 != NULL){
-//        PRINT_PREF
-//        PRINT_NEXT(res->data2 != NULL)
-//        print_obj(res->data1, size + 2);
-//    }
-//    if(res->data2 != NULL){
-//        PRINT_PREF
-//        PRINT_NEXT(0)
-//        print_obj(res->data2, size + 2);
-//    }
-//}
+void print_dlist(const struct dlist_st *res, int size) {
+    printf("double list (%zu):\n", res->size);
+    if(res->size != 0){
+        PRINT_PREF
+        PRINT_NEXT(1)
+        printf("[0] :\n");
+        size += 2;
+        for (int i = 0; i < res->size; i++) {
+            PRINT_PREF
+            PRINT_NEXT(i + 1 < res->size)
+            print_obj(res->data[0][i], size + 2);
+        }
+        size -= 2;
+        PRINT_PREF
+        PRINT_NEXT(0)
+        printf("[1] :\n");
+        size += 2;
+        for (int i = 0; i < res->size; i++) {
+            PRINT_PREF
+            PRINT_NEXT(i + 1 < res->size)
+            print_obj(res->data[1][i], size + 2);
+        }
+    }
+
+}
 void print_op_object(const struct op_object *res, int size) {
     printf("op object : \n");
+    if (res->data != NULL) {
+        PRINT_PREF
+        PRINT_NEXT(0)
+        print_obj(res->data, size + 2);
+    }
+}
+void print_op_attrib(const struct op_attrib *res, int size) {
+    printf("Attrib : ");
+    print_str(res->name);
+    if (res->data != NULL) {
+        PRINT_PREF
+        PRINT_NEXT(0)
+        print_obj(res->data, size + 2);
+    }
 }
 void print_obj(const struct object_st *res, int size) {
     if (res == NULL) {
@@ -521,11 +488,12 @@ void print_obj(const struct object_st *res, int size) {
     else if (res->type == TK_TOKEN_TYPE) return print_token(res->data, size + 2);
     else if (res->type == AST_NODE_TYPE) return print_node(res->data, size + 2);
     else if (res->type == OP_OBJECT_TYPE) return print_op_object(res->data, size + 2);
+    else if (res->type == OP_ATTRIB_TYPE) return print_op_attrib(res->data, size + 2);
+    else if (res->type == DLIST_TYPE) return print_dlist(res->data, size + 2);
 //    else if (res->type == OP_BLOCK_TYPE) return print_block(res->data, size + 2);
 }
 
-//void run_smart_contract(struct op_state *state);
-//void run_an(struct op_state *state, struct ast_node *node);
+void run_smart_contract(struct object_st *expr_obj);
 
 int main() {
     struct sc_parser *parser = sc_parser_new();
@@ -545,11 +513,15 @@ int main() {
         printf("\n");
         for (size_t i = parser->line_pos; i < parser->pos; i++) printf(" ");
         printf("^\n");
+
+        object_free(expr_obj);
+        sc_parser_free(parser);
+
+        printf("%zu\n", mem_ctx.filled);
         exit(1);
     }
 
     char res = token_analyzer(parser, expr_obj->data);
-    printf("Result : %d\n", res);
     if(res != SN_Status_Success){
         printf("Error_pos : %d\n", parser->error_pos);
         struct tk_token *token = parser->list->data[parser->error_pos]->data;
@@ -563,35 +535,31 @@ int main() {
         printf("\n");
         for (size_t i = token->line_pos; i < token->pos; i++) printf(" ");
         printf("^\n");
+
+        object_free(expr_obj);
+        sc_parser_free(parser);
+
+        printf("%zu\n", mem_ctx.filled);
+        exit(1);
+    }
+
+    int res1 = semantic_scan(expr_obj);
+    if (res1 != 0) {
+        printf("Error\n");
+
+        object_free(expr_obj);
+        sc_parser_free(parser);
+
+        printf("%zu\n", mem_ctx.filled);
         exit(1);
     }
 
     print_obj(expr_obj, 0);
+    run_smart_contract(expr_obj);
 
-    int res1 = semantic_scan(expr_obj);
-    printf("Result : %d\n", res1);
-
-    print_obj(expr_obj, 0);
 
     object_free(expr_obj);
     sc_parser_free(parser);
-//    struct op_state *state = op_state_new();
-//    //    clock_t begin = clock();
-//    //    stmt_run(expr_obj, state);
-//    //    clock_t end = clock();
-//    //    double time_spent = (double)(end - begin) / CLOCKS_PER_SEC;
-//    //    list_print(state->memory_names,0);
-//    //    list_print(state->memory,0);
-//    //    printf("TIME : %f\n", time_spent);
-//
-//    stack_add(state->code_operations, expr_obj);
-//    stack_add_new(state->memory, MAP_TYPE);
-//
-//    run_smart_contract(state);
-//    printf("\n");
-//    print_stack(state->temp_memory, 0);
-//    print_stack(state->code_operations, 0);
-//    op_state_free(state);
 
     printf("%zu\n", mem_ctx.filled);
 }

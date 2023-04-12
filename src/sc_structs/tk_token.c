@@ -1,6 +1,6 @@
 #include "sc_structs.h"
 
-struct object_type tk_token_type = {TK_TOKEN_OP, NULL, NULL};
+struct object_type tk_token_type = {TK_TOKEN_OP, NULL};
 
 struct tk_token *tk_token_new(){
     struct tk_token *res = skr_malloc(TK_TOKEN_SIZE);

@@ -22,22 +22,25 @@ err:    result = SN_Status_Error; parser->error_pos = parser->pos; goto end;
 char annotated_stmt(struct sc_parser *parser, struct ast_node *expr) {
     analyze_start
     {
+        parser_end goto eof;
+        parser_get
+        if (token->type != TokenType_KeyWords || token->subtype != KeyWord_VAR) goto end;
+        parser->pos++;
+
         expr_add(expr)
-        check_call(ident_new_expr(parser, expr_next), goto end;)
+        check_call(ident_new_expr(parser, expr_next), goto err;)
 
         expr->main_type = MainType_Stmt;
         expr->type = StmtType_Annot;
+        result = SN_Status_Success;
 
-        parser_end goto eof;
+        parser_end goto end;
         parser_get
         if (token->type != TokenType_Special || token->subtype != Special_EQ) goto end;
         parser->pos++;
-        list_append(expr->tokens, token_ptr);
 
         expr_add(expr)
         check_call(or_test_oper(parser, expr_next), goto err;)
-
-        result = SN_Status_Success;
     }
 analyze_end
 }
@@ -227,10 +230,7 @@ char function_stmt(struct sc_parser *parser, struct ast_node *expr) {
         check_call(ident_new_expr(parser, expr_next), goto err;)
 
         expr_add(expr)
-        check_call(parameter_list(parser, expr_next), goto err;)
-
-        expr_add(expr)
-        check_call(suite(parser, expr_next), goto err;)
+        check_call(function_body_stmt(parser, expr_next), goto err;)
 
         result = SN_Status_Success;
     }
@@ -256,10 +256,7 @@ char public_function_stmt(struct sc_parser *parser, struct ast_node *expr) {
         check_call(ident_new_expr(parser, expr_next), goto err;)
 
         expr_add(expr)
-        check_call(parameter_list(parser, expr_next), goto err;)
-
-        expr_add(expr)
-        check_call(suite(parser, expr_next), goto err;)
+        check_call(function_body_stmt(parser, expr_next), goto err;)
 
         result = SN_Status_Success;
     }
@@ -285,10 +282,7 @@ char static_function_stmt(struct sc_parser *parser, struct ast_node *expr) {
         check_call(ident_new_expr(parser, expr_next), goto err;)
 
         expr_add(expr)
-        check_call(parameter_list(parser, expr_next), goto err;)
-
-        expr_add(expr)
-        check_call(suite(parser, expr_next), goto err;)
+        check_call(function_body_stmt(parser, expr_next), goto err;)
 
         result = SN_Status_Success;
     }
@@ -312,6 +306,19 @@ char private_function_stmt(struct sc_parser *parser, struct ast_node *expr) {
 
         expr_add(expr)
         check_call(ident_new_expr(parser, expr_next), goto err;)
+
+        expr_add(expr)
+        check_call(function_body_stmt(parser, expr_next), goto err;)
+
+        result = SN_Status_Success;
+    }
+analyze_end
+}
+char function_body_stmt(struct sc_parser *parser, struct ast_node *expr) {
+    analyze_start
+    {
+        expr->main_type = MainType_Stmt;
+        expr->type = StmtType_Func_Body;
 
         expr_add(expr)
         check_call(parameter_list(parser, expr_next), goto err;)

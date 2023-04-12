@@ -1,70 +1,84 @@
 #include "sc_structs.h"
 
-struct object_type op_object_type = {OP_OBJECT_OP, NULL, NULL};
+struct object_type op_object_type = {OP_OBJECT_OP, NULL};
 
 struct op_object *op_object_new() {
     struct op_object *res = skr_malloc(OP_OBJECT_SIZE);
-    res->name = string_new();
     res->data = NULL;
 
     res->class = NULL;
-    res->attr = list_new();
+    res->attr = map_new();
 
-    res->args = list_new();
-    res->body = NULL;
-
-    res->closure = op_closure_new();
+    res->closure = dlist_new();
 
     return res;
 }
 void op_object_set(struct op_object *res, const struct op_object *a) {
     op_object_clear(res);
 
-    string_set(res->name, a->name);
     res->data = object_copy(a->data);
 
     res->class = object_copy(a->class);
-    list_set(res->attr, a->attr);
+    map_set(res->attr, a->attr);
 
-    list_set(res->args, a->args);
-    res->body = object_copy(a->body);
-
-    op_closure_set(res->closure, a->closure);
+    dlist_set(res->closure, a->closure);
 }
 void op_object_clear(struct op_object *res) {
-    string_clear(res->name);
     if(res->data != NULL) object_free(res->data);
     res->data = NULL;
 
     if(res->class != NULL) object_free(res->class);
     res->class = NULL;
-    list_clear(res->attr);
+    map_clear(res->attr);
 
-    list_clear(res->args);
-    if(res->body != NULL) object_free(res->body);
-    res->body = NULL;
-
-    op_closure_clear(res->closure);
+    dlist_clear(res->closure);
 }
 void op_object_free(struct op_object *res) {
-    string_free(res->name);
     if(res->data != NULL) object_free(res->data);
 
     if(res->class != NULL) object_free(res->class);
-    list_free(res->attr);
+    map_free(res->attr);
 
-    list_free(res->args);
-    if(res->body != NULL) object_free(res->body);
-
-    op_closure_free(res->closure);
+    dlist_free(res->closure);
     skr_free(res);
 }
 
+void op_object_set_function(struct op_object *res, struct ast_node *node) {
+    op_object_clear(res);
 
-void op_object_set_name(struct op_object *res, const struct string_st *name) {
-    string_set(res->name, name);
+    struct object_st *obj = NULL;
+    struct string_st *attr_name = string_new();
+
+    string_set_str(attr_name, "__params__", 10);
+    obj = map_set_elm(res->attr, attr_name->data, attr_name->size);
+    object_set(obj, node->next->data[0]);
+    object_free(obj);
+
+
+    string_set_str(attr_name, "__call__", 7);
+    obj = map_set_elm(res->attr, attr_name->data, attr_name->size);
+    object_set(obj, node->next->data[1]);
+    object_free(obj);
+
+    string_set_str(attr_name, "__closure__", 11);
+    obj = map_set_elm(res->attr, attr_name->data, attr_name->size);
+    object_set(obj, node->closure);
+    {
+        struct dlist_st *closure = obj->data;
+        struct object_st *temp = NULL;
+        for (size_t i = 0 ; i < closure->size; i++) {
+            temp = closure->data[1][i];
+            closure->data[1][i] = object_copy(((struct op_attrib *)temp->data)->data);
+            object_free(temp);
+        }
+    }
+    object_free(obj);
+
+    string_free(attr_name);
 }
-void op_object_set_data(struct op_object *res, struct object_st *obj) {
-    if(res->data != NULL) object_free(res->data);
-    res->data = object_copy(obj);
+struct object_st *op_object_get_attrib(struct op_object *res, struct string_st *name) {
+    return map_get_elm(res->attr, name->data, name->size);
+}
+struct object_st *op_object_set_attrib(struct op_object *res, struct string_st *name) {
+    return map_set_elm(res->attr, name->data, name->size);
 }

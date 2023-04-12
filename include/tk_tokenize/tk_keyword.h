@@ -14,31 +14,32 @@
 
 // Keywords length 3
 #define KeyWord_FOR             0x04
+#define KeyWord_VAR             0x05
 
 // Keywords length 4
-#define KeyWord_CASE            0x05
-#define KeyWord_ELSE            0x06
-#define KeyWord_NONE            0x07
-#define KeyWord_TRUE            0x08
-#define KeyWord_FUNC            0x09
+#define KeyWord_CASE            0x06
+#define KeyWord_ELSE            0x07
+#define KeyWord_NONE            0x08
+#define KeyWord_TRUE            0x09
+#define KeyWord_FUNC            0x0a
 
 // Keywords length 5
-#define KeyWord_BREAK           0x0a
-#define KeyWord_CLASS           0x0b
-#define KeyWord_WHILE           0x0c
-#define KeyWord_FALSE           0x0d
+#define KeyWord_BREAK           0x0b
+#define KeyWord_CLASS           0x0c
+#define KeyWord_WHILE           0x0d
+#define KeyWord_FALSE           0x0e
 
 // Keywords length 6
-#define KeyWord_PUBLIC          0x0e
-#define KeyWord_SWITCH          0x0f
-#define KeyWord_STATIC          0x10
-#define KeyWord_RETURN          0x11
+#define KeyWord_PUBLIC          0x0f
+#define KeyWord_SWITCH          0x10
+#define KeyWord_STATIC          0x11
+#define KeyWord_RETURN          0x12
 
 // Keywords length 7
-#define KeyWord_PRIVATE         0x12
+#define KeyWord_PRIVATE         0x13
 
 // Keywords length 8
-#define KeyWord_CONTINUE        0x13
+#define KeyWord_CONTINUE        0x14
 
 void tokenize_keyword(struct tk_token *, struct sc_parser *);
 

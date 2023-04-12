@@ -17,6 +17,7 @@
 #define StmtType_PUB_Func       0x21
 #define StmtType_STC_Func       0x22
 #define StmtType_PRI_Func       0x23
+#define StmtType_Func_Body      0x24
 
 #define StmtType_If             0x31
 #define StmtType_While          0x32
@@ -40,6 +41,7 @@ char function_stmt(struct sc_parser *, struct ast_node *);
 char public_function_stmt(struct sc_parser *, struct ast_node *);
 char static_function_stmt(struct sc_parser *, struct ast_node *);
 char private_function_stmt(struct sc_parser *, struct ast_node *);
+char function_body_stmt(struct sc_parser *, struct ast_node *);
 
 char if_stmt(struct sc_parser *, struct ast_node *);
 char while_stmt(struct sc_parser *, struct ast_node *);

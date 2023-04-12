@@ -40,6 +40,13 @@ void tokenize_keyword(struct tk_token *token, struct sc_parser *parser) {
         parser->pos += 3;
         return;
     }
+    if (tokenize_keyword_cmp(parser, "var", 3)) {
+        token->type = TokenType_KeyWords;
+        token->subtype = KeyWord_VAR;
+        tk_token_set_pos(token, parser);
+        parser->pos += 3;
+        return;
+    }
     // Keywords length 4
     if (tokenize_keyword_cmp(parser, "case", 4)) {
         token->type = TokenType_KeyWords;

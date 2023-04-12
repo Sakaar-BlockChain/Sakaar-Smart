@@ -1,6 +1,6 @@
 #include "sc_structs.h"
 
-struct object_type op_block_type = {OP_BLOCK_OP, NULL, NULL};
+struct object_type op_block_type = {OP_BLOCK_OP, NULL};
 
 struct op_block *op_block_new() {
     struct op_block *res = skr_malloc(OP_BLOCK_SIZE);
