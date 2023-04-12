@@ -63,7 +63,7 @@ void run_an(struct op_state *state, struct object_st *object) {
             }
             case PrimType_Ident_get: {
                 attrib = node->data->data;
-                print_obj(attrib->data, 0);
+//                print_obj(attrib->data, 0);
                 list_append(state->temp_memory, attrib->data);
                 break;
             }
@@ -72,10 +72,10 @@ void run_an(struct op_state *state, struct object_st *object) {
                 break;
             }
             case PrimType_Attrib:
-                printf("PrimType_Attrib ");
+//                printf("PrimType_Attrib ");
                 break;
             case PrimType_Subscript:
-                printf("PrimType_Subscript ");
+//                printf("PrimType_Subscript ");
                 break;
             case PrimType_Call: {
                 list_add_new(code_operations, OP_BLOCK_TYPE);
@@ -124,15 +124,58 @@ void run_an(struct op_state *state, struct object_st *object) {
     if (node->main_type == MainType_Stmt) {
         struct list_st *temp_list = node->next;
         switch (node->type) {
-            case StmtType_If:
-                printf("StmtType_If ");
+            case StmtType_If: {
+                // else
+                if (temp_list->size % 2 == 1) {
+                    list_add_new(code_operations, OP_BLOCK_TYPE);
+                    new_block = list_get_last(code_operations)->data;
+                    new_block->type = BlockType_If_not;
+                    new_block->data1 = object_copy(temp_list->data[temp_list->size - 1]);
+                }
+                // else if
+                for (size_t i = temp_list->size - (temp_list->size % 2) - 1; i >= 2; i -= 2) {
+                    list_add_new(code_operations, OP_BLOCK_TYPE);
+                    new_block = list_get_last(code_operations)->data;
+                    new_block->type = BlockType_If_not_del;
+                    {
+                        struct object_st *obj = object_new();
+                        object_set_type(obj, OP_BLOCK_TYPE);
+                        ((struct op_block *) obj->data)->type = BlockType_If;
+                        ((struct op_block *) obj->data)->data1 = object_copy(temp_list->data[i]);
+                        new_block->data1 = obj;
+                    }
+                    new_block->data2 = object_copy(temp_list->data[i - 1]);
+                }
+                // if
+                {
+                    list_add_new(code_operations, OP_BLOCK_TYPE);
+                    new_block = list_get_last(code_operations)->data;
+                    new_block->type = BlockType_If;
+                    new_block->data1 = object_copy(temp_list->data[1]);
+                }
+                list_append(code_operations, temp_list->data[0]);
                 break;
-            case StmtType_While:
-                printf("StmtType_While ");
+            }
+            case StmtType_While: {
+                list_add_new(code_operations, OP_BLOCK_TYPE);
+                new_block = list_get_last(code_operations)->data;
+                new_block->type = BlockType_If_del;
+                new_block->data1 = object_copy(object);
+                new_block->data2 = object_copy(temp_list->data[1]);
+
+                list_append(code_operations, temp_list->data[0]);
                 break;
-            case StmtType_DoWhile:
-                printf("StmtType_DoWhile ");
+            }
+            case StmtType_DoWhile: {
+                list_add_new(code_operations, OP_BLOCK_TYPE);
+                new_block = list_get_last(code_operations)->data;
+                new_block->type = BlockType_If_del;
+                new_block->data1 = object_copy(object);
+
+                list_append(code_operations, temp_list->data[1]);
+                list_append(code_operations, temp_list->data[0]);
                 break;
+            }
             case StmtType_Func_Body: {
                 list_add_new(state->temp_memory, OP_OBJECT_TYPE);
                 op_object_set_function(list_get_last(state->temp_memory)->data, node);
@@ -179,10 +222,10 @@ void run_an(struct op_state *state, struct object_st *object) {
                 break;
             }
             case StmtType_Break:
-                printf("StmtType_Break ");
+//                printf("StmtType_Break ");
                 break;
             case StmtType_Continue:
-                printf("StmtType_Continue ");
+//                printf("StmtType_Continue ");
                 break;
             case StmtType_List: {
                 {
@@ -212,11 +255,11 @@ void run_an(struct op_state *state, struct object_st *object) {
                 break;
             }
             case StmtType_Extends:
-                printf("StmtType_Extends ");
+//                printf("StmtType_Extends ");
                 break;
         }
     }
-    printf("\n");
+//    printf("\n");
 }
 
 void run_op(struct op_state *state, struct object_st *object) {

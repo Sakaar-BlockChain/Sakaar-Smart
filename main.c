@@ -1,5 +1,6 @@
 #include <stdio.h>
 #include "sm_semantic.h"
+#include "sys/time.h"
 
 #define PRINT_PREF for(int _i=0;_i<size;_i++)printf("%c",prefix[_i]);
 #define PRINT_NEXT(expr) if(expr){printf("\t├- ");prefix[size + 1] = '|';}else{printf("\t└- ");prefix[size + 1] = ' ';}prefix[size] = '\t';
@@ -555,7 +556,14 @@ int main() {
     }
 
     print_obj(expr_obj, 0);
+
+    clock_t begin = clock();
+
     run_smart_contract(expr_obj);
+
+    clock_t end = clock();
+    double time_spent = (double)(end - begin) / CLOCKS_PER_SEC;
+    printf("Time : %f\n", time_spent);
 
 
     object_free(expr_obj);

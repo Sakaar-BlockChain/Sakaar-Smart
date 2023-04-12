@@ -4,6 +4,7 @@
 #include "struct.h"
 
 #include "sc_structs/sc_parser.h"
+#include "sc_structs/sm_state.h"
 #include "sc_structs/op_state.h"
 
 #include "sc_structs/tk_token.h"
