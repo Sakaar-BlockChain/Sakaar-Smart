@@ -306,6 +306,169 @@ void print_token_list(const struct token_list_st *res, int size) {
     }
 }
 
+void print_node_list(const struct node_list_st *res, int size);
+void print_node(const struct node_st *res, int size) {
+    printf("Expr : ");
+    switch (res->type) {
+        case MainType_None:
+            printf("MainType_None ");
+            break;
+        case MainType_Expr:
+            printf("MainType_Expr ");
+            break;
+        case MainType_Oper:
+            printf("MainType_Oper ");
+            break;
+        case MainType_Stmt:
+            printf("MainType_Stmt ");
+            break;
+    }
+    if (res->type == MainType_Expr) {
+        switch (res->sub_type) {
+            case PrimType_List:
+                printf("PrimType_List ");
+                break;
+            case PrimType_Ident_get:
+                printf("PrimType_Ident_get ");
+                break;
+            case PrimType_Ident_new:
+                printf("PrimType_Ident_new ");
+                break;
+            case PrimType_Literal:
+                printf("PrimType_Literal ");
+                break;
+            case PrimType_Attrib:
+                printf("PrimType_Attrib ");
+                break;
+            case PrimType_Subscript:
+                printf("PrimType_Subscript ");
+                break;
+            case PrimType_Call:
+                printf("PrimType_Call ");
+                break;
+        }
+    }
+    if (res->type == MainType_Oper) {
+        switch (res->sub_type) {
+            case ExprType_U:
+                printf("ExprType_U ");
+                break;
+            case ExprType_M:
+                printf("ExprType_M ");
+                break;
+            case ExprType_A:
+                printf("ExprType_A ");
+                break;
+            case ExprType_Shift:
+                printf("ExprType_Shift ");
+                break;
+            case ExprType_And:
+                printf("ExprType_And ");
+                break;
+            case ExprType_Xor:
+                printf("ExprType_Xor ");
+                break;
+            case ExprType_Or:
+                printf("ExprType_Or ");
+                break;
+            case ExprType_Comp:
+                printf("ExprType_Comp ");
+                break;
+            case ExprType_NotTest:
+                printf("ExprType_NotTest ");
+                break;
+            case ExprType_AndTest:
+                printf("ExprType_AndTest ");
+                break;
+            case ExprType_OrTest:
+                printf("ExprType_OrTest ");
+                break;
+        }
+    }
+    if (res->type == MainType_Stmt) {
+        switch (res->sub_type) {
+            case StmtType_Annot:
+                printf("StmtType_Annot ");
+                break;
+            case StmtType_Assign:
+                printf("StmtType_Assign ");
+                break;
+            case StmtType_Return:
+                printf("StmtType_Return ");
+                break;
+            case StmtType_Break:
+                printf("StmtType_Break ");
+                break;
+            case StmtType_Continue:
+                printf("StmtType_Continue ");
+                break;
+            case StmtType_Params:
+                printf("StmtType_Params ");
+                break;
+            case StmtType_Extends:
+                printf("StmtType_Extends ");
+                break;
+            case StmtType_Func:
+                printf("StmtType_Func ");
+                break;
+            case StmtType_PUB_Func:
+                printf("StmtType_PUB_Func ");
+                break;
+            case StmtType_STC_Func:
+                printf("StmtType_STC_Func ");
+                break;
+            case StmtType_PRI_Func:
+                printf("StmtType_PRI_Func ");
+                break;
+            case StmtType_If:
+                printf("StmtType_If ");
+                break;
+            case StmtType_While:
+                printf("StmtType_While ");
+                break;
+            case StmtType_DoWhile:
+                printf("StmtType_DoWhile ");
+                break;
+            case StmtType_Class:
+                printf("StmtType_Class ");
+                break;
+            case StmtType_List:
+                printf("StmtType_List ");
+                break;
+        }
+    }
+    printf("\n");
+    if (res->data != NULL) {
+        PRINT_PREF
+        PRINT_NEXT(res->tokens.size != 0 || res->nodes.size != 0 || res->attrib != NULL)
+        print_obj(res->data, size + 2);
+    }
+    if (res->tokens.size != 0) {
+        PRINT_PREF
+        PRINT_NEXT(res->nodes.size != 0 || res->attrib != NULL)
+        print_token_list(&res->tokens, size + 2);
+    }
+    if (res->nodes.size != 0) {
+        PRINT_PREF
+        PRINT_NEXT(res->attrib != NULL)
+        print_node_list(&res->nodes, size + 2);
+    }
+    if (res->attrib != NULL) {
+//        PRINT_PREF
+//        PRINT_NEXT(0)
+//        print_attrib(res->attrib, size + 2);
+    }
+}
+void print_node_list(const struct node_list_st *res, int size) {
+    printf("nodes (%zu):\n", res->size);
+    for (int i = 0; i < res->size; i++) {
+        PRINT_PREF
+        PRINT_NEXT(i + 1 < res->size)
+        print_node(res->nodes[i], size + 2);
+    }
+}
+
+
 int main() {
     struct parser_st parser;
     parser_data_inti(&parser);
@@ -326,35 +489,33 @@ int main() {
         for (size_t i = parser.line_pos; i < parser.data_pos; i++) printf(" ");
         printf("^\n");
 
-//        object_free(expr_obj);
-
         parser_data_free(&parser);
 
         printf("%zu\n", mem_ctx.filled);
         exit(1);
     }
 
-//    char res = token_analyzer(parser, expr_obj->data);
-//    if(res != SN_Status_Success){
-//        printf("Error_pos : %d\n", parser->error_pos);
-//        struct tk_token *token = parser->list->data[parser->error_pos]->data;
-//        print_token(token, 0);
-//
-//        printf("\nLine %zu: \n", token->line_num + 1);
-//        for (size_t i = token->line_pos; i < parser->data_size; i++) {
-//            if (parser->data_str[i] == '\n') break;
-//            printf("%c", parser->data_str[i]);
-//        }
-//        printf("\n");
-//        for (size_t i = token->line_pos; i < token->pos; i++) printf(" ");
-//        printf("^\n");
-//
-//        object_free(expr_obj);
-//        sc_parser_free(parser);
-//
-//        printf("%zu\n", mem_ctx.filled);
-//        exit(1);
-//    }
+    node_list_add_new(&parser.nodes);
+    int res = token_analyzer(&parser, parser.nodes.nodes[0]);
+    if(res != SN_Status_Success){
+        printf("Error_pos : %d\n", parser.error_pos);
+        struct token_st *token = parser.tokens.tokens[parser.error_pos];
+        print_token(token, 0);
+
+        printf("\nLine %zu: \n", token->line_num + 1);
+        for (size_t i = token->line_pos; i < parser.data_size; i++) {
+            if (parser.data_str[i] == '\n') break;
+            printf("%c", parser.data_str[i]);
+        }
+        printf("\n");
+        for (size_t i = token->line_pos; i < token->pos; i++) printf(" ");
+        printf("^\n");
+
+        parser_data_free(&parser);
+
+        printf("%zu\n", mem_ctx.filled);
+        exit(1);
+    }
 //
 //    int res1 = semantic_scan(expr_obj);
 //    if (res1 != 0) {
@@ -366,8 +527,7 @@ int main() {
 //        printf("%zu\n", mem_ctx.filled);
 //        exit(1);
 //    }
-//
-//    print_obj(expr_obj, 0);
+    print_node(parser.nodes.nodes[0], 0);
 //
 //    clock_t begin = clock();
 //
