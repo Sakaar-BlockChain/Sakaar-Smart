@@ -7,7 +7,7 @@
 #include "tk_tokenize/tk_special.h"
 #include "tk_tokenize/tk_string.h"
 
-void tokenize_parse(struct tk_token *token, struct sc_parser *parser);
-void tokenize(struct sc_parser *parser);
+void tokenize_parse(struct token_st *token, struct parser_st *parser);
+void tokenize(struct parser_st *parser);
 
 #endif //TK_TOKENIZE_H

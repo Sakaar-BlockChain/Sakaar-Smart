@@ -65,6 +65,6 @@
 #define Special_NOT         0x06
 
 
-void tokenize_special(struct tk_token *, struct sc_parser *);
+void tokenize_special(struct token_st *, struct parser_st *);
 
 #endif //TK_SPECIAL_H

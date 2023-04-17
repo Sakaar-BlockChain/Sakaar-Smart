@@ -5,13 +5,13 @@
 #define CharInt_dec(c) ((c) >= '0' && (c) <= '9')
 #define CharInt_hex(c) (((c) >= '0' && (c) <= '9') || ((c) >= 'a' && (c) <= 'f') || ((c) >= 'A' && (c) <= 'F'))
 
-#define ErrInt {string_set_str(parser->error_msg, "Error while parsing integer", 27); return;}
-#define GetChar {pos++;if (pos == parser->size) ErrInt c = parser->data[pos];}
+#define ErrInt {string_set_str(&parser->error_msg, "Error while parsing integer", 27); return;}
+#define GetChar {pos++;if (pos == parser->data_size) ErrInt c = parser->data_str[pos];}
 
-void tokenize_integer(struct tk_token *token, struct sc_parser *parser) {
-    size_t pos = parser->pos;
-    if (CharInt_dec(parser->data[pos])) {
-        char c = parser->data[pos];
+void tokenize_integer(struct token_st *token, struct parser_st *parser) {
+    size_t pos = parser->data_pos;
+    if (CharInt_dec(parser->data_str[pos])) {
+        char c = parser->data_str[pos];
         if (c == '0') {
             GetChar
             if (c == 'b' || c == 'B') {
@@ -22,11 +22,11 @@ void tokenize_integer(struct tk_token *token, struct sc_parser *parser) {
                 if(IdentifierStart(c)) ErrInt
 
                 token->type = TokenType_Int;
-                token->subtype = IntType_bin;
-                tk_token_resize(token, pos - zero_end);
-                memcpy(token->data, &parser->data[zero_end], token->size);
-                tk_token_set_pos(token, parser);
-                parser->pos = pos;
+                token->sub_type = IntType_bin;
+
+                string_set_str(&token->data,&parser->data_str[zero_end], pos - zero_end);
+                token_set_pos(token, parser);
+                parser->data_pos = pos;
             } else if (c == 'o' || c == 'O') {
                 GetChar
                 while(c == '_') GetChar
@@ -35,11 +35,11 @@ void tokenize_integer(struct tk_token *token, struct sc_parser *parser) {
                 if(IdentifierStart(c)) ErrInt
 
                 token->type = TokenType_Int;
-                token->subtype = IntType_oct;
-                tk_token_resize(token, pos - zero_end);
-                memcpy(token->data, &parser->data[zero_end], token->size);
-                tk_token_set_pos(token, parser);
-                parser->pos = pos;
+                token->sub_type = IntType_oct;
+
+                string_set_str(&token->data,&parser->data_str[zero_end], pos - zero_end);
+                token_set_pos(token, parser);
+                parser->data_pos = pos;
             } else if (c == 'x' || c == 'X') {
                 GetChar
                 while(c == '_') GetChar
@@ -48,11 +48,11 @@ void tokenize_integer(struct tk_token *token, struct sc_parser *parser) {
                 if(IdentifierStart(c)) ErrInt
 
                 token->type = TokenType_Int;
-                token->subtype = IntType_hex;
-                tk_token_resize(token, pos - zero_end);
-                memcpy(token->data, &parser->data[zero_end], token->size);
-                tk_token_set_pos(token, parser);
-                parser->pos = pos;
+                token->sub_type = IntType_hex;
+
+                string_set_str(&token->data,&parser->data_str[zero_end], pos - zero_end);
+                token_set_pos(token, parser);
+                parser->data_pos = pos;
             } else {
                 while(c == '0') GetChar
                 size_t zero_end = pos;
@@ -61,34 +61,34 @@ void tokenize_integer(struct tk_token *token, struct sc_parser *parser) {
                 if (c == '.') {
                     GetChar
                     while(CharInt_dec(c)) GetChar
-                    token->subtype = IntType_float;
+                    token->sub_type = IntType_float;
                 } else {
-                    token->subtype = IntType_dec;
+                    token->sub_type = IntType_dec;
                 }
                 if(IdentifierStart(c)) ErrInt
 
                 token->type = TokenType_Int;
-                tk_token_resize(token, pos - zero_end);
-                memcpy(token->data, &parser->data[zero_end], token->size);
-                tk_token_set_pos(token, parser);
-                parser->pos = pos;
+
+                string_set_str(&token->data,&parser->data_str[zero_end], pos - zero_end);
+                token_set_pos(token, parser);
+                parser->data_pos = pos;
             }
         } else {
             while(CharInt_dec(c)) GetChar
             if (c == '.') {
                 GetChar
                 while(CharInt_dec(c)) GetChar
-                token->subtype = IntType_float;
+                token->sub_type = IntType_float;
             } else {
-                token->subtype = IntType_dec;
+                token->sub_type = IntType_dec;
             }
             if(IdentifierStart(c)) ErrInt
 
             token->type = TokenType_Int;
-            tk_token_resize(token, pos - parser->pos);
-            memcpy(token->data, &parser->data[parser->pos], token->size);
-            tk_token_set_pos(token, parser);
-            parser->pos = pos;
+
+            string_set_str(&token->data,&parser->data_str[parser->data_pos], pos - parser->data_pos);
+            token_set_pos(token, parser);
+            parser->data_pos = pos;
         }
     }
 }

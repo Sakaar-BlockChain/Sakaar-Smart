@@ -15,16 +15,16 @@
 #define PrimType_Subscript      0x06
 #define PrimType_Call           0x07
 
-char scopes_expr(struct sc_parser *, struct ast_node *);
-char list_expr(struct sc_parser *, struct ast_node *);
-char ident_get_expr(struct sc_parser *, struct ast_node *);
-char ident_new_expr(struct sc_parser *, struct ast_node *);
-char bool_expr(struct sc_parser *, struct ast_node *);
-char number_expr(struct sc_parser *, struct ast_node *);
-char string_expr(struct sc_parser *, struct ast_node *);
-char null_expr(struct sc_parser *, struct ast_node *);
-char literal_expr(struct sc_parser *, struct ast_node *);
-char atom_expr(struct sc_parser *, struct ast_node *);
-char primary_expr(struct sc_parser *, struct ast_node *);
+int scopes_expr(struct parser_st *, struct node_st *);
+int list_expr(struct parser_st *, struct node_st *);
+int ident_get_expr(struct parser_st *, struct node_st *);
+int ident_new_expr(struct parser_st *, struct node_st *);
+int bool_expr(struct parser_st *, struct node_st *);
+int number_expr(struct parser_st *, struct node_st *);
+int string_expr(struct parser_st *, struct node_st *);
+int null_expr(struct parser_st *, struct node_st *);
+int literal_expr(struct parser_st *, struct node_st *);
+int atom_expr(struct parser_st *, struct node_st *);
+int primary_expr(struct parser_st *, struct node_st *);
 
 #endif //AN_EXPR_H

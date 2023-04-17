@@ -30,7 +30,34 @@ void print_tlv(const struct string_st *res) {
     for (int i = 0; i < res->size; i++)printf("%.2x ", (unsigned char) res->data[i]);
     printf("\n");
 }
-void print_token(const struct tk_token *res, int size) {
+void print_list(const struct list_st *res, int size) {
+    printf("list (%zu):\n", res->size);
+    for (int i = 0; i < res->size; i++) {
+        PRINT_PREF
+        PRINT_NEXT(i + 1 < res->size)
+        print_obj(res->data[i], size + 2);
+    }
+}
+void print_obj(const struct object_st *res, int size) {
+    if (res == NULL) {
+        printf("None\n");
+        return;
+    }
+    printf("object : (%d) %p\n", res->counter, res);
+    PRINT_PREF
+    PRINT_NEXT(0)
+    if (res->type == NONE_TYPE) printf("None\n");
+    else if (res->type == STRING_TYPE) return print_str(res->data);
+    else if (res->type == TLV_TYPE) return print_tlv(res->data);
+    else if (res->type == INTEGER_TYPE) return print_int(res->data);
+    else if (res->type == OBJECT_TYPE) return print_obj(res->data, size + 2);
+    else if (res->type == LIST_TYPE) return print_list(res->data, size + 2);
+}
+
+void run_smart_contract(struct object_st *expr_obj);
+
+
+void print_token(const struct token_st *res, int size) {
     printf("Token : ");
     switch (res->type) {
         case TokenType_None:
@@ -53,7 +80,7 @@ void print_token(const struct tk_token *res, int size) {
             break;
     }
     if (res->type == TokenType_Int) {
-        switch (res->subtype) {
+        switch (res->sub_type) {
             case IntType_bin:
                 printf("IntType_bin ");
                 break;
@@ -72,7 +99,7 @@ void print_token(const struct tk_token *res, int size) {
         }
     }
     if (res->type == TokenType_KeyWords) {
-        switch (res->subtype) {
+        switch (res->sub_type) {
             case KeyWord_DO:
                 printf("KeyWord_DO ");
                 break;
@@ -130,12 +157,12 @@ void print_token(const struct tk_token *res, int size) {
     if (res->type == TokenType_Int || res->type == TokenType_Identifier || res->type == TokenType_String) {
         PRINT_PREF
         PRINT_NEXT(0)
-        for (int i = 0; i < res->size; i++) printf("%c", res->data[i]);
+        for (int i = 0; i < res->data.size; i++) printf("%c", res->data.data[i]);
         printf("\n");
     } else if (res->type == TokenType_Special) {
         PRINT_PREF
         PRINT_NEXT(0)
-        switch (res->subtype) {
+        switch (res->sub_type) {
             case Special_MOD:
                 printf("%c", '%');
                 break;
@@ -270,304 +297,89 @@ void print_token(const struct tk_token *res, int size) {
         printf("\n");
     }
 }
-void print_node(const struct ast_node *res, int size) {
-    printf("Expr : ");
-    switch (res->main_type) {
-        case MainType_None:
-            printf("MainType_None ");
-            break;
-        case MainType_Expr:
-            printf("MainType_Expr ");
-            break;
-        case MainType_Oper:
-            printf("MainType_Oper ");
-            break;
-        case MainType_Stmt:
-            printf("MainType_Stmt ");
-            break;
-    }
-    if (res->main_type == MainType_Expr) {
-        switch (res->type) {
-            case PrimType_List:
-                printf("PrimType_List ");
-                break;
-            case PrimType_Ident_get:
-                printf("PrimType_Ident_get ");
-                break;
-            case PrimType_Ident_new:
-                printf("PrimType_Ident_new ");
-                break;
-            case PrimType_Literal:
-                printf("PrimType_Literal ");
-                break;
-            case PrimType_Attrib:
-                printf("PrimType_Attrib ");
-                break;
-            case PrimType_Subscript:
-                printf("PrimType_Subscript ");
-                break;
-            case PrimType_Call:
-                printf("PrimType_Call ");
-                break;
-        }
-    }
-    if (res->main_type == MainType_Oper) {
-        switch (res->type) {
-            case ExprType_U:
-                printf("ExprType_U ");
-                break;
-            case ExprType_M:
-                printf("ExprType_M ");
-                break;
-            case ExprType_A:
-                printf("ExprType_A ");
-                break;
-            case ExprType_Shift:
-                printf("ExprType_Shift ");
-                break;
-            case ExprType_And:
-                printf("ExprType_And ");
-                break;
-            case ExprType_Xor:
-                printf("ExprType_Xor ");
-                break;
-            case ExprType_Or:
-                printf("ExprType_Or ");
-                break;
-            case ExprType_Comp:
-                printf("ExprType_Comp ");
-                break;
-            case ExprType_NotTest:
-                printf("ExprType_NotTest ");
-                break;
-            case ExprType_AndTest:
-                printf("ExprType_AndTest ");
-                break;
-            case ExprType_OrTest:
-                printf("ExprType_OrTest ");
-                break;
-        }
-    }
-    if (res->main_type == MainType_Stmt) {
-        switch (res->type) {
-            case StmtType_Annot:
-                printf("StmtType_Annot ");
-                break;
-            case StmtType_Assign:
-                printf("StmtType_Assign ");
-                break;
-            case StmtType_Return:
-                printf("StmtType_Return ");
-                break;
-            case StmtType_Break:
-                printf("StmtType_Break ");
-                break;
-            case StmtType_Continue:
-                printf("StmtType_Continue ");
-                break;
-            case StmtType_Params:
-                printf("StmtType_Params ");
-                break;
-            case StmtType_Extends:
-                printf("StmtType_Extends ");
-                break;
-            case StmtType_Func:
-                printf("StmtType_Func ");
-                break;
-            case StmtType_PUB_Func:
-                printf("StmtType_PUB_Func ");
-                break;
-            case StmtType_STC_Func:
-                printf("StmtType_STC_Func ");
-                break;
-            case StmtType_PRI_Func:
-                printf("StmtType_PRI_Func ");
-                break;
-            case StmtType_If:
-                printf("StmtType_If ");
-                break;
-            case StmtType_While:
-                printf("StmtType_While ");
-                break;
-            case StmtType_DoWhile:
-                printf("StmtType_DoWhile ");
-                break;
-            case StmtType_Class:
-                printf("StmtType_Class ");
-                break;
-            case StmtType_List:
-                printf("StmtType_List ");
-                break;
-        }
-    }
-    printf("\n");
-    if (res->data != NULL) {
-        PRINT_PREF
-        PRINT_NEXT(!list_is_null(res->tokens) || !list_is_null(res->next) || res->closure != NULL)
-        print_obj(res->data, size + 2);
-    }
-    if (!list_is_null(res->tokens)) {
-        PRINT_PREF
-        PRINT_NEXT(!list_is_null(res->next) || res->closure != NULL)
-        print_list(res->tokens, size + 2);
-    }
-    if (!list_is_null(res->next)) {
-        PRINT_PREF
-        PRINT_NEXT(res->closure != NULL)
-        print_list(res->next, size + 2);
-    }
-    if (res->closure != NULL) {
-        PRINT_PREF
-        PRINT_NEXT(0)
-        print_obj(res->closure, size + 2);
-    }
-}
-void print_list(const struct list_st *res, int size) {
-    printf("list (%zu):\n", res->size);
+void print_token_list(const struct token_list_st *res, int size) {
+    printf("tokens (%zu):\n", res->size);
     for (int i = 0; i < res->size; i++) {
         PRINT_PREF
         PRINT_NEXT(i + 1 < res->size)
-        print_obj(res->data[i], size + 2);
+        print_token(res->tokens[i], size + 2);
     }
 }
-void print_dlist(const struct dlist_st *res, int size) {
-    printf("double list (%zu):\n", res->size);
-    if(res->size != 0){
-        PRINT_PREF
-        PRINT_NEXT(1)
-        printf("[0] :\n");
-        size += 2;
-        for (int i = 0; i < res->size; i++) {
-            PRINT_PREF
-            PRINT_NEXT(i + 1 < res->size)
-            print_obj(res->data[0][i], size + 2);
-        }
-        size -= 2;
-        PRINT_PREF
-        PRINT_NEXT(0)
-        printf("[1] :\n");
-        size += 2;
-        for (int i = 0; i < res->size; i++) {
-            PRINT_PREF
-            PRINT_NEXT(i + 1 < res->size)
-            print_obj(res->data[1][i], size + 2);
-        }
-    }
-
-}
-void print_op_object(const struct op_object *res, int size) {
-    printf("op object : \n");
-    if (res->data != NULL) {
-        PRINT_PREF
-        PRINT_NEXT(0)
-        print_obj(res->data, size + 2);
-    }
-}
-void print_op_attrib(const struct op_attrib *res, int size) {
-    printf("Attrib : ");
-    print_str(res->name);
-    if (res->data != NULL) {
-        PRINT_PREF
-        PRINT_NEXT(0)
-        print_obj(res->data, size + 2);
-    }
-}
-void print_obj(const struct object_st *res, int size) {
-    if (res == NULL) {
-        printf("None\n");
-        return;
-    }
-    printf("object : (%d) %p\n", res->counter, res);
-    PRINT_PREF
-    PRINT_NEXT(0)
-    if (res->type == NONE_TYPE) printf("None\n");
-    else if (res->type == STRING_TYPE) return print_str(res->data);
-    else if (res->type == TLV_TYPE) return print_tlv(res->data);
-    else if (res->type == INTEGER_TYPE) return print_int(res->data);
-    else if (res->type == OBJECT_TYPE) return print_obj(res->data, size + 2);
-    else if (res->type == LIST_TYPE) return print_list(res->data, size + 2);
-    else if (res->type == TK_TOKEN_TYPE) return print_token(res->data, size + 2);
-    else if (res->type == AST_NODE_TYPE) return print_node(res->data, size + 2);
-    else if (res->type == OP_OBJECT_TYPE) return print_op_object(res->data, size + 2);
-    else if (res->type == OP_ATTRIB_TYPE) return print_op_attrib(res->data, size + 2);
-    else if (res->type == DLIST_TYPE) return print_dlist(res->data, size + 2);
-//    else if (res->type == OP_BLOCK_TYPE) return print_block(res->data, size + 2);
-}
-
-void run_smart_contract(struct object_st *expr_obj);
 
 int main() {
-    struct sc_parser *parser = sc_parser_new();
-    struct object_st *expr_obj = object_new();
-    object_set_type(expr_obj, AST_NODE_TYPE);
+    struct parser_st parser;
+    parser_data_inti(&parser);
+//    struct object_st *expr_obj = object_new();
+//    object_set_type(expr_obj, AST_NODE_TYPE);
 
-    sc_parser_set_file(parser, "text.txt");
-    tokenize(parser);
-    if (!string_is_null(parser->error_msg)) {
+    parser_set_file(&parser, "text.txt");
+    tokenize(&parser);
+    if (!string_is_null(&parser.error_msg)) {
         printf("Error : ");
-        for (int i = 0; i < parser->error_msg->size; i++) printf("%c", parser->error_msg->data[i]);
-        printf("\nLine %zu: \n", parser->line_num + 1);
-        for (size_t i = parser->line_pos; i < parser->size; i++) {
-            if (parser->data[i] == '\n') break;
-            printf("%c", parser->data[i]);
+        for (int i = 0; i < parser.error_msg.size; i++) printf("%c", parser.error_msg.data[i]);
+        printf("\nLine %zu: \n", parser.line_num + 1);
+        for (size_t i = parser.line_pos; i < parser.data_size; i++) {
+            if (parser.data_str[i] == '\n') break;
+            printf("%c", parser.data_str[i]);
         }
         printf("\n");
-        for (size_t i = parser->line_pos; i < parser->pos; i++) printf(" ");
+        for (size_t i = parser.line_pos; i < parser.data_pos; i++) printf(" ");
         printf("^\n");
 
-        object_free(expr_obj);
-        sc_parser_free(parser);
+//        object_free(expr_obj);
+
+        parser_data_free(&parser);
 
         printf("%zu\n", mem_ctx.filled);
         exit(1);
     }
 
-    char res = token_analyzer(parser, expr_obj->data);
-    if(res != SN_Status_Success){
-        printf("Error_pos : %d\n", parser->error_pos);
-        struct tk_token *token = parser->list->data[parser->error_pos]->data;
-        print_token(token, 0);
+//    char res = token_analyzer(parser, expr_obj->data);
+//    if(res != SN_Status_Success){
+//        printf("Error_pos : %d\n", parser->error_pos);
+//        struct tk_token *token = parser->list->data[parser->error_pos]->data;
+//        print_token(token, 0);
+//
+//        printf("\nLine %zu: \n", token->line_num + 1);
+//        for (size_t i = token->line_pos; i < parser->data_size; i++) {
+//            if (parser->data_str[i] == '\n') break;
+//            printf("%c", parser->data_str[i]);
+//        }
+//        printf("\n");
+//        for (size_t i = token->line_pos; i < token->pos; i++) printf(" ");
+//        printf("^\n");
+//
+//        object_free(expr_obj);
+//        sc_parser_free(parser);
+//
+//        printf("%zu\n", mem_ctx.filled);
+//        exit(1);
+//    }
+//
+//    int res1 = semantic_scan(expr_obj);
+//    if (res1 != 0) {
+//        printf("Error\n");
+//
+//        object_free(expr_obj);
+//        sc_parser_free(parser);
+//
+//        printf("%zu\n", mem_ctx.filled);
+//        exit(1);
+//    }
+//
+//    print_obj(expr_obj, 0);
+//
+//    clock_t begin = clock();
+//
+//    run_smart_contract(expr_obj);
+//
+//    clock_t end = clock();
+//    double time_spent = (double)(end - begin) / CLOCKS_PER_SEC;
+//    printf("Time : %f\n", time_spent);
+//
+//
 
-        printf("\nLine %zu: \n", token->line_num + 1);
-        for (size_t i = token->line_pos; i < parser->size; i++) {
-            if (parser->data[i] == '\n') break;
-            printf("%c", parser->data[i]);
-        }
-        printf("\n");
-        for (size_t i = token->line_pos; i < token->pos; i++) printf(" ");
-        printf("^\n");
-
-        object_free(expr_obj);
-        sc_parser_free(parser);
-
-        printf("%zu\n", mem_ctx.filled);
-        exit(1);
-    }
-
-    int res1 = semantic_scan(expr_obj);
-    if (res1 != 0) {
-        printf("Error\n");
-
-        object_free(expr_obj);
-        sc_parser_free(parser);
-
-        printf("%zu\n", mem_ctx.filled);
-        exit(1);
-    }
-
-    print_obj(expr_obj, 0);
-
-    clock_t begin = clock();
-
-    run_smart_contract(expr_obj);
-
-    clock_t end = clock();
-    double time_spent = (double)(end - begin) / CLOCKS_PER_SEC;
-    printf("Time : %f\n", time_spent);
-
-
-    object_free(expr_obj);
-    sc_parser_free(parser);
+    parser_data_free(&parser);
 
     printf("%zu\n", mem_ctx.filled);
 }
