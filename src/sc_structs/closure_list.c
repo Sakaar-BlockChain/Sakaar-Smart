@@ -48,5 +48,6 @@ void closure_list_add_new(struct closure_list_st *res) {
     res->closures[res->size - 1] = closure_new();
 }
 struct closure_st *closure_list_last(struct closure_list_st *res) {
+    if (res->closures == NULL || res->size == 0) return NULL;
     return res->closures[res->size - 1];
 }

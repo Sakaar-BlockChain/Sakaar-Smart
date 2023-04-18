@@ -47,5 +47,6 @@ void token_list_add_new(struct token_list_st *res) {
     res->tokens[res->size - 1] = token_new();
 }
 struct token_st *token_list_last(struct token_list_st *res) {
+    if (res->tokens == NULL || res->size == 0) return NULL;
     return res->tokens[res->size - 1];
 }

@@ -50,6 +50,6 @@ int class_stmt(struct parser_st *, struct node_st *);
 int compound_stmt(struct parser_st *, struct node_st *);
 
 int statement(struct parser_st *, struct node_st *);
-int suite(struct parser_st *, struct node_st *);
+int suite(struct parser_st *parser, struct node_st *expr, int scope_type);
 
 #endif //AN_STMT_H

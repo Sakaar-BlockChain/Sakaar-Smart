@@ -48,5 +48,6 @@ void node_list_add_new(struct node_list_st *res) {
     res->nodes[res->size - 1] = node_new();
 }
 struct node_st *node_list_last(struct node_list_st *res) {
+    if (res->nodes == NULL || res->size == 0) return NULL;
     return res->nodes[res->size - 1];
 }

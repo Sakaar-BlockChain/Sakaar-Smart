@@ -1,1 +1,5 @@
-a += 1;
+var a;
+func F(c){
+    var x;
+    a;
+}

@@ -21,6 +21,8 @@ struct node_st{
 
     struct object_st *data;
     struct attrib_st *attrib;
+    struct variable_st *variable;
+    struct closure_st *closure;
 };
 
 struct node_st *node_new();

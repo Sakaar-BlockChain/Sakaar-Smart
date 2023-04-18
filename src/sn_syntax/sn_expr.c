@@ -56,12 +56,14 @@ int ident_get_expr(struct parser_st *parser, struct node_st *expr) {
     struct token_st *token;
     parser_get
     if (token->type != TokenType_Identifier) return SN_Status_Nothing;
-    parser->data_pos++;
     expr->sub_type = PrimType_Ident_get;
     expr->type = MainType_Expr;
-    expr->data = object_new();
-    object_set_type(expr->data, STRING_TYPE);
-    string_set_str(expr->data->data, token->data.data, token->data.size);
+    expr->attrib = parser_get_ident(parser, &token->data);
+    if (expr->attrib == NULL) {
+        node_clear(expr);
+        return SN_Status_Error_Indent;
+    }
+    parser->data_pos++;
     return SN_Status_Success;
 }
 int ident_new_expr(struct parser_st *parser, struct node_st *expr) {
@@ -72,9 +74,7 @@ int ident_new_expr(struct parser_st *parser, struct node_st *expr) {
     parser->data_pos++;
     expr->sub_type = PrimType_Ident_new;
     expr->type = MainType_Expr;
-    expr->data = object_new();
-    object_set_type(expr->data, STRING_TYPE);
-    string_set_str(expr->data->data, token->data.data, token->data.size);
+    expr->attrib = parser_new_ident(parser, &token->data);
     return SN_Status_Success;
 }
 int bool_expr(struct parser_st *parser, struct node_st *expr) {

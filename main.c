@@ -56,6 +56,53 @@ void print_obj(const struct object_st *res, int size) {
 
 void run_smart_contract(struct object_st *expr_obj);
 
+void print_attrib(const struct attrib_st *res, int size) {
+    printf("attribs (%p):\n", res);
+    PRINT_PREF
+    PRINT_NEXT(0)
+    print_str(&res->name);
+}
+void print_attrib_list(const struct attrib_list_st *res, int size)  {
+    printf("attribs (%zu):\n", res->size);
+    for (int i = 0; i < res->size; i++) {
+        PRINT_PREF
+        PRINT_NEXT(i + 1 < res->size)
+        print_attrib(res->attribs[i], size + 2);
+    }
+}
+
+void print_variable(const struct variable_st *res, int size) {
+    printf("variable : (%p)\n", res);
+    PRINT_PREF
+    PRINT_NEXT(0)
+    print_attrib_list(&res->attrib, size + 2);
+}
+void print_variable_list(const struct variable_list_st *res, int size) {
+    printf("variables (%zu):\n", res->size);
+    for (int i = 0; i < res->size; i++) {
+        PRINT_PREF
+        PRINT_NEXT(i + 1 < res->size)
+        print_variable(res->variables[i], size + 2);
+    }
+}
+
+void print_closure(const struct closure_st *res, int size) {
+    printf("closure : (%p)\n", res);
+    PRINT_PREF
+    PRINT_NEXT(1)
+    print_attrib_list(&res->attrib, size + 2);
+    PRINT_PREF
+    PRINT_NEXT(0)
+    print_attrib_list(&res->data, size + 2);
+}
+void print_closure_list(const struct closure_list_st *res, int size) {
+    printf("closures (%zu):\n", res->size);
+    for (int i = 0; i < res->size; i++) {
+        PRINT_PREF
+        PRINT_NEXT(i + 1 < res->size)
+        print_closure(res->closures[i], size + 2);
+    }
+}
 
 void print_token(const struct token_st *res, int size) {
     printf("Token : ");
@@ -440,23 +487,28 @@ void print_node(const struct node_st *res, int size) {
     printf("\n");
     if (res->data != NULL) {
         PRINT_PREF
-        PRINT_NEXT(res->tokens.size != 0 || res->nodes.size != 0 || res->attrib != NULL)
+        PRINT_NEXT(res->tokens.size != 0 || res->nodes.size != 0 || res->variable != NULL || res->closure != NULL)
         print_obj(res->data, size + 2);
     }
     if (res->tokens.size != 0) {
         PRINT_PREF
-        PRINT_NEXT(res->nodes.size != 0 || res->attrib != NULL)
+        PRINT_NEXT(res->nodes.size != 0 || res->variable != NULL || res->closure != NULL)
         print_token_list(&res->tokens, size + 2);
     }
     if (res->nodes.size != 0) {
         PRINT_PREF
-        PRINT_NEXT(res->attrib != NULL)
+        PRINT_NEXT(res->variable != NULL || res->closure != NULL)
         print_node_list(&res->nodes, size + 2);
     }
-    if (res->attrib != NULL) {
-//        PRINT_PREF
-//        PRINT_NEXT(0)
-//        print_attrib(res->attrib, size + 2);
+    if (res->variable != NULL) {
+        PRINT_PREF
+        PRINT_NEXT(res->closure != NULL)
+        print_variable(res->variable, size + 2);
+    }
+    if (res->closure != NULL) {
+        PRINT_PREF
+        PRINT_NEXT(0)
+        print_closure(res->closure, size + 2);
     }
 }
 void print_node_list(const struct node_list_st *res, int size) {
@@ -528,6 +580,8 @@ int main() {
 //        exit(1);
 //    }
     print_node(parser.nodes.nodes[0], 0);
+    print_variable_list(&parser.variables, 0);
+    print_variable_list(&parser.variables_stack, 0);
 //
 //    clock_t begin = clock();
 //

@@ -46,5 +46,6 @@ void attrib_list_add_new(struct attrib_list_st *res) {
     res->attribs[res->size - 1] = attrib_new();
 }
 struct attrib_st *attrib_list_last(struct attrib_list_st *res) {
+    if (res->attribs == NULL || res->size == 0) return NULL;
     return res->attribs[res->size - 1];
 }
