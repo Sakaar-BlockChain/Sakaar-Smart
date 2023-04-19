@@ -37,7 +37,6 @@ void node_clear(struct node_st *res) {
 
     if(res->data != NULL) object_free(res->data);
     if(res->attrib != NULL) attrib_free(res->attrib);
-    if(res->attrib != NULL) attrib_free(res->attrib);
     res->data = NULL;
     res->attrib = NULL;
     res->variable = NULL;

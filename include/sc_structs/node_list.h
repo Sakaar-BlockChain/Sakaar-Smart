@@ -21,4 +21,7 @@ void node_list_append(struct node_list_st *, struct node_st *);
 void node_list_add_new(struct node_list_st *);
 struct node_st *node_list_last(struct node_list_st *);
 
+
+void print_node_list(const struct node_list_st *, int);
+
 #endif //NODE_LIST_H

@@ -19,13 +19,25 @@ void parser_clear(struct parser_st *res) {
     string_clear(&res->error_msg);
     res->error_pos = 0;
 
-    token_list_clear(&res->tokens);
-    node_list_clear(&res->nodes);
+    if(res->return_obj != NULL) object_free(res->return_obj);
+    if(res->error_obj != NULL) object_free(res->error_obj);
+    res->return_obj = NULL;
+    res->error_obj = NULL;
+
+    res->interrupt_type = Interrupt_None;
+
+    block_list_clear(&res->blocks);
     closure_list_clear(&res->closures);
+    node_list_clear(&res->nodes);
+    token_list_clear(&res->tokens);
     variable_list_clear(&res->variables);
 
+    block_list_clear(&res->blocks_stack);
     closure_list_clear(&res->closures_stack);
+    frame_list_clear(&res->frame_stack);
     variable_list_clear(&res->variables_stack);
+
+    list_clear(res->temp_memory);
 }
 
 void parser_data_inti(struct parser_st *res) {
@@ -42,17 +54,28 @@ void parser_data_inti(struct parser_st *res) {
     string_data_init(&res->error_msg);
     res->error_pos = 0;
 
-    token_list_data_init(&res->tokens);
-    res->tokens.type = 1;
-    node_list_data_init(&res->nodes);
-    res->nodes.type = 1;
+    res->return_obj = NULL;
+    res->error_obj = NULL;
+
+    block_list_data_init(&res->blocks);
     closure_list_data_init(&res->closures);
-    res->closures.type = 1;
+    node_list_data_init(&res->nodes);
+    token_list_data_init(&res->tokens);
     variable_list_data_init(&res->variables);
+    res->blocks.type = 1;
+    res->closures.type = 1;
+    res->nodes.type = 1;
+    res->tokens.type = 1;
     res->variables.type = 1;
 
+    res->interrupt_type = Interrupt_None;
+
+    block_list_data_init(&res->blocks_stack);
     closure_list_data_init(&res->closures_stack);
+    frame_list_data_init(&res->frame_stack);
     variable_list_data_init(&res->variables_stack);
+
+    res->temp_memory = list_new();
 }
 void parser_data_free(struct parser_st *res) {
     if(res->data_str != NULL) skr_free(res->data_str);
@@ -60,13 +83,21 @@ void parser_data_free(struct parser_st *res) {
     string_data_free(&res->error_msg);
     res->error_pos = 0;
 
-    token_list_data_free(&res->tokens);
-    node_list_data_free(&res->nodes);
+    if(res->return_obj != NULL) object_free(res->return_obj);
+    if(res->error_obj != NULL) object_free(res->error_obj);
+
+    block_list_data_free(&res->blocks);
     closure_list_data_free(&res->closures);
+    node_list_data_free(&res->nodes);
+    token_list_data_free(&res->tokens);
     variable_list_data_free(&res->variables);
 
+    block_list_data_free(&res->blocks_stack);
     closure_list_data_free(&res->closures_stack);
+    frame_list_data_free(&res->frame_stack);
     variable_list_data_free(&res->variables_stack);
+
+    list_free(res->temp_memory);
 }
 
 void parser_set_file(struct parser_st *res, char *file_path){
@@ -124,7 +155,7 @@ struct attrib_st *parser_get_ident(struct parser_st *res, struct string_st *name
         list = &res->variables_stack.variables[i - 1]->attrib;
         for (size_t j = 0; j < list->size; j++) {
             if (string_cmp(&list->attribs[j]->name, name) == 0) {
-                ptr = attrib_copy(list->attribs[j]);
+                ptr = list->attribs[j];
                 break;
             }
         }
@@ -146,5 +177,5 @@ struct attrib_st *parser_get_ident(struct parser_st *res, struct string_st *name
         ptr = attrib_list_last(list);
     }
 
-    return ptr;
+    return attrib_copy(ptr);
 }

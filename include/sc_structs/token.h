@@ -39,4 +39,7 @@ void token_data_free(struct token_st *);
 void token_set_pos(struct token_st *, struct parser_st *);
 
 
+void print_token(const struct token_st *, int);
+
+
 #endif //TOKEN_H

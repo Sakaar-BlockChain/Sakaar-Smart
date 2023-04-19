@@ -1,5 +1,5 @@
 #include <stdio.h>
-#include "sm_semantic.h"
+#include "op_operations.h"
 #include "sys/time.h"
 
 #define PRINT_PREF for(int _i=0;_i<size;_i++)printf("%c",prefix[_i]);
@@ -11,7 +11,7 @@ char prefix[100];
 void print_int(const struct integer_st *res) {
     printf("integer : ");
 #ifdef USE_GMP
-    gmp_printf("%Zx", res->mpz_int);
+    gmp_printf("%Zd", res->mpz_int);
 #else
     struct string_st *str = string_new();
     integer_get_str(res, str);
@@ -52,15 +52,17 @@ void print_obj(const struct object_st *res, int size) {
     else if (res->type == INTEGER_TYPE) return print_int(res->data);
     else if (res->type == OBJECT_TYPE) return print_obj(res->data, size + 2);
     else if (res->type == LIST_TYPE) return print_list(res->data, size + 2);
+    else printf("Something\n");
 }
 
-void run_smart_contract(struct object_st *expr_obj);
-
 void print_attrib(const struct attrib_st *res, int size) {
-    printf("attribs (%p):\n", res);
+    printf("attribs (%d): (%p)\n", res->counter, res);
+    PRINT_PREF
+    PRINT_NEXT(1)
+    print_str(&res->name);
     PRINT_PREF
     PRINT_NEXT(0)
-    print_str(&res->name);
+    print_obj(res->data, size + 2);
 }
 void print_attrib_list(const struct attrib_list_st *res, int size)  {
     printf("attribs (%zu):\n", res->size);
@@ -83,6 +85,24 @@ void print_variable_list(const struct variable_list_st *res, int size) {
         PRINT_PREF
         PRINT_NEXT(i + 1 < res->size)
         print_variable(res->variables[i], size + 2);
+    }
+}
+
+void print_frame(const struct frame_st *res, int size) {
+    printf("frame : (%p)\n", res);
+    PRINT_PREF
+    PRINT_NEXT(1)
+    print_attrib_list(&res->attrib, size + 2);
+    PRINT_PREF
+    PRINT_NEXT(0)
+    print_list(&res->data, size + 2);
+}
+void print_frame_list(const struct frame_list_st *res, int size) {
+    printf("frame (%zu):\n", res->size);
+    for (int i = 0; i < res->size; i++) {
+        PRINT_PREF
+        PRINT_NEXT(i + 1 < res->size)
+        print_frame(res->frames[i], size + 2);
     }
 }
 
@@ -353,7 +373,6 @@ void print_token_list(const struct token_list_st *res, int size) {
     }
 }
 
-void print_node_list(const struct node_list_st *res, int size);
 void print_node(const struct node_st *res, int size) {
     printf("Expr : ");
     switch (res->type) {
@@ -487,28 +506,33 @@ void print_node(const struct node_st *res, int size) {
     printf("\n");
     if (res->data != NULL) {
         PRINT_PREF
-        PRINT_NEXT(res->tokens.size != 0 || res->nodes.size != 0 || res->variable != NULL || res->closure != NULL)
+        PRINT_NEXT(res->tokens.size != 0 || res->nodes.size != 0 || res->variable != NULL || res->closure != NULL || res->attrib != NULL)
         print_obj(res->data, size + 2);
     }
     if (res->tokens.size != 0) {
         PRINT_PREF
-        PRINT_NEXT(res->nodes.size != 0 || res->variable != NULL || res->closure != NULL)
+        PRINT_NEXT(res->nodes.size != 0 || res->variable != NULL || res->closure != NULL || res->attrib != NULL)
         print_token_list(&res->tokens, size + 2);
     }
     if (res->nodes.size != 0) {
         PRINT_PREF
-        PRINT_NEXT(res->variable != NULL || res->closure != NULL)
+        PRINT_NEXT(res->variable != NULL || res->closure != NULL || res->attrib != NULL)
         print_node_list(&res->nodes, size + 2);
     }
     if (res->variable != NULL) {
         PRINT_PREF
-        PRINT_NEXT(res->closure != NULL)
+        PRINT_NEXT(res->closure != NULL || res->attrib != NULL)
         print_variable(res->variable, size + 2);
     }
     if (res->closure != NULL) {
         PRINT_PREF
-        PRINT_NEXT(0)
+        PRINT_NEXT(res->attrib != NULL)
         print_closure(res->closure, size + 2);
+    }
+    if (res->attrib != NULL) {
+        PRINT_PREF
+        PRINT_NEXT(0)
+        print_attrib(res->attrib, size + 2);
     }
 }
 void print_node_list(const struct node_list_st *res, int size) {
@@ -530,7 +554,7 @@ int main() {
     parser_set_file(&parser, "text.txt");
     tokenize(&parser);
     if (!string_is_null(&parser.error_msg)) {
-        printf("Error : ");
+        printf("Lexical error: ");
         for (int i = 0; i < parser.error_msg.size; i++) printf("%c", parser.error_msg.data[i]);
         printf("\nLine %zu: \n", parser.line_num + 1);
         for (size_t i = parser.line_pos; i < parser.data_size; i++) {
@@ -550,48 +574,46 @@ int main() {
     node_list_add_new(&parser.nodes);
     int res = token_analyzer(&parser, parser.nodes.nodes[0]);
     if(res != SN_Status_Success){
-        printf("Error_pos : %d\n", parser.error_pos);
-        struct token_st *token = parser.tokens.tokens[parser.error_pos];
-        print_token(token, 0);
+        if (res == SN_Status_EOF) {
+            printf("Syntax error : EOF\n");
+        } else {
+            if (res == SN_Status_Error_Indent) {
+                printf("Semantic error : Identifier not initialized\n");
+            } else if (res == SN_Status_Error_Loop) {
+                printf("Semantic error : Calling loop stmt expression out of loop\n");
+            } else if (res == SN_Status_Error_Func) {
+                printf("Semantic error : Calling func stmt expression out of func\n");
+            } else if (res == SN_Status_Error_Class) {
+                printf("Semantic error : Calling class stmt expression out of class\n");
+            } else if (res == SN_Status_Error) {
+                printf("Syntax error :\n");
+            }
+            struct token_st *token = parser.tokens.tokens[parser.error_pos];
 
-        printf("\nLine %zu: \n", token->line_num + 1);
-        for (size_t i = token->line_pos; i < parser.data_size; i++) {
-            if (parser.data_str[i] == '\n') break;
-            printf("%c", parser.data_str[i]);
+            printf("Line %zu: \n", token->line_num + 1);
+            for (size_t i = token->line_pos; i < parser.data_size; i++) {
+                if (parser.data_str[i] == '\n') break;
+                printf("%c", parser.data_str[i]);
+            }
+            printf("\n");
+            for (size_t i = token->line_pos; i < token->pos; i++) printf(" ");
+            printf("^\n");
         }
-        printf("\n");
-        for (size_t i = token->line_pos; i < token->pos; i++) printf(" ");
-        printf("^\n");
 
         parser_data_free(&parser);
 
         printf("%zu\n", mem_ctx.filled);
         exit(1);
     }
-//
-//    int res1 = semantic_scan(expr_obj);
-//    if (res1 != 0) {
-//        printf("Error\n");
-//
-//        object_free(expr_obj);
-//        sc_parser_free(parser);
-//
-//        printf("%zu\n", mem_ctx.filled);
-//        exit(1);
-//    }
     print_node(parser.nodes.nodes[0], 0);
-    print_variable_list(&parser.variables, 0);
-    print_variable_list(&parser.variables_stack, 0);
-//
-//    clock_t begin = clock();
-//
-//    run_smart_contract(expr_obj);
-//
-//    clock_t end = clock();
-//    double time_spent = (double)(end - begin) / CLOCKS_PER_SEC;
-//    printf("Time : %f\n", time_spent);
-//
-//
+
+    clock_t begin = clock();
+
+    run_smart_contract(&parser, parser.nodes.nodes[0]);
+
+    clock_t end = clock();
+    double time_spent = (double)(end - begin) / CLOCKS_PER_SEC;
+    printf("Time : %f\n", time_spent);
 
     parser_data_free(&parser);
 

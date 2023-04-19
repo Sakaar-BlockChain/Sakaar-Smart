@@ -19,4 +19,6 @@ void closure_data_free(struct closure_st *);
 
 void closure_append(struct closure_st *, struct attrib_st *, struct attrib_st *);
 
+void print_closure(const struct closure_st *, int);
+
 #endif //CLOSURE_H

@@ -30,9 +30,9 @@ void closure_list_resize(struct closure_list_st *res, size_t size) {
         for (size_t i = res->max_size; i < size * 2; i++) res->closures[i] = NULL;
         res->max_size = size * 2;
     }
-    if (res->size > size) {
+    if (res->type && res->size > size) {
         for (size_t i = size; i < res->size; i++) {
-            if (res->type && res->closures[i] != NULL) closure_free(res->closures[i]);
+            if (res->closures[i] != NULL) closure_free(res->closures[i]);
             res->closures[i] = NULL;
         }
     }

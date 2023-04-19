@@ -30,9 +30,9 @@ void node_list_resize(struct node_list_st *res, size_t size) {
         for (size_t i = res->max_size; i < size * 2; i++) res->nodes[i] = NULL;
         res->max_size = size * 2;
     }
-    if (res->size > size) {
+    if (res->type && res->size > size) {
         for (size_t i = size; i < res->size; i++) {
-            if (res->type && res->nodes[i] != NULL) node_free(res->nodes[i]);
+            if (res->nodes[i] != NULL) node_free(res->nodes[i]);
             res->nodes[i] = NULL;
         }
     }

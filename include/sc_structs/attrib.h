@@ -7,7 +7,7 @@ struct attrib_st{
     struct string_st name;
     struct object_st *data;
 
-    short counter;
+    size_t counter;
 };
 
 struct attrib_st *attrib_new();
@@ -16,5 +16,8 @@ void attrib_clear(struct attrib_st *);
 void attrib_free(struct attrib_st *);
 
 struct attrib_st *attrib_copy(struct attrib_st *);
+
+
+void print_attrib(const struct attrib_st *, int);
 
 #endif //ATTRIB_H

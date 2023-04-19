@@ -1,5 +1,8 @@
-var a;
-func F(c){
-    var x;
-    a;
+func F(x) {
+    if(x == 0) {
+        return 1;
+    }
+    return F(x - 1) + 2;
 }
+
+F(1000000);

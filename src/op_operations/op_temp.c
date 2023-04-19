@@ -379,16 +379,16 @@
 //                    } else {
 //                        struct object_st *res = object_new();
 //
-//                        if (block->subtype == Special_MOD) object__mod(res, obj1, obj2);
-//                        else if (block->subtype == Special_AND) object__and(res, obj1, obj2);
-//                        else if (block->subtype == Special_MUL) object__mul(res, obj1, obj2);
-//                        else if (block->subtype == Special_ADD) object__add(res, obj1, obj2);
-//                        else if (block->subtype == Special_SUB) object__sub(res, obj1, obj2);
-//                        else if (block->subtype == Special_DIV) object__div(res, obj1, obj2);
-//                        else if (block->subtype == Special_XOR) object__xor(res, obj1, obj2);
-//                        else if (block->subtype == Special_OR) object__or(res, obj1, obj2);
-//                        else if (block->subtype == Special_LSHIFT) object__ls(res, obj1, obj2);
-//                        else if (block->subtype == Special_RSHIFT) object__rs(res, obj1, obj2);
+//                        if (block->subtype == Special_MOD) object__mod(res, err, obj1, obj2);
+//                        else if (block->subtype == Special_AND) object__and(res, err, obj1, obj2);
+//                        else if (block->subtype == Special_MUL) object__mul(res, err, obj1, obj2);
+//                        else if (block->subtype == Special_ADD) object__add(res, err, obj1, obj2);
+//                        else if (block->subtype == Special_SUB) object__sub(res, err, obj1, obj2);
+//                        else if (block->subtype == Special_DIV) object__div(res, err, obj1, obj2);
+//                        else if (block->subtype == Special_XOR) object__xor(res, err, obj1, obj2);
+//                        else if (block->subtype == Special_OR) object__or(res, err, obj1, obj2);
+//                        else if (block->subtype == Special_LSHIFT) object__ls(res, err, obj1, obj2);
+//                        else if (block->subtype == Special_RSHIFT) object__rs(res, err, obj1, obj2);
 //
 //                        list_append(state->temp_memory, res);
 //                        object_free(res);
@@ -439,16 +439,16 @@
 //                    } else {
 //                        struct object_st *res = object_new();
 //
-//                        if (block->subtype == Special_EQ_MOD) object__mod(res, obj1, obj2);
-//                        else if (block->subtype == Special_EQ_AND) object__and(res, obj1, obj2);
-//                        else if (block->subtype == Special_EQ_MUL) object__mul(res, obj1, obj2);
-//                        else if (block->subtype == Special_EQ_ADD) object__add(res, obj1, obj2);
-//                        else if (block->subtype == Special_EQ_SUB) object__sub(res, obj1, obj2);
-//                        else if (block->subtype == Special_EQ_DIV) object__div(res, obj1, obj2);
-//                        else if (block->subtype == Special_EQ_XOR) object__xor(res, obj1, obj2);
-//                        else if (block->subtype == Special_EQ_OR) object__or(res, obj1, obj2);
-//                        else if (block->subtype == Special_EQ_LSHIFT) object__ls(res, obj1, obj2);
-//                        else if (block->subtype == Special_EQ_RSHIFT) object__rs(res, obj1, obj2);
+//                        if (block->subtype == Special_EQ_MOD) object__mod(res, err, obj1, obj2);
+//                        else if (block->subtype == Special_EQ_AND) object__and(res, err, obj1, obj2);
+//                        else if (block->subtype == Special_EQ_MUL) object__mul(res, err, obj1, obj2);
+//                        else if (block->subtype == Special_EQ_ADD) object__add(res, err, obj1, obj2);
+//                        else if (block->subtype == Special_EQ_SUB) object__sub(res, err, obj1, obj2);
+//                        else if (block->subtype == Special_EQ_DIV) object__div(res, err, obj1, obj2);
+//                        else if (block->subtype == Special_EQ_XOR) object__xor(res, err, obj1, obj2);
+//                        else if (block->subtype == Special_EQ_OR) object__or(res, err, obj1, obj2);
+//                        else if (block->subtype == Special_EQ_LSHIFT) object__ls(res, err, obj1, obj2);
+//                        else if (block->subtype == Special_EQ_RSHIFT) object__rs(res, err, obj1, obj2);
 //
 //                        object_set(obj1, res);
 //                        list_append(state->temp_memory, obj1);
@@ -883,3 +883,666 @@
 //    }
 //    op_state_free(state);
 //}
+
+#include <stdio.h>
+#include "op_operations.h"
+
+
+void run_block(struct parser_st *parser, struct block_expr_st *block) {
+    struct node_st *node = block->node;
+    struct block_expr_st *block_temp = NULL;
+    struct block_list_st *blocks_stack = &parser->blocks_stack;
+    struct frame_st *frame = NULL;
+
+    if (parser->interrupt_type != 0) {
+        if (parser->interrupt_type == Interrupt_Break && block->type == BlockType_Conf && block->sub_type == ScopeType_StmtLoop) {
+            parser->interrupt_type = 0;
+            return;
+        }else if (block->type != BlockType_OP || block->sub_type != Block_FrameClose) return;
+    }
+
+    if (block->type == BlockType_None && node != NULL) {
+        if (node->type == MainType_Expr) {
+            switch (node->sub_type) {
+                case PrimType_List: {
+                    {
+                        block_list_add_new(&parser->blocks);
+                        block_temp = block_list_last(&parser->blocks);
+                        block_temp->type = BlockType_OP;
+                        block_temp->sub_type = Block_List;
+                        block_temp->count = node->nodes.size;
+                        block_list_append(&block->blocks, block_temp);
+                    }
+
+                    for (size_t i = 0; i < node->nodes.size; i++) {
+                        block_list_add_new(&parser->blocks);
+                        block_temp = block_list_last(&parser->blocks);
+                        block_temp->node = node->nodes.nodes[i];
+                        block_list_append(&block->blocks, block_temp);
+                    }
+                    block->type = BlockType_Conf;
+                    break;
+                }
+                case PrimType_Ident_get: {
+                    block->attrib = attrib_copy(node->attrib);
+                    block->type = BlockType_OP;
+                    block->sub_type = Block_Load;
+                    break;
+                }
+                case PrimType_Ident_new: {
+                    block->attrib = attrib_copy(node->attrib);
+                    block->type = BlockType_OP;
+                    block->sub_type = Block_Init;
+                    break;
+                }
+                case PrimType_Literal: {
+                    block->data = object_copy(node->data);
+                    block->type = BlockType_OP;
+                    block->sub_type = Block_LoadConst;
+                    break;
+                }
+                case PrimType_Attrib:
+                    printf("PrimType_Attrib\n");
+                    break;
+                case PrimType_Subscript:
+                    printf("PrimType_Subscript\n");
+                    break;
+                case PrimType_Call: {
+                    {
+                        block_list_add_new(&parser->blocks);
+                        block_temp = block_list_last(&parser->blocks);
+                        block_temp->type = BlockType_OP;
+                        block_temp->sub_type = Block_Call;
+                        block_temp->count = node->nodes.nodes[1]->nodes.size;
+                        block_list_append(&block->blocks, block_temp);
+                    }
+                    {
+                        block_list_add_new(&parser->blocks);
+                        block_temp = block_list_last(&parser->blocks);
+                        block_temp->node = node->nodes.nodes[0];
+                        block_list_append(&block->blocks, block_temp);
+                    }
+
+                    for (size_t i = 0; i < node->nodes.nodes[1]->nodes.size; i++) {
+                        block_list_add_new(&parser->blocks);
+                        block_temp = block_list_last(&parser->blocks);
+                        block_temp->node = node->nodes.nodes[1]->nodes.nodes[i];
+                        block_list_append(&block->blocks, block_temp);
+                    }
+                    block->type = BlockType_Conf;
+                    break;
+                }
+            }
+        }
+        if (node->type == MainType_Oper) {
+            size_t count = 2;
+            if (node->type == ExprType_U || node->type == ExprType_NotTest) count = 1;
+            int is_bool = 0;
+
+            for (size_t i = 0; i < node->tokens.size; i++) {
+                block_list_add_new(&parser->blocks);
+                block_temp = block_list_last(&parser->blocks);
+                block_temp->type = BlockType_OP;
+                block_temp->sub_type = Block_OP;
+                block_temp->token = node->tokens.tokens[i];
+                block_temp->count = count;
+                block_list_append(&block->blocks, block_temp);
+
+                if (block_temp->token->sub_type == Special_AND_AND ||
+                    block_temp->token->sub_type == Special_OR_OR ||
+                    block_temp->token->sub_type == Special_NOT)
+                    is_bool = 1;
+
+            }
+            for (size_t i = node->nodes.size; i > 0; i--) {
+                if (is_bool) {
+                    block_list_add_new(&parser->blocks);
+                    block_temp = block_list_last(&parser->blocks);
+                    block_temp->type = BlockType_OP;
+                    block_temp->sub_type = Block_Bool;
+                    block_list_append(&block->blocks, block_temp);
+                }
+                block_list_add_new(&parser->blocks);
+                block_temp = block_list_last(&parser->blocks);
+                block_temp->node = node->nodes.nodes[i - 1];
+                block_list_append(&block->blocks, block_temp);
+            }
+            block->type = BlockType_Conf;
+        }
+        if (node->type == MainType_Stmt) {
+            switch (node->sub_type) {
+                case StmtType_Assign: {
+                    {
+                        block_list_add_new(&parser->blocks);
+                        block_temp = block_list_last(&parser->blocks);
+                        block_temp->type = BlockType_OP;
+                        block_temp->sub_type = Block_POP;
+                        block_list_append(&block->blocks, block_temp);
+                    }
+
+                    for (size_t i = 0; i < node->tokens.size; i++) {
+                        block_list_add_new(&parser->blocks);
+                        block_temp = block_list_last(&parser->blocks);
+                        block_temp->type = BlockType_OP;
+                        block_temp->sub_type = Block_OP;
+                        block_temp->token = node->tokens.tokens[i];
+                        block_temp->count = 2;
+                        block_list_append(&block->blocks, block_temp);
+                    }
+                    for (size_t i = node->nodes.size; i > 0; i--) {
+                        block_list_add_new(&parser->blocks);
+                        block_temp = block_list_last(&parser->blocks);
+                        block_temp->node = node->nodes.nodes[i - 1];
+                        block_list_append(&block->blocks, block_temp);
+                    }
+                    block->type = BlockType_Conf;
+                    break;
+                }
+                case StmtType_Return: {
+                    {
+                        block_list_add_new(&parser->blocks);
+                        block_temp = block_list_last(&parser->blocks);
+                        block_temp->type = BlockType_OP;
+                        block_temp->sub_type = Block_Return;
+                        block_temp->count = node->nodes.size;
+                        block_list_append(&block->blocks, block_temp);
+                    }
+                    for (size_t i = 0; i < node->nodes.size; i++) {
+                        block_list_add_new(&parser->blocks);
+                        block_temp = block_list_last(&parser->blocks);
+                        block_temp->node = node->nodes.nodes[i];
+                        block_list_append(&block->blocks, block_temp);
+                    }
+                    block->type = BlockType_Conf;
+                    break;
+                }
+                case StmtType_Break: {
+                    block->type = BlockType_OP;
+                    block->sub_type = Block_Break;
+                    break;
+                }
+                case StmtType_Continue: {
+                    block->type = BlockType_OP;
+                    block->sub_type = Block_Continue;
+                    break;
+                }
+                case StmtType_Extends:
+                    printf("StmtType_Extends\n");
+                    break;
+                case StmtType_Func_Body: {
+                    block->type = BlockType_OP;
+                    block->sub_type = Block_Func;
+                    block->variable = node->variable;
+                    block->closure = node->closure;
+                    {
+                        block_list_add_new(&parser->blocks);
+                        block_temp = block_list_last(&parser->blocks);
+                        block_temp->node = node->nodes.nodes[1];
+                        block_list_append(&block->blocks, block_temp);
+                    }
+                    break;
+                }
+                case StmtType_If: {
+                    {
+                        block_list_add_new(&parser->blocks);
+                        block_temp = block_list_last(&parser->blocks);
+                        block_temp->type = BlockType_OP;
+                        block_temp->sub_type = Block_IF;
+                        block_temp->count = 1;
+                        struct block_expr_st *tmp;
+                        for (size_t i = 1; i < node->nodes.size; i++){
+                            block_list_add_new(&parser->blocks);
+                            tmp = block_list_last(&parser->blocks);
+                            tmp->node = node->nodes.nodes[i];
+                            block_list_append(&block_temp->blocks, tmp);
+                        }
+                        block_list_append(&block->blocks, block_temp);
+                    }
+                    {
+                        block_list_add_new(&parser->blocks);
+                        block_temp = block_list_last(&parser->blocks);
+                        block_temp->node = node->nodes.nodes[0];
+                        block_list_append(&block->blocks, block_temp);
+                    }
+                    block->type = BlockType_Conf;
+                    break;
+                }
+                case StmtType_While: {
+                    {
+                        block_list_add_new(&parser->blocks);
+                        block_temp = block_list_last(&parser->blocks);
+                        block_temp->type = BlockType_OP;
+                        block_temp->sub_type = Block_IF;
+                        block_temp->count = 2;
+                        block_list_append(&block_temp->blocks, block);
+                        {
+                            block_list_add_new(&parser->blocks);
+                            struct block_expr_st *tmp = block_list_last(&parser->blocks);
+                            tmp->node = node->nodes.nodes[1];
+                            tmp->sub_type = ScopeType_Loop;
+                            block_list_append(&block_temp->blocks, tmp);
+                        }
+                        block_list_append(&block->blocks, block_temp);
+                    }
+                    {
+                        block_list_add_new(&parser->blocks);
+                        block_temp = block_list_last(&parser->blocks);
+                        block_temp->node = node->nodes.nodes[0];
+                        block_list_append(&block->blocks, block_temp);
+                    }
+                    block->type = BlockType_Conf;
+                    block->sub_type = ScopeType_StmtLoop;
+                    break;
+                }
+                case StmtType_DoWhile: {
+                    {
+                        block_list_add_new(&parser->blocks);
+                        block_temp = block_list_last(&parser->blocks);
+                        block_temp->type = BlockType_OP;
+                        block_temp->sub_type = Block_IF;
+                        block_temp->count = 2;
+                        block_list_append(&block_temp->blocks, block);
+                        {
+                            block_list_add_new(&parser->blocks);
+                            struct block_expr_st *tmp = block_list_last(&parser->blocks);
+                            tmp->node = node->nodes.nodes[0];
+                            tmp->sub_type = ScopeType_Loop;
+                            block_list_append(&block_temp->blocks, tmp);
+                            block_list_append(blocks_stack, tmp);
+                        }
+                        block_list_append(&block->blocks, block_temp);
+                    }
+                    {
+                        block_list_add_new(&parser->blocks);
+                        block_temp = block_list_last(&parser->blocks);
+                        block_temp->node = node->nodes.nodes[1];
+                        block_list_append(&block->blocks, block_temp);
+                    }
+                    block->type = BlockType_Conf;
+                    block->sub_type = ScopeType_StmtLoop;
+                    break;
+                }
+                case StmtType_Class:
+                    printf("StmtType_Class\n");
+                    break;
+
+                case StmtType_Func:
+                case StmtType_Annot: {
+                    {
+                        block_list_add_new(&parser->blocks);
+                        block_temp = block_list_last(&parser->blocks);
+                        block_temp->type = BlockType_OP;
+                        block_temp->sub_type = Block_POP;
+                        block_list_append(&block->blocks, block_temp);
+                    }
+                    {
+                        block_list_add_new(&parser->blocks);
+                        block_temp = block_list_last(&parser->blocks);
+                        block_temp->type = BlockType_OP;
+                        block_temp->sub_type = Block_Set;
+                        block_list_append(&block->blocks, block_temp);
+                    }
+                    for (size_t i = node->nodes.size; i > 0; i--) {
+                        block_list_add_new(&parser->blocks);
+                        block_temp = block_list_last(&parser->blocks);
+                        block_temp->node = node->nodes.nodes[i - 1];
+                        block_list_append(&block->blocks, block_temp);
+                    }
+                    block->type = BlockType_Conf;
+                    break;
+                }
+                case StmtType_List: {
+                    if (node->variable != NULL) {
+                        block_list_add_new(&parser->blocks);
+                        block_temp = block_list_last(&parser->blocks);
+                        block_temp->type = BlockType_OP;
+                        block_temp->sub_type = Block_FrameClose;
+                        block_temp->count = block->sub_type;
+                        block_list_append(&block->blocks, block_temp);
+                    }
+                    for (size_t i = node->nodes.size; i > 0; i--) {
+                        block_list_add_new(&parser->blocks);
+                        block_temp = block_list_last(&parser->blocks);
+                        block_temp->node = node->nodes.nodes[i - 1];
+                        block_list_append(&block->blocks, block_temp);
+                    }
+                    if (node->variable != NULL) {
+                        block_list_add_new(&parser->blocks);
+                        block_temp = block_list_last(&parser->blocks);
+                        block_temp->type = BlockType_OP;
+                        block_temp->sub_type = Block_FrameInit;
+                        block_temp->variable = node->variable;
+                        block_list_append(&block->blocks, block_temp);
+                    }
+                    block->type = BlockType_Conf;
+                    break;
+                }
+            }
+        }
+        block->node = NULL;
+    }
+    if (block->type == BlockType_Conf) {
+        for (size_t i = 0; i < block->blocks.size; i++) {
+            block_list_append(blocks_stack, block->blocks.blocks[i]);
+        }
+        return;
+    }
+//    if (block->type == BlockType_Conf) {
+//        size_t count = 0;
+//
+//        for (size_t i = 0; i < block->blocks.size; i++) {
+//            block_list_append(blocks_stack, block->blocks.blocks[i]);
+//            if(block->blocks.blocks[i]->type == BlockType_None) count ++;
+//        }
+//        return;
+//    }
+    if (block->type == BlockType_OP) {
+        if ((block->sub_type & 0xF0) == Block_Convert) {
+            struct object_st *temp = NULL;
+            struct object_st *obj = list_pop(parser->temp_memory);
+
+            struct object_st *res = object_new();
+            struct object_st *err = object_new();
+
+
+            if (block->sub_type == Block_Bool) object__bool(res, err, obj);
+            else if (block->sub_type == Block_Int) object__int(res, err, obj);
+            else if (block->sub_type == Block_Float) object__float(res, err, obj);
+            else if (block->sub_type == Block_Str) object__str(res, err, obj);
+
+            list_append(parser->temp_memory, res);
+            object_free(res);
+            object_free(err);
+
+            object_free(obj);
+            object_free(temp);
+            return;
+        }
+        switch (block->sub_type) {
+            case Block_Init: {
+                if(block->attrib->data != NULL) object_free(block->attrib->data);
+                block->attrib->data = object_new();
+            }
+            case Block_Load: {
+//                print_obj(block->attrib->data, 0);
+                list_append(parser->temp_memory, block->attrib->data);
+                break;
+            }
+            case Block_LoadConst: {
+                list_append(parser->temp_memory, block->data);
+                break;
+            }
+            case Block_OP:  {
+                int token_type = block->token->sub_type;
+                if (block->count == 2) {
+                    struct object_st *obj2 = list_pop(parser->temp_memory);
+                    struct object_st *obj1 = list_pop(parser->temp_memory);
+                    struct object_st *res = object_new();
+                    struct object_st *err = object_new();
+                    if ((token_type & 0xF0) == 0x10) {
+                        if (token_type == Special_MOD) object__mod(res, err, obj1, obj2);
+                        else if (token_type == Special_AND) object__and(res, err, obj1, obj2);
+                        else if (token_type == Special_MUL) object__mul(res, err, obj1, obj2);
+                        else if (token_type == Special_ADD) object__add(res, err, obj1, obj2);
+                        else if (token_type == Special_SUB) object__sub(res, err, obj1, obj2);
+                        else if (token_type == Special_DIV) object__div(res, err, obj1, obj2);
+                        else if (token_type == Special_XOR) object__xor(res, err, obj1, obj2);
+                        else if (token_type == Special_OR) object__or(res, err, obj1, obj2);
+                        else if (token_type == Special_LSHIFT) object__ls(res, err, obj1, obj2);
+                        else if (token_type == Special_RSHIFT) object__rs(res, err, obj1, obj2);
+
+                        list_append(parser->temp_memory, res);
+                    } else if ((token_type & 0xF0) == 0x20) {
+                        if (token_type == Special_EQ_MOD) object__mod(res, err, obj1, obj2);
+                        else if (token_type == Special_EQ_AND) object__and(res, err, obj1, obj2);
+                        else if (token_type == Special_EQ_MUL) object__mul(res, err, obj1, obj2);
+                        else if (token_type == Special_EQ_ADD) object__add(res, err, obj1, obj2);
+                        else if (token_type == Special_EQ_SUB) object__sub(res, err, obj1, obj2);
+                        else if (token_type == Special_EQ_DIV) object__div(res, err, obj1, obj2);
+                        else if (token_type == Special_EQ_XOR) object__xor(res, err, obj1, obj2);
+                        else if (token_type == Special_EQ_OR) object__or(res, err, obj1, obj2);
+                        else if (token_type == Special_EQ_LSHIFT) object__ls(res, err, obj1, obj2);
+                        else if (token_type == Special_EQ_RSHIFT) object__rs(res, err, obj1, obj2);
+
+                        object_set(obj1, res);
+                        list_append(parser->temp_memory, obj1);
+                    } else if ((token_type & 0xF0) == 0x40) {
+                        int cmp_res = object_cmp(obj1, obj2);
+                        object_set_type(res, INTEGER_TYPE);
+
+                        if (
+                                (token_type == Special_LESS && cmp_res < 0) ||
+                                (token_type == Special_GREATER && cmp_res != 2 && cmp_res > 0) ||
+                                (token_type == Special_EQ_LESS && cmp_res <= 0) ||
+                                (token_type == Special_EQ_GREATER && cmp_res != 2 && cmp_res >= 0) ||
+                                (token_type == Special_EQ_NOT && cmp_res != 0) ||
+                                (token_type == Special_EQ_EQ && cmp_res == 0))
+                            integer_set_ui(res->data, 1);
+                        else integer_set_ui(res->data, 0);
+
+                        list_append(parser->temp_memory, res);
+                    } else if ((token_type & 0xF0) == 0x50) {
+                        int bool1 = 1;
+                        if (obj1->type == INTEGER_TYPE && integer_is_null(obj1->data)) bool1 = 0;
+                        int bool2 = 1;
+                        if (obj2->type == INTEGER_TYPE && integer_is_null(obj2->data)) bool2 = 0;
+                        object_free(obj2);
+                        object_free(obj1);
+
+                        object_set_type(res, INTEGER_TYPE);
+                        if (token_type == Special_AND_AND) integer_set_ui(res->data, bool1 && bool2);
+                        if (token_type == Special_OR_OR) integer_set_ui(res->data, bool1 || bool2);
+
+                        list_append(parser->temp_memory, res);
+                    } else {
+                        object_set(obj1, obj2);
+                        list_append(parser->temp_memory, obj2);
+                    }
+
+                    if(err->type != NONE_TYPE) {
+                        print_obj(err, 0);
+                    }
+
+                    object_free(res);
+                    object_free(err);
+                    object_free(obj2);
+                    object_free(obj1);
+                    break;
+                } else if (block->count == 1) {
+                    struct object_st *obj = list_pop(parser->temp_memory);
+                    struct object_st *res = object_new();
+                    struct object_st *err = object_new();
+
+                    object__neg(res, err, obj);
+
+                    list_append(parser->temp_memory, res);
+
+                    object_free(res);
+                    object_free(err);
+                    object_free(obj);
+                    break;
+                }
+            }
+            case Block_Set: {
+                struct object_st *obj2 = list_pop(parser->temp_memory);
+                struct object_st *obj1 = list_pop(parser->temp_memory);
+
+                object_set(obj1, obj2);
+                list_append(parser->temp_memory, obj2);
+
+                object_free(obj2);
+                object_free(obj1);
+                break;
+            }
+            case Block_POP: {
+                object_free(list_pop(parser->temp_memory));
+                break;
+            }
+            case Block_IF: {
+                struct object_st *obj = list_pop(parser->temp_memory);
+
+                if (obj->type != INTEGER_TYPE) {
+                    block_list_append(blocks_stack, block);
+                    list_append(parser->temp_memory, obj);
+
+                    block_list_add_new(&parser->blocks);
+                    block_temp = block_list_last(&parser->blocks);
+                    block_temp->type = BlockType_OP;
+                    block_temp->sub_type = Block_Bool;
+                    block_list_append(blocks_stack, block_temp);
+                } else {
+                    if(!integer_is_null(obj->data)) {
+                        size_t count = block->count;
+                        if(count > block->blocks.size) count = block->blocks.size;
+                        for (size_t i = 0; i < count; i++) {
+                            block_list_append(blocks_stack, block->blocks.blocks[i]);
+                        }
+                    }else{
+                        for (size_t i = block->count; i < block->blocks.size; i++) {
+                            block_list_append(blocks_stack, block->blocks.blocks[i]);
+                        }
+                    }
+                }
+                object_free(obj);
+                break;
+            }
+            case Block_Call: {
+                struct object_st *temp = NULL;
+                struct object_st *obj = list_pop(parser->temp_memory);
+
+                if (obj->type != OP_OBJECT_TYPE) {
+                    // TODO error
+                    exit(1);
+                }
+                struct op_object *func = obj->data;
+                {
+                    block_list_add_new(&parser->blocks);
+                    block_temp = block_list_last(&parser->blocks);
+                    block_temp->type = BlockType_OP;
+                    block_temp->sub_type = Block_FrameClose;
+                    block_temp->count = ScopeType_Func;
+                    block_list_append(blocks_stack, block_temp);
+                }
+                {
+                    frame_list_add_new(&parser->frame_stack);
+                    frame = frame_list_last(&parser->frame_stack);
+                    attrib_list_set(&frame->attrib, &func->argument->attrib);
+                    frame_save_data(frame);
+                    for(size_t i = 0; i < func->closure->attrib.size; i++){
+                        if(func->closure->attrib.attribs[i]->data != NULL) object_free(func->closure->attrib.attribs[i]->data);
+                        func->closure->attrib.attribs[i]->data = object_copy(func->closure->data.data[i]);
+                    }
+                }
+                size_t need = func->argument->attrib.size - func->closure->attrib.size;
+                if (need != block->count) {
+                    // TODo error
+                    exit(1);
+                }
+
+                for (int i = 0; i < need; i++) {
+                    func->argument->attrib.attribs[i]->data = object_new();
+                    temp = list_pop(parser->temp_memory);
+                    object_set(func->argument->attrib.attribs[i]->data, temp);
+                    object_free(temp);
+                }
+                block_list_append(blocks_stack, func->function_body);
+                break;
+            }
+            case Block_List: {
+                struct object_st *obj = object_new();
+                struct object_st *temp = NULL;
+                object_set_type(obj, LIST_TYPE);
+                for (size_t i = 0; i < block->count; i++) {
+                    temp = list_pop(parser->temp_memory);
+                    list_append(obj->data, temp);
+                    object_free(temp);
+                }
+                list_append(parser->temp_memory, obj);
+                object_free(obj);
+                break;
+            }
+            case Block_Func: {
+                list_add_new(parser->temp_memory, OP_OBJECT_TYPE);
+                op_object_set_function(parser->temp_memory->data[parser->temp_memory->size - 1]->data,
+                                       block->variable, block->closure, block->blocks.blocks[0]);
+                break;
+            }
+            case Block_FrameInit: {
+                if (block->variable != NULL) {
+                    frame_list_add_new(&parser->frame_stack);
+                    frame = frame_list_last(&parser->frame_stack);
+                    attrib_list_set(&frame->attrib, &block->variable->attrib);
+                    frame_save_data(frame);
+                }
+                break;
+            }
+            case Block_FrameClose: {
+                if(block->count == ScopeType_Loop && (parser->interrupt_type & Interrupt_Continue)) {
+                    parser->interrupt_type ^= Interrupt_Continue;
+                }
+                if(block->count == ScopeType_Func) {
+                    if (parser->return_obj == NULL) list_add_new(parser->temp_memory, NONE_TYPE);
+                    else list_append(parser->temp_memory, parser->return_obj);
+                    object_free(parser->return_obj);
+                    parser->return_obj = NULL;
+
+                    parser->interrupt_type = 0;
+                }
+                if (parser->frame_stack.size != 0) {
+                    frame_load_data(frame_list_last(&parser->frame_stack));
+                    frame_list_resize(&parser->frame_stack, parser->frame_stack.size - 1);
+                }
+                break;
+            }
+            case Block_Return: {
+                if (block->count != 0 && parser->return_obj == NULL) {
+                    if (block->count == 1) {
+                        parser->return_obj = list_pop(parser->temp_memory);
+                    } else {
+                        parser->return_obj = object_new();
+                        object_set_type(parser->return_obj, LIST_TYPE);
+                        struct object_st *temp = NULL;
+                        for (size_t i = 0; i < block->count; i++) {
+                            temp = list_pop(parser->temp_memory);
+                            object_free(temp);
+                        }
+                    }
+                    parser->interrupt_type = Interrupt_Return;
+                }
+                break;
+            }
+            case Block_Break: {
+                parser->interrupt_type = Interrupt_Break;
+            }
+            case Block_Continue: {
+                parser->interrupt_type |= Interrupt_Continue;
+                break;
+            }
+        }
+    }
+}
+
+void run_smart_contract(struct parser_st *parser, struct node_st *node) {
+    struct block_expr_st *block = NULL;
+    struct block_list_st *blocks_stack = &parser->blocks_stack;
+
+    { // Clear all nodes
+//        parser->nodes.type = 0;
+//        node_list_clear(&parser->nodes);
+    }
+    {
+        block_list_add_new(&parser->blocks);
+        block = block_list_last(&parser->blocks);
+        block->node = node;
+        block_list_append(blocks_stack, block);
+    }
+
+    while (blocks_stack->size) {
+        block = block_list_last(blocks_stack);
+        block_list_resize(blocks_stack, blocks_stack->size - 1);
+
+        run_block(parser, block);
+    }
+
+    print_list(parser->temp_memory, 0);
+}

@@ -29,9 +29,9 @@ void token_list_resize(struct token_list_st *res, size_t size) {
         for (size_t i = res->max_size; i < size * 2; i++) res->tokens[i] = NULL;
         res->max_size = size * 2;
     }
-    if (res->size > size) {
+    if (res->type && res->size > size) {
         for (size_t i = size; i < res->size; i++) {
-            if (res->type && res->tokens[i] != NULL) token_free(res->tokens[i]);
+            if (res->tokens[i] != NULL) token_free(res->tokens[i]);
             res->tokens[i] = NULL;
         }
     }

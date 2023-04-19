@@ -22,4 +22,7 @@ void token_list_add_new(struct token_list_st *);
 struct token_st *token_list_last(struct token_list_st *);
 
 
+void print_token_list(const struct token_list_st *, int);
+
+
 #endif //TOKEN_LIST_H

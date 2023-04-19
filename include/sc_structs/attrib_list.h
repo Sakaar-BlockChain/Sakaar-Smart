@@ -20,4 +20,7 @@ void attrib_list_append(struct attrib_list_st *, struct attrib_st *);
 void attrib_list_add_new(struct attrib_list_st *);
 struct attrib_st *attrib_list_last(struct attrib_list_st *);
 
+
+void print_attrib_list(const struct attrib_list_st *, int);
+
 #endif //ATTRIB_LIST_H

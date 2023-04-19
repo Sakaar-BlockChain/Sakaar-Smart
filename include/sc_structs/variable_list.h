@@ -21,4 +21,7 @@ void variable_list_append(struct variable_list_st *, struct variable_st *);
 void variable_list_add_new(struct variable_list_st *);
 struct variable_st *variable_list_last(struct variable_list_st *);
 
+
+void print_variable_list(const struct variable_list_st *, int);
+
 #endif //VARIABLE_LIST_H

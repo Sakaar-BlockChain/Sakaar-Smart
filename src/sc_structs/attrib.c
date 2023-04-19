@@ -27,6 +27,7 @@ void attrib_free(struct attrib_st *res) {
 }
 
 struct attrib_st *attrib_copy(struct attrib_st *res) {
+    if(res == NULL) return NULL;
     res->counter ++;
     return res;
 }

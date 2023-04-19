@@ -17,4 +17,7 @@ void variable_data_init(struct variable_st *);
 void variable_data_free(struct variable_st *);
 
 
+void print_variable(const struct variable_st *, int);
+
+
 #endif //VARIABLE_H

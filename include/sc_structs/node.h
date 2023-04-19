@@ -33,4 +33,7 @@ void node_free(struct node_st *);
 void node_data_init(struct node_st *);
 void node_data_free(struct node_st *);
 
+
+void print_node(const struct node_st *, int);
+
 #endif //AST_NODE_H

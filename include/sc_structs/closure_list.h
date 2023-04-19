@@ -21,4 +21,7 @@ void closure_list_append(struct closure_list_st *, struct closure_st *);
 void closure_list_add_new(struct closure_list_st *);
 struct closure_st *closure_list_last(struct closure_list_st *);
 
+
+void print_closure_list(const struct closure_list_st *, int);
+
 #endif //CLOSURE_LIST_H
