@@ -61,7 +61,7 @@ int ident_get_expr(struct parser_st *parser, struct node_st *expr) {
     expr->attrib = parser_get_ident(parser, &token->data);
     if (expr->attrib == NULL) {
         node_clear(expr);
-        return SN_Status_Error_Indent;
+        return SM_Status_Error_Indent;
     }
     parser->data_pos++;
     return SN_Status_Success;
@@ -179,7 +179,7 @@ int primary_expr(struct parser_st *parser, struct node_st *expr) {
     analyze_start
     {
         check_call(atom_expr(parser, expr_next), goto end;)
-        while(parser->data_pos < parser->tokens.size){
+        while(parser->data_pos < parser->tokens.size) {
             parser_get
             if (token->type == TokenType_Special && token->sub_type == Special_DOT) {
                 parser->data_pos++;
@@ -187,7 +187,6 @@ int primary_expr(struct parser_st *parser, struct node_st *expr) {
                 expr_cast
                 expr->sub_type = PrimType_Attrib;
                 expr->type = MainType_Expr;
-                expr_add
 
                 parser_end goto eof;
                 parser_get

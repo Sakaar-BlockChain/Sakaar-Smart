@@ -23,7 +23,7 @@ void node_set(struct node_st *res, const struct node_st *a) {
     token_list_set(&res->tokens, &a->tokens);
     node_list_set(&res->nodes, &a->nodes);
 
-    if (a->data != NULL) res->data = object_copy(a->data);
+    if (a->data != NULL) res->data = object_copy_obj(a->data);
     if (a->attrib != NULL) res->attrib = attrib_copy(a->attrib);
     res->variable = a->variable;
     res->closure = a->closure;

@@ -29,13 +29,15 @@ struct frame_st *frame_copy(struct frame_st *res) {
     return res;
 }
 void frame_load_data(struct frame_st *res) {
+    if(res == NULL) return;
     for(size_t i = 0; i < res->attrib.size; i++){
         if(res->attrib.attribs[i]->data != NULL) object_free(res->attrib.attribs[i]->data);
         res->attrib.attribs[i]->data = res->data.data[i];
         res->data.data[i] = NULL;
     }
 }
-void frame_save_data(struct frame_st *res) {
+void frame_save_data(struct frame_st *res, struct attrib_list_st *data) {
+    attrib_list_set(&res->attrib, data);
     list_resize(&res->data, res->attrib.size);
     for(size_t i = 0; i < res->attrib.size; i++){
         if(res->data.data[i] != NULL) object_free(res->data.data[i]);

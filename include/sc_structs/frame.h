@@ -19,7 +19,7 @@ void frame_free(struct frame_st *);
 struct frame_st *frame_copy(struct frame_st *);
 
 void frame_load_data(struct frame_st *);
-void frame_save_data(struct frame_st *);
+void frame_save_data(struct frame_st *, struct attrib_list_st *);
 
 void print_frame(const struct frame_st *, int);
 

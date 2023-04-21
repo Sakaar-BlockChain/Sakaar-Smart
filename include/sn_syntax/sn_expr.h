@@ -26,5 +26,6 @@ int null_expr(struct parser_st *, struct node_st *);
 int literal_expr(struct parser_st *, struct node_st *);
 int atom_expr(struct parser_st *, struct node_st *);
 int primary_expr(struct parser_st *, struct node_st *);
+int set_primary_expr(struct parser_st *, struct node_st *);
 
 #endif //AN_EXPR_H

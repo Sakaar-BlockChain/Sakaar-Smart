@@ -45,10 +45,11 @@ void frame_list_append(struct frame_list_st *res, struct frame_st *data) {
     frame_list_resize(res, res->size + 1);
     res->frames[res->size - 1] = frame_copy(data);
 }
-void frame_list_add_new(struct frame_list_st *res) {
+struct frame_st *frame_list_add_new(struct frame_list_st *res) {
     frame_list_resize(res, res->size + 1);
-}
-struct frame_st *frame_list_last(struct frame_list_st *res) {
-    if (res->frames == NULL || res->size == 0) return NULL;
     return res->frames[res->size - 1];
+}
+struct frame_st *frame_list_pop(struct frame_list_st *res) {
+    if (res->frames == NULL || res->size == 0) return NULL;
+    return res->frames[--res->size];
 }

@@ -15,8 +15,8 @@ void frame_list_data_free(struct frame_list_st *);
 
 void frame_list_resize(struct frame_list_st *, size_t);
 void frame_list_append(struct frame_list_st *, struct frame_st *);
-void frame_list_add_new(struct frame_list_st *);
-struct frame_st *frame_list_last(struct frame_list_st *);
+struct frame_st *frame_list_add_new(struct frame_list_st *);
+struct frame_st *frame_list_pop(struct frame_list_st *);
 
 
 void print_frame_list(const struct frame_list_st *, int);

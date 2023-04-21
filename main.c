@@ -55,6 +55,106 @@ void print_obj(const struct object_st *res, int size) {
     else printf("Something\n");
 }
 
+void print_code(char command, void *data) {
+
+    switch (command) {
+        case BC_Init:
+            printf("BC_Init\t ");
+            break;
+        case BC_Load:
+            printf("BC_Load\t ");
+            break;
+        case BC_LoadConst:
+            printf("BC_LoadConst ");
+            break;
+        case BC_Attrib:
+            printf("BC_Attrib ");
+            break;
+        case BC_Subscript:
+            printf("BC_Subscript ");
+            break;
+        case BC_Call:
+            printf("BC_Call\t ");
+            break;
+        case BC_Pop:
+            printf("BC_Pop\t ");
+            break;
+
+        case BC_Convert_Bool:
+            printf("BC_Convert_Bool ");
+            break;
+        case BC_Convert_Int:
+            printf("BC_Convert_Int ");
+            break;
+        case BC_Convert_Float:
+            printf("BC_Convert_Float ");
+            break;
+        case BC_Convert_Str:
+            printf("BC_Convert_Str ");
+            break;
+
+        case BC_Compare:
+            printf("BC_Compare ");
+            break;
+        case BC_Arithmetic:
+            printf("BC_Arithmetic ");
+            break;
+        case BC_ArithmeticSet:
+            printf("BC_ArithmeticSet ");
+            break;
+        case BC_Negate:
+            printf("BC_Negate\t ");
+            break;
+        case BC_NegateBool:
+            printf("BC_NegateBool ");
+            break;
+        case BC_Set:
+            printf("BC_Set\t ");
+            break;
+
+        case BC_Jump:
+            printf("BC_Jump\t ");
+            break;
+        case BC_JumpBlock:
+            printf("BC_JumpBlock ");
+            break;
+        case BC_IfTrue_Jump:
+            printf("BC_IfTrue_Jump ");
+            break;
+        case BC_IfFalse_Jump:
+            printf("BC_IfFalse_Jump ");
+            break;
+
+        case BC_MakeFunc:
+            printf("BC_MakeFunc ");
+            break;
+        case BC_MakeClass:
+            printf("BC_MakeClass ");
+            break;
+        case BC_MakeList:
+            printf("BC_MakeList ");
+            break;
+
+        case BC_FrameInit:
+            printf("BC_FrameInit ");
+            break;
+        case BC_FrameClose:
+            printf("BC_FrameClose ");
+            break;
+    }
+    printf("\t%p\n", data);
+}
+
+void print_bytecode(struct bytecode_st *res, int size) {
+    printf("bytecode (%d) : (%p)\n", res->size, res);
+    for(size_t i=0;i<res->size;i++){
+        PRINT_PREF
+        PRINT_NEXT(i + 1 < res->size)
+        printf("%.4x\t", i);
+        print_code(res->command[i], res->data[i]);
+    }
+}
+
 void print_attrib(const struct attrib_st *res, int size) {
     printf("attribs (%d): (%p)\n", res->counter, res);
     PRINT_PREF
@@ -98,7 +198,7 @@ void print_frame(const struct frame_st *res, int size) {
     print_list(&res->data, size + 2);
 }
 void print_frame_list(const struct frame_list_st *res, int size) {
-    printf("frame (%zu):\n", res->size);
+    printf("frames (%zu):\n", res->size);
     for (int i = 0; i < res->size; i++) {
         PRINT_PREF
         PRINT_NEXT(i + 1 < res->size)
@@ -468,6 +568,9 @@ void print_node(const struct node_st *res, int size) {
             case StmtType_Continue:
                 printf("StmtType_Continue ");
                 break;
+            case StmtType_Oper:
+                printf("StmtType_Oper ");
+                break;
             case StmtType_Params:
                 printf("StmtType_Params ");
                 break;
@@ -577,13 +680,13 @@ int main() {
         if (res == SN_Status_EOF) {
             printf("Syntax error : EOF\n");
         } else {
-            if (res == SN_Status_Error_Indent) {
+            if (res == SM_Status_Error_Indent) {
                 printf("Semantic error : Identifier not initialized\n");
-            } else if (res == SN_Status_Error_Loop) {
+            } else if (res == SM_Status_Error_Loop) {
                 printf("Semantic error : Calling loop stmt expression out of loop\n");
-            } else if (res == SN_Status_Error_Func) {
+            } else if (res == SM_Status_Error_Func) {
                 printf("Semantic error : Calling func stmt expression out of func\n");
-            } else if (res == SN_Status_Error_Class) {
+            } else if (res == SM_Status_Error_Class) {
                 printf("Semantic error : Calling class stmt expression out of class\n");
             } else if (res == SN_Status_Error) {
                 printf("Syntax error :\n");
@@ -605,7 +708,7 @@ int main() {
         printf("%zu\n", mem_ctx.filled);
         exit(1);
     }
-    print_node(parser.nodes.nodes[0], 0);
+//    print_node(parser.nodes.nodes[0], 0);
 
     clock_t begin = clock();
 

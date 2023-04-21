@@ -19,12 +19,8 @@ void parser_clear(struct parser_st *res) {
     string_clear(&res->error_msg);
     res->error_pos = 0;
 
-    if(res->return_obj != NULL) object_free(res->return_obj);
-    if(res->error_obj != NULL) object_free(res->error_obj);
-    res->return_obj = NULL;
-    res->error_obj = NULL;
-
     res->interrupt_type = Interrupt_None;
+    res->interrupt_scopes = 0;
 
     block_list_clear(&res->blocks);
     closure_list_clear(&res->closures);
@@ -54,9 +50,6 @@ void parser_data_inti(struct parser_st *res) {
     string_data_init(&res->error_msg);
     res->error_pos = 0;
 
-    res->return_obj = NULL;
-    res->error_obj = NULL;
-
     block_list_data_init(&res->blocks);
     closure_list_data_init(&res->closures);
     node_list_data_init(&res->nodes);
@@ -69,6 +62,7 @@ void parser_data_inti(struct parser_st *res) {
     res->variables.type = 1;
 
     res->interrupt_type = Interrupt_None;
+    res->interrupt_scopes = 0;
 
     block_list_data_init(&res->blocks_stack);
     closure_list_data_init(&res->closures_stack);
@@ -82,9 +76,6 @@ void parser_data_free(struct parser_st *res) {
 
     string_data_free(&res->error_msg);
     res->error_pos = 0;
-
-    if(res->return_obj != NULL) object_free(res->return_obj);
-    if(res->error_obj != NULL) object_free(res->error_obj);
 
     block_list_data_free(&res->blocks);
     closure_list_data_free(&res->closures);

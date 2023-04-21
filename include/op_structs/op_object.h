@@ -20,13 +20,17 @@ struct op_object{
 };
 
 struct op_object *op_object_new();
-void op_object_set(struct op_object *res, const struct op_object *a);
-void op_object_clear(struct op_object *res);
-void op_object_free(struct op_object *res);
+void op_object_free(struct op_object *);
+
+void op_object_set(struct op_object *, const struct op_object *);
+void op_object_copy(struct op_object *, const struct op_object *);
+
+void op_object_clear(struct op_object *);
+int op_object_cmp(const struct op_object *, const struct op_object *);
 
 void op_object_set_data(struct op_object *, struct object_st *);
-void op_object_set_function(struct op_object *res, struct variable_st *, struct closure_st *, struct block_expr_st *);
+void op_object_set_function(struct op_object *, struct node_st *, struct block_expr_st *);
 struct object_st *op_object_get_attrib(struct op_object *, struct string_st *);
-struct object_st *op_object_set_attrib(struct op_object *, struct string_st *);
+struct object_st *op_object_attrib(struct op_object *, struct string_st *);
 
 #endif //OP_OBJECT_H

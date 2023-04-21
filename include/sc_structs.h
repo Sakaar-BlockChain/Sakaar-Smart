@@ -21,6 +21,7 @@
 
 
 #include "sc_structs/parser.h"
+#include "sc_structs/bytecode.h"
 
 
 #endif //SC_STRUCTS_H

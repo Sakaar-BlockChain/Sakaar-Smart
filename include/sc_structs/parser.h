@@ -13,7 +13,7 @@
 #define ScopeType_Func      0x01
 #define ScopeType_Class     0x02
 #define ScopeType_Loop      0x04
-#define ScopeType_StmtLoop  0x05
+#define ScopeType_Try       0x05
 
 #define MaxBracketNesting 256
 
@@ -22,6 +22,7 @@
 #define Interrupt_Break     0x02
 #define Interrupt_Return    0x04
 #define Interrupt_Throw     0x08
+#define Interrupt_Break_Out 0x09
 
 struct parser_st{
     char * data_str;
@@ -38,9 +39,8 @@ struct parser_st{
     struct string_st error_msg;
     size_t error_pos;
 
-    struct object_st *return_obj;
-    struct object_st *error_obj;
     int interrupt_type;
+    int interrupt_scopes;
 
     struct block_list_st blocks;
     struct closure_list_st closures;

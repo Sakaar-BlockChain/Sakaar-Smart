@@ -9,7 +9,7 @@
 #define OP_OBJECT_SIZE      sizeof(struct op_object)
 
 
-#define OP_OBJECT_OP    (struct object_op) {METHOD_NEW &op_object_new, METHOD_SET &op_object_set, METHOD_CLEAR &op_object_clear, METHOD_FREE &op_object_free, NULL}
+#define OP_OBJECT_OP    {METHOD_NEW &op_object_new, METHOD_FREE &op_object_free, METHOD_SET &op_object_set, METHOD_SET &op_object_copy, METHOD_CLEAR &op_object_clear, METHOD_CMP &op_object_cmp}
 
 
 extern struct object_type op_object_type;

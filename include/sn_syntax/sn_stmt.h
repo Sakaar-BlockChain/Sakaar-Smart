@@ -9,6 +9,7 @@
 #define StmtType_Return         0x03
 #define StmtType_Break          0x04
 #define StmtType_Continue       0x05
+#define StmtType_Oper           0x06
 
 #define StmtType_Params         0x11
 #define StmtType_Extends        0x12
