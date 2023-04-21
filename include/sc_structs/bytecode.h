@@ -29,6 +29,8 @@
 #define BC_JumpBlock        0x31
 #define BC_IfTrue_Jump      0x32
 #define BC_IfFalse_Jump     0x33
+#define BC_SaveStack        0x34
+#define BC_LoadStack        0x35
 
 #define BC_Make             0x40
 #define BC_MakeFunc         0x41

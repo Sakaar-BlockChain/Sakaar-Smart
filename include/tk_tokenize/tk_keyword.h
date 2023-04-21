@@ -8,38 +8,40 @@
 #define KeyWord_None            0x00
 
 // Keywords length 2
-#define KeyWord_DO              0x01
-#define KeyWord_IF              0x02
-#define KeyWord_IN              0x03
+#define KeyWord_DO              0x20
+#define KeyWord_IF              0x21
+#define KeyWord_IN              0x22
 
 // Keywords length 3
-#define KeyWord_FOR             0x04
-#define KeyWord_VAR             0x05
+#define KeyWord_TRY             0x30
+#define KeyWord_FOR             0x31
+#define KeyWord_VAR             0x32
 
 // Keywords length 4
-#define KeyWord_CASE            0x06
-#define KeyWord_ELSE            0x07
-#define KeyWord_NONE            0x08
-#define KeyWord_TRUE            0x09
-#define KeyWord_FUNC            0x0a
+#define KeyWord_CASE            0x40
+#define KeyWord_ELSE            0x41
+#define KeyWord_NONE            0x42
+#define KeyWord_TRUE            0x43
+#define KeyWord_FUNC            0x44
+#define KeyWord_WITH            0x45
 
 // Keywords length 5
-#define KeyWord_BREAK           0x0b
-#define KeyWord_CLASS           0x0c
-#define KeyWord_WHILE           0x0d
-#define KeyWord_FALSE           0x0e
+#define KeyWord_BREAK           0x50
+#define KeyWord_CLASS           0x51
+#define KeyWord_WHILE           0x52
+#define KeyWord_FALSE           0x53
 
 // Keywords length 6
-#define KeyWord_PUBLIC          0x0f
-#define KeyWord_SWITCH          0x10
-#define KeyWord_STATIC          0x11
-#define KeyWord_RETURN          0x12
+#define KeyWord_PUBLIC          0x60
+#define KeyWord_SWITCH          0x61
+#define KeyWord_STATIC          0x62
+#define KeyWord_RETURN          0x63
 
 // Keywords length 7
-#define KeyWord_PRIVATE         0x13
+#define KeyWord_PRIVATE         0x70
 
 // Keywords length 8
-#define KeyWord_CONTINUE        0x14
+#define KeyWord_CONTINUE        0x80
 
 void tokenize_keyword(struct token_st *, struct parser_st *);
 

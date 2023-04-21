@@ -24,6 +24,7 @@
 #define StmtType_While          0x32
 #define StmtType_DoWhile        0x33
 #define StmtType_Class          0x34
+#define StmtType_TryWith        0x35
 
 #define StmtType_List           0x41
 
@@ -48,6 +49,7 @@ int if_stmt(struct parser_st *, struct node_st *);
 int while_stmt(struct parser_st *, struct node_st *);
 int do_while_stmt(struct parser_st *, struct node_st *);
 int class_stmt(struct parser_st *, struct node_st *);
+int try_with_stmt(struct parser_st *, struct node_st *);
 int compound_stmt(struct parser_st *, struct node_st *);
 
 int statement(struct parser_st *, struct node_st *);

@@ -33,6 +33,13 @@ void tokenize_keyword(struct token_st *token, struct parser_st *parser) {
         return;
     }
     // Keywords length 3
+    if (tokenize_keyword_cmp(parser, "try", 3)) {
+        token->type = TokenType_KeyWords;
+        token->sub_type = KeyWord_TRY;
+        token_set_pos(token, parser);
+        parser->data_pos += 3;
+        return;
+    }
     if (tokenize_keyword_cmp(parser, "for", 3)) {
         token->type = TokenType_KeyWords;
         token->sub_type = KeyWord_FOR;
@@ -79,6 +86,13 @@ void tokenize_keyword(struct token_st *token, struct parser_st *parser) {
     if (tokenize_keyword_cmp(parser, "func", 4)) {
         token->type = TokenType_KeyWords;
         token->sub_type = KeyWord_FUNC;
+        token_set_pos(token, parser);
+        parser->data_pos += 4;
+        return;
+    }
+    if (tokenize_keyword_cmp(parser, "with", 4)) {
+        token->type = TokenType_KeyWords;
+        token->sub_type = KeyWord_WITH;
         token_set_pos(token, parser);
         parser->data_pos += 4;
         return;

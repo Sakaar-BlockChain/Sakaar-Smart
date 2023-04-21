@@ -1,3 +1,12 @@
-var a = [0, 1, 2, 30];
-a[3] = 4;
-a;
+func G(){
+
+}
+func F(x, y) {
+    return 100 * y;
+}
+G.__add__ = F;
+var b = 0;
+while(b < 10000){
+    var a = G + 0;
+    b += 1;
+}

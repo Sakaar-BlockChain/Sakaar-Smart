@@ -158,6 +158,24 @@ void run_make_bytecode(struct parser_st *parser, struct node_st *node, struct by
             case StmtType_Class:
                 printf("StmtType_Class\n");
                 break;
+            case StmtType_TryWith: {
+                block_list_add_new(&parser->blocks);
+                struct block_expr_st *block_temp_try = block_list_last(&parser->blocks);
+                block_temp_try->sub_type = ScopeType_Try;
+                block_temp_try->node = node->nodes.nodes[0];
+
+                block_list_add_new(&parser->blocks);
+                struct block_expr_st *block_temp_with = block_list_last(&parser->blocks);
+                block_temp_with->sub_type = ScopeType_Try;
+                block_temp_with->node = node->nodes.nodes[0];
+
+                bytecode_append(code, BC_SaveStack, NULL);
+                bytecode_append(code, BC_JumpBlock, block_temp_try);
+                bytecode_append(code, BC_Jump, NULL + code->size + 3);
+                bytecode_append(code, BC_LoadStack, NULL); // Saving last param
+                bytecode_append(code, BC_JumpBlock, block_temp_with);
+                break;
+            }
             case StmtType_Func:
             case StmtType_Annot:
                 for (size_t i = 0; i < node->nodes.size; i++)
@@ -211,7 +229,7 @@ void run_block(struct parser_st *parser, struct block_expr_st *block, size_t pos
                                 object_free(((struct attrib_st *) data)->data);
                             ((struct attrib_st *) data)->data = object_new();
                         case BC_Load:
-                            print_obj(((struct attrib_st *) data)->data, 0);
+//                            print_obj(((struct attrib_st *) data)->data, 0);
                             list_append(parser->temp_memory, ((struct attrib_st *) data)->data);
                             break;
                         case BC_LoadConst:
@@ -221,7 +239,13 @@ void run_block(struct parser_st *parser, struct block_expr_st *block, size_t pos
                             struct object_st *obj = list_pop(parser->temp_memory);
                             struct object_st *err = object_new();
                             struct object_st *res = object_attrib(err, obj, ((struct object_st *)data)->data);
-                            list_append(parser->temp_memory, res);
+                            if (err->type != NONE_TYPE) {
+                                parser->interrupt_type = Interrupt_Throw;
+                                parser->interrupt_scopes = 0;
+                                list_append(parser->temp_memory, err);
+                            } else {
+                                list_append(parser->temp_memory, res);
+                            }
                             object_free(res);
                             object_free(err);
                             object_free(obj);
@@ -232,7 +256,13 @@ void run_block(struct parser_st *parser, struct block_expr_st *block, size_t pos
                             struct object_st *obj2 = list_pop(parser->temp_memory);
                             struct object_st *err = object_new();
                             struct object_st *res = object_subscript(err, obj1, obj2);
-                            list_append(parser->temp_memory, res);
+                            if (err->type != NONE_TYPE) {
+                                parser->interrupt_type = Interrupt_Throw;
+                                parser->interrupt_scopes = 0;
+                                list_append(parser->temp_memory, err);
+                            } else {
+                                list_append(parser->temp_memory, res);
+                            }
                             object_free(res);
                             object_free(err);
                             object_free(obj1);
@@ -294,7 +324,13 @@ void run_block(struct parser_st *parser, struct block_expr_st *block, size_t pos
                     else if (command == BC_Convert_Float) object__float(res, err, obj);
                     else if (command == BC_Convert_Str) object__str(res, err, obj);
 
-                    list_append(parser->temp_memory, res);
+                    if (err->type != NONE_TYPE) {
+                        parser->interrupt_type = Interrupt_Throw;
+                        parser->interrupt_scopes = 0;
+                        list_append(parser->temp_memory, err);
+                    } else {
+                        list_append(parser->temp_memory, res);
+                    }
                     object_free(res);
                     object_free(err);
 
@@ -307,7 +343,13 @@ void run_block(struct parser_st *parser, struct block_expr_st *block, size_t pos
                     struct object_st *err = object_new();
                     if (command == BC_Negate) {
                         object__neg(res, err, obj2);
-                        list_append(parser->temp_memory, res);
+                        if (err->type != NONE_TYPE) {
+                            parser->interrupt_type = Interrupt_Throw;
+                            parser->interrupt_scopes = 0;
+                            list_append(parser->temp_memory, err);
+                        } else {
+                            list_append(parser->temp_memory, res);
+                        }
                     } else if (command == BC_NegateBool) {
                         object_set_type(res, INTEGER_TYPE);
                         if (integer_is_null(obj2->data)) integer_set_ui(res->data, 1);
@@ -346,8 +388,11 @@ void run_block(struct parser_st *parser, struct block_expr_st *block, size_t pos
                                     list_append(parser->temp_memory, res);
                                     break;
                                 }
-
-                                list_append(parser->temp_memory, res);
+                                if (err->type != NONE_TYPE) {
+                                    parser->interrupt_type = Interrupt_Throw;
+                                    parser->interrupt_scopes = 0;
+                                    list_append(parser->temp_memory, err);
+                                } else list_append(parser->temp_memory, res);
                                 break;
                             case BC_ArithmeticSet:
                                 if ((int) data == Special_EQ_MOD) object__mod(res, err, obj1, obj2);
@@ -362,8 +407,14 @@ void run_block(struct parser_st *parser, struct block_expr_st *block, size_t pos
                                 else if ((int) data == Special_EQ_RSHIFT) object__rs(res, err, obj1, obj2);
                                 else if ((int) data == Special_EQ) object_set(res, obj2);
 
-                                object_set(obj1, res);
-                                list_append(parser->temp_memory, obj1);
+                                if (err->type != NONE_TYPE) {
+                                    parser->interrupt_type = Interrupt_Throw;
+                                    parser->interrupt_scopes = 0;
+                                    list_append(parser->temp_memory, err);
+                                } else {
+                                    object_set(obj1, res);
+                                    list_append(parser->temp_memory, obj1);
+                                }
                                 break;
                             case BC_Compare:
                                 if (obj1->type == INTEGER_TYPE && integer_is_null(obj1->data)) bool1 = 0;
@@ -391,11 +442,23 @@ void run_block(struct parser_st *parser, struct block_expr_st *block, size_t pos
                     if (command == BC_Jump) {
                         pos = (size_t) data;
                         continue;
-                    } else if (command == BC_JumpBlock) {
+                    }
+                    else if (command == BC_JumpBlock) {
                         block_list_append(blocks_stack, block, pos + 1);
                         block_list_append(blocks_stack, data, 0);
                         return;
-                    } else {
+                    }
+                    else if (command == BC_SaveStack) {
+                        // TODO save stack size
+                    }
+                    else if (command == BC_LoadStack) {
+                        struct object_st *obj = list_pop(parser->temp_memory);
+                        size_t size; // TODO load stack size
+                        list_resize(parser->temp_memory, size);
+                        list_append(parser->temp_memory, obj);
+                        object_free(obj);
+                    }
+                    else {
                         struct object_st *obj = list_pop(parser->temp_memory);
                         int bool = !integer_is_null(obj->data);
                         object_free(obj);
@@ -431,6 +494,7 @@ void run_block(struct parser_st *parser, struct block_expr_st *block, size_t pos
                             break;
                     }
                     list_append(parser->temp_memory, obj);
+                    object_free(obj);
                 } // Not // Done
                 else if ((command & 0xF0) == BC_Frame) {
                     if (command == BC_FrameInit && parser->interrupt_type == 0) {

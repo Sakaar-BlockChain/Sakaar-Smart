@@ -276,6 +276,9 @@ void print_token(const struct token_st *res, int size) {
             case KeyWord_IN:
                 printf("KeyWord_IN ");
                 break;
+            case KeyWord_TRY:
+                printf("KeyWord_TRY ");
+                break;
             case KeyWord_FOR:
                 printf("KeyWord_FOR ");
                 break;
@@ -290,6 +293,9 @@ void print_token(const struct token_st *res, int size) {
                 break;
             case KeyWord_FUNC:
                 printf("KeyWord_FUNC ");
+                break;
+            case KeyWord_WITH:
+                printf("KeyWord_WITH ");
                 break;
             case KeyWord_BREAK:
                 printf("KeyWord_BREAK ");

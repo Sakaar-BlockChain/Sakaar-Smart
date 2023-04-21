@@ -541,6 +541,32 @@ int class_stmt(struct parser_st *parser, struct node_st *expr) {
     }
 analyze_end
 }
+int try_with_stmt(struct parser_st *parser, struct node_st *expr) {
+    analyze_start
+    {
+        parser_end goto eof;
+        parser_get
+        if (token->type != TokenType_KeyWords || token->sub_type != KeyWord_TRY) goto end;
+        parser->data_pos++;
+
+        expr->type = MainType_Stmt;
+        expr->sub_type = StmtType_TryWith;
+
+        expr_add
+        check_call(suite(parser, expr_next, parser->scope_type), goto err;)
+
+
+        parser_end goto eof;
+        parser_get
+        if (token->type != TokenType_KeyWords || token->sub_type != KeyWord_WITH) goto end;
+        parser->data_pos++;
+
+        expr_add
+        check_call(suite(parser, expr_next, ScopeType_Class), goto err;)
+        result = SN_Status_Success;
+    }
+analyze_end
+}
 
 int compound_stmt(struct parser_st *parser, struct node_st *expr) {
     int result = function_stmt(parser, expr);
@@ -559,6 +585,8 @@ int compound_stmt(struct parser_st *parser, struct node_st *expr) {
     result = do_while_stmt(parser, expr);
     if (result != SN_Status_Nothing) return result;
     result = class_stmt(parser, expr);
+    if (result != SN_Status_Nothing) return result;
+    result = try_with_stmt(parser, expr);
     return result;
 }
 

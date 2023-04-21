@@ -52,7 +52,10 @@ int list_expr(struct parser_st *parser, struct node_st *expr) {
     return list_oper(parser, expr, Special_LSQB, Special_RSQB);
 }
 int ident_get_expr(struct parser_st *parser, struct node_st *expr) {
-    parser_end return SN_Status_EOF;
+    parser_end {
+        parser->error_pos = parser->data_pos;
+        return SN_Status_EOF;
+    }
     struct token_st *token;
     parser_get
     if (token->type != TokenType_Identifier) return SN_Status_Nothing;
@@ -61,6 +64,7 @@ int ident_get_expr(struct parser_st *parser, struct node_st *expr) {
     expr->attrib = parser_get_ident(parser, &token->data);
     if (expr->attrib == NULL) {
         node_clear(expr);
+        parser->error_pos = parser->data_pos;
         return SM_Status_Error_Indent;
     }
     parser->data_pos++;
