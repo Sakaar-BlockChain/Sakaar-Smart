@@ -219,6 +219,10 @@ int simple_stmt(struct parser_st *parser, struct node_st *expr) {
     result = assignment_stmt(parser, expr);
     if (result != SN_Status_Nothing) return result;
     result = simple_oper(parser, expr);
+    if (result != SN_Status_Nothing) return result;
+    result = import_impr(parser, expr);
+    if (result != SN_Status_Nothing) return result;
+    result = from_impr(parser, expr);
     return result;
 }
 

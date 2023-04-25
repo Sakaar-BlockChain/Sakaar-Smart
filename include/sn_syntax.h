@@ -4,6 +4,7 @@
 #include "sn_syntax/sn_oper.h"
 #include "sn_syntax/sn_stmt.h"
 #include "sn_syntax/sn_expr.h"
+#include "sn_syntax/sn_impr.h"
 #include "tk_tokenize.h"
 
 #define SN_Status_Success       0

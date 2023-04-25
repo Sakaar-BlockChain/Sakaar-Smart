@@ -44,6 +44,7 @@ struct parser_st{
 
     struct closure_list_st closures_stack;
     struct variable_list_list_st variables_stack;
+    struct list_st const_objects;
 };
 
 void parser_clear(struct parser_st *);
@@ -56,5 +57,6 @@ void parser_set_str(struct parser_st *, char *, size_t);
 
 size_t parser_new_ident(struct parser_st *, struct string_st *);
 size_t parser_get_ident(struct parser_st *, struct string_st *);
+size_t parser_const_obj(struct parser_st *, struct object_st *);
 
 #endif //PARSER_H

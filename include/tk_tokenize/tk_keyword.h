@@ -8,9 +8,10 @@
 #define KeyWord_None            0x00
 
 // Keywords length 2
-#define KeyWord_DO              0x20
-#define KeyWord_IF              0x21
-#define KeyWord_IN              0x22
+#define KeyWord_AS              0x20
+#define KeyWord_DO              0x21
+#define KeyWord_IF              0x22
+#define KeyWord_IN              0x23
 
 // Keywords length 3
 #define KeyWord_TRY             0x30
@@ -22,8 +23,9 @@
 #define KeyWord_ELSE            0x41
 #define KeyWord_NONE            0x42
 #define KeyWord_TRUE            0x43
-#define KeyWord_FUNC            0x44
-#define KeyWord_WITH            0x45
+#define KeyWord_FROM            0x44
+#define KeyWord_FUNC            0x45
+#define KeyWord_WITH            0x46
 
 // Keywords length 5
 #define KeyWord_BREAK           0x50
@@ -36,6 +38,7 @@
 #define KeyWord_SWITCH          0x61
 #define KeyWord_STATIC          0x62
 #define KeyWord_RETURN          0x63
+#define KeyWord_IMPORT          0x64
 
 // Keywords length 7
 #define KeyWord_PRIVATE         0x70

@@ -26,6 +26,7 @@ void parser_clear(struct parser_st *res) {
 
     closure_list_clear(&res->closures_stack);
     variable_list_list_clear(&res->variables_stack);
+    list_clear(&res->const_objects);
 }
 
 void parser_data_inti(struct parser_st *res) {
@@ -53,6 +54,7 @@ void parser_data_inti(struct parser_st *res) {
 
     closure_list_data_init(&res->closures_stack);
     variable_list_list_data_init(&res->variables_stack);
+    list_data_init(&res->const_objects);
 }
 void parser_data_free(struct parser_st *res) {
     if(res->data_str != NULL) skr_free(res->data_str);
@@ -67,6 +69,7 @@ void parser_data_free(struct parser_st *res) {
 
     closure_list_data_free(&res->closures_stack);
     variable_list_list_data_free(&res->variables_stack);
+    list_data_free(&res->const_objects);
 }
 
 void parser_set_file(struct parser_st *res, char *file_path){
@@ -150,4 +153,15 @@ size_t parser_get_ident(struct parser_st *res, struct string_st *name) {
     }
 
     return pos;
+}
+size_t parser_const_obj(struct parser_st *res, struct object_st *obj) {
+    for(size_t i=0; i<res->const_objects.size;i++){
+        if (object_cmp(res->const_objects.data[i], obj)) {
+            object_free(obj);
+            return i + 1;
+        }
+    }
+    list_append(&res->const_objects, obj);
+    object_free(obj);
+    return res->const_objects.size;
 }

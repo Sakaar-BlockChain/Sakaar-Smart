@@ -8,8 +8,7 @@ struct node_st *node_new() {
     token_list_data_init(&res->tokens);
     node_list_data_init(&res->nodes);
 
-    res->data = NULL;
-    res->attrib = 0;
+    res->data = 0;
     res->variable = NULL;
     res->closure = NULL;
     return res;
@@ -23,8 +22,7 @@ void node_set(struct node_st *res, const struct node_st *a) {
     token_list_set(&res->tokens, &a->tokens);
     node_list_set(&res->nodes, &a->nodes);
 
-    if (a->data != NULL) res->data = object_copy_obj(a->data);
-    res->attrib = a->attrib;
+    res->data = a->data;
     res->variable = a->variable;
     res->closure = a->closure;
 }
@@ -35,17 +33,13 @@ void node_clear(struct node_st *res) {
     token_list_clear(&res->tokens);
     node_list_clear(&res->nodes);
 
-    if(res->data != NULL) object_free(res->data);
-    res->data = NULL;
-    res->attrib = 0;
+    res->data = 0;
     res->variable = NULL;
     res->closure = NULL;
 }
 void node_free(struct node_st *res) {
     token_list_data_free(&res->tokens);
     node_list_data_free(&res->nodes);
-
-    if(res->data != NULL) object_free(res->data);
     skr_free(res);
 }
 
@@ -56,14 +50,11 @@ void node_data_init(struct node_st *res) {
     token_list_data_init(&res->tokens);
     node_list_data_init(&res->nodes);
 
-    res->data = NULL;
-    res->attrib = 0;
+    res->data = 0;
     res->variable = NULL;
     res->closure = NULL;
 }
 void node_data_free(struct node_st *res) {
     token_list_data_free(&res->tokens);
     node_list_data_free(&res->nodes);
-
-    if(res->data != NULL) object_free(res->data);
 }

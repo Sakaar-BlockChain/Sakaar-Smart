@@ -1,4 +1,0 @@
-var y;
-func F(x) {
-    y;
-}

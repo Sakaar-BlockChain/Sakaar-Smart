@@ -3,10 +3,6 @@
 
 #include "sc_structs.h"
 
-#define Literal_None            0x00
-#define Literal_String          0x01
-#define Literal_Number          0x02
-
 #define PrimType_List           0x01
 #define PrimType_Ident_get      0x02
 #define PrimType_Ident_new      0x03

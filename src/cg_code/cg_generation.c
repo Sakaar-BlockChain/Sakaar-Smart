@@ -11,17 +11,17 @@ void cg_generate_code_expr(struct parser_st *parser, struct node_st *node, struc
             bytecode_append(code, BC_MakeList, NULL + node->nodes.size);
             break;
         case PrimType_Ident_get:
-            bytecode_append(code, BC_Load, NULL + node->attrib);
+            bytecode_append(code, BC_Load, NULL + node->data);
             break;
         case PrimType_Ident_new:
-            bytecode_append(code, BC_Init, NULL + node->attrib);
+            bytecode_append(code, BC_Init, NULL + node->data);
             break;
         case PrimType_Literal:
-            bytecode_append(code, BC_LoadConst, node->data);
+            bytecode_append(code, BC_LoadConst, NULL + node->data);
             break;
         case PrimType_Attrib:
             cg_generate_code(parser, node->nodes.nodes[0], code);
-            bytecode_append(code, BC_Attrib, node->data);
+            bytecode_append(code, BC_Attrib, NULL + node->data);
             break;
         case PrimType_Subscript:
             cg_generate_code(parser, node->nodes.nodes[1], code);

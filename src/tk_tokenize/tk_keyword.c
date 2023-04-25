@@ -11,6 +11,13 @@ int tokenize_keyword_cmp(struct parser_st *parser, const char *data, size_t size
 
 void tokenize_keyword(struct token_st *token, struct parser_st *parser) {
     // Keywords length 2
+    if (tokenize_keyword_cmp(parser, "as", 2)) {
+        token->type = TokenType_KeyWords;
+        token->sub_type = KeyWord_AS;
+        token_set_pos(token, parser);
+        parser->data_pos += 2;
+        return;
+    }
     if (tokenize_keyword_cmp(parser, "do", 2)) {
         token->type = TokenType_KeyWords;
         token->sub_type = KeyWord_DO;
@@ -83,6 +90,13 @@ void tokenize_keyword(struct token_st *token, struct parser_st *parser) {
         parser->data_pos += 4;
         return;
     }
+    if (tokenize_keyword_cmp(parser, "from", 4)) {
+        token->type = TokenType_KeyWords;
+        token->sub_type = KeyWord_FROM;
+        token_set_pos(token, parser);
+        parser->data_pos += 4;
+        return;
+    }
     if (tokenize_keyword_cmp(parser, "func", 4)) {
         token->type = TokenType_KeyWords;
         token->sub_type = KeyWord_FUNC;
@@ -151,6 +165,13 @@ void tokenize_keyword(struct token_st *token, struct parser_st *parser) {
     if (tokenize_keyword_cmp(parser, "return", 6)) {
         token->type = TokenType_KeyWords;
         token->sub_type = KeyWord_RETURN;
+        token_set_pos(token, parser);
+        parser->data_pos += 6;
+        return;
+    }
+    if (tokenize_keyword_cmp(parser, "import", 6)) {
+        token->type = TokenType_KeyWords;
+        token->sub_type = KeyWord_IMPORT;
         token_set_pos(token, parser);
         parser->data_pos += 6;
         return;

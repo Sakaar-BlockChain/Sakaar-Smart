@@ -11,6 +11,7 @@
 #define MainType_Expr           0x01
 #define MainType_Oper           0x02
 #define MainType_Stmt           0x03
+#define MainType_Impr           0x04
 
 struct node_st{
     short type;
@@ -19,11 +20,10 @@ struct node_st{
     struct token_list_st tokens;
     struct node_list_st nodes;
 
-    struct object_st *data;
     struct variable_list_st *variable;
     struct closure_st *closure;
 
-    size_t attrib;
+    size_t data;
 };
 
 struct node_st *node_new();

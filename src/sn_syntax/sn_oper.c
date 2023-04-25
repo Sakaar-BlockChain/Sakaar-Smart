@@ -1,33 +1,44 @@
 #include "sn_syntax.h"
 
-#define expr_cast { \
-node_list_add_new(&parser->nodes);          \
-expr_next = node_list_last(&parser->nodes); \
-node_set(expr_next, expr); node_clear(expr);\
-node_list_append(&expr->nodes, expr_next);  \
+#define expr_cast {                             \
+node_list_add_new(&parser->nodes);              \
+expr_next = node_list_last(&parser->nodes);     \
+node_set(expr_next, expr); node_clear(expr);    \
+node_list_append(&expr->nodes, expr_next);      \
 }
-#define expr_add { \
-node_list_add_new(&parser->nodes);          \
-expr_next = node_list_last(&parser->nodes); \
-node_list_append(&expr->nodes, expr_next);  \
+
+#define expr_add {                              \
+node_list_add_new(&parser->nodes);              \
+expr_next = node_list_last(&parser->nodes);     \
+node_list_append(&(expr)->nodes, expr_next);    \
 }
 
 #define parser_end if (parser->tokens.size <= parser->data_pos)
 #define parser_get token = parser->tokens.tokens[parser->data_pos];
 
-#define analyze_start \
-size_t nodes_count = parser->nodes.size; \
-size_t current_pointing = parser->data_pos; \
-struct node_st *expr_next = expr;           \
-struct token_st *token = NULL;              \
+#define analyze_start                           \
+size_t nodes_count = parser->nodes.size;        \
+size_t current_pointing = parser->data_pos;     \
+struct node_st *expr_next = expr;               \
+struct token_st *token = NULL;                  \
 int result = SN_Status_Nothing, sub_result;
-#define analyze_end \
-end:    if (result != SN_Status_Success) {node_clear(expr); node_list_resize(&parser->nodes, nodes_count); parser->data_pos = current_pointing;} return result; \
-sub:    result = sub_result; goto end; \
-eof:    result = SN_Status_EOF; parser->error_pos = parser->data_pos; goto end; \
-err:    result = SN_Status_Error; parser->error_pos = parser->data_pos; goto end;
+
+#define analyze_end_sub                                                             \
+sub:        result = sub_result; goto end;                                          \
+eof:        result = SN_Status_EOF; parser->error_pos = parser->data_pos; goto end; \
+err:        result = SN_Status_Error; parser->error_pos = parser->data_pos; goto end;
+
+#define analyze_end                                 \
+end:                                                \
+if (result != SN_Status_Success) {                  \
+node_clear(expr);                                   \
+node_list_resize(&parser->nodes, nodes_count);      \
+parser->data_pos = current_pointing;                \
+} return result;                                    \
+analyze_end_sub
 
 #define check_call(call, check) {sub_result = call; if (sub_result == SN_Status_Nothing) check if (sub_result != SN_Status_Success) goto sub;}
+
 
 int u_oper(struct parser_st *parser, struct node_st *expr) {
     analyze_start

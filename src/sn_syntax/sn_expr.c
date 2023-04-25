@@ -1,33 +1,44 @@
 #include "sn_syntax.h"
 
-#define expr_cast { \
-node_list_add_new(&parser->nodes);          \
-expr_next = node_list_last(&parser->nodes); \
-node_set(expr_next, expr); node_clear(expr);\
-node_list_append(&expr->nodes, expr_next);  \
+#define expr_cast {                             \
+node_list_add_new(&parser->nodes);              \
+expr_next = node_list_last(&parser->nodes);     \
+node_set(expr_next, expr); node_clear(expr);    \
+node_list_append(&expr->nodes, expr_next);      \
 }
-#define expr_add { \
-node_list_add_new(&parser->nodes);          \
-expr_next = node_list_last(&parser->nodes); \
-node_list_append(&expr->nodes, expr_next);  \
+
+#define expr_add {                              \
+node_list_add_new(&parser->nodes);              \
+expr_next = node_list_last(&parser->nodes);     \
+node_list_append(&(expr)->nodes, expr_next);    \
 }
 
 #define parser_end if (parser->tokens.size <= parser->data_pos)
 #define parser_get token = parser->tokens.tokens[parser->data_pos];
 
-#define analyze_start \
-size_t nodes_count = parser->nodes.size; \
-size_t current_pointing = parser->data_pos; \
-struct node_st *expr_next = expr;           \
-struct token_st *token = NULL;              \
+#define analyze_start                           \
+size_t nodes_count = parser->nodes.size;        \
+size_t current_pointing = parser->data_pos;     \
+struct node_st *expr_next = expr;               \
+struct token_st *token = NULL;                  \
 int result = SN_Status_Nothing, sub_result;
-#define analyze_end \
-end:    if (result != SN_Status_Success) {node_clear(expr); node_list_resize(&parser->nodes, nodes_count); parser->data_pos = current_pointing;} return result; \
-sub:    result = sub_result; goto end; \
-eof:    result = SN_Status_EOF; parser->error_pos = parser->data_pos; goto end; \
-err:    result = SN_Status_Error; parser->error_pos = parser->data_pos; goto end;
+
+#define analyze_end_sub                                                             \
+sub:        result = sub_result; goto end;                                          \
+eof:        result = SN_Status_EOF; parser->error_pos = parser->data_pos; goto end; \
+err:        result = SN_Status_Error; parser->error_pos = parser->data_pos; goto end;
+
+#define analyze_end                                 \
+end:                                                \
+if (result != SN_Status_Success) {                  \
+node_clear(expr);                                   \
+node_list_resize(&parser->nodes, nodes_count);      \
+parser->data_pos = current_pointing;                \
+} return result;                                    \
+analyze_end_sub
 
 #define check_call(call, check) {sub_result = call; if (sub_result == SN_Status_Nothing) check if (sub_result != SN_Status_Success) goto sub;}
+
 
 int scopes_expr(struct parser_st *parser, struct node_st *expr) {
     analyze_start
@@ -61,8 +72,8 @@ int ident_get_expr(struct parser_st *parser, struct node_st *expr) {
     if (token->type != TokenType_Identifier) return SN_Status_Nothing;
     expr->sub_type = PrimType_Ident_get;
     expr->type = MainType_Expr;
-    expr->attrib = parser_get_ident(parser, &token->data);
-    if (expr->attrib == 0) {
+    expr->data = parser_get_ident(parser, &token->data);
+    if (expr->data == 0) {
         node_clear(expr);
         parser->error_pos = parser->data_pos;
         return SM_Status_Error_Indent;
@@ -78,7 +89,7 @@ int ident_new_expr(struct parser_st *parser, struct node_st *expr) {
     parser->data_pos++;
     expr->sub_type = PrimType_Ident_new;
     expr->type = MainType_Expr;
-    expr->attrib = parser_new_ident(parser, &token->data);
+    expr->data = parser_new_ident(parser, &token->data);
     return SN_Status_Success;
 }
 int bool_expr(struct parser_st *parser, struct node_st *expr) {
@@ -90,10 +101,13 @@ int bool_expr(struct parser_st *parser, struct node_st *expr) {
     parser->data_pos++;
     expr->sub_type = PrimType_Literal;
     expr->type = MainType_Expr;
-    expr->data = object_new();
-    object_set_type(expr->data, INTEGER_TYPE);
-    if (token->sub_type == KeyWord_FALSE) integer_set_ui(expr->data->data, 0);
-    else integer_set_ui(expr->data->data, 1);
+    {
+        struct object_st *obj = object_new();
+        object_set_type(obj, INTEGER_TYPE);
+        if (token->sub_type == KeyWord_FALSE) integer_set_ui(obj->data, 0);
+        else integer_set_ui(obj->data, 1);
+        expr->data = parser_const_obj(parser, obj);
+    }
     return SN_Status_Success;
 }
 int number_expr(struct parser_st *parser, struct node_st *expr) {
@@ -104,34 +118,36 @@ int number_expr(struct parser_st *parser, struct node_st *expr) {
     parser->data_pos++;
     expr->sub_type = PrimType_Literal;
     expr->type = MainType_Expr;
-    expr->data = object_new();
-
-    switch(token->sub_type){
-        case IntType_bin: {
-            object_set_type(expr->data, INTEGER_TYPE);
-            _integer_set_str_bin(expr->data->data, token->data.data, token->data.size);
-            break;
+    {
+        struct object_st *obj = object_new();
+        switch (token->sub_type) {
+            case IntType_bin: {
+                object_set_type(obj, INTEGER_TYPE);
+                _integer_set_str_bin(obj->data, token->data.data, token->data.size);
+                break;
+            }
+            case IntType_oct: {
+                object_set_type(obj, INTEGER_TYPE);
+                _integer_set_str_oct(obj->data, token->data.data, token->data.size);
+                break;
+            }
+            case IntType_dec: {
+                object_set_type(obj, INTEGER_TYPE);
+                _integer_set_str_dec(obj->data, token->data.data, token->data.size);
+                break;
+            }
+            case IntType_hex: {
+                object_set_type(obj, INTEGER_TYPE);
+                _integer_set_str(obj->data, token->data.data, token->data.size);
+                break;
+            }
+            case IntType_float: {
+                object_set_type(obj, FLOAT_TYPE);
+                // TODO get float from string
+                break;
+            }
         }
-        case IntType_oct: {
-            object_set_type(expr->data, INTEGER_TYPE);
-            _integer_set_str_oct(expr->data->data, token->data.data, token->data.size);
-            break;
-        }
-        case IntType_dec: {
-            object_set_type(expr->data, INTEGER_TYPE);
-            _integer_set_str_dec(expr->data->data, token->data.data, token->data.size);
-            break;
-        }
-        case IntType_hex: {
-            object_set_type(expr->data, INTEGER_TYPE);
-            _integer_set_str(expr->data->data, token->data.data, token->data.size);
-            break;
-        }
-        case IntType_float: {
-            object_set_type(expr->data, FLOAT_TYPE);
-            // TODO get float from string
-            break;
-        }
+        expr->data = parser_const_obj(parser, obj);
     }
     return SN_Status_Success;
 }
@@ -143,9 +159,12 @@ int string_expr(struct parser_st *parser, struct node_st *expr) {
     parser->data_pos++;
     expr->sub_type = PrimType_Literal;
     expr->type = MainType_Expr;
-    expr->data = object_new();
-    object_set_type(expr->data, STRING_TYPE);
-    string_set(expr->data->data, &token->data);
+    {
+        struct object_st *obj = object_new();
+        object_set_type(obj, STRING_TYPE);
+        string_set(obj->data, &token->data);
+        expr->data = parser_const_obj(parser, obj);
+    }
     return SN_Status_Success;
 }
 int null_expr(struct parser_st *parser, struct node_st *expr) {
@@ -156,7 +175,7 @@ int null_expr(struct parser_st *parser, struct node_st *expr) {
     parser->data_pos++;
     expr->sub_type = PrimType_Literal;
     expr->type = MainType_Expr;
-    expr->data = object_new();
+    expr->data = 0;
     return SN_Status_Success;
 }
 int literal_expr(struct parser_st *parser, struct node_st *expr) {
@@ -197,9 +216,12 @@ int primary_expr(struct parser_st *parser, struct node_st *expr) {
                 if (token->type != TokenType_Identifier) goto err;
                 parser->data_pos++;
 
-                expr->data = object_new();
-                object_set_type(expr->data, STRING_TYPE);
-                string_set_str(expr->data->data, token->data.data, token->data.size);
+                {
+                    struct object_st *obj = object_new();
+                    object_set_type(obj, STRING_TYPE);
+                    string_set_str(obj->data, token->data.data, token->data.size);
+                    expr->data = parser_const_obj(parser, obj);
+                }
                 continue;
             } else if (token->type == TokenType_Special && token->sub_type == Special_LSQB) {
                 parser->data_pos++;

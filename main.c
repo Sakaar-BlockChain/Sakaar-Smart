@@ -487,6 +487,9 @@ void print_node(const struct node_st *res, int size) {
         case MainType_Stmt:
             printf("MainType_Stmt ");
             break;
+        case MainType_Impr:
+            printf("MainType_Impr ");
+            break;
     }
     if (res->type == MainType_Expr) {
         switch (res->sub_type) {
@@ -605,36 +608,51 @@ void print_node(const struct node_st *res, int size) {
                 break;
         }
     }
+    if (res->type == MainType_Impr) {
+        switch (res->sub_type) {
+            case ImprType_Name:
+                printf("ImprType_Name ");
+                break;
+            case ImprType_Module_As:
+                printf("ImprType_Module_As ");
+                break;
+            case ImprType_Module_All:
+                printf("ImprType_Module_All ");
+                break;
+            case ImprType_From:
+                printf("ImprType_From ");
+                break;
+            case ImprType_Import:
+                printf("ImprType_Import ");
+                break;
+        }
+    }
     printf("\n");
-    if (res->data != NULL) {
+    if (res->type == MainType_Expr && (res->sub_type == PrimType_Ident_get || res->sub_type == PrimType_Ident_new ||
+                                       res->sub_type == PrimType_Attrib || res->sub_type == PrimType_Literal)) {
         PRINT_PREF
-        PRINT_NEXT(res->tokens.size != 0 || res->nodes.size != 0 || res->variable != NULL || res->closure != NULL || (res->type == MainType_Expr && (res->sub_type == PrimType_Ident_get || res->sub_type == PrimType_Ident_new)))
-        print_obj(res->data, size + 2);
+        PRINT_NEXT(res->tokens.size != 0 || res->nodes.size != 0 || res->variable != NULL || res->closure != NULL)
+        printf("data : %zu\n", res->data);
     }
     if (res->tokens.size != 0) {
         PRINT_PREF
-        PRINT_NEXT(res->nodes.size != 0 || res->variable != NULL || res->closure != NULL || (res->type == MainType_Expr && (res->sub_type == PrimType_Ident_get || res->sub_type == PrimType_Ident_new)))
+        PRINT_NEXT(res->nodes.size != 0 || res->variable != NULL || res->closure != NULL)
         print_token_list(&res->tokens, size + 2);
     }
     if (res->nodes.size != 0) {
         PRINT_PREF
-        PRINT_NEXT(res->variable != NULL || res->closure != NULL || (res->type == MainType_Expr && (res->sub_type == PrimType_Ident_get || res->sub_type == PrimType_Ident_new)))
+        PRINT_NEXT(res->variable != NULL || res->closure != NULL)
         print_node_list(&res->nodes, size + 2);
     }
     if (res->variable != NULL) {
         PRINT_PREF
-        PRINT_NEXT(res->closure != NULL || (res->type == MainType_Expr && (res->sub_type == PrimType_Ident_get || res->sub_type == PrimType_Ident_new)))
+        PRINT_NEXT(res->closure != NULL)
         print_variable_list(res->variable, size + 2);
     }
     if (res->closure != NULL) {
         PRINT_PREF
-        PRINT_NEXT((res->type == MainType_Expr && (res->sub_type == PrimType_Ident_get || res->sub_type == PrimType_Ident_new)))
-        print_closure(res->closure, size + 2);
-    }
-    if (res->type == MainType_Expr && (res->sub_type == PrimType_Ident_get || res->sub_type == PrimType_Ident_new)) {
-        PRINT_PREF
         PRINT_NEXT(0)
-        printf("attrib : %zu\n", res->attrib);
+        print_closure(res->closure, size + 2);
     }
 }
 void print_node_list(const struct node_list_st *res, int size) {
@@ -653,7 +671,7 @@ int main() {
 //    struct object_st *expr_obj = object_new();
 //    object_set_type(expr_obj, AST_NODE_TYPE);
 
-    parser_set_file(&parser, "text.txt");
+    parser_set_file(&parser, "text.sc");
     tokenize(&parser);
     if (!string_is_null(&parser.error_msg)) {
         printf("Lexical error: ");
@@ -708,11 +726,11 @@ int main() {
         exit(1);
     }
     print_node(parser.nodes.nodes[0], 0);
-
-    struct bytecode_st *code = bytecode_new();
-    cg_generate_code(&parser, parser.nodes.nodes[0], code);
-    print_bytecode(code, 0);
-    bytecode_free(code);
+//
+//    struct bytecode_st *code = bytecode_new();
+//    cg_generate_code(&parser, parser.nodes.nodes[0], code);
+//    print_bytecode(code, 0);
+//    bytecode_free(code);
 
 
 //    clock_t begin = clock();
