@@ -57,7 +57,7 @@ void variable_list_append(struct variable_list_st *res, struct variable_st *data
 void variable_list_add_new(struct variable_list_st *res) {
     if(!res->type) return;
     variable_list_resize(res, res->size + 1);
-    res->variables[res->size - 1] = variable_new();
+    res->variables[res->size - 1] = variable_new(res->size);
 }
 struct variable_st *variable_list_last(struct variable_list_st *res) {
     if (res->variables == NULL || res->size == 0) return NULL;

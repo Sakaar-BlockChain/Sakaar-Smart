@@ -1,8 +1,19 @@
-//
-// Created by 04024 on 25.04.2023.
-//
+#ifndef FRAME_H
+#define FRAME_H
 
-#ifndef SAKAAR_SMARTCONTRACT_FRAME_H
-#define SAKAAR_SMARTCONTRACT_FRAME_H
+#include "struct.h"
+#include "variable_list.h"
 
-#endif //SAKAAR_SMARTCONTRACT_FRAME_H
+struct frame_st {
+    struct variable_list_st attrib;
+    struct list_st data;
+};
+
+struct frame_st *frame_new();
+void frame_set(struct frame_st *, const struct frame_st *);
+void frame_clear(struct frame_st *);
+void frame_free(struct frame_st *);
+
+void print_frame(const struct frame_st *, int);
+
+#endif //FRAME_H

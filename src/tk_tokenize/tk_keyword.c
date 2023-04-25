@@ -141,23 +141,9 @@ void tokenize_keyword(struct token_st *token, struct parser_st *parser) {
         return;
     }
     // Keywords length 6
-    if (tokenize_keyword_cmp(parser, "public", 6)) {
-        token->type = TokenType_KeyWords;
-        token->sub_type = KeyWord_PUBLIC;
-        token_set_pos(token, parser);
-        parser->data_pos += 6;
-        return;
-    }
     if (tokenize_keyword_cmp(parser, "switch", 6)) {
         token->type = TokenType_KeyWords;
         token->sub_type = KeyWord_SWITCH;
-        token_set_pos(token, parser);
-        parser->data_pos += 6;
-        return;
-    }
-    if (tokenize_keyword_cmp(parser, "static", 6)) {
-        token->type = TokenType_KeyWords;
-        token->sub_type = KeyWord_STATIC;
         token_set_pos(token, parser);
         parser->data_pos += 6;
         return;
@@ -174,14 +160,6 @@ void tokenize_keyword(struct token_st *token, struct parser_st *parser) {
         token->sub_type = KeyWord_IMPORT;
         token_set_pos(token, parser);
         parser->data_pos += 6;
-        return;
-    }
-    // Keywords length 7
-    if (tokenize_keyword_cmp(parser, "private", 7)) {
-        token->type = TokenType_KeyWords;
-        token->sub_type = KeyWord_PRIVATE;
-        token_set_pos(token, parser);
-        parser->data_pos += 7;
         return;
     }
     // Keywords length 6

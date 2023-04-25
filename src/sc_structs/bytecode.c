@@ -8,15 +8,6 @@ struct bytecode_st *bytecode_new() {
     res->size = res->max_size = 0;
     return res;
 }
-void bytecode_set(struct bytecode_st *res, struct bytecode_st *a) {
-    bytecode_resize(res, a->size);
-
-    memcpy(res->command, a->command, a->size);
-    memcpy(res->data, a->data, a->size * sizeof(void *));
-}
-void bytecode_clear(struct bytecode_st *res) {
-    bytecode_resize(res, 0);
-}
 void bytecode_free(struct bytecode_st *res) {
     if(res->data != NULL) skr_free(res->data);
     if(res->command != NULL) skr_free(res->command);
@@ -43,14 +34,6 @@ void bytecode_resize(struct bytecode_st *res, size_t size) {
             res->command[i] = 0;
         }
     res->size = size;
-}
-void bytecode_concat(struct bytecode_st *res, struct bytecode_st *a) {
-    if (res == NULL) return;
-
-    size_t _size = res->size;
-    bytecode_resize(res, res->size + a->size);
-    memcpy(res->command + _size, a->command, a->size);
-    memcpy(res->data + _size, a->data, a->size * sizeof(void *));
 }
 void bytecode_append(struct bytecode_st *res, char command, void *data) {
     bytecode_resize(res, res->size + 1);

@@ -118,10 +118,9 @@ int from_impr(struct parser_st *parser, struct node_st *expr) {
         if (token->type != TokenType_KeyWords || token->sub_type != KeyWord_FROM) goto end;
         parser->data_pos++;
 
-        parser_get
-        if (token->type != TokenType_Identifier) goto err;
-        parser->data_pos++;
-        token_list_append(&expr->tokens, token);
+
+        expr_add
+        check_call(module_impr(parser, expr_next), goto err;)
 
         expr->type = MainType_Impr;
         expr->sub_type = ImprType_From;

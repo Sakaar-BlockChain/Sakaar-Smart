@@ -4,6 +4,6 @@
 #include "sn_syntax.h"
 #include "op_structs.h"
 
-void run_smart_contract(struct parser_st *, struct node_st *);
+void run_smart_contract(struct parser_st *, size_t);
 
 #endif //OP_OPERATIONS_H

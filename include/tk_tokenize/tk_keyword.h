@@ -34,14 +34,9 @@
 #define KeyWord_FALSE           0x53
 
 // Keywords length 6
-#define KeyWord_PUBLIC          0x60
-#define KeyWord_SWITCH          0x61
-#define KeyWord_STATIC          0x62
-#define KeyWord_RETURN          0x63
-#define KeyWord_IMPORT          0x64
-
-// Keywords length 7
-#define KeyWord_PRIVATE         0x70
+#define KeyWord_SWITCH          0x60
+#define KeyWord_RETURN          0x61
+#define KeyWord_IMPORT          0x62
 
 // Keywords length 8
 #define KeyWord_CONTINUE        0x80

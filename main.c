@@ -57,7 +57,6 @@ void print_obj(const struct object_st *res, int size) {
 }
 
 void print_code(char command, void *data) {
-
     switch (command) {
         case BC_Init:
             printf("BC_Init         ");
@@ -76,6 +75,9 @@ void print_code(char command, void *data) {
             break;
         case BC_Call:
             printf("BC_Call         ");
+            break;
+        case BC_FuncEnd:
+            printf("BC_FuncEnd      ");
             break;
         case BC_Pop:
             printf("BC_Pop          ");
@@ -116,14 +118,14 @@ void print_code(char command, void *data) {
         case BC_Jump:
             printf("BC_Jump         ");
             break;
-        case BC_JumpBlock:
-            printf("BC_JumpBlock    ");
-            break;
         case BC_IfTrueOrPop:
             printf("BC_IfTrueOrPop  ");
             break;
         case BC_IfFalseOrPop:
             printf("BC_IfFalseOrPop ");
+            break;
+        case BC_IfFalse_Jump:
+            printf("BC_IfFalse_Jump ");
             break;
 
         case BC_MakeFunc:
@@ -136,17 +138,23 @@ void print_code(char command, void *data) {
             printf("BC_MakeList     ");
             break;
 
-        case BC_FrameInit:
-            printf("BC_FrameInit    ");
+        case BC_Break:
+            printf("BC_Break        ");
             break;
-        case BC_FrameClose:
-            printf("BC_FrameClose   ");
+        case BC_Throw:
+            printf("BC_Throw        ");
+            break;
+        case BC_Return:
+            printf("BC_Return       ");
+            break;
+        case BC_Continue:
+            printf("BC_Continue     ");
             break;
     }
     printf("\t%p", data);
 }
 
-void print_bytecode(struct bytecode_st *res, int size) {
+void print_bytecode(const struct bytecode_st *res, int size) {
     printf("bytecode (%d) : (%p)\n", res->size, res);
     for(size_t i=0;i<res->size;i++){
         PRINT_PREF
@@ -156,13 +164,34 @@ void print_bytecode(struct bytecode_st *res, int size) {
         printf("\t%p\n", &res->data[i]);
     }
 }
+void print_bytecode_list(const struct bytecode_list_st *res, int size) {
+    printf("bytecode_list (%d) : (%p)\n", res->size, res);
+    for (int i = 0; i < res->size; i++) {
+        PRINT_PREF
+        PRINT_NEXT(i + 1 < res->size)
+        print_bytecode(res->bytecodes[i], size + 2);
+    }
+}
 
+
+void print_frame(const struct frame_st *res, int size) {
+    printf("frame : \n");
+    PRINT_PREF
+    PRINT_NEXT(1)
+    print_variable_list(&res->attrib, size + 2);
+    PRINT_PREF
+    PRINT_NEXT(0)
+    print_list(&res->data, size + 2);
+}
 
 void print_variable(const struct variable_st *res, int size) {
     printf("variable : (%p)\n", res);
     PRINT_PREF
-    PRINT_NEXT(0)
+    PRINT_NEXT(1)
     print_str(&res->name);
+    PRINT_PREF
+    PRINT_NEXT(0)
+    printf("position : %zu\n", res->position);
 }
 void print_variable_list(const struct variable_list_st *res, int size) {
     printf("variable_list (%zu):\n", res->size);
@@ -209,7 +238,7 @@ void print_closure(const struct closure_st *res, int size) {
     print_variable_list(&res->data, size + 2);
 }
 void print_closure_list(const struct closure_list_st *res, int size) {
-    printf("closures (%zu):\n", res->size);
+    printf("closure_list (%zu):\n", res->size);
     for (int i = 0; i < res->size; i++) {
         PRINT_PREF
         PRINT_NEXT(i + 1 < res->size)
@@ -302,14 +331,8 @@ void print_token(const struct token_st *res, int size) {
             case KeyWord_FALSE:
                 printf("KeyWord_FALSE ");
                 break;
-            case KeyWord_PUBLIC:
-                printf("KeyWord_PUBLIC ");
-                break;
             case KeyWord_SWITCH:
                 printf("KeyWord_SWITCH ");
-                break;
-            case KeyWord_STATIC:
-                printf("KeyWord_STATIC ");
                 break;
             case KeyWord_RETURN:
                 printf("KeyWord_RETURN ");
@@ -464,7 +487,7 @@ void print_token(const struct token_st *res, int size) {
     }
 }
 void print_token_list(const struct token_list_st *res, int size) {
-    printf("tokens (%zu):\n", res->size);
+    printf("token_list (%zu):\n", res->size);
     for (int i = 0; i < res->size; i++) {
         PRINT_PREF
         PRINT_NEXT(i + 1 < res->size)
@@ -656,7 +679,7 @@ void print_node(const struct node_st *res, int size) {
     }
 }
 void print_node_list(const struct node_list_st *res, int size) {
-    printf("nodes (%zu):\n", res->size);
+    printf("node_list (%zu):\n", res->size);
     for (int i = 0; i < res->size; i++) {
         PRINT_PREF
         PRINT_NEXT(i + 1 < res->size)
@@ -668,11 +691,17 @@ void print_node_list(const struct node_list_st *res, int size) {
 int main() {
     struct parser_st parser;
     parser_data_inti(&parser);
-//    struct object_st *expr_obj = object_new();
-//    object_set_type(expr_obj, AST_NODE_TYPE);
 
-    parser_set_file(&parser, "text.sc");
-    tokenize(&parser);
+    parser_set_file(&parser, "text.sc"); // Open File
+    if (!string_is_null(&parser.error_msg)) {
+        printf("File Error: ");
+        for (int i = 0; i < parser.error_msg.size; i++) printf("%c", parser.error_msg.data[i]);
+        printf("\n");
+        parser_data_free(&parser);
+        exit(1);
+    }
+
+    tokenize(&parser); // Tokenize file
     if (!string_is_null(&parser.error_msg)) {
         printf("Lexical error: ");
         for (int i = 0; i < parser.error_msg.size; i++) printf("%c", parser.error_msg.data[i]);
@@ -692,8 +721,8 @@ int main() {
     }
 
     node_list_add_new(&parser.nodes);
-    int res = token_analyzer(&parser, parser.nodes.nodes[0]);
-    if(res != SN_Status_Success){
+    int res = token_analyzer(&parser, parser.nodes.nodes[0]); // Make simple AST Tree
+    if(res != SN_Status_Success) {
         if (res == SN_Status_EOF) {
             printf("Syntax error : EOF\n");
         } else {
@@ -726,23 +755,23 @@ int main() {
         exit(1);
     }
     print_node(parser.nodes.nodes[0], 0);
-//
-//    struct bytecode_st *code = bytecode_new();
-//    cg_generate_code(&parser, parser.nodes.nodes[0], code);
-//    print_bytecode(code, 0);
-//    bytecode_free(code);
 
 
-//    clock_t begin = clock();
-//
-//    run_smart_contract(&parser, parser.nodes.nodes[0]);
-//
-//    clock_t end = clock();
-//    double time_spent = (double)(end - begin) / CLOCKS_PER_SEC;
-//    printf("Time : %f\n", time_spent);
+    size_t codespace = parser_codespace(&parser);
+    cg_generate_code(&parser, parser.nodes.nodes[0], parser.codes.bytecodes[codespace]);
+    print_bytecode_list(&parser.codes, 0);
+
+
+    clock_t begin = clock();
+
+    parser_store_vars(&parser, parser.nodes.nodes[0]->variable->size, 0);
+    run_smart_contract(&parser, codespace);
+
+    clock_t end = clock();
+    double time_spent = (double)(end - begin) / CLOCKS_PER_SEC;
+    printf("Time : %f\n", time_spent);
 
     parser_data_free(&parser);
-
     printf("%zu\n", mem_ctx.filled);
 }
 

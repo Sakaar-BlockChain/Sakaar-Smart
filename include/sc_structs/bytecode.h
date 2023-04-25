@@ -3,13 +3,15 @@
 
 #include "struct.h"
 
+#define BC_Basics           0x00
 #define BC_Init             0x01
 #define BC_Load             0x02
 #define BC_LoadConst        0x03
 #define BC_Attrib           0x04
 #define BC_Subscript        0x05
 #define BC_Call             0x06
-#define BC_Pop              0x07
+#define BC_FuncEnd          0x07
+#define BC_Pop              0x08
 
 #define BC_Convert          0x10
 #define BC_Convert_Bool     0x11
@@ -26,27 +28,20 @@
 #define BC_Set              0x26
 
 #define BC_Jump             0x30
-#define BC_JumpBlock        0x31
-#define BC_IfTrueOrPop      0x32
-#define BC_IfFalseOrPop     0x33
-#define BC_SaveStack        0x34
-#define BC_LoadStack        0x35
+#define BC_IfTrueOrPop      0x31
+#define BC_IfFalseOrPop     0x32
+#define BC_IfFalse_Jump     0x33
 
 #define BC_Make             0x40
 #define BC_MakeFunc         0x41
 #define BC_MakeClass        0x42
 #define BC_MakeList         0x43
 
-#define BC_Frame            0x50
-#define BC_FrameInit        0x51
-#define BC_FrameClose       0x52
-#define BC_FrameCloseFunc   0x53
-
-#define BC_Interrupts       0x60
-#define BC_Break            0x61
-#define BC_Throw            0x62
-#define BC_Return           0x63
-#define BC_Continue         0x64
+#define BC_Interrupts       0x50
+#define BC_Break            0x51
+#define BC_Throw            0x52
+#define BC_Return           0x53
+#define BC_Continue         0x54
 
 struct bytecode_st {
     char *command;
@@ -56,15 +51,12 @@ struct bytecode_st {
 };
 
 struct bytecode_st *bytecode_new();
-void bytecode_set(struct bytecode_st *, struct bytecode_st *);
-void bytecode_clear(struct bytecode_st *);
 void bytecode_free(struct bytecode_st *);
 
 void bytecode_resize(struct bytecode_st *, size_t);
-void bytecode_concat(struct bytecode_st *, struct bytecode_st *);
 void bytecode_append(struct bytecode_st *, char , void *);
 
 void print_code(char command, void *data);
-void print_bytecode(struct bytecode_st *, int);
+void print_bytecode(const struct bytecode_st *, int);
 
 #endif //BYTECODE_H

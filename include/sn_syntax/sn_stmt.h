@@ -40,9 +40,6 @@ int parameter_list(struct parser_st *, struct node_st *);
 int extends_list(struct parser_st *, struct node_st *);
 
 int function_stmt(struct parser_st *, struct node_st *);
-int public_function_stmt(struct parser_st *, struct node_st *);
-int static_function_stmt(struct parser_st *, struct node_st *);
-int private_function_stmt(struct parser_st *, struct node_st *);
 int function_body_stmt(struct parser_st *, struct node_st *);
 
 int if_stmt(struct parser_st *, struct node_st *);

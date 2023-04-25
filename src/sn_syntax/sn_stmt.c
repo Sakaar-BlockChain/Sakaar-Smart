@@ -51,20 +51,27 @@ int annotated_stmt(struct parser_st *parser, struct node_st *expr) {
         if (token->type != TokenType_KeyWords || token->sub_type != KeyWord_VAR) goto end;
         parser->data_pos++;
 
-        expr_add
-        check_call(ident_new_expr(parser, expr_next), goto err;)
+        while (1) {
+            expr_add
+            check_call(ident_new_expr(parser, expr_next), goto err;)
 
-        expr->type = MainType_Stmt;
-        expr->sub_type = StmtType_Annot;
+            expr->type = MainType_Stmt;
+            expr->sub_type = StmtType_Annot;
+
+            parser_end goto eof;
+            parser_get
+            if (token->type == TokenType_Special && token->sub_type == Special_EQ) {
+                parser->data_pos++;
+                expr_add
+                check_call(or_test_oper(parser, expr_next), goto err;)
+            }
+
+            parser_end goto eof;
+            parser_get
+            if (token->type != TokenType_Special || token->sub_type != Special_COMMA) break;
+            parser->data_pos++;
+        }
         result = SN_Status_Success;
-
-        parser_end goto end;
-        parser_get
-        if (token->type != TokenType_Special || token->sub_type != Special_EQ) goto end;
-        parser->data_pos++;
-
-        expr_add
-        check_call(or_test_oper(parser, expr_next), goto err;)
     }
 analyze_end
 }
@@ -299,102 +306,6 @@ int function_stmt(struct parser_st *parser, struct node_st *expr) {
 analyze_end
 }
 
-int public_function_stmt(struct parser_st *parser, struct node_st *expr) {
-    analyze_start
-    {
-        parser_end goto eof;
-        parser_get
-        if (token->type != TokenType_KeyWords || token->sub_type != KeyWord_PUBLIC) goto end;
-        if ((parser->scope_type & ScopeType_Class) != ScopeType_Class) goto err_class;
-        parser->data_pos++;
-
-        parser_end goto eof;
-        parser_get
-        if (token->type != TokenType_KeyWords || token->sub_type != KeyWord_FUNC) goto err;
-        parser->data_pos++;
-
-        expr->type = MainType_Stmt;
-        expr->sub_type = StmtType_PUB_Func;
-
-        expr_add
-        check_call(ident_new_expr(parser, expr_next), goto err;)
-
-        expr_add
-        check_call(function_body_stmt(parser, expr_next), goto err;)
-
-        result = SN_Status_Success;
-    }
-analyze_end
-    err_class:
-    result = SM_Status_Error_Class;
-    parser->error_pos = parser->data_pos;
-    goto end;
-}
-
-int static_function_stmt(struct parser_st *parser, struct node_st *expr) {
-    analyze_start
-    {
-        parser_end goto eof;
-        parser_get
-        if (token->type != TokenType_KeyWords || token->sub_type != KeyWord_STATIC) goto end;
-        if ((parser->scope_type & ScopeType_Class) != ScopeType_Class) goto err_class;
-        parser->data_pos++;
-
-        parser_end goto eof;
-        parser_get
-        if (token->type != TokenType_KeyWords || token->sub_type != KeyWord_FUNC) goto err;
-        parser->data_pos++;
-
-        expr->type = MainType_Stmt;
-        expr->sub_type = StmtType_STC_Func;
-
-        expr_add
-        check_call(ident_new_expr(parser, expr_next), goto err;)
-
-        expr_add
-        check_call(function_body_stmt(parser, expr_next), goto err;)
-
-        result = SN_Status_Success;
-    }
-analyze_end
-    err_class:
-    result = SM_Status_Error_Class;
-    parser->error_pos = parser->data_pos;
-    goto end;
-}
-
-int private_function_stmt(struct parser_st *parser, struct node_st *expr) {
-    analyze_start
-    {
-        parser_end goto eof;
-        parser_get
-        if (token->type != TokenType_KeyWords || token->sub_type != KeyWord_PRIVATE) goto end;
-        if ((parser->scope_type & ScopeType_Class) != ScopeType_Class) goto err_class;
-        parser->data_pos++;
-
-        parser_end goto eof;
-        parser_get
-        if (token->type != TokenType_KeyWords || token->sub_type != KeyWord_FUNC) goto err;
-        parser->data_pos++;
-
-        expr->type = MainType_Stmt;
-        expr->sub_type = StmtType_PRI_Func;
-
-        expr_add
-        check_call(ident_new_expr(parser, expr_next), goto err;)
-
-        expr_add
-        check_call(function_body_stmt(parser, expr_next), goto err;)
-
-        result = SN_Status_Success;
-    }
-analyze_end
-    err_class:
-    result = SM_Status_Error_Class;
-    parser->error_pos = parser->data_pos;
-    goto end;
-}
-
 int function_body_stmt(struct parser_st *parser, struct node_st *expr) {
     analyze_start
     int _scope_type = parser->scope_type;
@@ -482,6 +393,7 @@ analyze_end
 
 int while_stmt(struct parser_st *parser, struct node_st *expr) {
     analyze_start
+    int scope_type = parser->scope_type;
     {
         parser_end goto eof;
         parser_get
@@ -494,15 +406,25 @@ int while_stmt(struct parser_st *parser, struct node_st *expr) {
         expr_add
         check_call(scopes_expr(parser, expr_next), goto err;)
 
+        parser->scope_type |= ScopeType_Loop;
         expr_add
         check_call(suite(parser, expr_next), goto err;)
         result = SN_Status_Success;
     }
-analyze_end
+    end:
+    parser->scope_type = scope_type;
+    if (result != SN_Status_Success) {
+        node_clear(expr);
+        node_list_resize(&parser->nodes, nodes_count);
+        parser->data_pos = current_pointing;
+    }
+    return result;
+analyze_end_sub
 }
 
 int do_while_stmt(struct parser_st *parser, struct node_st *expr) {
     analyze_start
+    int scope_type = parser->scope_type;
     {
         parser_end goto eof;
         parser_get
@@ -512,8 +434,10 @@ int do_while_stmt(struct parser_st *parser, struct node_st *expr) {
         expr->type = MainType_Stmt;
         expr->sub_type = StmtType_DoWhile;
 
+        parser->scope_type |= ScopeType_Loop;
         expr_add
         check_call(suite(parser, expr_next), goto err;)
+        parser->scope_type = scope_type;
 
         parser_end goto eof;
         parser_get
@@ -525,7 +449,15 @@ int do_while_stmt(struct parser_st *parser, struct node_st *expr) {
 
         result = SN_Status_Success;
     }
-analyze_end
+    end:
+    parser->scope_type = scope_type;
+    if (result != SN_Status_Success) {
+        node_clear(expr);
+        node_list_resize(&parser->nodes, nodes_count);
+        parser->data_pos = current_pointing;
+    }
+    return result;
+analyze_end_sub
 }
 
 int class_stmt(struct parser_st *parser, struct node_st *expr) {
@@ -585,13 +517,6 @@ analyze_end
 int compound_stmt(struct parser_st *parser, struct node_st *expr) {
     int result = function_stmt(parser, expr);
     if (result != SN_Status_Nothing) return result;
-    result = public_function_stmt(parser, expr);
-    if (result != SN_Status_Nothing) return result;
-    result = static_function_stmt(parser, expr);
-    if (result != SN_Status_Nothing) return result;
-    result = private_function_stmt(parser, expr);
-    if (result != SN_Status_Nothing) return result;
-
     result = if_stmt(parser, expr);
     if (result != SN_Status_Nothing) return result;
     result = while_stmt(parser, expr);

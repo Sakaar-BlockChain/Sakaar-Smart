@@ -2,6 +2,7 @@
 #define PARSER_H
 
 #include "struct.h"
+#include "bytecode_list.h"
 #include "closure_list.h"
 #include "node_list.h"
 #include "token_list.h"
@@ -23,6 +24,9 @@
 #define Interrupt_Break_Out 0x09
 
 struct parser_st{
+    struct string_st file_name;
+    struct string_st file_path;
+
     char * data_str;
     size_t data_size;
     size_t data_pos;
@@ -37,14 +41,20 @@ struct parser_st{
     struct string_st error_msg;
     size_t error_pos;
 
+    struct bytecode_list_st codes;
     struct closure_list_st closures;
     struct node_list_st nodes;
     struct token_list_st tokens;
     struct variable_list_list_st variables;
 
+    struct bytecode_list_st codes_stack;
     struct closure_list_st closures_stack;
     struct variable_list_list_st variables_stack;
-    struct list_st const_objects;
+
+    struct list_st *const_objects;
+    struct list_st *temp_stack;
+    struct list_st *var_stack;
+    size_t var_start_pos;
 };
 
 void parser_clear(struct parser_st *);
@@ -58,5 +68,10 @@ void parser_set_str(struct parser_st *, char *, size_t);
 size_t parser_new_ident(struct parser_st *, struct string_st *);
 size_t parser_get_ident(struct parser_st *, struct string_st *);
 size_t parser_const_obj(struct parser_st *, struct object_st *);
+size_t parser_codespace(struct parser_st *);
+
+void parser_store_vars(struct parser_st *, size_t, size_t);
+size_t parser_restore_vars(struct parser_st *);
+
 
 #endif //PARSER_H
