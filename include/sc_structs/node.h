@@ -20,9 +20,10 @@ struct node_st{
     struct node_list_st nodes;
 
     struct object_st *data;
-    struct attrib_st *attrib;
-    struct variable_st *variable;
+    struct variable_list_st *variable;
     struct closure_st *closure;
+
+    size_t attrib;
 };
 
 struct node_st *node_new();

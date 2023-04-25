@@ -10,8 +10,10 @@ struct variable_list_st{
     int type;
 };
 
+struct variable_list_st *variable_list_new();
 void variable_list_set(struct variable_list_st *, const struct variable_list_st *);
 void variable_list_clear(struct variable_list_st *);
+void variable_list_free(struct variable_list_st *);
 
 void variable_list_data_init(struct variable_list_st *);
 void variable_list_data_free(struct variable_list_st *);

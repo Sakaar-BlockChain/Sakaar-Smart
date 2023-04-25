@@ -1,6 +1,13 @@
 #include "sc_structs.h"
 
 
+struct variable_list_st *variable_list_new() {
+    struct variable_list_st *res = skr_malloc(sizeof(struct variable_list_st));
+    res->variables = NULL;
+    res->max_size = res->size = 0;
+    res->type = 0;
+    return res;
+}
 void variable_list_set(struct variable_list_st *res, const struct variable_list_st *a) {
     if(res->type) return;
     variable_list_resize(res, a->size);
@@ -8,6 +15,11 @@ void variable_list_set(struct variable_list_st *res, const struct variable_list_
 }
 void variable_list_clear(struct variable_list_st *res) {
     variable_list_resize(res, 0);
+}
+void variable_list_free(struct variable_list_st *res) {
+    variable_list_resize(res, 0);
+    if (res->variables != NULL) skr_free(res->variables);
+    skr_free(res);
 }
 
 void variable_list_data_init(struct variable_list_st *res) {

@@ -1,12 +1,4 @@
-func G(){
-
-}
-func F(x, y) {
-    return 100 * y;
-}
-G.__add__ = F;
-var b = 0;
-while(b < 10000){
-    var a = G + 0;
-    b += 1;
+var y;
+func F(x) {
+    y;
 }

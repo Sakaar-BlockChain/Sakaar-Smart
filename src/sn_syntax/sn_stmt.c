@@ -3,35 +3,41 @@
 
 #include "sn_syntax.h"
 
-#define expr_cast { \
-node_list_add_new(&parser->nodes);          \
-expr_next = node_list_last(&parser->nodes); \
-node_set(expr_next, expr); node_clear(expr);\
-node_list_append(&expr->nodes, expr_next);  \
+#define expr_cast {                             \
+node_list_add_new(&parser->nodes);              \
+expr_next = node_list_last(&parser->nodes);     \
+node_set(expr_next, expr); node_clear(expr);    \
+node_list_append(&expr->nodes, expr_next);      \
 }
-#define expr_add { \
-node_list_add_new(&parser->nodes);          \
-expr_next = node_list_last(&parser->nodes); \
-node_list_append(&(expr)->nodes, expr_next);  \
+
+#define expr_add {                              \
+node_list_add_new(&parser->nodes);              \
+expr_next = node_list_last(&parser->nodes);     \
+node_list_append(&(expr)->nodes, expr_next);    \
 }
 
 #define parser_end if (parser->tokens.size <= parser->data_pos)
 #define parser_get token = parser->tokens.tokens[parser->data_pos];
 
-#define analyze_start \
-size_t nodes_count = parser->nodes.size;    \
-size_t current_pointing = parser->data_pos; \
-struct node_st *expr_next = expr;           \
-struct token_st *token = NULL;              \
+#define analyze_start                           \
+size_t nodes_count = parser->nodes.size;        \
+size_t current_pointing = parser->data_pos;     \
+struct node_st *expr_next = expr;               \
+struct token_st *token = NULL;                  \
 int result = SN_Status_Nothing, sub_result;
 
-#define analyze_end_sub \
-sub:        result = sub_result; goto end; \
+#define analyze_end_sub                                                             \
+sub:        result = sub_result; goto end;                                          \
 eof:        result = SN_Status_EOF; parser->error_pos = parser->data_pos; goto end; \
 err:        result = SN_Status_Error; parser->error_pos = parser->data_pos; goto end;
-#define analyze_end \
-end:                \
-if (result != SN_Status_Success) {node_clear(expr); node_list_resize(&parser->nodes, nodes_count); parser->data_pos = current_pointing;} return result; \
+
+#define analyze_end                                 \
+end:                                                \
+if (result != SN_Status_Success) {                  \
+node_clear(expr);                                   \
+node_list_resize(&parser->nodes, nodes_count);      \
+parser->data_pos = current_pointing;                \
+} return result;                                    \
 analyze_end_sub
 
 #define check_call(call, check) {sub_result = call; if (sub_result == SN_Status_Nothing) check if (sub_result != SN_Status_Success) goto sub;}
@@ -387,6 +393,8 @@ analyze_end
 
 int function_body_stmt(struct parser_st *parser, struct node_st *expr) {
     analyze_start
+    int _scope_type = parser->scope_type;
+    parser->scope_type = ScopeType_Func;
     size_t variable_count = parser->variables.size;
     size_t variable_stack_size = parser->variables_stack.size;
     size_t closure_count = parser->closures.size;
@@ -396,9 +404,9 @@ int function_body_stmt(struct parser_st *parser, struct node_st *expr) {
         expr->sub_type = StmtType_Func_Body;
 
         {
-            variable_list_add_new(&parser->variables);
-            expr->variable = variable_list_last(&parser->variables);
-            variable_list_append(&parser->variables_stack, expr->variable);
+            variable_list_list_add_new(&parser->variables);
+            expr->variable = variable_list_list_last(&parser->variables);
+            variable_list_list_append(&parser->variables_stack, expr->variable);
             expr->closure = closure_new();
             closure_list_append(&parser->closures, expr->closure);
             closure_list_append(&parser->closures_stack, expr->closure);
@@ -408,17 +416,18 @@ int function_body_stmt(struct parser_st *parser, struct node_st *expr) {
         check_call(parameter_list(parser, expr_next), goto err;)
 
         expr_add
-        check_call(suite(parser, expr_next, ScopeType_Func), goto err;)
+        check_call(suite(parser, expr_next), goto err;)
 
         result = SN_Status_Success;
     }
-    variable_list_resize(&parser->variables_stack, variable_stack_size);
+    parser->scope_type = _scope_type;
+    variable_list_list_resize(&parser->variables_stack, variable_stack_size);
     closure_list_resize(&parser->closures_stack, closure_stack_size);
     if (result != SN_Status_Success) {
         node_clear(expr);
         node_list_resize(&parser->nodes, nodes_count);
         closure_list_resize(&parser->closures, closure_count);
-        variable_list_resize(&parser->variables, variable_count);
+        variable_list_list_resize(&parser->variables, variable_count);
         parser->data_pos = current_pointing;
     }
     return result;
@@ -440,7 +449,7 @@ int if_stmt(struct parser_st *parser, struct node_st *expr) {
         check_call(scopes_expr(parser, expr_next), goto err;)
 
         expr_add
-        check_call(suite(parser, expr_next, parser->scope_type), goto err;)
+        check_call(suite(parser, expr_next), goto err;)
 
         while (parser->data_pos < parser->tokens.size) {
             parser_get
@@ -456,10 +465,10 @@ int if_stmt(struct parser_st *parser, struct node_st *expr) {
                 check_call(scopes_expr(parser, expr_next), goto err;)
 
                 expr_add
-                check_call(suite(parser, expr_next, parser->scope_type), goto err;)
+                check_call(suite(parser, expr_next), goto err;)
             } else {
                 expr_add
-                check_call(suite(parser, expr_next, parser->scope_type), goto err;)
+                check_call(suite(parser, expr_next), goto err;)
             }
         }
         result = SN_Status_Success;
@@ -482,7 +491,7 @@ int while_stmt(struct parser_st *parser, struct node_st *expr) {
         check_call(scopes_expr(parser, expr_next), goto err;)
 
         expr_add
-        check_call(suite(parser, expr_next, (parser->scope_type | ScopeType_Loop)), goto err;)
+        check_call(suite(parser, expr_next), goto err;)
         result = SN_Status_Success;
     }
 analyze_end
@@ -500,7 +509,7 @@ int do_while_stmt(struct parser_st *parser, struct node_st *expr) {
         expr->sub_type = StmtType_DoWhile;
 
         expr_add
-        check_call(suite(parser, expr_next, (parser->scope_type | ScopeType_Loop)), goto err;)
+        check_call(suite(parser, expr_next), goto err;)
 
         parser_end goto eof;
         parser_get
@@ -536,11 +545,12 @@ int class_stmt(struct parser_st *parser, struct node_st *expr) {
         }
 
         expr_add
-        check_call(suite(parser, expr_next, ScopeType_Class), goto err;)
+        check_call(suite(parser, expr_next), goto err;)
         result = SN_Status_Success;
     }
 analyze_end
 }
+
 int try_with_stmt(struct parser_st *parser, struct node_st *expr) {
     analyze_start
     {
@@ -553,7 +563,7 @@ int try_with_stmt(struct parser_st *parser, struct node_st *expr) {
         expr->sub_type = StmtType_TryWith;
 
         expr_add
-        check_call(suite(parser, expr_next, parser->scope_type), goto err;)
+        check_call(suite(parser, expr_next), goto err;)
 
 
         parser_end goto eof;
@@ -562,7 +572,7 @@ int try_with_stmt(struct parser_st *parser, struct node_st *expr) {
         parser->data_pos++;
 
         expr_add
-        check_call(suite(parser, expr_next, ScopeType_Class), goto err;)
+        check_call(suite(parser, expr_next), goto err;)
         result = SN_Status_Success;
     }
 analyze_end
@@ -610,15 +620,10 @@ int statement(struct parser_st *parser, struct node_st *expr) {
 analyze_end
 }
 
-int suite(struct parser_st *parser, struct node_st *expr, int scope_type) {
+int suite(struct parser_st *parser, struct node_st *expr) {
     int res = statement(parser, expr);
     if (res != SN_Status_Nothing) return res;
     analyze_start
-    int _scope_type = parser->scope_type;
-    parser->scope_type = scope_type;
-    size_t variable_count = parser->variables.size;
-    size_t variable_stack_size = parser->variables_stack.size;
-    size_t closure_stack_size = parser->closures_stack.size;
     {
         parser_end goto eof;
         parser_get
@@ -627,12 +632,6 @@ int suite(struct parser_st *parser, struct node_st *expr, int scope_type) {
 
         expr->type = MainType_Stmt;
         expr->sub_type = StmtType_List;
-        {
-            variable_list_add_new(&parser->variables);
-            expr->variable = variable_list_last(&parser->variables);
-            variable_list_append(&parser->variables_stack, expr->variable);
-            closure_list_append(&parser->closures_stack, expr->closure);
-        }
 
         parser_end goto eof;
         parser_get
@@ -645,8 +644,8 @@ int suite(struct parser_st *parser, struct node_st *expr, int scope_type) {
         while (parser->data_pos < parser->tokens.size) {
             expr_add
             parser_get
-            if (token->type == TokenType_Special && token->sub_type == Special_LCB)
-                check_call(suite(parser, expr_next, parser->scope_type), goto err;)
+            if (token->type == TokenType_Special && token->sub_type == Special_LCB) check_call(
+                    suite(parser, expr_next), goto err;)
             else check_call(statement(parser, expr_next), goto err;)
 
             parser_end goto eof;
@@ -659,18 +658,7 @@ int suite(struct parser_st *parser, struct node_st *expr, int scope_type) {
         }
         goto err;
     }
-    end:
-    parser->scope_type = _scope_type;
-    variable_list_resize(&parser->variables_stack, variable_stack_size);
-    closure_list_resize(&parser->closures_stack, closure_stack_size);
-    if (result != SN_Status_Success) {
-        node_clear(expr);
-        node_list_resize(&parser->nodes, nodes_count);
-        variable_list_resize(&parser->variables, variable_count);
-        parser->data_pos = current_pointing;
-    }
-    return result;
-analyze_end_sub
+analyze_end
 }
 
 int token_analyzer(struct parser_st *parser, struct node_st *expr) {
@@ -681,25 +669,25 @@ int token_analyzer(struct parser_st *parser, struct node_st *expr) {
         expr->type = MainType_Stmt;
         expr->sub_type = StmtType_List;
         {
-            variable_list_add_new(&parser->variables);
-            expr->variable = variable_list_last(&parser->variables);
-            variable_list_append(&parser->variables_stack, expr->variable);
+            variable_list_list_add_new(&parser->variables);
+            expr->variable = variable_list_list_last(&parser->variables);
+            variable_list_list_append(&parser->variables_stack, expr->variable);
             closure_list_append(&parser->closures_stack, NULL);
         }
 
         while (parser->data_pos < parser->tokens.size) {
             expr_add
-            check_call(suite(parser, expr_next, ScopeType_None), goto end;)
+            check_call(suite(parser, expr_next), goto end;)
         }
         result = SN_Status_Success;
     }
     end:
-    variable_list_resize(&parser->variables_stack, 0);
+    variable_list_list_resize(&parser->variables_stack, 0);
     closure_list_resize(&parser->closures_stack, 0);
     if (result != SN_Status_Success) {
         node_clear(expr);
         node_list_resize(&parser->nodes, nodes_count);
-        variable_list_resize(&parser->variables, variable_count);
+        variable_list_list_resize(&parser->variables, variable_count);
         parser->data_pos = current_pointing;
     }
     return result;

@@ -19,21 +19,13 @@ void parser_clear(struct parser_st *res) {
     string_clear(&res->error_msg);
     res->error_pos = 0;
 
-    res->interrupt_type = Interrupt_None;
-    res->interrupt_scopes = 0;
-
-    block_list_clear(&res->blocks);
     closure_list_clear(&res->closures);
     node_list_clear(&res->nodes);
     token_list_clear(&res->tokens);
-    variable_list_clear(&res->variables);
+    variable_list_list_clear(&res->variables);
 
-    block_list_clear(&res->blocks_stack);
     closure_list_clear(&res->closures_stack);
-    frame_list_clear(&res->frame_stack);
-    variable_list_clear(&res->variables_stack);
-
-    list_clear(res->temp_memory);
+    variable_list_list_clear(&res->variables_stack);
 }
 
 void parser_data_inti(struct parser_st *res) {
@@ -50,26 +42,17 @@ void parser_data_inti(struct parser_st *res) {
     string_data_init(&res->error_msg);
     res->error_pos = 0;
 
-    block_list_data_init(&res->blocks);
     closure_list_data_init(&res->closures);
     node_list_data_init(&res->nodes);
     token_list_data_init(&res->tokens);
-    variable_list_data_init(&res->variables);
-    res->blocks.type = 1;
+    variable_list_list_data_init(&res->variables);
     res->closures.type = 1;
     res->nodes.type = 1;
     res->tokens.type = 1;
     res->variables.type = 1;
 
-    res->interrupt_type = Interrupt_None;
-    res->interrupt_scopes = 0;
-
-    block_list_data_init(&res->blocks_stack);
     closure_list_data_init(&res->closures_stack);
-    frame_list_data_init(&res->frame_stack);
-    variable_list_data_init(&res->variables_stack);
-
-    res->temp_memory = list_new();
+    variable_list_list_data_init(&res->variables_stack);
 }
 void parser_data_free(struct parser_st *res) {
     if(res->data_str != NULL) skr_free(res->data_str);
@@ -77,18 +60,13 @@ void parser_data_free(struct parser_st *res) {
     string_data_free(&res->error_msg);
     res->error_pos = 0;
 
-    block_list_data_free(&res->blocks);
     closure_list_data_free(&res->closures);
     node_list_data_free(&res->nodes);
     token_list_data_free(&res->tokens);
-    variable_list_data_free(&res->variables);
+    variable_list_list_data_free(&res->variables);
 
-    block_list_data_free(&res->blocks_stack);
     closure_list_data_free(&res->closures_stack);
-    frame_list_data_free(&res->frame_stack);
-    variable_list_data_free(&res->variables_stack);
-
-    list_free(res->temp_memory);
+    variable_list_list_data_free(&res->variables_stack);
 }
 
 void parser_set_file(struct parser_st *res, char *file_path){
@@ -124,49 +102,52 @@ void parser_set_str(struct parser_st *res, char *data, size_t size) {
 }
 
 
-struct attrib_st *parser_new_ident(struct parser_st *res, struct string_st *name) {
-    struct attrib_list_st *list = &variable_list_last(&res->variables_stack)->attrib;
+size_t parser_new_ident(struct parser_st *res, struct string_st *name) {
+    struct variable_list_st *list = variable_list_list_last(&res->variables_stack);
     for (size_t i = 0; i < list->size; i++) {
-        if (string_cmp(&list->attribs[i]->name, name) == 0) {
-            return attrib_copy(list->attribs[i]);
+        if (string_cmp(&list->variables[i]->name, name) == 0) {
+            return i + 1;
         }
     }
-    attrib_list_add_new(list);
-    string_set(&attrib_list_last(list)->name, name);
-    return attrib_copy(attrib_list_last(list));
+    variable_list_add_new(list);
+    string_set(&variable_list_last(list)->name, name);
+    return list->size;
 }
-struct attrib_st *parser_get_ident(struct parser_st *res, struct string_st *name) {
-    struct attrib_list_st *list;
+size_t parser_get_ident(struct parser_st *res, struct string_st *name) {
+    struct variable_list_st *list;
     struct closure_st *closure;
 
     size_t i = res->variables_stack.size;
-    struct attrib_st *ptr = NULL;
+    struct variable_st *ptr = NULL;
+    size_t pos = -1;
 
     for (; i > 0; i--) {
-        list = &res->variables_stack.variables[i - 1]->attrib;
+        list = res->variables_stack.variable_lists[i - 1];
         for (size_t j = 0; j < list->size; j++) {
-            if (string_cmp(&list->attribs[j]->name, name) == 0) {
-                ptr = list->attribs[j];
+            if (string_cmp(&list->variables[j]->name, name) == 0) {
+                ptr = list->variables[j];
+                pos = j + 1;
                 break;
             }
         }
         if (ptr != NULL) break;
     }
 
-    if (ptr == NULL) return NULL;
+    if (ptr == NULL) return 0;
 
     for (; i < res->variables_stack.size; i++) {
         if (res->closures_stack.closures[i] == NULL) continue;
-        list = &res->variables_stack.variables[i]->attrib;
+        list = res->variables_stack.variable_lists[i];
         closure = res->closures_stack.closures[i];
 
-        attrib_list_add_new(list);
-        string_set(&attrib_list_last(list)->name, name);
+        variable_list_add_new(list);
+        string_set(&variable_list_last(list)->name, name);
 
-        closure_append(closure, attrib_list_last(list), ptr);
+        closure_append(closure, variable_list_last(list), ptr);
 
-        ptr = attrib_list_last(list);
+        ptr = variable_list_last(list);
+        pos = list->size;
     }
 
-    return attrib_copy(ptr);
+    return pos;
 }

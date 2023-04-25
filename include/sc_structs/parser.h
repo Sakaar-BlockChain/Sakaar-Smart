@@ -2,12 +2,10 @@
 #define PARSER_H
 
 #include "struct.h"
-#include "block_list.h"
 #include "closure_list.h"
-#include "frame_list.h"
 #include "node_list.h"
 #include "token_list.h"
-#include "variable_list.h"
+#include "variable_list_list.h"
 
 #define ScopeType_None      0x00
 #define ScopeType_Func      0x01
@@ -39,22 +37,13 @@ struct parser_st{
     struct string_st error_msg;
     size_t error_pos;
 
-    int interrupt_type;
-    int interrupt_scopes;
-
-    struct block_list_st blocks;
     struct closure_list_st closures;
     struct node_list_st nodes;
     struct token_list_st tokens;
-    struct variable_list_st variables;
+    struct variable_list_list_st variables;
 
-    struct block_list_st blocks_stack;
     struct closure_list_st closures_stack;
-    struct frame_list_st frame_stack;
-    struct variable_list_st variables_stack;
-
-    struct list_st *temp_memory;
-
+    struct variable_list_list_st variables_stack;
 };
 
 void parser_clear(struct parser_st *);
@@ -65,10 +54,7 @@ void parser_data_free(struct parser_st *);
 void parser_set_file(struct parser_st *, char *);
 void parser_set_str(struct parser_st *, char *, size_t);
 
-struct attrib_st *parser_new_ident(struct parser_st *, struct string_st *);
-struct attrib_st *parser_get_ident(struct parser_st *, struct string_st *);
-
-
-void print_block(const struct block_expr_st *, int);
+size_t parser_new_ident(struct parser_st *, struct string_st *);
+size_t parser_get_ident(struct parser_st *, struct string_st *);
 
 #endif //PARSER_H

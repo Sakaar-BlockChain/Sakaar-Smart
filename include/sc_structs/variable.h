@@ -2,10 +2,9 @@
 #define VARIABLE_H
 
 #include "struct.h"
-#include "attrib_list.h"
 
 struct variable_st{
-    struct attrib_list_st attrib;
+    struct string_st name;
 };
 
 struct variable_st *variable_new();

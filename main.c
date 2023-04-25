@@ -1,5 +1,6 @@
 #include <stdio.h>
 #include "op_operations.h"
+#include "cg_code.h"
 #include "sys/time.h"
 
 #define PRINT_PREF for(int _i=0;_i<size;_i++)printf("%c",prefix[_i]);
@@ -59,90 +60,90 @@ void print_code(char command, void *data) {
 
     switch (command) {
         case BC_Init:
-            printf("BC_Init\t ");
+            printf("BC_Init         ");
             break;
         case BC_Load:
-            printf("BC_Load\t ");
+            printf("BC_Load         ");
             break;
         case BC_LoadConst:
-            printf("BC_LoadConst ");
+            printf("BC_LoadConst    ");
             break;
         case BC_Attrib:
-            printf("BC_Attrib ");
+            printf("BC_Attrib       ");
             break;
         case BC_Subscript:
-            printf("BC_Subscript ");
+            printf("BC_Subscript    ");
             break;
         case BC_Call:
-            printf("BC_Call\t ");
+            printf("BC_Call         ");
             break;
         case BC_Pop:
-            printf("BC_Pop\t ");
+            printf("BC_Pop          ");
             break;
 
         case BC_Convert_Bool:
             printf("BC_Convert_Bool ");
             break;
         case BC_Convert_Int:
-            printf("BC_Convert_Int ");
+            printf("BC_Convert_Int  ");
             break;
         case BC_Convert_Float:
-            printf("BC_Convert_Float ");
+            printf("BC_Convert_Float");
             break;
         case BC_Convert_Str:
-            printf("BC_Convert_Str ");
+            printf("BC_Convert_Str  ");
             break;
 
         case BC_Compare:
-            printf("BC_Compare ");
+            printf("BC_Compare      ");
             break;
         case BC_Arithmetic:
-            printf("BC_Arithmetic ");
+            printf("BC_Arithmetic   ");
             break;
         case BC_ArithmeticSet:
-            printf("BC_ArithmeticSet ");
+            printf("BC_ArithmeticSet");
             break;
         case BC_Negate:
-            printf("BC_Negate\t ");
+            printf("BC_Negate       ");
             break;
         case BC_NegateBool:
-            printf("BC_NegateBool ");
+            printf("BC_NegateBool   ");
             break;
         case BC_Set:
-            printf("BC_Set\t ");
+            printf("BC_Set          ");
             break;
 
         case BC_Jump:
-            printf("BC_Jump\t ");
+            printf("BC_Jump         ");
             break;
         case BC_JumpBlock:
-            printf("BC_JumpBlock ");
+            printf("BC_JumpBlock    ");
             break;
-        case BC_IfTrue_Jump:
-            printf("BC_IfTrue_Jump ");
+        case BC_IfTrueOrPop:
+            printf("BC_IfTrueOrPop  ");
             break;
-        case BC_IfFalse_Jump:
-            printf("BC_IfFalse_Jump ");
+        case BC_IfFalseOrPop:
+            printf("BC_IfFalseOrPop ");
             break;
 
         case BC_MakeFunc:
-            printf("BC_MakeFunc ");
+            printf("BC_MakeFunc     ");
             break;
         case BC_MakeClass:
-            printf("BC_MakeClass ");
+            printf("BC_MakeClass    ");
             break;
         case BC_MakeList:
-            printf("BC_MakeList ");
+            printf("BC_MakeList     ");
             break;
 
         case BC_FrameInit:
-            printf("BC_FrameInit ");
+            printf("BC_FrameInit    ");
             break;
         case BC_FrameClose:
-            printf("BC_FrameClose ");
+            printf("BC_FrameClose   ");
             break;
     }
-    printf("\t%p\n", data);
+    printf("\t%p", data);
 }
 
 void print_bytecode(struct bytecode_st *res, int size) {
@@ -152,68 +153,60 @@ void print_bytecode(struct bytecode_st *res, int size) {
         PRINT_NEXT(i + 1 < res->size)
         printf("%.4x\t", i);
         print_code(res->command[i], res->data[i]);
+        printf("\t%p\n", &res->data[i]);
     }
 }
 
-void print_attrib(const struct attrib_st *res, int size) {
-    printf("attribs (%d): (%p)\n", res->counter, res);
-    PRINT_PREF
-    PRINT_NEXT(1)
-    print_str(&res->name);
-    PRINT_PREF
-    PRINT_NEXT(0)
-    print_obj(res->data, size + 2);
-}
-void print_attrib_list(const struct attrib_list_st *res, int size)  {
-    printf("attribs (%zu):\n", res->size);
-    for (int i = 0; i < res->size; i++) {
-        PRINT_PREF
-        PRINT_NEXT(i + 1 < res->size)
-        print_attrib(res->attribs[i], size + 2);
-    }
-}
 
 void print_variable(const struct variable_st *res, int size) {
     printf("variable : (%p)\n", res);
     PRINT_PREF
     PRINT_NEXT(0)
-    print_attrib_list(&res->attrib, size + 2);
+    print_str(&res->name);
 }
 void print_variable_list(const struct variable_list_st *res, int size) {
-    printf("variables (%zu):\n", res->size);
+    printf("variable_list (%zu):\n", res->size);
     for (int i = 0; i < res->size; i++) {
         PRINT_PREF
         PRINT_NEXT(i + 1 < res->size)
         print_variable(res->variables[i], size + 2);
     }
 }
-
-void print_frame(const struct frame_st *res, int size) {
-    printf("frame : (%p)\n", res);
-    PRINT_PREF
-    PRINT_NEXT(1)
-    print_attrib_list(&res->attrib, size + 2);
-    PRINT_PREF
-    PRINT_NEXT(0)
-    print_list(&res->data, size + 2);
-}
-void print_frame_list(const struct frame_list_st *res, int size) {
-    printf("frames (%zu):\n", res->size);
+void print_variable_list_list(const struct variable_list_list_st *res, int size) {
+    printf("variable_list_list (%zu):\n", res->size);
     for (int i = 0; i < res->size; i++) {
         PRINT_PREF
         PRINT_NEXT(i + 1 < res->size)
-        print_frame(res->frames[i], size + 2);
+        print_variable_list(res->variable_lists[i], size + 2);
     }
 }
+
+//void print_frame(const struct frame_st *res, int size) {
+//    printf("frame : (%p)\n", res);
+//    PRINT_PREF
+//    PRINT_NEXT(1)
+//    print_attrib_list(&res->attrib, size + 2);
+//    PRINT_PREF
+//    PRINT_NEXT(0)
+//    print_list(&res->data, size + 2);
+//}
+//void print_frame_list(const struct frame_list_st *res, int size) {
+//    printf("frames (%zu):\n", res->size);
+//    for (int i = 0; i < res->size; i++) {
+//        PRINT_PREF
+//        PRINT_NEXT(i + 1 < res->size)
+//        print_frame(res->frames[i], size + 2);
+//    }
+//}
 
 void print_closure(const struct closure_st *res, int size) {
     printf("closure : (%p)\n", res);
     PRINT_PREF
     PRINT_NEXT(1)
-    print_attrib_list(&res->attrib, size + 2);
+    print_variable_list(&res->attrib, size + 2);
     PRINT_PREF
     PRINT_NEXT(0)
-    print_attrib_list(&res->data, size + 2);
+    print_variable_list(&res->data, size + 2);
 }
 void print_closure_list(const struct closure_list_st *res, int size) {
     printf("closures (%zu):\n", res->size);
@@ -615,33 +608,33 @@ void print_node(const struct node_st *res, int size) {
     printf("\n");
     if (res->data != NULL) {
         PRINT_PREF
-        PRINT_NEXT(res->tokens.size != 0 || res->nodes.size != 0 || res->variable != NULL || res->closure != NULL || res->attrib != NULL)
+        PRINT_NEXT(res->tokens.size != 0 || res->nodes.size != 0 || res->variable != NULL || res->closure != NULL || (res->type == MainType_Expr && (res->sub_type == PrimType_Ident_get || res->sub_type == PrimType_Ident_new)))
         print_obj(res->data, size + 2);
     }
     if (res->tokens.size != 0) {
         PRINT_PREF
-        PRINT_NEXT(res->nodes.size != 0 || res->variable != NULL || res->closure != NULL || res->attrib != NULL)
+        PRINT_NEXT(res->nodes.size != 0 || res->variable != NULL || res->closure != NULL || (res->type == MainType_Expr && (res->sub_type == PrimType_Ident_get || res->sub_type == PrimType_Ident_new)))
         print_token_list(&res->tokens, size + 2);
     }
     if (res->nodes.size != 0) {
         PRINT_PREF
-        PRINT_NEXT(res->variable != NULL || res->closure != NULL || res->attrib != NULL)
+        PRINT_NEXT(res->variable != NULL || res->closure != NULL || (res->type == MainType_Expr && (res->sub_type == PrimType_Ident_get || res->sub_type == PrimType_Ident_new)))
         print_node_list(&res->nodes, size + 2);
     }
     if (res->variable != NULL) {
         PRINT_PREF
-        PRINT_NEXT(res->closure != NULL || res->attrib != NULL)
-        print_variable(res->variable, size + 2);
+        PRINT_NEXT(res->closure != NULL || (res->type == MainType_Expr && (res->sub_type == PrimType_Ident_get || res->sub_type == PrimType_Ident_new)))
+        print_variable_list(res->variable, size + 2);
     }
     if (res->closure != NULL) {
         PRINT_PREF
-        PRINT_NEXT(res->attrib != NULL)
+        PRINT_NEXT((res->type == MainType_Expr && (res->sub_type == PrimType_Ident_get || res->sub_type == PrimType_Ident_new)))
         print_closure(res->closure, size + 2);
     }
-    if (res->attrib != NULL) {
+    if (res->type == MainType_Expr && (res->sub_type == PrimType_Ident_get || res->sub_type == PrimType_Ident_new)) {
         PRINT_PREF
         PRINT_NEXT(0)
-        print_attrib(res->attrib, size + 2);
+        printf("attrib : %zu\n", res->attrib);
     }
 }
 void print_node_list(const struct node_list_st *res, int size) {
@@ -714,15 +707,21 @@ int main() {
         printf("%zu\n", mem_ctx.filled);
         exit(1);
     }
-//    print_node(parser.nodes.nodes[0], 0);
+    print_node(parser.nodes.nodes[0], 0);
 
-    clock_t begin = clock();
+    struct bytecode_st *code = bytecode_new();
+    cg_generate_code(&parser, parser.nodes.nodes[0], code);
+    print_bytecode(code, 0);
+    bytecode_free(code);
 
-    run_smart_contract(&parser, parser.nodes.nodes[0]);
 
-    clock_t end = clock();
-    double time_spent = (double)(end - begin) / CLOCKS_PER_SEC;
-    printf("Time : %f\n", time_spent);
+//    clock_t begin = clock();
+//
+//    run_smart_contract(&parser, parser.nodes.nodes[0]);
+//
+//    clock_t end = clock();
+//    double time_spent = (double)(end - begin) / CLOCKS_PER_SEC;
+//    printf("Time : %f\n", time_spent);
 
     parser_data_free(&parser);
 

@@ -62,7 +62,7 @@ int ident_get_expr(struct parser_st *parser, struct node_st *expr) {
     expr->sub_type = PrimType_Ident_get;
     expr->type = MainType_Expr;
     expr->attrib = parser_get_ident(parser, &token->data);
-    if (expr->attrib == NULL) {
+    if (expr->attrib == 0) {
         node_clear(expr);
         parser->error_pos = parser->data_pos;
         return SM_Status_Error_Indent;
