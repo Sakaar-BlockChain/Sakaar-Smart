@@ -12,7 +12,8 @@ void variable_list_list_clear(struct variable_list_list_st *res) {
 
 void variable_list_list_data_init(struct variable_list_list_st *res) {
     res->variable_lists = NULL;
-    res->max_size = res->size = 0;
+    res->max_size = 0;
+    res->size = 0;
     res->type = 0;
 }
 void variable_list_list_data_free(struct variable_list_list_st *res) {

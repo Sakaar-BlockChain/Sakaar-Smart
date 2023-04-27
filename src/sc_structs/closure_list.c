@@ -12,7 +12,8 @@ void closure_list_clear(struct closure_list_st *res) {
 
 void closure_list_data_init(struct closure_list_st *res) {
     res->closures = NULL;
-    res->max_size = res->size = 0;
+    res->max_size = 0;
+    res->size = 0;
     res->type = 0;
 }
 void closure_list_data_free(struct closure_list_st *res) {

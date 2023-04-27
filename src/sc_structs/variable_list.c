@@ -4,7 +4,7 @@
 struct variable_list_st *variable_list_new() {
     struct variable_list_st *res = skr_malloc(sizeof(struct variable_list_st));
     res->variables = NULL;
-    res->max_size = res->size = 0;
+    res->max_size = 0;res->size = 0;
     res->type = 0;
     return res;
 }
@@ -24,7 +24,8 @@ void variable_list_free(struct variable_list_st *res) {
 
 void variable_list_data_init(struct variable_list_st *res) {
     res->variables = NULL;
-    res->max_size = res->size = 0;
+    res->max_size = 0;
+    res->size = 0;
     res->type = 0;
 }
 void variable_list_data_free(struct variable_list_st *res) {

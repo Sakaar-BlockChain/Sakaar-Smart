@@ -11,7 +11,8 @@ void token_list_clear(struct token_list_st *res) {
 
 void token_list_data_init(struct token_list_st *res) {
     res->tokens = NULL;
-    res->max_size = res->size = 0;
+    res->max_size = 0;
+    res->size = 0;
     res->type = 0;
 }
 void token_list_data_free(struct token_list_st *res) {

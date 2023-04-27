@@ -7,7 +7,8 @@
 #define PRINT_NEXT(expr) if(expr){printf("\t├- ");prefix[size + 1] = '|';}else{printf("\t└- ");prefix[size + 1] = ' ';}prefix[size] = '\t';
 
 char prefix[100];
-
+void *printing[100];
+size_t printing_pos;
 
 void print_int(const struct integer_st *res) {
     printf("integer : ");
@@ -47,13 +48,21 @@ void print_obj(const struct object_st *res, int size) {
     printf("object : (%d) %p\n", res->counter, res);
     PRINT_PREF
     PRINT_NEXT(0)
+    for(size_t i=0;i<printing_pos;i++) {
+        if (printing[i] == res) {
+            printf("...\n");
+            return;
+        }
+    }
+    printing[printing_pos++] = (void *) res;
     if (res->type == NONE_TYPE) printf("None\n");
-    else if (res->type == STRING_TYPE) return print_str(res->data);
-    else if (res->type == TLV_TYPE) return print_tlv(res->data);
-    else if (res->type == INTEGER_TYPE) return print_int(res->data);
-    else if (res->type == OBJECT_TYPE) return print_obj(res->data, size + 2);
-    else if (res->type == LIST_TYPE) return print_list(res->data, size + 2);
+    else if (res->type == STRING_TYPE) print_str(res->data);
+    else if (res->type == TLV_TYPE) print_tlv(res->data);
+    else if (res->type == INTEGER_TYPE) print_int(res->data);
+    else if (res->type == OBJECT_TYPE) print_obj(res->data, size + 2);
+    else if (res->type == LIST_TYPE) print_list(res->data, size + 2);
     else printf("Something\n");
+    printing[--printing_pos] = NULL;
 }
 
 void print_code(char command, void *data) {

@@ -11,7 +11,8 @@ void bytecode_list_clear(struct bytecode_list_st *res) {
 
 void bytecode_list_data_init(struct bytecode_list_st *res) {
     res->bytecodes = NULL;
-    res->max_size = res->size = 0;
+    res->max_size = 0;
+    res->size = 0;
     res->type = 0;
 }
 void bytecode_list_data_free(struct bytecode_list_st *res) {

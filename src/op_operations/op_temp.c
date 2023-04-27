@@ -358,8 +358,9 @@ size_t run_codespace(struct parser_st *parser, struct bytecode_st *code, size_t 
             switch (command) {
                 case BC_Init: // Done
                     if (var_stack->data[var_start_pos + data_s] != NULL)
-                        object_free(var_stack->data[var_start_pos + data_s]);
-                    var_stack->data[var_start_pos + data_s] = object_new();
+                        object_clear(var_stack->data[var_start_pos + data_s]);
+                    else
+                        var_stack->data[var_start_pos + data_s] = object_new();
                 case BC_Load: // Done
                     list_append(temp_stack, var_stack->data[var_start_pos + data_s]);
                     break;
@@ -404,7 +405,8 @@ size_t run_codespace(struct parser_st *parser, struct bytecode_st *code, size_t 
                     func = obj1->data;
                     parser_store_vars(parser, func->argument->size, position + 1);
                     for (size_t i = 0; i < func->closure->attrib.size; i++) {
-                        var_stack->data[parser->var_start_pos + func->closure->attrib.variables[i]->position] = object_copy_obj(
+                        var_stack->data[parser->var_start_pos +
+                                        func->closure->attrib.variables[i]->position] = object_copy_obj(
                                 func->closure->data.data[i]);
                     }
 

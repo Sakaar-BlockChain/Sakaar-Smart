@@ -12,7 +12,8 @@ void node_list_clear(struct node_list_st *res) {
 
 void node_list_data_init(struct node_list_st *res) {
     res->nodes = NULL;
-    res->max_size = res->size = 0;
+    res->max_size = 0;
+    res->size = 0;
     res->type = 0;
 }
 void node_list_data_free(struct node_list_st *res) {
