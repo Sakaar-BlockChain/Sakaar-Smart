@@ -123,22 +123,22 @@ int number_expr(struct parser_st *parser, struct node_st *expr) {
         switch (token->sub_type) {
             case IntType_bin: {
                 object_set_type(obj, INTEGER_TYPE);
-                _integer_set_str_bin(obj->data, token->data.data, token->data.size);
+                integer_set_str_bin_(obj->data, token->data.data, token->data.size);
                 break;
             }
             case IntType_oct: {
                 object_set_type(obj, INTEGER_TYPE);
-                _integer_set_str_oct(obj->data, token->data.data, token->data.size);
+                integer_set_str_oct_(obj->data, token->data.data, token->data.size);
                 break;
             }
             case IntType_dec: {
                 object_set_type(obj, INTEGER_TYPE);
-                _integer_set_str_dec(obj->data, token->data.data, token->data.size);
+                integer_set_str_dec_(obj->data, token->data.data, token->data.size);
                 break;
             }
             case IntType_hex: {
                 object_set_type(obj, INTEGER_TYPE);
-                _integer_set_str(obj->data, token->data.data, token->data.size);
+                integer_set_str_(obj->data, token->data.data, token->data.size);
                 break;
             }
             case IntType_float: {
