@@ -1,2 +1,0 @@
-C:\MinGW\bin\ar.exe qc libSakaar_Memory_lib.a CMakeFiles/Sakaar_Memory_lib.dir/src/memory.c.obj
-C:\MinGW\bin\ranlib.exe libSakaar_Memory_lib.a
