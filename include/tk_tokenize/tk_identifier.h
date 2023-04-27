@@ -9,6 +9,6 @@
 #define IdentifierChar(c) (IdentifierStart(c) || ((c) >= '0' && (c) <= '9'))
 
 
-void tokenize_identifier(struct tk_token *, struct sc_parser *);
+void tokenize_identifier(struct token_st *, struct parser_st *);
 
 #endif //TK_IDENTIFIER_H

@@ -9,6 +9,7 @@
 #define StmtType_Return         0x03
 #define StmtType_Break          0x04
 #define StmtType_Continue       0x05
+#define StmtType_Oper           0x06
 
 #define StmtType_Params         0x11
 #define StmtType_Extends        0x12
@@ -17,37 +18,38 @@
 #define StmtType_PUB_Func       0x21
 #define StmtType_STC_Func       0x22
 #define StmtType_PRI_Func       0x23
+#define StmtType_Func_Body      0x24
 
 #define StmtType_If             0x31
 #define StmtType_While          0x32
 #define StmtType_DoWhile        0x33
 #define StmtType_Class          0x34
+#define StmtType_TryWith        0x35
 
 #define StmtType_List           0x41
 
-void annotated_stmt(struct sc_parser *, struct ast_node *);
-void assignment_stmt(struct sc_parser *, struct ast_node *);
-void return_stmt(struct sc_parser *, struct ast_node *);
-void break_stmt(struct sc_parser *, struct ast_node *);
-void continue_stmt(struct sc_parser *, struct ast_node *);
-void simple_stmt(struct sc_parser *, struct ast_node *);
-void stmt_list(struct sc_parser *, struct ast_node *);
+int annotated_stmt(struct parser_st *, struct node_st *);
+int assignment_stmt(struct parser_st *, struct node_st *);
+int return_stmt(struct parser_st *, struct node_st *);
+int break_stmt(struct parser_st *, struct node_st *);
+int continue_stmt(struct parser_st *, struct node_st *);
+int simple_stmt(struct parser_st *, struct node_st *);
+int stmt_list(struct parser_st *, struct node_st *);
 
-void parameter_list(struct sc_parser *, struct ast_node *);
-void extends_list(struct sc_parser *, struct ast_node *);
+int parameter_list(struct parser_st *, struct node_st *);
+int extends_list(struct parser_st *, struct node_st *);
 
-void function_stmt(struct sc_parser *, struct ast_node *);
-void public_function_stmt(struct sc_parser *, struct ast_node *);
-void static_function_stmt(struct sc_parser *, struct ast_node *);
-void private_function_stmt(struct sc_parser *, struct ast_node *);
+int function_stmt(struct parser_st *, struct node_st *);
+int function_body_stmt(struct parser_st *, struct node_st *);
 
-void if_stmt(struct sc_parser *, struct ast_node *);
-void while_stmt(struct sc_parser *, struct ast_node *);
-void do_while_stmt(struct sc_parser *, struct ast_node *);
-void class_stmt(struct sc_parser *, struct ast_node *);
-void compound_stmt(struct sc_parser *, struct ast_node *);
+int if_stmt(struct parser_st *, struct node_st *);
+int while_stmt(struct parser_st *, struct node_st *);
+int do_while_stmt(struct parser_st *, struct node_st *);
+int class_stmt(struct parser_st *, struct node_st *);
+int try_with_stmt(struct parser_st *, struct node_st *);
+int compound_stmt(struct parser_st *, struct node_st *);
 
-void statement(struct sc_parser *, struct ast_node *);
-void suite(struct sc_parser *, struct ast_node *);
+int statement(struct parser_st *, struct node_st *);
+int suite(struct parser_st *parser, struct node_st *expr);
 
 #endif //AN_STMT_H

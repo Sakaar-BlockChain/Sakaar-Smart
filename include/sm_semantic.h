@@ -1,8 +1,8 @@
-//
-// Created by 04024 on 28.02.2023.
-//
+#ifndef SM_SEMANTIC_H
+#define SM_SEMANTIC_H
 
-#ifndef SAKAAR_SMARTCONTRACT_SM_SEMANTIC_H
-#define SAKAAR_SMARTCONTRACT_SM_SEMANTIC_H
+#include "sn_syntax.h"
 
-#endif //SAKAAR_SMARTCONTRACT_SM_SEMANTIC_H
+void sm_semantic_code(struct parser_st *, struct node_st *);
+
+#endif //SM_SEMANTIC_H

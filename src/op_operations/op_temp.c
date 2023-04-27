@@ -1,886 +1,612 @@
-#include "sc_structs.h"
-#include "an_analize.h"
-#include "hash_code.h"
-#include "tk_tokenize/tk_special.h"
-
-#define Convert_Bool            0x01
-#define Convert_Int             0x02
-#define Convert_Float           0x03
-#define Convert_Str             0x04
-
-#define Delete_Scope_Func       0x01
-#define Delete_Scope_Class      0x02
-
-#define BlockType_Convert       0x01
-#define BlockType_Arithmetic    0x02
-
-#define BlockType_If_not        0x11
-#define BlockType_If_not_del    0x12
-#define BlockType_If            0x13
-#define BlockType_If_del        0x14
-
-#define BlockType_Put           0x03
-#define BlockType_Delete_Temp   0x04
-#define BlockType_Delete_Scope  0x05
-
-#define BlockType_Continue      0x06
-#define BlockType_Break         0x07
-#define BlockType_Return        0x08
-
-#define BlockType_List          0x09
-#define BlockType_Attr          0x0a
-#define BlockType_Func          0x0b
-#define BlockType_Call          0x0c
-#define BlockType_Class         0x0e
+#include <stdio.h>
+#include "op_operations.h"
 
 
-void run_an(struct op_state *state, struct object_st *object) {
-    struct stack_st *code_operations = state->code_operations;
-    struct an_node *node = object->data;
-
-    if (node->main_type == MainType_Expr) {
-        struct list_st *temp_list = node->next;
-        switch (node->type) {
-            case PrimType_List: {
-                stack_add_new(code_operations, OP_BLOCK_TYPE);
-                ((struct op_block *) code_operations->top->data->data)->type = BlockType_List;
-                ((struct op_block *) code_operations->top->data->data)->count = temp_list->size;
-
-                for (size_t i = 0; i < temp_list->size; i++) {
-                    stack_add(code_operations, temp_list->data[i]);
-                }
-                break;
-            }
-            case PrimType_Identifier: {
-                struct object_st *res = NULL;
-                struct string_st *ind_str = node->data->data;
-                res = map_set_elm(state->memory->top->data->data, ind_str->data, ind_str->size);
-                stack_add(state->temp_memory, res);
-                print_obj(res, 0);
-                object_free(res);
-                break;
-            }
-            case PrimType_Literal: {
-                stack_add(state->temp_memory, node->data);
-                break;
-            }
-            case PrimType_Attrib: {
-                struct object_st *res = NULL;
-                struct string_st *ind_str = node->data->data;
-                res = map_set_elm(state->memory->top->data->data, ind_str->data, ind_str->size);
-                stack_add(state->temp_memory, res);
-                object_free(res);
-                for (size_t i = temp_list->size; i > 0; i--) {
-                    stack_add_new(code_operations, OP_BLOCK_TYPE);
-                    ((struct op_block *) code_operations->top->data->data)->type = BlockType_Attr;
-                    ((struct op_block *) code_operations->top->data->data)->data1 = object_copy(
-                            temp_list->data[i - 1]);
-                }
-                break;
-            }
-            case PrimType_Subscript:
-                printf("PrimType_Subscript ");
-                break;
-            case PrimType_Call: {
-                stack_add_new(code_operations, OP_BLOCK_TYPE);
-                ((struct op_block *) code_operations->top->data->data)->type = BlockType_Call;
-                ((struct op_block *) code_operations->top->data->data)->count = (((struct an_node *) temp_list->data[1]->data)->next)->size;
-                stack_add(code_operations, temp_list->data[0]);
-                temp_list = ((struct an_node *) temp_list->data[1]->data)->next;
-                for (size_t i = 0; i < temp_list->size; i++) {
-                    stack_add(code_operations, temp_list->data[i]);
-                }
-                break;
-            }
-        }
-    }
-    if (node->main_type == MainType_Oper) {
-        struct list_st *temp_list = node->tokens;
-        size_t count = 2;
-        if (node->type == ExprType_U || node->type == ExprType_NotTest) count = 1;
-        int is_bool = 0;
-        for (size_t i = 0; i < temp_list->size; i++) {
-            stack_add_new(code_operations, OP_BLOCK_TYPE);
-            ((struct op_block *) code_operations->top->data->data)->type = BlockType_Arithmetic;
-            ((struct op_block *) code_operations->top->data->data)->subtype = ((struct tk_token *) temp_list->data[i]->data)->subtype;
-            ((struct op_block *) code_operations->top->data->data)->count = count;
-
-            if (((struct tk_token *) temp_list->data[i]->data)->subtype == Special_AND_AND ||
-                ((struct tk_token *) temp_list->data[i]->data)->subtype == Special_OR_OR ||
-                ((struct tk_token *) temp_list->data[i]->data)->subtype == Special_NOT)
-                is_bool = 1;
-
-        }
-        temp_list = node->next;
-        for (size_t i = temp_list->size; i > 0; i--) {
-            if (is_bool) {
-                stack_add_new(code_operations, OP_BLOCK_TYPE);
-                ((struct op_block *) code_operations->top->data->data)->type = BlockType_Convert;
-                ((struct op_block *) code_operations->top->data->data)->subtype = Convert_Bool;
-            }
-            stack_add(code_operations, temp_list->data[i - 1]);
-        }
-    }
-    if (node->main_type == MainType_Stmt) {
-        struct list_st *temp_list = node->next;
-        switch (node->type) {
-            case StmtType_If: {
-                // else
-                if (temp_list->size % 2 == 1) {
-                    stack_add_new(code_operations, OP_BLOCK_TYPE);
-                    ((struct op_block *) code_operations->top->data->data)->type = BlockType_If_not;
-                    ((struct op_block *) code_operations->top->data->data)->data1 = object_copy(
-                            temp_list->data[temp_list->size - 1]);
-                }
-                // else if
-                for (size_t i = temp_list->size - (temp_list->size % 2) - 1; i >= 2; i -= 2) {
-                    stack_add_new(code_operations, OP_BLOCK_TYPE);
-                    ((struct op_block *) code_operations->top->data->data)->type = BlockType_If_not_del;
-                    {
-                        struct object_st *obj = object_new();
-                        object_set_type(obj, OP_BLOCK_TYPE);
-                        ((struct op_block *) obj->data)->type = BlockType_If;
-                        ((struct op_block *) obj->data)->data1 = object_copy(temp_list->data[i]);
-                        ((struct op_block *) code_operations->top->data->data)->data1 = obj;
-                    }
-                    ((struct op_block *) code_operations->top->data->data)->data2 = object_copy(temp_list->data[i - 1]);
-                }
-                // if
-                {
-                    stack_add_new(code_operations, OP_BLOCK_TYPE);
-                    ((struct op_block *) code_operations->top->data->data)->type = BlockType_If;
-                    ((struct op_block *) code_operations->top->data->data)->data1 = object_copy(temp_list->data[1]);
-                }
-                stack_add(code_operations, temp_list->data[0]);
-                break;
-            }
-            case StmtType_While: {
-                stack_add_new(code_operations, OP_BLOCK_TYPE);
-                ((struct op_block *) code_operations->top->data->data)->type = BlockType_If_del;
-                ((struct op_block *) code_operations->top->data->data)->data1 = object_copy(object);
-                ((struct op_block *) code_operations->top->data->data)->data2 = object_copy(temp_list->data[1]);
-
-                stack_add(code_operations, temp_list->data[0]);
-                break;
-            }
-            case StmtType_DoWhile: {
-                stack_add_new(code_operations, OP_BLOCK_TYPE);
-                ((struct op_block *) code_operations->top->data->data)->type = BlockType_If_del;
-                ((struct op_block *) code_operations->top->data->data)->data1 = object_copy(object);
-
-                stack_add(code_operations, temp_list->data[1]);
-                stack_add(code_operations, temp_list->data[0]);
-                break;
-            }
-            case StmtType_For:
-                printf("StmtType_For ");
-                break;
-            case StmtType_ForHeader:
-                printf("StmtType_ForHeader ");
-                break;
-            case StmtType_Try:
-                printf("StmtType_Try ");
-                break;
-            case StmtType_Func: {
-                stack_add_new(code_operations, OP_BLOCK_TYPE);
-                ((struct op_block *) code_operations->top->data->data)->type = BlockType_Func;
-                ((struct op_block *) code_operations->top->data->data)->data1 = object_copy(
-                        temp_list->data[1]);
-                ((struct op_block *) code_operations->top->data->data)->data2 = object_copy(
-                        temp_list->data[2]);
-                stack_add(code_operations, temp_list->data[0]);
-                break;
-            }
-            case StmtType_Class: {
-                stack_add_new(code_operations, OP_BLOCK_TYPE);
-                ((struct op_block *) code_operations->top->data->data)->type = BlockType_Delete_Scope;
-                ((struct op_block *) code_operations->top->data->data)->subtype = Delete_Scope_Class;
-                ((struct op_block *) code_operations->top->data->data)->count = state->memory->size;
-
-                stack_add(code_operations, temp_list->data[1]);
-
-                stack_add_new(code_operations, OP_BLOCK_TYPE);
-                ((struct op_block *) code_operations->top->data->data)->type = BlockType_Class;
-
-                stack_add(code_operations, temp_list->data[0]);
-                break;
-            }
-            case StmtType_Assign: {
-                temp_list = node->tokens;
-                size_t count = 2;
-                for (size_t i = 0; i < temp_list->size; i++) {
-                    stack_add_new(code_operations, OP_BLOCK_TYPE);
-                    ((struct op_block *) code_operations->top->data->data)->type = BlockType_Arithmetic;
-                    ((struct op_block *) code_operations->top->data->data)->subtype = ((struct tk_token *) temp_list->data[i]->data)->subtype;
-                    ((struct op_block *) code_operations->top->data->data)->count = count;
-                }
-                temp_list = node->next;
-                for (size_t i = temp_list->size; i > 0; i--) {
-                    stack_add(code_operations, temp_list->data[i - 1]);
-                }
-                //                            print_stack(code_operations, 0);
-                break;
-            }
-            case StmtType_Return: {
-                stack_add_new(code_operations, OP_BLOCK_TYPE);
-                ((struct op_block *) code_operations->top->data->data)->type = BlockType_Return;
-                ((struct op_block *) code_operations->top->data->data)->count = temp_list->size;
-
-                for (size_t i = 0; i < temp_list->size; i++) {
-                    stack_add(code_operations, temp_list->data[i]);
-                }
-                break;
-            }
-            case StmtType_Break: {
-                stack_add_new(code_operations, OP_BLOCK_TYPE);
-                ((struct op_block *) code_operations->top->data->data)->type = BlockType_Break;
-                break;
-            }
-            case StmtType_Continue: {
-                stack_add_new(code_operations, OP_BLOCK_TYPE);
-                ((struct op_block *) code_operations->top->data->data)->type = BlockType_Continue;
-                break;
-            }
-            case StmtType_Import:
-                printf("StmtType_Import ");
-                break;
-            case StmtType_List: {
-                for (size_t i = 0; i < temp_list->size; i++) {
-
-                    stack_add_new(code_operations, OP_BLOCK_TYPE);
-
-                    ((struct op_block *) code_operations->top->data->data)->type = BlockType_Put;
-                    {
-                        struct object_st *obj = object_new();
-                        object_set_type(obj, OP_BLOCK_TYPE);
-                        ((struct op_block *) obj->data)->type = BlockType_Delete_Temp;
-                        ((struct op_block *) obj->data)->count = state->temp_memory->size;
-                        ((struct op_block *) code_operations->top->data->data)->data1 = obj;
-                    }
-                    ((struct op_block *) code_operations->top->data->data)->data2 = object_copy(
-                            temp_list->data[temp_list->size - i - 1]);
-                }
-                break;
-            }
-            case StmtType_Extends:
-                printf("StmtType_Extends ");
-                break;
-        }
-    }
+void lol() {
+//    if (interrupt_type != 0) {
+////        if (interrupt_type == Interrupt_Break && block->type == BlockType_Conf &&
+////            block->sub_type == ScopeType_StmtLoop) {
+////            interrupt_type = 0;
+////            return;
+////        } else if (block->type != BlockType_OP || block->sub_type != Block_FrameClose) return;
+//    }
+//    struct block_list_st *blocks_stack = &blocks_stack;
+//    struct block_expr_st *block_temp = NULL;
+//    if (block->type == BlockType_None && block->node != NULL) {
+//        block->code = bytecode_new();
+//        run_make_bytecode(parser, block->node, block->code);
+//        print_bytecode(block->code, 0);
+//        block->type = BlockType_ByteCode;
+//    }
+//    if (block->type == BlockType_ByteCode) {
+//        struct bytecode_st *code = block->code;
+//        size_t pos = position;
+//        if(interrupt_type == Interrupt_Break_Out) {
+//            pos ++;
+//            interrupt_type = 0;
+//        }
+//        while (pos < code->size) {
+//            char command = code->command[pos];
+//            void *data = code->data[pos];
+//            if (interrupt_type == 0 || (command & 0xF0) == BC_Frame) {
+//                if ((command & 0xF0) == 0) {
+//                    switch (command) {
+//                        case BC_Init:
+//                            if (((struct attrib_st *) data)->data != NULL)
+//                                object_free(((struct attrib_st *) data)->data);
+//                            ((struct attrib_st *) data)->data = object_new();
+//                        case BC_Load:
+////                            print_obj(((struct attrib_st *) data)->data, 0);
+//                            list_append(temp_stack, ((struct attrib_st *) data)->data);
+//                            break;
+//                        case BC_LoadConst:
+//                            list_append(temp_stack, data);
+//                            break;
+//                        case BC_Attrib: {
+//                            struct object_st *obj = list_pop(temp_stack);
+//                            struct object_st *err = object_new();
+//                            struct object_st *res = object_attrib(err, obj, ((struct object_st *)data)->data);
+//                            if (err->type != NONE_TYPE) {
+//                                interrupt_type = Interrupt_Throw;
+//                                interrupt_scopes = 0;
+//                                list_append(temp_stack, err);
+//                            } else {
+//                                list_append(temp_stack, res);
+//                            }
+//                            object_free(res);
+//                            object_free(err);
+//                            object_free(obj);
+//                            break;
+//                        }
+//                        case BC_Subscript: {
+//                            struct object_st *obj1 = list_pop(temp_stack);
+//                            struct object_st *obj2 = list_pop(temp_stack);
+//                            struct object_st *err = object_new();
+//                            struct object_st *res = object_subscript(err, obj1, obj2);
+//                            if (err->type != NONE_TYPE) {
+//                                interrupt_type = Interrupt_Throw;
+//                                interrupt_scopes = 0;
+//                                list_append(temp_stack, err);
+//                            } else {
+//                                list_append(temp_stack, res);
+//                            }
+//                            object_free(res);
+//                            object_free(err);
+//                            object_free(obj1);
+//                            object_free(obj2);
+//                            break;
+//                        }
+//                        case BC_Call: {
+//
+//                            struct object_st *temp = NULL;
+//                            struct object_st *obj = list_pop(temp_stack);
+//
+//                            if (obj->type != OP_OBJECT_TYPE) {
+//                                // TODO error
+//                                exit(1);
+//                            }
+//                            struct op_object *func = obj->data;
+//                            {
+//
+//                                frame_save_data(frame_list_add_new(&frame_stack), &func->argument->attrib);
+//
+//                                for (size_t i = 0; i < func->closure->attrib.size; i++) {
+//                                    if (func->closure->attrib.attribs[i]->data != NULL)
+//                                        object_free(func->closure->attrib.attribs[i]->data);
+//                                    func->closure->attrib.attribs[i]->data = object_copy_obj(func->closure->data.data[i]);
+//                                }
+//                            }
+//
+//                            size_t need = func->argument->attrib.size - func->closure->attrib.size;
+//                            if (NULL + need != data) {
+//                                // TODo error
+//                                exit(1);
+//                            }
+//
+//                            for (int i = 0; i < need; i++) {
+//                                func->argument->attrib.attribs[i]->data = object_new();
+//                                temp = list_pop(temp_stack);
+//                                object_set(func->argument->attrib.attribs[i]->data, temp);
+//                                object_free(temp);
+//                            }
+//
+//                            block_list_append(blocks_stack, block, pos + 1);
+//                            block_list_append(blocks_stack, func->function_body, 0);
+//                            return;
+//                        }
+//                        case BC_Pop:
+//                            object_free(list_pop(temp_stack));
+//                            break;
+//                    }
+//                } // Not // Done
+//                else if ((command & 0xF0) == BC_Convert) {
+//                    struct object_st *temp = NULL;
+//                    struct object_st *obj = list_pop(temp_stack);
+//
+//                    struct object_st *res = object_new();
+//                    struct object_st *err = object_new();
+//
+//                    if (command == BC_Convert_Bool) object__bool(res, err, obj);
+//                    else if (command == BC_Convert_Int) object__int(res, err, obj);
+//                    else if (command == BC_Convert_Float) object__float(res, err, obj);
+//                    else if (command == BC_Convert_Str) object__str(res, err, obj);
+//
+//                    if (err->type != NONE_TYPE) {
+//                        interrupt_type = Interrupt_Throw;
+//                        interrupt_scopes = 0;
+//                        list_append(temp_stack, err);
+//                    } else {
+//                        list_append(temp_stack, res);
+//                    }
+//                    object_free(res);
+//                    object_free(err);
+//
+//                    object_free(obj);
+//                    object_free(temp);
+//                } // Done
+//                else if ((command & 0xF0) == BC_Operations) {
+//                    struct object_st *obj2 = list_pop(temp_stack);
+//                    struct object_st *res = object_new();
+//                    struct object_st *err = object_new();
+//                    if (command == BC_Negate) {
+//                        object__neg(res, err, obj2);
+//                        if (err->type != NONE_TYPE) {
+//                            interrupt_type = Interrupt_Throw;
+//                            interrupt_scopes = 0;
+//                            list_append(temp_stack, err);
+//                        } else {
+//                            list_append(temp_stack, res);
+//                        }
+//                    } else if (command == BC_NegateBool) {
+//                        object_set_type(res, INTEGER_TYPE);
+//                        if (integer_is_null(obj2->data)) integer_set_ui(res->data, 1);
+//                        else integer_set_ui(res->data, 0);
+//                        list_append(temp_stack, res);
+//                    } else {
+//                        struct object_st *obj1 = list_pop(temp_stack);
+//
+//                        int bool1 = 1, bool2 = 1;
+//                        switch (command) {
+//                            case BC_Arithmetic:
+//                                if ((int) data == Special_MOD) object__mod(res, err, obj1, obj2);
+//                                else if ((int) data == Special_AND) object__and(res, err, obj1, obj2);
+//                                else if ((int) data == Special_MUL) object__mul(res, err, obj1, obj2);
+//                                else if ((int) data == Special_ADD) object__add(res, err, obj1, obj2);
+//                                else if ((int) data == Special_SUB) object__sub(res, err, obj1, obj2);
+//                                else if ((int) data == Special_DIV) object__div(res, err, obj1, obj2);
+//                                else if ((int) data == Special_XOR) object__xor(res, err, obj1, obj2);
+//                                else if ((int) data == Special_OR) object__or(res, err, obj1, obj2);
+//                                else if ((int) data == Special_LSHIFT) object__ls(res, err, obj1, obj2);
+//                                else if ((int) data == Special_RSHIFT) object__rs(res, err, obj1, obj2);
+//                                else {
+//                                    bool1 = object_cmp(obj1, obj2);
+//                                    object_set_type(res, INTEGER_TYPE);
+//
+//                                    if (
+//                                            ((int) data == Special_LESS && bool1 < 0) ||
+//                                            ((int) data == Special_GREATER && bool1 != 2 && bool1 > 0) ||
+//                                            ((int) data == Special_EQ_LESS && bool1 <= 0) ||
+//                                            ((int) data == Special_EQ_GREATER && bool1 != 2 && bool1 >= 0) ||
+//                                            ((int) data == Special_EQ_NOT && bool1 != 0) ||
+//                                            ((int) data == Special_EQ_EQ && bool1 == 0))
+//                                        integer_set_ui(res->data, 1);
+//                                    else integer_set_ui(res->data, 0);
+//
+//                                    list_append(temp_stack, res);
+//                                    break;
+//                                }
+//                                if (err->type != NONE_TYPE) {
+//                                    interrupt_type = Interrupt_Throw;
+//                                    interrupt_scopes = 0;
+//                                    list_append(temp_stack, err);
+//                                } else list_append(temp_stack, res);
+//                                break;
+//                            case BC_ArithmeticSet:
+//                                if ((int) data == Special_EQ_MOD) object__mod(res, err, obj1, obj2);
+//                                else if ((int) data == Special_EQ_AND) object__and(res, err, obj1, obj2);
+//                                else if ((int) data == Special_EQ_MUL) object__mul(res, err, obj1, obj2);
+//                                else if ((int) data == Special_EQ_ADD) object__add(res, err, obj1, obj2);
+//                                else if ((int) data == Special_EQ_SUB) object__sub(res, err, obj1, obj2);
+//                                else if ((int) data == Special_EQ_DIV) object__div(res, err, obj1, obj2);
+//                                else if ((int) data == Special_EQ_XOR) object__xor(res, err, obj1, obj2);
+//                                else if ((int) data == Special_EQ_OR) object__or(res, err, obj1, obj2);
+//                                else if ((int) data == Special_EQ_LSHIFT) object__ls(res, err, obj1, obj2);
+//                                else if ((int) data == Special_EQ_RSHIFT) object__rs(res, err, obj1, obj2);
+//                                else if ((int) data == Special_EQ) object_set(res, obj2);
+//
+//                                if (err->type != NONE_TYPE) {
+//                                    interrupt_type = Interrupt_Throw;
+//                                    interrupt_scopes = 0;
+//                                    list_append(temp_stack, err);
+//                                } else {
+//                                    object_set(obj1, res);
+//                                    list_append(temp_stack, obj1);
+//                                }
+//                                break;
+//                            case BC_Compare:
+//                                if (obj1->type == INTEGER_TYPE && integer_is_null(obj1->data)) bool1 = 0;
+//                                if (obj2->type == INTEGER_TYPE && integer_is_null(obj2->data)) bool2 = 0;
+//
+//                                object_set_type(res, INTEGER_TYPE);
+//                                if ((int) data == Special_AND_AND) integer_set_ui(res->data, bool1 && bool2);
+//                                if ((int) data == Special_OR_OR) integer_set_ui(res->data, bool1 || bool2);
+//
+//                                list_append(temp_stack, res);
+//                                break;
+//                            case BC_Set:
+//                                object_set(obj1, obj2);
+//                                list_append(temp_stack, obj2);
+//                                break;
+//                        }
+//
+//                        object_free(obj1);
+//                    }
+//                    object_free(res);
+//                    object_free(err);
+//                    object_free(obj2);
+//                } // Done
+//                else if ((command & 0xF0) == BC_Jump) {
+//                    if (command == BC_Jump) {
+//                        pos = (size_t) data;
+//                        continue;
+//                    }
+//                    else if (command == BC_JumpBlock) {
+//                        block_list_append(blocks_stack, block, pos + 1);
+//                        block_list_append(blocks_stack, data, 0);
+//                        return;
+//                    }
+//                    else if (command == BC_SaveStack) {
+//                        // TODO save stack size
+//                    }
+//                    else if (command == BC_LoadStack) {
+//                        struct object_st *obj = list_pop(temp_stack);
+//                        size_t size; // TODO load stack size
+//                        list_resize(temp_stack, size);
+//                        list_append(temp_stack, obj);
+//                        object_free(obj);
+//                    }
+//                    else {
+////                        struct object_st *obj = list_pop(temp_stack);
+////                        int bool = !integer_is_null(obj->data);
+////                        object_free(obj);
+////
+////                        if ((command == BC_IfTrue_Jump && bool) || (command == BC_IfFalse_Jump && !bool)) {
+////                            pos = (size_t) data;
+////                            continue;
+////                        }
+//                    }
+//                } // Done
+//                else if ((command & 0xF0) == BC_Make) {
+//                    struct object_st *obj = object_new();
+//                    switch (command) {
+//                        case BC_MakeFunc:
+//                            object_set_type(obj, OP_OBJECT_TYPE);
+//                            block_list_add_new(&blocks);
+//                            block_temp = block_list_last(&blocks);
+//                            block_temp->sub_type = ScopeType_Func;
+//                            block_temp->node = data;
+//                            block_temp->node = block_temp->node->nodes.nodes[1];
+//                            op_object_set_function(obj->data, data, block_temp);
+//                            break;
+//                        case BC_MakeClass:
+//                            break;
+//                        case BC_MakeList:
+//                            object_set_type(obj, LIST_TYPE);
+//                            struct object_st *temp = NULL;
+//                            for (size_t i = 0; i < (size_t) data; i++) {
+//                                temp = list_pop(temp_stack);
+//                                list_append(obj->data, temp);
+//                                object_free(temp);
+//                            }
+//                            break;
+//                    }
+//                    list_append(temp_stack, obj);
+//                    object_free(obj);
+//                } // Not // Done
+//                else if ((command & 0xF0) == BC_Frame) {
+//                    if (command == BC_FrameInit && interrupt_type == 0) {
+//                        if (interrupt_type != 0) interrupt_scopes++;
+//                        else frame_save_data(frame_list_add_new(&frame_stack), data);
+//                    } else
+//                    if (command == BC_FrameClose) {
+//                        if (interrupt_type != 0 && interrupt_scopes != 0) interrupt_scopes --;
+//                        else frame_load_data(frame_list_pop(&frame_stack));
+//                    } else
+//                    if (command == BC_FrameCloseFunc && interrupt_type == 0) {
+//                        frame_load_data(frame_list_pop(&frame_stack));
+//                    }
+//                }// Done
+//                else if ((command & 0xF0) == BC_Interrupts) {
+//                    if (command == BC_Break) interrupt_type = Interrupt_Break;
+//                    else if (command == BC_Throw) interrupt_type = Interrupt_Throw;
+//                    else if (command == BC_Return) interrupt_type = Interrupt_Return;
+//                    else if (command == BC_Continue) interrupt_type = Interrupt_Continue;
+//                    interrupt_scopes = 0;
+//                } // Not // Done
+//            }
+//            ++pos;
+//        }
+//        if(block->sub_type == ScopeType_Func && interrupt_type == Interrupt_Return) interrupt_type = 0;
+//        if(block->sub_type == ScopeType_Loop && interrupt_type == Interrupt_Continue) interrupt_type = 0;
+//        if(block->sub_type == ScopeType_Loop && interrupt_type == Interrupt_Break) interrupt_type = Interrupt_Break_Out;
+//        if(block->sub_type == ScopeType_Try && interrupt_type == Interrupt_Throw) interrupt_type = 0;
+//    }
 }
 
-void run_op(struct op_state *state, struct object_st *object) {
-    struct stack_st *code_operations = state->code_operations;
-    struct op_block *block = object->data;
-    if ((block->type & 0xF0) == 0x10) {
+size_t run_codespace(struct parser_st *parser, struct bytecode_st *code, size_t position) {
+    char command;
+    void *data;
+    size_t data_s;
+    size_t var_start_pos = parser->var_start_pos;
+    struct list_st *const_objects = parser->const_objects;
+    struct list_st *temp_stack = parser->temp_stack;
+    struct list_st *var_stack = parser->var_stack;
 
-        struct object_st *temp = object_new();
-        struct object_st *obj = object_copy(state->temp_memory->top->data);
+    struct object_st **temp;
+    struct object_st *res = NULL;
+    struct object_st *err = NULL;
+    struct object_st *obj1 = NULL;
+    struct object_st *obj2 = NULL;
+    struct op_object *func = NULL;
 
-        if (obj->type != INTEGER_TYPE) {
-            stack_add(code_operations, object);
 
-            stack_add_new(code_operations, OP_BLOCK_TYPE);
-            ((struct op_block *) code_operations->top->data->data)->type = BlockType_Convert;
-            ((struct op_block *) code_operations->top->data->data)->subtype = Convert_Bool;
-        } else {
-            int res = 0;
-            if ((block->type == BlockType_If_not || block->type == BlockType_If_not_del) &&
-                integer_is_null(obj->data))
-                res = 1;
-            if ((block->type == BlockType_If || block->type == BlockType_If_del) && !integer_is_null(obj->data))
-                res = 1;
-
-            if (res) {
-                if (block->type == BlockType_If_not_del || block->type == BlockType_If_del)
-                    stack_pop(state->temp_memory);
-                stack_add(code_operations, block->data1);
-                stack_add(code_operations, block->data2);
-            }
-        }
-        object_free(obj);
-        object_free(temp);
-        return;
-    }
-
-    switch (block->type) {
-        case BlockType_Convert: {
-            struct object_st *temp = NULL;
-            struct object_st *obj = object_copy(state->temp_memory->top->data);
-            if (obj->type == MAP_TYPE) {
-                struct string_st *ind_str = string_new();
-
-                if (block->subtype == Convert_Bool) string_set_str(ind_str, "__bool__", 8);
-                else if (block->subtype == Convert_Int) string_set_str(ind_str, "__int__", 7);
-                else if (block->subtype == Convert_Float) string_set_str(ind_str, "__float__", 9);
-                else if (block->subtype == Convert_Str) string_set_str(ind_str, "__str__", 7);
-
-                sha256_code._code(ind_str, ind_str);
-                temp = map_get_elm(obj->data, ind_str->data, ind_str->size);
-                string_free(ind_str);
-            }
-
-            if (temp == NULL) {
-                struct object_st *res = object_new();
-                stack_pop(state->temp_memory);
-
-                if (block->subtype == Convert_Bool) object__bool(res, obj);
-                else if (block->subtype == Convert_Int) object__int(res, obj);
-                else if (block->subtype == Convert_Float) object__float(res, obj);
-                else if (block->subtype == Convert_Str) object__str(res, obj);
-
-                stack_add(state->temp_memory, res);
-                object_free(res);
-            } else {
-                stack_add_new(code_operations, OP_BLOCK_TYPE);
-                ((struct op_block *) code_operations->top->data->data)->type = BlockType_Call;
-                ((struct op_block *) code_operations->top->data->data)->count = 1;
-
-                stack_add(state->temp_memory, temp);
-            }
-            object_free(obj);
-            object_free(temp);
-            break;
-        }
-        case BlockType_Arithmetic: {
-            if (block->count == 2) {
-                if ((block->subtype & 0xF0) == 0x10) {
-                    struct object_st *temp = NULL;
-                    struct object_st *obj2 = object_copy(state->temp_memory->top->data);
-                    stack_pop(state->temp_memory);
-                    struct object_st *obj1 = object_copy(state->temp_memory->top->data);
-                    stack_pop(state->temp_memory);
-
-                    if (obj1->type == MAP_TYPE) {
-                        struct string_st *ind_str = string_new();
-
-                        if (block->subtype == Special_MOD) string_set_str(ind_str, "__mod__", 7);
-                        else if (block->subtype == Special_AND) string_set_str(ind_str, "__and__", 7);
-                        else if (block->subtype == Special_MUL) string_set_str(ind_str, "__mul__", 7);
-                        else if (block->subtype == Special_ADD) string_set_str(ind_str, "__add__", 7);
-                        else if (block->subtype == Special_SUB) string_set_str(ind_str, "__sub__", 7);
-                        else if (block->subtype == Special_DIV) string_set_str(ind_str, "__div__", 7);
-                        else if (block->subtype == Special_XOR) string_set_str(ind_str, "__xor__", 7);
-                        else if (block->subtype == Special_OR) string_set_str(ind_str, "__or__", 6);
-                        else if (block->subtype == Special_LSHIFT) string_set_str(ind_str, "__ls__", 6);
-                        else if (block->subtype == Special_RSHIFT) string_set_str(ind_str, "__rs__", 6);
-
-                        sha256_code._code(ind_str, ind_str);
-                        temp = map_get_elm(obj1->data, ind_str->data, ind_str->size);
-                        string_free(ind_str);
-                    }
-
-                    if (temp != NULL) {
-                        stack_add(state->temp_memory, obj2);
-                        stack_add(state->temp_memory, obj1);
-                        stack_add(state->temp_memory, temp);
-
-                        stack_add_new(code_operations, OP_BLOCK_TYPE);
-                        ((struct op_block *) code_operations->top->data->data)->type = BlockType_Call;
-                        ((struct op_block *) code_operations->top->data->data)->count = 2;
-                    } else {
-                        struct object_st *res = object_new();
-
-                        if (block->subtype == Special_MOD) object__mod(res, obj1, obj2);
-                        else if (block->subtype == Special_AND) object__and(res, obj1, obj2);
-                        else if (block->subtype == Special_MUL) object__mul(res, obj1, obj2);
-                        else if (block->subtype == Special_ADD) object__add(res, obj1, obj2);
-                        else if (block->subtype == Special_SUB) object__sub(res, obj1, obj2);
-                        else if (block->subtype == Special_DIV) object__div(res, obj1, obj2);
-                        else if (block->subtype == Special_XOR) object__xor(res, obj1, obj2);
-                        else if (block->subtype == Special_OR) object__or(res, obj1, obj2);
-                        else if (block->subtype == Special_LSHIFT) object__ls(res, obj1, obj2);
-                        else if (block->subtype == Special_RSHIFT) object__rs(res, obj1, obj2);
-
-                        stack_add(state->temp_memory, res);
-                        object_free(res);
-                    }
-                    object_free(temp);
-                    object_free(obj2);
-                    object_free(obj1);
+    while (position < code->size) {
+        command = code->command[position];
+        data = code->data[position];
+        data_s = (size_t) data;
+        if ((command & 0xF0) == BC_Basics) {
+            switch (command) {
+                case BC_Init: // Done
+                    if (var_stack->data[var_start_pos + data_s] != NULL)
+                        object_clear(var_stack->data[var_start_pos + data_s]);
+                    else
+                        var_stack->data[var_start_pos + data_s] = object_new();
+                case BC_Load: // Done
+                    list_append(temp_stack, var_stack->data[var_start_pos + data_s]);
                     break;
-                } else if ((block->subtype & 0xF0) == 0x20) {
-                    struct object_st *temp = NULL;
-                    struct object_st *obj2 = object_copy(state->temp_memory->top->data);
-                    stack_pop(state->temp_memory);
-                    struct object_st *obj1 = object_copy(state->temp_memory->top->data);
-                    stack_pop(state->temp_memory);
-                    if (obj1->type == MAP_TYPE) {
-                        struct string_st *ind_str = string_new();
-
-                        if (block->subtype == Special_EQ_MOD) string_set_str(ind_str, "__mod__", 7);
-                        else if (block->subtype == Special_EQ_AND) string_set_str(ind_str, "__and__", 7);
-                        else if (block->subtype == Special_EQ_MUL) string_set_str(ind_str, "__mul__", 7);
-                        else if (block->subtype == Special_EQ_ADD) string_set_str(ind_str, "__add__", 7);
-                        else if (block->subtype == Special_EQ_SUB) string_set_str(ind_str, "__sub__", 7);
-                        else if (block->subtype == Special_EQ_DIV) string_set_str(ind_str, "__div__", 7);
-                        else if (block->subtype == Special_EQ_XOR) string_set_str(ind_str, "__xor__", 7);
-                        else if (block->subtype == Special_EQ_OR) string_set_str(ind_str, "__or__", 6);
-                        else if (block->subtype == Special_EQ_LSHIFT) string_set_str(ind_str, "__ls__", 6);
-                        else if (block->subtype == Special_EQ_RSHIFT) string_set_str(ind_str, "__rs__", 6);
-
-                        sha256_code._code(ind_str, ind_str);
-                        temp = map_get_elm(obj1->data, ind_str->data, ind_str->size);
-                        string_free(ind_str);
-                    }
-
-                    if (temp != NULL) {
-                        stack_add(state->temp_memory, obj1);
-                        stack_add(state->temp_memory, obj2);
-                        stack_add(state->temp_memory, obj1);
-                        stack_add(state->temp_memory, temp);
-
-                        stack_add_new(code_operations, OP_BLOCK_TYPE);
-                        ((struct op_block *) code_operations->top->data->data)->type = BlockType_Arithmetic;
-                        ((struct op_block *) code_operations->top->data->data)->subtype = Special_EQ;
-                        ((struct op_block *) code_operations->top->data->data)->count = 2;
-
-                        stack_add_new(code_operations, OP_BLOCK_TYPE);
-                        ((struct op_block *) code_operations->top->data->data)->type = BlockType_Call;
-                        ((struct op_block *) code_operations->top->data->data)->count = 2;
-                    } else {
-                        struct object_st *res = object_new();
-
-                        if (block->subtype == Special_EQ_MOD) object__mod(res, obj1, obj2);
-                        else if (block->subtype == Special_EQ_AND) object__and(res, obj1, obj2);
-                        else if (block->subtype == Special_EQ_MUL) object__mul(res, obj1, obj2);
-                        else if (block->subtype == Special_EQ_ADD) object__add(res, obj1, obj2);
-                        else if (block->subtype == Special_EQ_SUB) object__sub(res, obj1, obj2);
-                        else if (block->subtype == Special_EQ_DIV) object__div(res, obj1, obj2);
-                        else if (block->subtype == Special_EQ_XOR) object__xor(res, obj1, obj2);
-                        else if (block->subtype == Special_EQ_OR) object__or(res, obj1, obj2);
-                        else if (block->subtype == Special_EQ_LSHIFT) object__ls(res, obj1, obj2);
-                        else if (block->subtype == Special_EQ_RSHIFT) object__rs(res, obj1, obj2);
-
-                        object_set(obj1, res);
-                        stack_add(state->temp_memory, obj1);
-                        object_free(res);
-                    }
-                    object_free(temp);
-                    object_free(obj2);
-                    object_free(obj1);
+                case BC_LoadConst: // Done
+                    list_append(temp_stack, const_objects->data[data_s]);
                     break;
-                } else if ((block->subtype & 0xF0) == 0x40) {
-                    struct object_st *temp = NULL;
-                    struct object_st *obj2 = object_copy(state->temp_memory->top->data);
-                    stack_pop(state->temp_memory);
-                    struct object_st *obj1 = object_copy(state->temp_memory->top->data);
-                    stack_pop(state->temp_memory);
-
-                    if (obj1->type == MAP_TYPE) {
-                        struct string_st *ind_str = string_new();
-
-
-                        if (block->subtype == Special_LESS) string_set_str(ind_str, "__lt__", 6);
-                        else if (block->subtype == Special_GREATER) string_set_str(ind_str, "__gt__", 6);
-                        else if (block->subtype == Special_EQ_LESS) string_set_str(ind_str, "__le__", 6);
-                        else if (block->subtype == Special_EQ_GREATER) string_set_str(ind_str, "__ge__", 6);
-                        else if (block->subtype == Special_EQ_NOT || block->subtype == Special_EQ_EQ)
-                            string_set_str(ind_str, "__eq__", 6);
-
-
-                        sha256_code._code(ind_str, ind_str);
-                        temp = map_get_elm(obj1->data, ind_str->data, ind_str->size);
-                        string_free(ind_str);
-                    }
-
-                    if (temp != NULL) {
-                        stack_add(state->temp_memory, obj2);
-                        stack_add(state->temp_memory, obj1);
-                        stack_add(state->temp_memory, temp);
-
-                        if (block->subtype == Special_EQ_NOT) {
-                            stack_add_new(code_operations, OP_BLOCK_TYPE);
-                            ((struct op_block *) code_operations->top->data->data)->type = BlockType_Arithmetic;
-                            ((struct op_block *) code_operations->top->data->data)->subtype = Special_NOT;
-                            ((struct op_block *) code_operations->top->data->data)->count = 1;
-                        }
-
-                        stack_add_new(code_operations, OP_BLOCK_TYPE);
-                        ((struct op_block *) code_operations->top->data->data)->type = BlockType_Call;
-                        ((struct op_block *) code_operations->top->data->data)->count = 2;
-                    } else {
-                        int cmp_res = object_cmp(obj1, obj2);
-
-                        struct object_st *res = object_new();
-                        object_set_type(res, INTEGER_TYPE);
-
-                        if (
-                                (block->subtype == Special_LESS && cmp_res < 0) ||
-                                (block->subtype == Special_GREATER && cmp_res != 2 && cmp_res > 0) ||
-                                (block->subtype == Special_EQ_LESS && cmp_res <= 0) ||
-                                (block->subtype == Special_EQ_GREATER && cmp_res != 2 && cmp_res >= 0) ||
-                                (block->subtype == Special_EQ_NOT && cmp_res != 0) ||
-                                (block->subtype == Special_EQ_EQ && cmp_res == 0))
-                            integer_set_ui(res->data, 1);
-                        else integer_set_ui(res->data, 0);
-
-                        stack_add(state->temp_memory, res);
-                        object_free(res);
-                    }
-                    object_free(temp);
-                    object_free(obj2);
-                    object_free(obj1);
-                    break;
-                } else if ((block->subtype & 0xF0) == 0x50) {
-                    struct object_st *obj2 = object_copy(state->temp_memory->top->data);
-                    stack_pop(state->temp_memory);
-                    struct object_st *obj1 = object_copy(state->temp_memory->top->data);
-                    stack_pop(state->temp_memory);
-
-                    int bool1 = 1;
-                    if (obj1->type == INTEGER_TYPE && integer_is_null(obj1->data)) bool1 = 0;
-                    int bool2 = 1;
-                    if (obj2->type == INTEGER_TYPE && integer_is_null(obj2->data)) bool2 = 0;
-                    object_free(obj2);
-                    object_free(obj1);
-
-                    struct object_st *res = object_new();
-                    object_set_type(res, INTEGER_TYPE);
-                    if (block->subtype == Special_AND_AND) integer_set_ui(res->data, bool1 && bool2);
-                    if (block->subtype == Special_OR_OR) integer_set_ui(res->data, bool1 || bool2);
-
-                    stack_add(state->temp_memory, res);
+                case BC_Attrib: {
+                    obj1 = list_pop(temp_stack);
+                    err = object_new();
+                    res = object_attrib(err, obj1, const_objects->data[data_s]->data);
+                    if (err->type != NONE_TYPE) {
+//                        interrupt_type = Interrupt_Throw;
+//                        interrupt_scopes = 0;
+                        list_append(temp_stack, err);
+                    } else list_append(temp_stack, res);
                     object_free(res);
-                    break;
-                } else {
-                    struct object_st *temp = NULL;
-                    struct object_st *obj2 = object_copy(state->temp_memory->top->data);
-                    stack_pop(state->temp_memory);
-                    struct object_st *obj1 = object_copy(state->temp_memory->top->data);
-                    stack_pop(state->temp_memory);
-
-                    if (obj1->type == MAP_TYPE) {
-                        struct string_st *ind_str = string_new();
-
-                        string_set_str(ind_str, "__set__", 7);
-
-                        sha256_code._code(ind_str, ind_str);
-                        temp = map_get_elm(obj1->data, ind_str->data, ind_str->size);
-                        string_free(ind_str);
-                    }
-                    if (temp != NULL) {
-                        stack_add(state->temp_memory, obj2);
-                        stack_add(state->temp_memory, obj1);
-                        stack_add(state->temp_memory, temp);
-
-                        stack_add_new(code_operations, OP_BLOCK_TYPE);
-                        ((struct op_block *) code_operations->top->data->data)->type = BlockType_Call;
-                        ((struct op_block *) code_operations->top->data->data)->count = 2;
-                    } else {
-                        object_set(obj1, obj2);
-                        stack_add(state->temp_memory, obj2);
-                    }
-
-                    object_free(temp);
-                    object_free(obj2);
+                    object_free(err);
                     object_free(obj1);
                     break;
                 }
-
-
-            } else if (block->count == 1) {
-                struct object_st *temp = NULL;
-                struct object_st *obj = object_copy(state->temp_memory->top->data);
-                stack_pop(state->temp_memory);
-                if (obj->type == MAP_TYPE) {
-                    struct string_st *ind_str = string_new();
-
-                    string_set_str(ind_str, "__ne__", 6);
-
-                    sha256_code._code(ind_str, ind_str);
-                    temp = map_get_elm(obj->data, ind_str->data, ind_str->size);
-                    string_free(ind_str);
-                }
-
-                if (temp != NULL) {
-                    stack_add(state->temp_memory, obj);
-                    stack_add(state->temp_memory, temp);
-
-                    stack_add_new(code_operations, OP_BLOCK_TYPE);
-                    ((struct op_block *) code_operations->top->data->data)->type = BlockType_Call;
-                    ((struct op_block *) code_operations->top->data->data)->count = 1;
-                } else {
-                    struct object_st *res = object_new();
-
-                    object__neg(res, obj);
-
-                    stack_add(state->temp_memory, res);
+                case BC_Subscript: {
+                    obj1 = list_pop(temp_stack);
+                    obj2 = list_pop(temp_stack);
+                    err = object_new();
+                    res = object_subscript(err, obj1, obj2);
+                    if (err->type != NONE_TYPE) {
+//                        interrupt_type = Interrupt_Throw;
+//                        interrupt_scopes = 0;
+                        list_append(temp_stack, err);
+                    } else list_append(temp_stack, res);
                     object_free(res);
+                    object_free(err);
+                    object_free(obj1);
+                    object_free(obj2);
+                    break;
                 }
-                object_free(temp);
-                object_free(obj);
-            }
-            break;
-        }
-        case BlockType_Put: {
-            stack_add(code_operations, block->data1);
-            stack_add(code_operations, block->data2);
-            break;
-        }
-        case BlockType_Delete_Temp: {
-            while (state->temp_memory->size > block->count) stack_pop(state->temp_memory);
-            break;
-        }
-        case BlockType_Delete_Scope: {
-            if (block->subtype == Delete_Scope_Func) {
-                if (state->return_obj == NULL) stack_add_new(state->temp_memory, NONE_TYPE);
-                else {
-                    stack_add(state->temp_memory, state->return_obj);
-                    object_free(state->return_obj);
-                    state->return_obj = NULL;
-                }
-            } else if (block->subtype == Delete_Scope_Class) {
-                object_set(state->temp_memory->top->data, state->memory->top->data);
-            }
-            if (state->memory->size > block->count) stack_pop(state->memory);
+                case BC_Call: {
 
-            // TODO garbage collector
-            break;
-        }
-
-        case BlockType_Continue: {
-            struct object_st *current_object = NULL;
-            while (code_operations->size) {
-                current_object = code_operations->top->data;
-
-
-                if (current_object->type == OP_BLOCK_TYPE) {
-                    if (((struct op_block *) current_object->data)->type == BlockType_Delete_Temp &&
-                        state->temp_memory->size > ((struct op_block *) current_object->data)->count)
-                        stack_pop(state->temp_memory);
-                } else if (current_object->type == AN_NODE_TYPE) {
-                    if (((struct an_node *) current_object->data)->type == StmtType_While) {
-                        break;
-                    }// TODO for and do while loop continue
-                }
-                stack_pop(code_operations);
-            }
-            break;
-        }
-        case BlockType_Break: {
-            struct object_st *current_object = NULL;
-            while (code_operations->size) {
-                current_object = code_operations->top->data;
-                if (current_object->type == OP_BLOCK_TYPE) {
-                    if (((struct op_block *) current_object->data)->type == BlockType_Delete_Temp &&
-                        state->temp_memory->size > ((struct op_block *) current_object->data)->count)
-                        stack_pop(state->temp_memory);
-                } else if (current_object->type == AN_NODE_TYPE) {
-                    if (((struct an_node *) current_object->data)->type == StmtType_While) {
-                        stack_pop(code_operations);
-                        break;
-                    }// TODO for and do while loop break
-                }
-                stack_pop(code_operations);
-            }
-            break;
-        }
-        case BlockType_Return: {
-            if (block->count != 0 && state->return_obj == NULL) {
-                if (block->count == 1) {
-                    state->return_obj = object_copy(state->temp_memory->top->data);
-                    stack_pop(state->temp_memory);
-                } else {
-                    state->return_obj = object_new();
-                    object_set_type(state->return_obj, LIST_TYPE);
-                    for (size_t i = 0; i < block->count; i++) {
-                        list_append(state->return_obj->data, state->temp_memory->top->data);
-                        stack_pop(state->temp_memory);
+//                    print_list(var_stack, 0);
+//                    print_list(temp_stack, 0);
+                    obj1 = list_pop(temp_stack);
+                    func = obj1->data;
+                    parser_store_vars(parser, func->argument->size, position + 1);
+                    for (size_t i = 0; i < func->closure->attrib.size; i++) {
+                        var_stack->data[parser->var_start_pos +
+                                        func->closure->attrib.variables[i]->position] = object_copy_obj(
+                                func->closure->data.data[i]);
                     }
+
+                    if (func->argument_size != data_s) {
+                        // TODo error
+                        exit(2);
+                    }
+
+                    for (int i = 0; i < func->argument_size; i++) {
+                        var_stack->data[parser->var_start_pos + i + 1] = list_pop(temp_stack);
+                    }
+                    bytecode_list_append(&parser->codes_stack, code);
+                    bytecode_list_append(&parser->codes_stack, parser->codes.bytecodes[func->function_body]);
+                    object_free(obj1);
+                    return 0;
                 }
+                case BC_FuncEnd:
+                    position = parser_restore_vars(parser);
+                    return position;
+                case BC_Pop: // Done
+                    object_free(list_pop(temp_stack));
+                    break;
             }
-            struct object_st *current_object = NULL;
-            while (code_operations->size) {
-                current_object = code_operations->top->data;
-                if (current_object->type == OP_BLOCK_TYPE) {
-                    if (((struct op_block *) current_object->data)->type == BlockType_Delete_Temp &&
-                        state->temp_memory->size > ((struct op_block *) current_object->data)->count)
-                        stack_pop(state->temp_memory);
-                    if (((struct op_block *) current_object->data)->type == BlockType_Delete_Scope) break;
-                }
-                stack_pop(code_operations);
-            }
-            break;
-        }
+        } // Not // Done
+        else if ((command & 0xF0) == BC_Convert) {
+            obj1 = list_pop(temp_stack);
+            res = object_new();
+            err = object_new();
 
-        case BlockType_List: {
-            struct object_st *obj = object_new();
-            object_set_type(obj, LIST_TYPE);
-            for (size_t i = 0; i < block->count; i++) {
-                list_append(obj->data, state->temp_memory->top->data);
-                stack_pop(state->temp_memory);
-            }
-            stack_add(state->temp_memory, obj);
-            object_free(obj);
-            break;
-        }
-        case BlockType_Attr: {
-            struct object_st *res = NULL;
-            struct string_st *ind_str = ((struct an_node *) block->data1->data)->data->data;
-            struct object_st *obj = object_copy(state->temp_memory->top->data);
-            if (code_operations->top->data->type != OP_BLOCK_TYPE ||
-                ((struct op_block *) code_operations->top->data->data)->type != BlockType_Call) {
-                stack_pop(state->temp_memory);
-            } else {
-                ((struct op_block *) code_operations->top->data->data)->count++;
-            }
+            if (command == BC_Convert_Bool) object__bool(res, err, obj1);
+            else if (command == BC_Convert_Int) object__int(res, err, obj1);
+            else if (command == BC_Convert_Float) object__float(res, err, obj1);
+            else if (command == BC_Convert_Str) object__str(res, err, obj1);
 
-            if (obj->type == MAP_TYPE) {
-                res = map_set_elm(obj->data, ind_str->data, ind_str->size);
-                stack_add(state->temp_memory, res);
-            } else {
-                stack_add_new(state->temp_memory, NONE_TYPE);
-            }
-
+            if (err->type != NONE_TYPE) {
+//                interrupt_type = Interrupt_Throw;
+//                interrupt_scopes = 0;
+                list_append(temp_stack, err);
+            } else list_append(temp_stack, res);
             object_free(res);
-            object_free(obj);
-            break;
-        }
-        case BlockType_Func: {
-            struct object_st *res = NULL;
-            struct string_st *ind_str = string_new();
-            struct object_st *obj = object_copy(state->temp_memory->top->data);
+            object_free(err);
+            object_free(obj1);
+        } // Done
+        else if ((command & 0xF0) == BC_Operations) {
+            obj2 = list_pop(temp_stack);
+            res = object_new();
+            err = object_new();
 
-            object_set_type(obj, MAP_TYPE);
-            if (obj->type == MAP_TYPE) {
-                string_set_str(ind_str, "__params__", 10);
-                sha256_code._code(ind_str, ind_str);
-                res = map_set_elm(obj->data, ind_str->data, ind_str->size);
-                object_set(res, block->data1);
-                object_free(res);
-            }
-
-            if (obj->type == MAP_TYPE) {
-                string_set_str(ind_str, "__call__", 7);
-                sha256_code._code(ind_str, ind_str);
-                res = map_set_elm(obj->data, ind_str->data, ind_str->size);
-                object_set(res, block->data2);
-                object_free(res);
-            }
-
-            string_free(ind_str);
-            object_free(obj);
-            break;
-        }
-        case BlockType_Call: {
-            struct object_st *res = NULL;
-            struct string_st *ind_str = string_new();
-            struct object_st *func = object_copy(state->temp_memory->top->data);
-            stack_pop(state->temp_memory);
-
-
-            {
-                stack_add_new(code_operations, OP_BLOCK_TYPE);
-                ((struct op_block *) code_operations->top->data->data)->type = BlockType_Delete_Scope;
-                ((struct op_block *) code_operations->top->data->data)->subtype = Delete_Scope_Func;
-                ((struct op_block *) code_operations->top->data->data)->count = state->memory->size;
-                stack_add_new(state->memory, MAP_TYPE);
-            }
-
-            if (func->type == MAP_TYPE) {
-                string_set_str(ind_str, "__init__", 8);
-                sha256_code._code(ind_str, ind_str);
-                res = map_get_elm(func->data, ind_str->data, ind_str->size);
-            }
-            int ok = 0;
-            if (res == NULL) {
-                struct string_st *ind_temp = NULL;
-                struct object_st *elm = NULL;
-                if (func->type == MAP_TYPE) {
-                    string_set_str(ind_str, "__params__", 10);
-                    sha256_code._code(ind_str, ind_str);
-                    res = map_set_elm(func->data, ind_str->data, ind_str->size);
-                }
-                if (res != NULL) {
-                    struct list_st *temp_list = ((struct an_node *) res->data)->next;
-                    if (temp_list->size == block->count) {
-                        ok = 1;
-                        for (int i = 0; i < temp_list->size; i++) {
-                            ind_temp = ((struct an_node *) temp_list->data[i]->data)->data->data;
-                            elm = map_set_elm(state->memory->top->data->data, ind_temp->data, ind_temp->size);
-                            object_set(elm, state->temp_memory->top->data);
-                            stack_pop(state->temp_memory);
-                            object_free(elm);
-                        }
-                    }
-                }
-                object_free(res);
-                if (func->type == MAP_TYPE && ok) {
-                    string_set_str(ind_str, "__call__", 7);
-                    sha256_code._code(ind_str, ind_str);
-                    res = map_set_elm(func->data, ind_str->data, ind_str->size);
-                    stack_add(code_operations, res);
-                }
-                object_free(res);
+            if (command == BC_Negate) {
+                object__neg(res, err, obj2);
+                if (err->type != NONE_TYPE) {
+                    list_append(temp_stack, err);
+                } else list_append(temp_stack, res);
+            } else if (command == BC_NegateBool) {
+                object_set_type(res, INTEGER_TYPE);
+                if (integer_is_null(obj2->data)) integer_set_ui(res->data, 1);
+                else integer_set_ui(res->data, 0);
+                list_append(temp_stack, res);
             } else {
-                struct object_st *_res = NULL;
-                struct string_st *ind_temp = NULL;
-                struct object_st *elm = NULL;
-                if (res->type == MAP_TYPE) {
-                    string_set_str(ind_str, "__params__", 10);
-                    sha256_code._code(ind_str, ind_str);
-                    _res = map_set_elm(res->data, ind_str->data, ind_str->size);
-                }
-                if (res != NULL) {
-                    struct list_st *temp_list = ((struct an_node *) _res->data)->next;
-                    if (temp_list->size == block->count + 1) {
-                        ind_temp = ((struct an_node *) temp_list->data[0]->data)->data->data;
-                        elm = map_set_elm(state->memory->top->data->data, ind_temp->data, ind_temp->size);
-                        state->return_obj = object_copy(elm);
-                        object_set(elm, func);
-                        object_free(elm);
-                    }
+                obj1 = list_pop(temp_stack);
 
-                    if (temp_list->size == block->count + 1) {
-                        ok = 1;
-                        for (int i = 1; i < temp_list->size; i++) {
-                            ind_temp = ((struct an_node *) temp_list->data[i]->data)->data->data;
-                            elm = map_set_elm(state->memory->top->data->data, ind_temp->data, ind_temp->size);
-                            object_set(elm, state->temp_memory->top->data);
-                            stack_pop(state->temp_memory);
-                            object_free(elm);
+                int bool1 = 1, bool2 = 1;
+                switch (command) {
+                    case BC_Arithmetic:
+                        if ((int) data == Special_MOD) object__mod(res, err, obj1, obj2);
+                        else if ((int) data == Special_AND) object__and(res, err, obj1, obj2);
+                        else if ((int) data == Special_MUL) object__mul(res, err, obj1, obj2);
+                        else if ((int) data == Special_ADD) object__add(res, err, obj1, obj2);
+                        else if ((int) data == Special_SUB) object__sub(res, err, obj1, obj2);
+                        else if ((int) data == Special_DIV) object__div(res, err, obj1, obj2);
+                        else if ((int) data == Special_XOR) object__xor(res, err, obj1, obj2);
+                        else if ((int) data == Special_OR) object__or(res, err, obj1, obj2);
+                        else if ((int) data == Special_LSHIFT) object__ls(res, err, obj1, obj2);
+                        else if ((int) data == Special_RSHIFT) object__rs(res, err, obj1, obj2);
+                        else {
+                            bool1 = object_cmp(obj1, obj2);
+                            object_set_type(res, INTEGER_TYPE);
+
+                            if (
+                                    ((int) data == Special_LESS && bool1 < 0) ||
+                                    ((int) data == Special_GREATER && bool1 != 2 && bool1 > 0) ||
+                                    ((int) data == Special_EQ_LESS && bool1 <= 0) ||
+                                    ((int) data == Special_EQ_GREATER && bool1 != 2 && bool1 >= 0) ||
+                                    ((int) data == Special_EQ_NOT && bool1 != 0) ||
+                                    ((int) data == Special_EQ_EQ && bool1 == 0))
+                                integer_set_ui(res->data, 1);
+                            else integer_set_ui(res->data, 0);
+
+                            list_append(temp_stack, res);
+                            break;
                         }
-                    }
-                }
-                object_free(_res);
-                _res = NULL;
-                if (res->type == MAP_TYPE && ok) {
-                    string_set_str(ind_str, "__call__", 7);
-                    sha256_code._code(ind_str, ind_str);
-                    _res = map_set_elm(res->data, ind_str->data, ind_str->size);
-                    stack_add(code_operations, _res);
-                }
-                object_free(_res);
-                object_free(res);
+                        if (err->type != NONE_TYPE) {
+//                            interrupt_type = Interrupt_Throw;
+//                            interrupt_scopes = 0;
+                            list_append(temp_stack, err);
+                        } else list_append(temp_stack, res);
+                        break;
+                    case BC_ArithmeticSet:
+                        if ((int) data == Special_EQ_MOD) object__mod(res, err, obj1, obj2);
+                        else if ((int) data == Special_EQ_AND) object__and(res, err, obj1, obj2);
+                        else if ((int) data == Special_EQ_MUL) object__mul(res, err, obj1, obj2);
+                        else if ((int) data == Special_EQ_ADD) object__add(res, err, obj1, obj2);
+                        else if ((int) data == Special_EQ_SUB) object__sub(res, err, obj1, obj2);
+                        else if ((int) data == Special_EQ_DIV) object__div(res, err, obj1, obj2);
+                        else if ((int) data == Special_EQ_XOR) object__xor(res, err, obj1, obj2);
+                        else if ((int) data == Special_EQ_OR) object__or(res, err, obj1, obj2);
+                        else if ((int) data == Special_EQ_LSHIFT) object__ls(res, err, obj1, obj2);
+                        else if ((int) data == Special_EQ_RSHIFT) object__rs(res, err, obj1, obj2);
+                        else if ((int) data == Special_EQ) object_set(res, obj2);
 
+                        if (err->type != NONE_TYPE) {
+//                            interrupt_type = Interrupt_Throw;
+//                            interrupt_scopes = 0;
+                            list_append(temp_stack, err);
+                        } else {
+                            object_set(obj1, res);
+                            list_append(temp_stack, obj1);
+                        }
+                        break;
+                    case BC_Compare:
+                        if (obj1->type == INTEGER_TYPE && integer_is_null(obj1->data)) bool1 = 0;
+                        if (obj2->type == INTEGER_TYPE && integer_is_null(obj2->data)) bool2 = 0;
+
+                        object_set_type(res, INTEGER_TYPE);
+                        if ((int) data == Special_AND_AND) integer_set_ui(res->data, bool1 && bool2);
+                        if ((int) data == Special_OR_OR) integer_set_ui(res->data, bool1 || bool2);
+
+                        list_append(temp_stack, res);
+                        break;
+                    case BC_Set:
+                        object_set(obj1, obj2);
+                        list_append(temp_stack, obj2);
+                        break;
+                }
+
+                object_free(obj1);
             }
+            object_free(res);
+            object_free(err);
+            object_free(obj2);
+        } // Done
+        else if ((command & 0xF0) == BC_Jump) {
+            if (command == BC_Jump) {
+                position = (size_t) data;
+                continue;
+            } else {
+                struct object_st *obj = temp_stack->data[temp_stack->size - 1];
+                int bool = !integer_is_null(obj->data);
 
-            string_free(ind_str);
-            object_free(func);
-            break;
-        }
-        case BlockType_Class: {
-            stack_add_new(state->memory, MAP_TYPE);
-            break;
-        }
+                if ((bool && command == BC_IfTrueOrPop) || (!bool && command == BC_IfFalseOrPop) ||
+                    (!bool && command == BC_IfFalse_Jump)) {
+                    position = (size_t) data;
+                    object_free(list_pop(temp_stack));
+                    continue;
+                } else if (command == BC_IfFalse_Jump) object_free(list_pop(temp_stack));
+            }
+        }  // Done
 
+        else if ((command & 0xF0) == BC_Make) {
+            obj1 = object_new();
+            switch (command) {
+                case BC_MakeFunc:
+                    object_set_type(obj1, OP_OBJECT_TYPE);
+                    op_object_set_function(obj1->data, data, parser);
+                    break;
+                case BC_MakeClass:
+                    break;
+                case BC_MakeList:
+                    object_set_type(obj1, LIST_TYPE);
+                    obj2 = NULL;
+                    for (size_t i = 0; i < (size_t) data; i++) {
+                        obj2 = list_pop(temp_stack);
+                        list_append(obj1->data, obj2);
+                        object_free(obj2);
+                    }
+                    break;
+            }
+            list_append(temp_stack, obj1);
+            object_free(obj1);
+        } // Not // Done
+        else if ((command & 0xF0) == BC_Interrupts) {
+
+        }
+        ++position;
     }
+    return 0;
 }
 
-void run_smart_contract(struct op_state *state) {
-    struct stack_st *code_operations = state->code_operations;
-    struct object_st *current_object = NULL;
-    while (code_operations->size) {
-        current_object = object_copy(code_operations->top->data);
-        stack_pop(code_operations);
+void run_smart_contract(struct parser_st *parser, size_t codespace) {
+    struct bytecode_list_st *codes_stack = &parser->codes_stack;
+    struct bytecode_st *code;
 
-        if (current_object->type == AN_NODE_TYPE) {
-            run_an(state, current_object);
-        }
-        if (current_object->type == OP_BLOCK_TYPE) {
-            run_op(state, current_object);
-        }
-        object_free(current_object);
+    bytecode_list_append(codes_stack, parser->codes.bytecodes[codespace]);
+    size_t position = 0;
+    printf("------------------------------Code Started--------------------------------------\n");
+    while (codes_stack->size > 0) {
+        code = bytecode_list_pop(codes_stack);
+        position = run_codespace(parser, code, position);
     }
+    printf("-------------------------------Code Ended---------------------------------------\n");
+    print_list(parser->temp_stack, 0);
+    print_list(parser->var_stack, 0);
 }

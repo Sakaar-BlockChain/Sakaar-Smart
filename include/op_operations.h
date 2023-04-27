@@ -1,8 +1,9 @@
-//
-// Created by 04024 on 26.02.2023.
-//
+#ifndef OP_OPERATIONS_H
+#define OP_OPERATIONS_H
 
-#ifndef SAKAAR_SMARTCONTRACT_OP_OPERATIONS_H
-#define SAKAAR_SMARTCONTRACT_OP_OPERATIONS_H
+#include "sn_syntax.h"
+#include "op_structs.h"
 
-#endif //SAKAAR_SMARTCONTRACT_OP_OPERATIONS_H
+void run_smart_contract(struct parser_st *, size_t);
+
+#endif //OP_OPERATIONS_H

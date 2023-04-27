@@ -11,7 +11,7 @@ target_include_directories(${PROJECT_NAME}_lib PUBLIC
         $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/include>
         $<INSTALL_INTERFACE:include>
         PRIVATE src)
-MESSAGE(STATUS "Created: Sakaar_Struct_lib")
+MESSAGE(STATUS "Created: ${PROJECT_NAME}_lib")
 
 target_link_libraries(${PROJECT_NAME}_lib PUBLIC Sakaar_Memory_lib)
 target_link_libraries(${PROJECT_NAME}_lib PUBLIC Sakaar_Struct_lib)
