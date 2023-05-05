@@ -28,5 +28,3 @@ void sm_semantic(struct parser_st *parser, struct node_st *node) {
 ////      BackPoint -> BackPoint
 ////      SomeData in function
 ////      SomeData in function
-//
-//void

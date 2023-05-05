@@ -168,27 +168,27 @@ void lol() {
 //                        int bool1 = 1, bool2 = 1;
 //                        switch (command) {
 //                            case BC_Arithmetic:
-//                                if ((int) data == Special_MOD) object__mod(res, err, obj1, obj2);
-//                                else if ((int) data == Special_AND) object__and(res, err, obj1, obj2);
-//                                else if ((int) data == Special_MUL) object__mul(res, err, obj1, obj2);
-//                                else if ((int) data == Special_ADD) object__add(res, err, obj1, obj2);
-//                                else if ((int) data == Special_SUB) object__sub(res, err, obj1, obj2);
-//                                else if ((int) data == Special_DIV) object__div(res, err, obj1, obj2);
-//                                else if ((int) data == Special_XOR) object__xor(res, err, obj1, obj2);
-//                                else if ((int) data == Special_OR) object__or(res, err, obj1, obj2);
-//                                else if ((int) data == Special_LSHIFT) object__ls(res, err, obj1, obj2);
-//                                else if ((int) data == Special_RSHIFT) object__rs(res, err, obj1, obj2);
+//                                if (data_s == Special_MOD) object__mod(res, err, obj1, obj2);
+//                                else if (data_s == Special_AND) object__and(res, err, obj1, obj2);
+//                                else if (data_s == Special_MUL) object__mul(res, err, obj1, obj2);
+//                                else if (data_s == Special_ADD) object__add(res, err, obj1, obj2);
+//                                else if (data_s == Special_SUB) object__sub(res, err, obj1, obj2);
+//                                else if (data_s == Special_DIV) object__div(res, err, obj1, obj2);
+//                                else if (data_s == Special_XOR) object__xor(res, err, obj1, obj2);
+//                                else if (data_s == Special_OR) object__or(res, err, obj1, obj2);
+//                                else if (data_s == Special_LSHIFT) object__ls(res, err, obj1, obj2);
+//                                else if (data_s == Special_RSHIFT) object__rs(res, err, obj1, obj2);
 //                                else {
 //                                    bool1 = object_cmp(obj1, obj2);
 //                                    object_set_type(res, INTEGER_TYPE);
 //
 //                                    if (
-//                                            ((int) data == Special_LESS && bool1 < 0) ||
-//                                            ((int) data == Special_GREATER && bool1 != 2 && bool1 > 0) ||
-//                                            ((int) data == Special_EQ_LESS && bool1 <= 0) ||
-//                                            ((int) data == Special_EQ_GREATER && bool1 != 2 && bool1 >= 0) ||
-//                                            ((int) data == Special_EQ_NOT && bool1 != 0) ||
-//                                            ((int) data == Special_EQ_EQ && bool1 == 0))
+//                                            (data_s == Special_LESS && bool1 < 0) ||
+//                                            (data_s == Special_GREATER && bool1 != 2 && bool1 > 0) ||
+//                                            (data_s == Special_EQ_LESS && bool1 <= 0) ||
+//                                            (data_s == Special_EQ_GREATER && bool1 != 2 && bool1 >= 0) ||
+//                                            (data_s == Special_EQ_NOT && bool1 != 0) ||
+//                                            (data_s == Special_EQ_EQ && bool1 == 0))
 //                                        integer_set_ui(res->data, 1);
 //                                    else integer_set_ui(res->data, 0);
 //
@@ -202,17 +202,17 @@ void lol() {
 //                                } else list_append(temp_stack, res);
 //                                break;
 //                            case BC_ArithmeticSet:
-//                                if ((int) data == Special_EQ_MOD) object__mod(res, err, obj1, obj2);
-//                                else if ((int) data == Special_EQ_AND) object__and(res, err, obj1, obj2);
-//                                else if ((int) data == Special_EQ_MUL) object__mul(res, err, obj1, obj2);
-//                                else if ((int) data == Special_EQ_ADD) object__add(res, err, obj1, obj2);
-//                                else if ((int) data == Special_EQ_SUB) object__sub(res, err, obj1, obj2);
-//                                else if ((int) data == Special_EQ_DIV) object__div(res, err, obj1, obj2);
-//                                else if ((int) data == Special_EQ_XOR) object__xor(res, err, obj1, obj2);
-//                                else if ((int) data == Special_EQ_OR) object__or(res, err, obj1, obj2);
-//                                else if ((int) data == Special_EQ_LSHIFT) object__ls(res, err, obj1, obj2);
-//                                else if ((int) data == Special_EQ_RSHIFT) object__rs(res, err, obj1, obj2);
-//                                else if ((int) data == Special_EQ) object_set(res, obj2);
+//                                if (data_s == Special_EQ_MOD) object__mod(res, err, obj1, obj2);
+//                                else if (data_s == Special_EQ_AND) object__and(res, err, obj1, obj2);
+//                                else if (data_s == Special_EQ_MUL) object__mul(res, err, obj1, obj2);
+//                                else if (data_s == Special_EQ_ADD) object__add(res, err, obj1, obj2);
+//                                else if (data_s == Special_EQ_SUB) object__sub(res, err, obj1, obj2);
+//                                else if (data_s == Special_EQ_DIV) object__div(res, err, obj1, obj2);
+//                                else if (data_s == Special_EQ_XOR) object__xor(res, err, obj1, obj2);
+//                                else if (data_s == Special_EQ_OR) object__or(res, err, obj1, obj2);
+//                                else if (data_s == Special_EQ_LSHIFT) object__ls(res, err, obj1, obj2);
+//                                else if (data_s == Special_EQ_RSHIFT) object__rs(res, err, obj1, obj2);
+//                                else if (data_s == Special_EQ) object_set(res, obj2);
 //
 //                                if (err->type != NONE_TYPE) {
 //                                    interrupt_type = Interrupt_Throw;
@@ -228,8 +228,8 @@ void lol() {
 //                                if (obj2->type == INTEGER_TYPE && integer_is_null(obj2->data)) bool2 = 0;
 //
 //                                object_set_type(res, INTEGER_TYPE);
-//                                if ((int) data == Special_AND_AND) integer_set_ui(res->data, bool1 && bool2);
-//                                if ((int) data == Special_OR_OR) integer_set_ui(res->data, bool1 || bool2);
+//                                if (data_s == Special_AND_AND) integer_set_ui(res->data, bool1 && bool2);
+//                                if (data_s == Special_OR_OR) integer_set_ui(res->data, bool1 || bool2);
 //
 //                                list_append(temp_stack, res);
 //                                break;
@@ -471,27 +471,27 @@ size_t run_codespace(struct parser_st *parser, struct bytecode_st *code, size_t 
                 int bool1 = 1, bool2 = 1;
                 switch (command) {
                     case BC_Arithmetic:
-                        if ((int) data == Special_MOD) object__mod(res, err, obj1, obj2);
-                        else if ((int) data == Special_AND) object__and(res, err, obj1, obj2);
-                        else if ((int) data == Special_MUL) object__mul(res, err, obj1, obj2);
-                        else if ((int) data == Special_ADD) object__add(res, err, obj1, obj2);
-                        else if ((int) data == Special_SUB) object__sub(res, err, obj1, obj2);
-                        else if ((int) data == Special_DIV) object__div(res, err, obj1, obj2);
-                        else if ((int) data == Special_XOR) object__xor(res, err, obj1, obj2);
-                        else if ((int) data == Special_OR) object__or(res, err, obj1, obj2);
-                        else if ((int) data == Special_LSHIFT) object__ls(res, err, obj1, obj2);
-                        else if ((int) data == Special_RSHIFT) object__rs(res, err, obj1, obj2);
+                        if (data_s == Special_MOD) object__mod(res, err, obj1, obj2);
+                        else if (data_s == Special_AND) object__and(res, err, obj1, obj2);
+                        else if (data_s == Special_MUL) object__mul(res, err, obj1, obj2);
+                        else if (data_s == Special_ADD) object__add(res, err, obj1, obj2);
+                        else if (data_s == Special_SUB) object__sub(res, err, obj1, obj2);
+                        else if (data_s == Special_DIV) object__div(res, err, obj1, obj2);
+                        else if (data_s == Special_XOR) object__xor(res, err, obj1, obj2);
+                        else if (data_s == Special_OR) object__or(res, err, obj1, obj2);
+                        else if (data_s == Special_LSHIFT) object__ls(res, err, obj1, obj2);
+                        else if (data_s == Special_RSHIFT) object__rs(res, err, obj1, obj2);
                         else {
                             bool1 = object_cmp(obj1, obj2);
                             object_set_type(res, INTEGER_TYPE);
 
                             if (
-                                    ((int) data == Special_LESS && bool1 < 0) ||
-                                    ((int) data == Special_GREATER && bool1 != 2 && bool1 > 0) ||
-                                    ((int) data == Special_EQ_LESS && bool1 <= 0) ||
-                                    ((int) data == Special_EQ_GREATER && bool1 != 2 && bool1 >= 0) ||
-                                    ((int) data == Special_EQ_NOT && bool1 != 0) ||
-                                    ((int) data == Special_EQ_EQ && bool1 == 0))
+                                    (data_s == Special_LESS && bool1 < 0) ||
+                                    (data_s == Special_GREATER && bool1 != 2 && bool1 > 0) ||
+                                    (data_s == Special_EQ_LESS && bool1 <= 0) ||
+                                    (data_s == Special_EQ_GREATER && bool1 != 2 && bool1 >= 0) ||
+                                    (data_s == Special_EQ_NOT && bool1 != 0) ||
+                                    (data_s == Special_EQ_EQ && bool1 == 0))
                                 integer_set_ui(res->data, 1);
                             else integer_set_ui(res->data, 0);
 
@@ -505,17 +505,17 @@ size_t run_codespace(struct parser_st *parser, struct bytecode_st *code, size_t 
                         } else list_append(temp_stack, res);
                         break;
                     case BC_ArithmeticSet:
-                        if ((int) data == Special_EQ_MOD) object__mod(res, err, obj1, obj2);
-                        else if ((int) data == Special_EQ_AND) object__and(res, err, obj1, obj2);
-                        else if ((int) data == Special_EQ_MUL) object__mul(res, err, obj1, obj2);
-                        else if ((int) data == Special_EQ_ADD) object__add(res, err, obj1, obj2);
-                        else if ((int) data == Special_EQ_SUB) object__sub(res, err, obj1, obj2);
-                        else if ((int) data == Special_EQ_DIV) object__div(res, err, obj1, obj2);
-                        else if ((int) data == Special_EQ_XOR) object__xor(res, err, obj1, obj2);
-                        else if ((int) data == Special_EQ_OR) object__or(res, err, obj1, obj2);
-                        else if ((int) data == Special_EQ_LSHIFT) object__ls(res, err, obj1, obj2);
-                        else if ((int) data == Special_EQ_RSHIFT) object__rs(res, err, obj1, obj2);
-                        else if ((int) data == Special_EQ) object_set(res, obj2);
+                        if (data_s == Special_EQ_MOD) object__mod(res, err, obj1, obj2);
+                        else if (data_s == Special_EQ_AND) object__and(res, err, obj1, obj2);
+                        else if (data_s == Special_EQ_MUL) object__mul(res, err, obj1, obj2);
+                        else if (data_s == Special_EQ_ADD) object__add(res, err, obj1, obj2);
+                        else if (data_s == Special_EQ_SUB) object__sub(res, err, obj1, obj2);
+                        else if (data_s == Special_EQ_DIV) object__div(res, err, obj1, obj2);
+                        else if (data_s == Special_EQ_XOR) object__xor(res, err, obj1, obj2);
+                        else if (data_s == Special_EQ_OR) object__or(res, err, obj1, obj2);
+                        else if (data_s == Special_EQ_LSHIFT) object__ls(res, err, obj1, obj2);
+                        else if (data_s == Special_EQ_RSHIFT) object__rs(res, err, obj1, obj2);
+                        else if (data_s == Special_EQ) object_set(res, obj2);
 
                         if (err->type != NONE_TYPE) {
 //                            interrupt_type = Interrupt_Throw;
@@ -531,8 +531,8 @@ size_t run_codespace(struct parser_st *parser, struct bytecode_st *code, size_t 
                         if (obj2->type == INTEGER_TYPE && integer_is_null(obj2->data)) bool2 = 0;
 
                         object_set_type(res, INTEGER_TYPE);
-                        if ((int) data == Special_AND_AND) integer_set_ui(res->data, bool1 && bool2);
-                        if ((int) data == Special_OR_OR) integer_set_ui(res->data, bool1 || bool2);
+                        if (data_s == Special_AND_AND) integer_set_ui(res->data, bool1 && bool2);
+                        if (data_s == Special_OR_OR) integer_set_ui(res->data, bool1 || bool2);
 
                         list_append(temp_stack, res);
                         break;
