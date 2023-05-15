@@ -20,5 +20,5 @@ target_link_libraries(${PROJECT_NAME}_lib PUBLIC Sakaar_HashCode_lib)
 target_link_libraries(${PROJECT_NAME}_lib PUBLIC Sakaar_CryptoCode_lib)
 target_link_libraries(${PROJECT_NAME}_lib PUBLIC Sakaar_CryptoBase_lib)
 
-add_executable(${PROJECT_NAME} main.c)
+add_executable(${PROJECT_NAME} main.c include/sc_structs/sc_error.h src/sc_structs/sc_error.c)
 target_link_libraries(${PROJECT_NAME} PUBLIC ${PROJECT_NAME}_lib)

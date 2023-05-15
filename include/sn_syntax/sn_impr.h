@@ -10,9 +10,13 @@
 #define ImprType_Import         0x05
 
 int name_impr(struct parser_st *, struct node_st *);
+
 int module_impr(struct parser_st *, struct node_st *);
+
 int module_as_impr(struct parser_st *, struct node_st *);
+
 int from_impr(struct parser_st *, struct node_st *);
+
 int import_impr(struct parser_st *, struct node_st *);
 
 #endif //SN_IMPORT_H

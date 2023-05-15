@@ -1,4 +1,5 @@
 #include <stdio.h>
+#include <time.h>
 #include "op_operations.h"
 #include "cg_code.h"
 #include "sys/time.h"
@@ -697,30 +698,28 @@ void print_node_list(const struct node_list_st *res, int size) {
 }
 
 
-int main() {
+int main(int args, char *argv[]) {
+    printf("param %s\n", argv[1]);
     struct parser_st parser;
     parser_data_inti(&parser);
 
-    parser_set_file(&parser, "text.sc"); // Open File
-    if (!string_is_null(&parser.error_msg)) {
-        printf("File Error: ");
-        for (int i = 0; i < parser.error_msg.size; i++) printf("%c", parser.error_msg.data[i]);
-        printf("\n");
+    parser_set_file(&parser, argv[1]); // Open File
+    if (parser.error->present) {
+        printf("%s: %s\n", parser.error->type.data, parser.error->msg.data);
         parser_data_free(&parser);
         exit(1);
     }
 
     tokenize(&parser); // Tokenize file
-    if (!string_is_null(&parser.error_msg)) {
-        printf("Lexical error: ");
-        for (int i = 0; i < parser.error_msg.size; i++) printf("%c", parser.error_msg.data[i]);
-        printf("\nLine %zu: \n", parser.line_num + 1);
-        for (size_t i = parser.line_pos; i < parser.data_size; i++) {
+    if (parser.error->present) {
+        printf("%s: %s\n", parser.error->type.data, parser.error->msg.data);
+        printf("Line %zu: \n", parser.error->line_num + 1);
+        for (size_t i = parser.error->line_pos; i < parser.data_size; i++) {
             if (parser.data_str[i] == '\n') break;
             printf("%c", parser.data_str[i]);
         }
         printf("\n");
-        for (size_t i = parser.line_pos; i < parser.data_pos; i++) printf(" ");
+        for (size_t i = parser.error->line_pos; i < parser.error->pos; i++) printf(" ");
         printf("^\n");
 
         parser_data_free(&parser);
@@ -731,32 +730,17 @@ int main() {
 
     node_list_add_new(&parser.nodes);
     int res = token_analyzer(&parser, parser.nodes.nodes[0]); // Make simple AST Tree
-    if(res != SN_Status_Success) {
-        if (res == SN_Status_EOF) {
-            printf("Syntax error : EOF\n");
-        } else {
-            if (res == SM_Status_Error_Indent) {
-                printf("Semantic error : Identifier not initialized\n");
-            } else if (res == SM_Status_Error_Loop) {
-                printf("Semantic error : Calling loop stmt expression out of loop\n");
-            } else if (res == SM_Status_Error_Func) {
-                printf("Semantic error : Calling func stmt expression out of func\n");
-            } else if (res == SM_Status_Error_Class) {
-                printf("Semantic error : Calling class stmt expression out of class\n");
-            } else if (res == SN_Status_Error) {
-                printf("Syntax error :\n");
-            }
-            struct token_st *token = parser.tokens.tokens[parser.error_pos];
 
-            printf("Line %zu: \n", token->line_num + 1);
-            for (size_t i = token->line_pos; i < parser.data_size; i++) {
-                if (parser.data_str[i] == '\n') break;
-                printf("%c", parser.data_str[i]);
-            }
-            printf("\n");
-            for (size_t i = token->line_pos; i < token->pos; i++) printf(" ");
-            printf("^\n");
+    if (parser.error->present) {
+        printf("%s: %s\n", parser.error->type.data, parser.error->msg.data);
+        printf("Line %zu: \n", parser.error->line_num + 1);
+        for (size_t i = parser.error->line_pos; i < parser.data_size; i++) {
+            if (parser.data_str[i] == '\n') break;
+            printf("%c", parser.data_str[i]);
         }
+        printf("\n");
+        for (size_t i = parser.error->line_pos; i < parser.error->pos; i++) printf(" ");
+        printf("^\n");
 
         parser_data_free(&parser);
 

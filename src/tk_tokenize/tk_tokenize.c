@@ -37,7 +37,10 @@ void tokenize(struct parser_st *parser) {
         }
         tokenize_parse(token, parser);
         if (token->type == TokenType_None) {
-            if (string_is_null(&parser->error_msg)) string_set_str(&parser->error_msg, "Unrecognized token", 18);
+            if (!parser->error->present) {
+                sc_error_set_msg(parser->error, ErrorType_Tokenizer, "Unrecognized token");
+                sc_error_set_pos(parser->error, parser->line_num, parser->line_pos, parser->data_pos - 1);
+            }
             goto bad_end;
         }
         if (token->type == TokenType_Special) {
@@ -51,51 +54,57 @@ void tokenize(struct parser_st *parser) {
                 case Special_LSB:
                     parser->scope_buf[parser->scope_pos++] = Special_LSB;
                     if (parser->scope_pos > MaxBracketNesting) {
-                        string_set_str(&parser->error_msg, "Scope length more then max scopes nesting", 41);
+                        sc_error_set_msg(parser->error, ErrorType_Tokenizer, "Scope length more then max scopes nesting");
+                        sc_error_set_pos(parser->error, parser->line_num, parser->line_pos, parser->data_pos - 1);
                         goto bad_end;
                     }
                     break;
                 case Special_LSQB:
                     parser->scope_buf[parser->scope_pos++] = Special_LSQB;
                     if (parser->scope_pos > MaxBracketNesting) {
-                        string_set_str(&parser->error_msg, "Scope length more then max scopes nesting", 41);
+                        sc_error_set_msg(parser->error, ErrorType_Tokenizer, "Scope length more then max scopes nesting");
+                        sc_error_set_pos(parser->error, parser->line_num, parser->line_pos, parser->data_pos - 1);
                         goto bad_end;
                     }
                     break;
                 case Special_LCB:
                     parser->scope_buf[parser->scope_pos++] = Special_LCB;
                     if (parser->scope_pos > MaxBracketNesting) {
-                        string_set_str(&parser->error_msg, "Scope length more then max scopes nesting", 41);
+                        sc_error_set_msg(parser->error, ErrorType_Tokenizer, "Scope length more then max scopes nesting");
+                        sc_error_set_pos(parser->error, parser->line_num, parser->line_pos, parser->data_pos - 1);
                         goto bad_end;
                     }
                     break;
                 case Special_RSB:
                     if (parser->scope_pos - 1 < 0 || parser->scope_buf[--parser->scope_pos] != Special_LSB) {
                         if (parser->scope_buf[parser->scope_pos] == Special_LSQB) {
-                            string_set_str(&parser->error_msg, "Scope closed incorrectly. Must be ']' using ')'", 47);
+                            sc_error_set_msg(parser->error, ErrorType_Tokenizer, "Scope closed incorrectly. Must be ']' using ')'");
                         } else if (parser->scope_buf[parser->scope_pos] == Special_LCB) {
-                            string_set_str(&parser->error_msg, "Scope closed incorrectly. Must be '}' using ')'", 47);
+                            sc_error_set_msg(parser->error, ErrorType_Tokenizer, "Scope closed incorrectly. Must be '}' using ')'");
                         }
+                        sc_error_set_pos(parser->error, parser->line_num, parser->line_pos, parser->data_pos - 1);
                         goto bad_end;
                     }
                     break;
                 case Special_RSQB:
                     if (parser->scope_pos - 1 < 0 || parser->scope_buf[--parser->scope_pos] != Special_LSQB) {
                         if (parser->scope_buf[parser->scope_pos] == Special_LSB) {
-                            string_set_str(&parser->error_msg, "Scope closed incorrectly. Must be ')' using ']'", 47);
+                            sc_error_set_msg(parser->error, ErrorType_Tokenizer, "Scope closed incorrectly. Must be ')' using ']'");
                         } else if (parser->scope_buf[parser->scope_pos] == Special_LCB) {
-                            string_set_str(&parser->error_msg, "Scope closed incorrectly. Must be '}' using ']'", 47);
+                            sc_error_set_msg(parser->error, ErrorType_Tokenizer, "Scope closed incorrectly. Must be '}' using ']'");
                         }
+                        sc_error_set_pos(parser->error, parser->line_num, parser->line_pos, parser->data_pos - 1);
                         goto bad_end;
                     }
                     break;
                 case Special_RCB:
                     if (parser->scope_pos - 1 < 0 || parser->scope_buf[--parser->scope_pos] != Special_LCB) {
                         if (parser->scope_buf[parser->scope_pos] == Special_LSQB) {
-                            string_set_str(&parser->error_msg, "Scope closed incorrectly. Must be ']' using '}'", 47);
+                            sc_error_set_msg(parser->error, ErrorType_Tokenizer, "Scope closed incorrectly. Must be ']' using '}'");
                         } else if (parser->scope_buf[parser->scope_pos] == Special_LSB) {
-                            string_set_str(&parser->error_msg, "Scope closed incorrectly. Must be ')' using '}'", 47);
+                            sc_error_set_msg(parser->error, ErrorType_Tokenizer, "Scope closed incorrectly. Must be ')' using '}'");
                         }
+                        sc_error_set_pos(parser->error, parser->line_num, parser->line_pos, parser->data_pos - 1);
                         goto bad_end;
                     }
                     break;
@@ -111,7 +120,8 @@ void tokenize(struct parser_st *parser) {
     }
 
     if (parser->scope_pos != 0) {
-        string_set_str(&parser->error_msg, "Scope is not closed...", 22);
+        sc_error_set_msg(parser->error, ErrorType_Tokenizer, "Scope is not closed...");
+        sc_error_set_pos(parser->error, parser->line_num, parser->line_pos, parser->data_pos - 1);
         goto bad_end;
     }
     token_free(token);

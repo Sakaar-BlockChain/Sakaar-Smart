@@ -28,8 +28,8 @@ int result = SN_Status_Nothing, sub_result;
 
 #define analyze_end_sub                                                             \
 sub:        result = sub_result; goto end;                                          \
-eof:        result = SN_Status_EOF; parser->error_pos = parser->data_pos; goto end; \
-err:        result = SN_Status_Error; parser->error_pos = parser->data_pos; goto end;
+eof:        result = SN_Status_EOF; parser_set_error_token(parser, ErrorType_Syntax, "Unexpected end of file", parser->data_pos - 1); goto end; \
+err:        result = SN_Status_Error; parser_set_error_token(parser, ErrorType_Syntax, "", parser->data_pos); goto end;
 
 #define analyze_end                                 \
 end:                                                \
@@ -157,8 +157,8 @@ int return_stmt(struct parser_st *parser, struct node_st *expr) {
     }
 analyze_end
     err_func:
-    result = SM_Status_Error_Func;
-    parser->error_pos = parser->data_pos;
+    result = SN_Status_Error;
+    parser_set_error_token(parser, ErrorType_Semantic, "Return statement must be inside function", parser->data_pos);
     goto end;
 }
 
@@ -177,8 +177,8 @@ int break_stmt(struct parser_st *parser, struct node_st *expr) {
     }
 analyze_end
     err_loop:
-    result = SM_Status_Error_Loop;
-    parser->error_pos = parser->data_pos;
+    result = SN_Status_Error;
+    parser_set_error_token(parser, ErrorType_Semantic, "Break statement must be inside loop", parser->data_pos);
     goto end;
 }
 
@@ -197,8 +197,8 @@ int continue_stmt(struct parser_st *parser, struct node_st *expr) {
     }
 analyze_end
     err_loop:
-    result = SM_Status_Error_Loop;
-    parser->error_pos = parser->data_pos;
+    result = SN_Status_Error;
+    parser_set_error_token(parser, ErrorType_Semantic, "Continue statement must be inside loop", parser->data_pos);
     goto end;
 }
 

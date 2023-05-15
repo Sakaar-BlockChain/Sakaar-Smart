@@ -5,7 +5,10 @@
 #define CharInt_dec(c) ((c) >= '0' && (c) <= '9')
 #define CharInt_hex(c) (((c) >= '0' && (c) <= '9') || ((c) >= 'a' && (c) <= 'f') || ((c) >= 'A' && (c) <= 'F'))
 
-#define ErrInt {string_set_str(&parser->error_msg, "Error while parsing integer", 27); return;}
+#define ErrInt {                                                                        \
+sc_error_set_msg(parser->error, ErrorType_Tokenizer,"Error while parsing integer");     \
+sc_error_set_pos(parser->error, parser->line_num, parser->line_pos, parser->data_pos);  \
+return;}
 #define GetChar {pos++;if (pos == parser->data_size) ErrInt c = parser->data_str[pos];}
 
 void tokenize_integer(struct token_st *token, struct parser_st *parser) {

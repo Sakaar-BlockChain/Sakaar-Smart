@@ -28,8 +28,8 @@ int result = SN_Status_Nothing, sub_result;
 
 #define analyze_end_sub                                                             \
 sub:        result = sub_result; goto end;                                          \
-eof:        result = SN_Status_EOF; parser->error_pos = parser->data_pos; goto end; \
-err:        result = SN_Status_Error; parser->error_pos = parser->data_pos; goto end;
+eof:        result = SN_Status_EOF; parser_set_error_token(parser, ErrorType_Syntax, "Unexpected end of file", parser->data_pos - 1); goto end; \
+err:        result = SN_Status_Error; parser_set_error_token(parser, ErrorType_Syntax, "", parser->data_pos); goto end;
 
 #define analyze_end                                 \
 end:                                                \
@@ -45,7 +45,7 @@ analyze_end_sub
 
 int name_impr(struct parser_st *parser, struct node_st *expr) {
     parser_end {
-        parser->error_pos = parser->data_pos;
+        parser_set_error_token(parser, ErrorType_Syntax, "Unexpected end of file", parser->data_pos - 1);
         return SN_Status_EOF;
     }
     struct token_st *token;
@@ -57,11 +57,12 @@ int name_impr(struct parser_st *parser, struct node_st *expr) {
     parser->data_pos++;
     return SN_Status_Success;
 }
+
 int module_impr(struct parser_st *parser, struct node_st *expr) {
     analyze_start
     {
         check_call(name_impr(parser, expr_next), goto end;)
-        while(parser->data_pos < parser->tokens.size) {
+        while (parser->data_pos < parser->tokens.size) {
             parser_get
             if (token->type == TokenType_Special && token->sub_type == Special_DOT) {
                 parser->data_pos++;
@@ -78,6 +79,7 @@ int module_impr(struct parser_st *parser, struct node_st *expr) {
     }
 analyze_end
 }
+
 int module_as_impr(struct parser_st *parser, struct node_st *expr) {
     analyze_start
     {
@@ -110,6 +112,7 @@ int module_as_impr(struct parser_st *parser, struct node_st *expr) {
     }
 analyze_end
 }
+
 int from_impr(struct parser_st *parser, struct node_st *expr) {
     analyze_start
     {
@@ -132,6 +135,7 @@ int from_impr(struct parser_st *parser, struct node_st *expr) {
     }
 analyze_end
 }
+
 int import_impr(struct parser_st *parser, struct node_st *expr) {
     analyze_start
     {
@@ -143,7 +147,7 @@ int import_impr(struct parser_st *parser, struct node_st *expr) {
         expr->type = MainType_Impr;
         expr->sub_type = ImprType_Import;
 
-        while(parser->data_pos < parser->tokens.size) {
+        while (parser->data_pos < parser->tokens.size) {
             expr_add
             check_call(module_as_impr(parser, expr_next), goto err;)
 

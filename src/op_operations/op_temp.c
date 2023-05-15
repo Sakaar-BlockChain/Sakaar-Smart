@@ -601,12 +601,9 @@ void run_smart_contract(struct parser_st *parser, size_t codespace) {
 
     bytecode_list_append(codes_stack, parser->codes.bytecodes[codespace]);
     size_t position = 0;
-    printf("------------------------------Code Started--------------------------------------\n");
     while (codes_stack->size > 0) {
         code = bytecode_list_pop(codes_stack);
         position = run_codespace(parser, code, position);
     }
-    printf("-------------------------------Code Ended---------------------------------------\n");
-    print_list(parser->temp_stack, 0);
     print_list(parser->var_stack, 0);
 }

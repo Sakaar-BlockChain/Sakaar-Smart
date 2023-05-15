@@ -19,8 +19,7 @@ void parser_clear(struct parser_st *res) {
     res->var_start_pos = 0;
     res->scope_type = ScopeType_None;
 
-    string_clear(&res->error_msg);
-    res->error_pos = 0;
+    res->error = sc_error_new();
 
     bytecode_list_clear(&res->codes);
     closure_list_clear(&res->closures);
@@ -52,8 +51,7 @@ void parser_data_inti(struct parser_st *res) {
     res->var_start_pos = 0;
     res->scope_type = ScopeType_None;
 
-    string_data_init(&res->error_msg);
-    res->error_pos = 0;
+    res->error = sc_error_new();
 
     bytecode_list_data_init(&res->codes);
     closure_list_data_init(&res->closures);
@@ -80,8 +78,7 @@ void parser_data_free(struct parser_st *res) {
     string_data_free(&res->file_path);
     if(res->data_str != NULL) skr_free(res->data_str);
 
-    string_data_free(&res->error_msg);
-    res->error_pos = 0;
+    sc_error_free(res->error);
 
     bytecode_list_data_free(&res->codes);
     closure_list_data_free(&res->closures);
@@ -101,9 +98,13 @@ void parser_data_free(struct parser_st *res) {
 void parser_set_file(struct parser_st *res, char *file_path){
     parser_clear(res);
 
-    if (memcmp(file_path + strlen(file_path) - 3, ".sc", 3) != 0) return string_set_str(&res->error_msg, "File Not Exist", 14);
+    if (memcmp(file_path + strlen(file_path) - 3, ".sc", 3) != 0)
+        return sc_error_set_msg(res->error, ErrorType_Import, "File wrong format");
+
     FILE *fp = fopen(file_path, "r");
-    if (fp == NULL) return string_set_str(&res->error_msg, "File Not Exist", 14);
+    if (fp == NULL)
+        return sc_error_set_msg(res->error, ErrorType_Import, "File Not Exist");
+
     fseek(fp, 0, SEEK_END);
     res->data_size = ftell(fp);
 
@@ -143,6 +144,13 @@ void parser_set_str(struct parser_st *res, char *data, size_t size) {
     res->data_size = size;
     res->data_str = skr_malloc(res->data_size);
     memcpy(res->data_str, data, size);
+}
+void parser_set_error_token(struct parser_st *parser, char *type, char *msg, size_t token_pos) {
+    sc_error_set_msg(parser->error, type, msg);
+    sc_error_set_pos(parser->error,
+                     parser->tokens.tokens[token_pos]->line_num,
+                     parser->tokens.tokens[token_pos]->line_pos,
+                     parser->tokens.tokens[token_pos]->pos);
 }
 
 

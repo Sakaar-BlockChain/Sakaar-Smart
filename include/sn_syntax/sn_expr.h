@@ -12,16 +12,27 @@
 #define PrimType_Call           0x07
 
 int scopes_expr(struct parser_st *, struct node_st *);
+
 int list_expr(struct parser_st *, struct node_st *);
+
 int ident_get_expr(struct parser_st *, struct node_st *);
+
 int ident_new_expr(struct parser_st *, struct node_st *);
+
 int bool_expr(struct parser_st *, struct node_st *);
+
 int number_expr(struct parser_st *, struct node_st *);
+
 int string_expr(struct parser_st *, struct node_st *);
+
 int null_expr(struct parser_st *, struct node_st *);
+
 int literal_expr(struct parser_st *, struct node_st *);
+
 int atom_expr(struct parser_st *, struct node_st *);
+
 int primary_expr(struct parser_st *, struct node_st *);
+
 int set_primary_expr(struct parser_st *, struct node_st *);
 
 #endif //AN_EXPR_H

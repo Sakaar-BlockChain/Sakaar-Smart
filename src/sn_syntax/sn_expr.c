@@ -25,8 +25,8 @@ int result = SN_Status_Nothing, sub_result;
 
 #define analyze_end_sub                                                             \
 sub:        result = sub_result; goto end;                                          \
-eof:        result = SN_Status_EOF; parser->error_pos = parser->data_pos; goto end; \
-err:        result = SN_Status_Error; parser->error_pos = parser->data_pos; goto end;
+eof:        result = SN_Status_EOF; parser_set_error_token(parser, ErrorType_Syntax, "Unexpected end of file", parser->data_pos - 1); goto end; \
+err:        result = SN_Status_Error; parser_set_error_token(parser, ErrorType_Syntax, "", parser->data_pos); goto end;
 
 #define analyze_end                                 \
 end:                                                \
@@ -57,14 +57,17 @@ int scopes_expr(struct parser_st *parser, struct node_st *expr) {
 
         result = SN_Status_Success;
     }
+
 analyze_end
 }
+
 int list_expr(struct parser_st *parser, struct node_st *expr) {
     return list_oper(parser, expr, Special_LSQB, Special_RSQB);
 }
+
 int ident_get_expr(struct parser_st *parser, struct node_st *expr) {
     parser_end {
-        parser->error_pos = parser->data_pos;
+        parser_set_error_token(parser, ErrorType_Syntax, "Unexpected end of file", parser->data_pos - 1);
         return SN_Status_EOF;
     }
     struct token_st *token;
@@ -75,14 +78,18 @@ int ident_get_expr(struct parser_st *parser, struct node_st *expr) {
     expr->data = parser_get_ident(parser, &token->data);
     if (expr->data == 0) {
         node_clear(expr);
-        parser->error_pos = parser->data_pos;
-        return SM_Status_Error_Indent;
+        parser_set_error_token(parser, ErrorType_Semantic, "Undefined variable", parser->data_pos);
+        return SN_Status_Error;
     }
     parser->data_pos++;
     return SN_Status_Success;
 }
+
 int ident_new_expr(struct parser_st *parser, struct node_st *expr) {
-    parser_end return SN_Status_EOF;
+    parser_end {
+        parser_set_error_token(parser, ErrorType_Syntax, "Unexpected end of file", parser->data_pos - 1);
+        return SN_Status_EOF;
+    }
     struct token_st *token;
     parser_get
     if (token->type != TokenType_Identifier) return SN_Status_Nothing;
@@ -92,8 +99,12 @@ int ident_new_expr(struct parser_st *parser, struct node_st *expr) {
     expr->data = parser_new_ident(parser, &token->data);
     return SN_Status_Success;
 }
+
 int bool_expr(struct parser_st *parser, struct node_st *expr) {
-    parser_end return SN_Status_EOF;
+    parser_end {
+        parser_set_error_token(parser, ErrorType_Syntax, "Unexpected end of file", parser->data_pos - 1);
+        return SN_Status_EOF;
+    }
     struct token_st *token;
     parser_get
     if (token->type != TokenType_KeyWords || (token->sub_type != KeyWord_FALSE && token->sub_type != KeyWord_TRUE))
@@ -110,8 +121,12 @@ int bool_expr(struct parser_st *parser, struct node_st *expr) {
     }
     return SN_Status_Success;
 }
+
 int number_expr(struct parser_st *parser, struct node_st *expr) {
-    parser_end return SN_Status_EOF;
+    parser_end {
+        parser_set_error_token(parser, ErrorType_Syntax, "Unexpected end of file", parser->data_pos - 1);
+        return SN_Status_EOF;
+    }
     struct token_st *token;
     parser_get
     if (token->type != TokenType_Int) return SN_Status_Nothing;
@@ -151,8 +166,12 @@ int number_expr(struct parser_st *parser, struct node_st *expr) {
     }
     return SN_Status_Success;
 }
+
 int string_expr(struct parser_st *parser, struct node_st *expr) {
-    parser_end return SN_Status_EOF;
+    parser_end {
+        parser_set_error_token(parser, ErrorType_Syntax, "Unexpected end of file", parser->data_pos - 1);
+        return SN_Status_EOF;
+    }
     struct token_st *token;
     parser_get
     if (token->type != TokenType_String) return SN_Status_Nothing;
@@ -167,8 +186,12 @@ int string_expr(struct parser_st *parser, struct node_st *expr) {
     }
     return SN_Status_Success;
 }
+
 int null_expr(struct parser_st *parser, struct node_st *expr) {
-    parser_end return SN_Status_EOF;
+    parser_end {
+        parser_set_error_token(parser, ErrorType_Syntax, "Unexpected end of file", parser->data_pos - 1);
+        return SN_Status_EOF;
+    }
     struct token_st *token;
     parser_get
     if (token->type != TokenType_KeyWords || token->sub_type != KeyWord_NONE) return SN_Status_Nothing;
@@ -178,6 +201,7 @@ int null_expr(struct parser_st *parser, struct node_st *expr) {
     expr->data = 0;
     return SN_Status_Success;
 }
+
 int literal_expr(struct parser_st *parser, struct node_st *expr) {
     int result = null_expr(parser, expr);
     if (result != SN_Status_Nothing) return result;
@@ -190,6 +214,7 @@ int literal_expr(struct parser_st *parser, struct node_st *expr) {
     result = list_expr(parser, expr);
     return result;
 }
+
 int atom_expr(struct parser_st *parser, struct node_st *expr) {
     int result = ident_get_expr(parser, expr);
     if (result != SN_Status_Nothing) return result;
@@ -198,11 +223,12 @@ int atom_expr(struct parser_st *parser, struct node_st *expr) {
     result = scopes_expr(parser, expr);
     return result;
 }
+
 int primary_expr(struct parser_st *parser, struct node_st *expr) {
     analyze_start
     {
         check_call(atom_expr(parser, expr_next), goto end;)
-        while(parser->data_pos < parser->tokens.size) {
+        while (parser->data_pos < parser->tokens.size) {
             parser_get
             if (token->type == TokenType_Special && token->sub_type == Special_DOT) {
                 parser->data_pos++;

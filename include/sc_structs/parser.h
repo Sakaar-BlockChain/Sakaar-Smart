@@ -38,8 +38,7 @@ struct parser_st{
     size_t scope_pos;
     int scope_type;
 
-    struct string_st error_msg;
-    size_t error_pos;
+    struct sc_error *error;
 
     struct bytecode_list_st codes;
     struct closure_list_st closures;
@@ -64,6 +63,7 @@ void parser_data_free(struct parser_st *);
 
 void parser_set_file(struct parser_st *, char *);
 void parser_set_str(struct parser_st *, char *, size_t);
+void parser_set_error_token(struct parser_st *, char *type, char *msg, size_t token_pos);
 
 size_t parser_new_ident(struct parser_st *, struct string_st *);
 size_t parser_get_ident(struct parser_st *, struct string_st *);
