@@ -763,10 +763,18 @@ int main(int args, char *argv[]) {
 
     clock_t end = clock();
     double time_spent = (double)(end - begin) / CLOCKS_PER_SEC;
+
+    if (parser.error->present) {
+        printf("%s: %s\n", parser.error->type.data, parser.error->msg.data);
+
+        printf("%zu\n", mem_ctx.filled);
+        exit(1);
+    }
     printf("Time : %f\n", time_spent);
 
     parser_data_free(&parser);
     printf("%zu\n", mem_ctx.filled);
+
 }
 
 // Сделать сериализацию обектов

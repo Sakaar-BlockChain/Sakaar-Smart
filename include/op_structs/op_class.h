@@ -25,8 +25,8 @@ void op_class_define(struct op_class *, struct node_st *, struct parser_st *);
 struct object_st *op_class_save_value(struct op_class *, struct parser_st *);
 
 // Sub method
-struct object_st *op_class_subscript(struct object_st *, struct op_class *, const struct object_st *);
-struct object_st *op_class_attrib(struct object_st *, const struct op_class *, const struct string_st *);
+struct object_st *op_class_subscript(struct error_st *, struct op_class *, const struct object_st *);
+struct object_st *op_class_attrib(struct error_st *, const struct op_class *, const struct string_st *);
 
 // Convert Methods
 //void op_object__bool(struct object_st *, struct object_st *, const struct op_object *);

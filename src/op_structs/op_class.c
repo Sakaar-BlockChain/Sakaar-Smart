@@ -94,9 +94,9 @@ struct object_st *op_class_save_value(struct op_class *res, struct parser_st* pa
 }
 
 // Sub method
-struct object_st *op_class_subscript(struct object_st *err, struct op_class *obj, const struct object_st *obj2) {
+struct object_st *op_class_subscript(struct error_st *err, struct op_class *obj, const struct object_st *obj2) {
     return map_subscript(err, obj->attr, obj2);
 }
-struct object_st *op_class_attrib(struct object_st *err, const struct op_class *obj, const struct string_st *str) {
+struct object_st *op_class_attrib(struct error_st *err, const struct op_class *obj, const struct string_st *str) {
     return map_set_elm(obj->attr, str->data, str->size);
 }

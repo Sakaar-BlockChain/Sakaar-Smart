@@ -9,8 +9,8 @@ void tokenize_string(struct token_st *token, struct parser_st *parser){
             if ((pos == 0 || parser->data_str[pos - 1] != '\\') && parser->data_str[pos] == '"') break;
         }
         if (parser->data_size == pos) {
-            sc_error_set_msg(parser->error, ErrorType_Tokenizer, "String started but did not end use for this \" ");
-            sc_error_set_pos(parser->error, parser->line_num, parser->line_pos, parser->data_pos);
+            error_set_msg(parser->error, ErrorType_Tokenizer, "String started but did not end use for this \" ");
+            error_set_pos(parser->error, parser->line_num, parser->line_pos, parser->data_pos);
             return;
         }
     } else {
@@ -18,8 +18,8 @@ void tokenize_string(struct token_st *token, struct parser_st *parser){
             if ((pos == 0 || parser->data_str[pos - 1] != '\\') && parser->data_str[pos] == '\'') break;
         }
         if (parser->data_size == pos) {
-            sc_error_set_msg(parser->error, ErrorType_Tokenizer, "String started but did not end use for this ' ");
-            sc_error_set_pos(parser->error, parser->line_num, parser->line_pos, parser->data_pos);
+            error_set_msg(parser->error, ErrorType_Tokenizer, "String started but did not end use for this ' ");
+            error_set_pos(parser->error, parser->line_num, parser->line_pos, parser->data_pos);
             return;
         }
     }

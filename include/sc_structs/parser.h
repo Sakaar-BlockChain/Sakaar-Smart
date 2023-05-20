@@ -38,7 +38,7 @@ struct parser_st{
     size_t scope_pos;
     int scope_type;
 
-    struct sc_error *error;
+    struct error_st *error;
 
     struct bytecode_list_st codes;
     struct closure_list_st closures;

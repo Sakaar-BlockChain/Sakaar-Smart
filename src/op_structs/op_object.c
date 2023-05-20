@@ -77,9 +77,9 @@ void op_object_define(struct op_object *res, struct op_class *class) {
 }
 
 // Sub method
-struct object_st *op_object_subscript(struct object_st *err, struct op_object *obj, const struct object_st *obj2) {
+struct object_st *op_object_subscript(struct error_st *err, struct op_object *obj, const struct object_st *obj2) {
     return map_subscript(err, obj->attr, obj2);
 }
-struct object_st *op_object_attrib(struct object_st *err, const struct op_object *obj, const struct string_st *str) {
+struct object_st *op_object_attrib(struct error_st *err, const struct op_object *obj, const struct string_st *str) {
     return map_set_elm(obj->attr, str->data, str->size);
 }

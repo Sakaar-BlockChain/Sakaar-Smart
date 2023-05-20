@@ -13,9 +13,10 @@ size_t run_codespace(struct parser_st *parser, struct bytecode_st *code, size_t 
 
     struct object_st **temp;
     struct object_st *res = NULL;
-    struct object_st *err = NULL;
     struct object_st *obj1 = NULL;
     struct object_st *obj2 = NULL;
+
+    struct error_st *err = parser->error;
 
 
     struct op_class *op_clas = NULL;
@@ -42,44 +43,32 @@ size_t run_codespace(struct parser_st *parser, struct bytecode_st *code, size_t 
                     break;
                 case BC_Attrib: {
                     obj1 = object_copy_obj(temp_stack->data[temp_stack->size - 1]);
-                    err = object_new();
                     res = object_attrib(err, obj1, const_objects->data[data_s]->data);
-                    if (err->type != NONE_TYPE) {
-//                        interrupt_type = Interrupt_Throw;
-//                        interrupt_scopes = 0;
-                        list_append(temp_stack, err);
-                    } else list_append(temp_stack, res);
+
+                    if (err->present) return 0;
+                    else list_append(temp_stack, res);
                     object_free(res);
-                    object_free(err);
                     object_free(obj1);
                     break;
                 }
                 case BC_Attrib_Del: {
                     obj1 = list_pop(temp_stack);
-                    err = object_new();
                     res = object_attrib(err, obj1, const_objects->data[data_s]->data);
-                    if (err->type != NONE_TYPE) {
-//                        interrupt_type = Interrupt_Throw;
-//                        interrupt_scopes = 0;
-                        list_append(temp_stack, err);
-                    } else list_append(temp_stack, res);
+
+                    if (err->present) return 0;
+                    else list_append(temp_stack, res);
                     object_free(res);
-                    object_free(err);
                     object_free(obj1);
                     break;
                 }
                 case BC_Subscript: {
                     obj1 = list_pop(temp_stack);
                     obj2 = list_pop(temp_stack);
-                    err = object_new();
                     res = object_subscript(err, obj1, obj2);
-                    if (err->type != NONE_TYPE) {
-//                        interrupt_type = Interrupt_Throw;
-//                        interrupt_scopes = 0;
-                        list_append(temp_stack, err);
-                    } else list_append(temp_stack, res);
+
+                    if (err->present) return 0;
+                    else list_append(temp_stack, res);
                     object_free(res);
-                    object_free(err);
                     object_free(obj1);
                     object_free(obj2);
                     break;
@@ -171,32 +160,26 @@ size_t run_codespace(struct parser_st *parser, struct bytecode_st *code, size_t 
         else if ((command & 0xF0) == BC_Convert) {
             obj1 = list_pop(temp_stack);
             res = object_new();
-            err = object_new();
 
             if (command == BC_Convert_Bool) object__bool(res, err, obj1);
             else if (command == BC_Convert_Int) object__int(res, err, obj1);
             else if (command == BC_Convert_Float) object__float(res, err, obj1);
             else if (command == BC_Convert_Str) object__str(res, err, obj1);
 
-            if (err->type != NONE_TYPE) {
-//                interrupt_type = Interrupt_Throw;
-//                interrupt_scopes = 0;
-                list_append(temp_stack, err);
-            } else list_append(temp_stack, res);
+            if (err->present) return 0;
+            else list_append(temp_stack, res);
             object_free(res);
-            object_free(err);
             object_free(obj1);
         } // Done
         else if ((command & 0xF0) == BC_Operations) {
             obj2 = list_pop(temp_stack);
             res = object_new();
-            err = object_new();
 
             if (command == BC_Negate) {
                 object__neg(res, err, obj2);
-                if (err->type != NONE_TYPE) {
-                    list_append(temp_stack, err);
-                } else list_append(temp_stack, res);
+
+                if (err->present) return 0;
+                else list_append(temp_stack, res);
             } else if (command == BC_NegateBool) {
                 object_set_type(res, INTEGER_TYPE);
                 if (integer_is_null(obj2->data)) integer_set_ui(res->data, 1);
@@ -235,11 +218,9 @@ size_t run_codespace(struct parser_st *parser, struct bytecode_st *code, size_t 
                             list_append(temp_stack, res);
                             break;
                         }
-                        if (err->type != NONE_TYPE) {
-//                            interrupt_type = Interrupt_Throw;
-//                            interrupt_scopes = 0;
-                            list_append(temp_stack, err);
-                        } else list_append(temp_stack, res);
+
+                        if (err->present) return 0;
+                        else list_append(temp_stack, res);
                         break;
                     case BC_ArithmeticSet:
                         if (data_s == Special_EQ_MOD) object__mod(res, err, obj1, obj2);
@@ -254,11 +235,8 @@ size_t run_codespace(struct parser_st *parser, struct bytecode_st *code, size_t 
                         else if (data_s == Special_EQ_RSHIFT) object__rs(res, err, obj1, obj2);
                         else if (data_s == Special_EQ) object_set(res, obj2);
 
-                        if (err->type != NONE_TYPE) {
-//                            interrupt_type = Interrupt_Throw;
-//                            interrupt_scopes = 0;
-                            list_append(temp_stack, err);
-                        } else {
+                        if (err->present) return 0;
+                        else {
                             object_set(obj1, res);
                             list_append(temp_stack, obj1);
                         }
@@ -282,7 +260,6 @@ size_t run_codespace(struct parser_st *parser, struct bytecode_st *code, size_t 
                 object_free(obj1);
             }
             object_free(res);
-            object_free(err);
             object_free(obj2);
         } // Done
         else if ((command & 0xF0) == BC_Jump) {
@@ -340,7 +317,7 @@ void run_smart_contract(struct parser_st *parser, size_t codespace) {
 
     bytecode_list_append(codes_stack, parser->codes.bytecodes[codespace]);
     size_t position = 0;
-    while (codes_stack->size > 0) {
+    while (codes_stack->size > 0 && !parser->error->present) {
         code = bytecode_list_pop(codes_stack);
         position = run_codespace(parser, code, position);
     }

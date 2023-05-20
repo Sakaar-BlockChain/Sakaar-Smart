@@ -8,7 +8,6 @@
 #include "sc_structs/node.h"
 #include "sc_structs/token.h"
 #include "sc_structs/variable.h"
-#include "sc_structs/sc_error.h"
 
 #include "sc_structs/bytecode_list.h"
 #include "sc_structs/closure_list.h"

@@ -19,7 +19,7 @@ void parser_clear(struct parser_st *res) {
     res->var_start_pos = 0;
     res->scope_type = ScopeType_None;
 
-    sc_error_clear(res->error);
+    error_clear(res->error);
 
     bytecode_list_clear(&res->codes);
     closure_list_clear(&res->closures);
@@ -51,7 +51,7 @@ void parser_data_inti(struct parser_st *res) {
     res->var_start_pos = 0;
     res->scope_type = ScopeType_None;
 
-    res->error = sc_error_new();
+    res->error = error_new();
 
     bytecode_list_data_init(&res->codes);
     closure_list_data_init(&res->closures);
@@ -78,7 +78,7 @@ void parser_data_free(struct parser_st *res) {
     string_data_free(&res->file_path);
     if(res->data_str != NULL) skr_free(res->data_str);
 
-    sc_error_free(res->error);
+    error_free(res->error);
 
     bytecode_list_data_free(&res->codes);
     closure_list_data_free(&res->closures);
@@ -99,11 +99,11 @@ void parser_set_file(struct parser_st *res, char *file_path){
     parser_clear(res);
 
     if (memcmp(file_path + strlen(file_path) - 3, ".sc", 3) != 0)
-        return sc_error_set_msg(res->error, ErrorType_Import, "File wrong format");
+        return error_set_msg(res->error, ErrorType_Import, "File wrong format");
 
     FILE *fp = fopen(file_path, "r");
     if (fp == NULL)
-        return sc_error_set_msg(res->error, ErrorType_Import, "File Not Exist");
+        return error_set_msg(res->error, ErrorType_Import, "File Not Exist");
 
     fseek(fp, 0, SEEK_END);
     res->data_size = ftell(fp);
@@ -146,8 +146,8 @@ void parser_set_str(struct parser_st *res, char *data, size_t size) {
     memcpy(res->data_str, data, size);
 }
 void parser_set_error_token(struct parser_st *parser, char *type, char *msg, size_t token_pos) {
-    sc_error_set_msg(parser->error, type, msg);
-    sc_error_set_pos(parser->error,
+    error_set_msg(parser->error, type, msg);
+    error_set_pos(parser->error,
                      parser->tokens.tokens[token_pos]->line_num,
                      parser->tokens.tokens[token_pos]->line_pos,
                      parser->tokens.tokens[token_pos]->pos);
