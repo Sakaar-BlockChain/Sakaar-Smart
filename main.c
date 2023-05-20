@@ -62,7 +62,9 @@ void print_obj(const struct object_st *res, int size) {
     else if (res->type == INTEGER_TYPE) print_int(res->data);
     else if (res->type == OBJECT_TYPE) print_obj(res->data, size + 2);
     else if (res->type == LIST_TYPE) print_list(res->data, size + 2);
-    else printf("Something\n");
+    else if (res->type == OP_CLASS_TYPE) printf("OP_CLASS\n");
+    else if (res->type == OP_FUNCTION_TYPE) printf("OP_FUNCTION\n");
+    else if (res->type == OP_OBJECT_TYPE) printf("OP_OBJECT\n");
     printing[--printing_pos] = NULL;
 }
 
@@ -88,6 +90,9 @@ void print_code(char command, void *data) {
             break;
         case BC_FuncEnd:
             printf("BC_FuncEnd      ");
+            break;
+        case BC_ClassEnd:
+            printf("BC_ClassEnd     ");
             break;
         case BC_Pop:
             printf("BC_Pop          ");
@@ -615,14 +620,8 @@ void print_node(const struct node_st *res, int size) {
             case StmtType_Func:
                 printf("StmtType_Func ");
                 break;
-            case StmtType_PUB_Func:
-                printf("StmtType_PUB_Func ");
-                break;
-            case StmtType_STC_Func:
-                printf("StmtType_STC_Func ");
-                break;
-            case StmtType_PRI_Func:
-                printf("StmtType_PRI_Func ");
+            case StmtType_Func_Body:
+                printf("StmtType_Func_Body ");
                 break;
             case StmtType_If:
                 printf("StmtType_If ");
@@ -635,6 +634,9 @@ void print_node(const struct node_st *res, int size) {
                 break;
             case StmtType_Class:
                 printf("StmtType_Class ");
+                break;
+            case StmtType_Class_Body:
+                printf("StmtType_Class_Body ");
                 break;
             case StmtType_List:
                 printf("StmtType_List ");
@@ -699,7 +701,6 @@ void print_node_list(const struct node_list_st *res, int size) {
 
 
 int main(int args, char *argv[]) {
-    printf("param %s\n", argv[1]);
     struct parser_st parser;
     parser_data_inti(&parser);
 

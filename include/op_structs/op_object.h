@@ -4,20 +4,13 @@
 #include "sc_structs.h"
 
 struct op_object{
-    struct object_st *data;
-
     // Class Object
-    struct object_st *class;
     struct map_st *attr;
 
     // Function inside
     struct frame_st *closure;
     struct variable_list_st *argument;
-    size_t function_body;
-    size_t argument_size;
-
-    // Function outside
-    void (*func)(struct list_st *, struct object_st *, struct op_object *);
+    size_t class_body;
 };
 
 struct op_object *op_object_new();
@@ -29,8 +22,7 @@ void op_object_copy(struct op_object *, const struct op_object *);
 void op_object_clear(struct op_object *);
 int op_object_cmp(const struct op_object *, const struct op_object *);
 
-void op_object_set_data(struct op_object *, struct object_st *);
-void op_object_set_function(struct op_object *, struct node_st *, struct parser_st *);
+void op_object_define(struct op_object *, struct op_class *);
 
 // Sub method
 struct object_st *op_object_subscript(struct object_st *, struct op_object *, const struct object_st *);

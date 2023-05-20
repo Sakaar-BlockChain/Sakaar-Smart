@@ -15,18 +15,17 @@
 #define StmtType_Extends        0x12
 
 #define StmtType_Func           0x20
-#define StmtType_PUB_Func       0x21
-#define StmtType_STC_Func       0x22
-#define StmtType_PRI_Func       0x23
-#define StmtType_Func_Body      0x24
+#define StmtType_Func_Body      0x21
 
-#define StmtType_If             0x31
-#define StmtType_While          0x32
-#define StmtType_DoWhile        0x33
-#define StmtType_Class          0x34
-#define StmtType_TryWith        0x35
+#define StmtType_Class          0x30
+#define StmtType_Class_Body     0x31
 
-#define StmtType_List           0x41
+#define StmtType_If             0x41
+#define StmtType_While          0x42
+#define StmtType_DoWhile        0x43
+#define StmtType_TryWith        0x44
+
+#define StmtType_List           0x51
 
 int annotated_stmt(struct parser_st *, struct node_st *);
 int assignment_stmt(struct parser_st *, struct node_st *);
@@ -42,10 +41,12 @@ int extends_list(struct parser_st *, struct node_st *);
 int function_stmt(struct parser_st *, struct node_st *);
 int function_body_stmt(struct parser_st *, struct node_st *);
 
+int class_stmt(struct parser_st *, struct node_st *);
+int class_body_stmt(struct parser_st *, struct node_st *);
+
 int if_stmt(struct parser_st *, struct node_st *);
 int while_stmt(struct parser_st *, struct node_st *);
 int do_while_stmt(struct parser_st *, struct node_st *);
-int class_stmt(struct parser_st *, struct node_st *);
 int try_with_stmt(struct parser_st *, struct node_st *);
 int compound_stmt(struct parser_st *, struct node_st *);
 

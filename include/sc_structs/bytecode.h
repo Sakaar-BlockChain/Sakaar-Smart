@@ -8,10 +8,12 @@
 #define BC_Load             0x02
 #define BC_LoadConst        0x03
 #define BC_Attrib           0x04
-#define BC_Subscript        0x05
-#define BC_Call             0x06
-#define BC_FuncEnd          0x07
-#define BC_Pop              0x08
+#define BC_Attrib_Del       0x05
+#define BC_Subscript        0x06
+#define BC_Call             0x07
+#define BC_FuncEnd          0x08
+#define BC_ClassEnd         0x09
+#define BC_Pop              0x0a
 
 #define BC_Convert          0x10
 #define BC_Convert_Bool     0x11

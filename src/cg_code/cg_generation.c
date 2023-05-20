@@ -15,6 +15,16 @@ void cg_generate_code_function(struct parser_st *parser, struct node_st *node) {
     bytecode_append(code, BC_FuncEnd, NULL);
 }
 
+void cg_generate_code_class(struct parser_st *parser, struct node_st *node) {
+    node->data = parser_codespace(parser);
+    if (node->nodes.size == 2) {
+        cg_generate_code(parser, node->nodes.nodes[1], parser->codes.bytecodes[node->data]);
+    } else {
+        cg_generate_code(parser, node->nodes.nodes[0], parser->codes.bytecodes[node->data]);
+    }
+    bytecode_append(parser->codes.bytecodes[node->data], BC_ClassEnd, NULL);
+}
+
 void cg_generate_code_expr(struct parser_st *parser, struct node_st *node, struct bytecode_st *code) {
     switch (node->sub_type) {
         case PrimType_List:
@@ -34,7 +44,7 @@ void cg_generate_code_expr(struct parser_st *parser, struct node_st *node, struc
             break;
         case PrimType_Attrib:
             cg_generate_code(parser, node->nodes.nodes[0], code);
-            bytecode_append(code, BC_Attrib, NULL + node->data);
+            bytecode_append(code, BC_Attrib_Del, NULL + node->data);
             break;
         case PrimType_Subscript:
             cg_generate_code(parser, node->nodes.nodes[1], code);
@@ -48,7 +58,8 @@ void cg_generate_code_expr(struct parser_st *parser, struct node_st *node, struc
             }
             cg_generate_code(parser, node->nodes.nodes[0], code);
             if (node->nodes.nodes[0]->type == MainType_Expr && node->nodes.nodes[0]->sub_type == PrimType_Attrib) {
-                cg_generate_code(parser, node->nodes.nodes[0]->nodes.nodes[1], code);
+                code->command[code->size - 1] = BC_Attrib;
+                ++count;
             }
             bytecode_append(code, BC_Call, NULL + count);
             break;
@@ -121,21 +132,19 @@ void cg_generate_code_stmt(struct parser_st *parser, struct node_st *node, struc
             bytecode_append(code, BC_Return, NULL);
             break;
         }
-        case StmtType_Break:
+        case StmtType_Break: {
             bytecode_append(code, BC_Break, NULL);
             break;
-        case StmtType_Continue:
+        }
+        case StmtType_Continue: {
             bytecode_append(code, BC_Continue, NULL);
             break;
+        }
         case StmtType_Oper: {
             cg_generate_code(parser, node->nodes.nodes[0], code);
             bytecode_append(code, BC_Pop, NULL);
             break;
         }
-        case StmtType_Func_Body:
-            cg_generate_code_function(parser, node);
-            bytecode_append(code, BC_MakeFunc, node);
-            break;
         case StmtType_If: {
             size_t *array = skr_malloc(sizeof(size_t) * (node->nodes.size / 2));
             size_t pos;
@@ -231,14 +240,6 @@ void cg_generate_code_stmt(struct parser_st *parser, struct node_st *node, struc
 //            bytecode_append(code, BC_JumpBlock, block_temp_with);
 //            break;
         }
-        case StmtType_Func: {
-            for (size_t i = 0; i < node->nodes.size; i++)
-                cg_generate_code(parser, node->nodes.nodes[i], code);
-            for (size_t i = 1; i < node->nodes.size; i++)
-                bytecode_append(code, BC_Set, NULL);
-            bytecode_append(code, BC_Pop, NULL);
-            break;
-        }
         case StmtType_Annot: {
             for (size_t i = 0; i < node->nodes.size; i++)
                 cg_generate_code(parser, node->nodes.nodes[i], code);
@@ -253,6 +254,30 @@ void cg_generate_code_stmt(struct parser_st *parser, struct node_st *node, struc
         case StmtType_List: {
             for (size_t i = 0; i < node->nodes.size; i++)
                 cg_generate_code(parser, node->nodes.nodes[i], code);
+            break;
+        }
+        case StmtType_Func_Body: {
+            cg_generate_code_function(parser, node);
+            bytecode_append(code, BC_MakeFunc, node);
+            break;
+        }
+        case StmtType_Func: {
+            for (size_t i = 0; i < node->nodes.size; i++)
+                cg_generate_code(parser, node->nodes.nodes[i], code);
+            bytecode_append(code, BC_Set, NULL);
+            bytecode_append(code, BC_Pop, NULL);
+            break;
+        }
+        case StmtType_Class_Body: {
+            cg_generate_code_class(parser, node);
+            bytecode_append(code, BC_MakeClass, node);
+            break;
+        }
+        case StmtType_Class: {
+            for (size_t i = 0; i < node->nodes.size; i++)
+                cg_generate_code(parser, node->nodes.nodes[i], code);
+            bytecode_append(code, BC_Set, NULL);
+            bytecode_append(code, BC_Pop, NULL);
             break;
         }
     }

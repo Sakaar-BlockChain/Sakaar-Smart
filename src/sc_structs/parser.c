@@ -19,7 +19,7 @@ void parser_clear(struct parser_st *res) {
     res->var_start_pos = 0;
     res->scope_type = ScopeType_None;
 
-    res->error = sc_error_new();
+    sc_error_clear(res->error);
 
     bytecode_list_clear(&res->codes);
     closure_list_clear(&res->closures);

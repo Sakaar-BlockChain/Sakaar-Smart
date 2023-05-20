@@ -349,6 +349,74 @@ int function_body_stmt(struct parser_st *parser, struct node_st *expr) {
 analyze_end
 }
 
+int class_stmt(struct parser_st *parser, struct node_st *expr) {
+    analyze_start
+    {
+        parser_end goto eof;
+        parser_get
+        if (token->type != TokenType_KeyWords || token->sub_type != KeyWord_CLASS) goto end;
+        parser->data_pos++;
+
+        expr->type = MainType_Stmt;
+        expr->sub_type = StmtType_Class;
+
+        expr_add
+        check_call(ident_new_expr(parser, expr_next), goto err;)
+
+        parser_get
+        if (token->type == TokenType_Special && token->sub_type == Special_LSB) {
+            expr_add
+            check_call(extends_list(parser, expr_next), goto err;)
+        }
+
+        expr_add
+        check_call(class_body_stmt(parser, expr_next), goto err;)
+
+        result = SN_Status_Success;
+    }
+analyze_end
+}
+
+int class_body_stmt(struct parser_st *parser, struct node_st *expr) {
+    analyze_start
+    int _scope_type = parser->scope_type;
+    parser->scope_type = ScopeType_Class;
+    size_t variable_count = parser->variables.size;
+    size_t variable_stack_size = parser->variables_stack.size;
+    size_t closure_count = parser->closures.size;
+    size_t closure_stack_size = parser->closures_stack.size;
+    {
+        expr->type = MainType_Stmt;
+        expr->sub_type = StmtType_Class_Body;
+
+        {
+            variable_list_list_add_new(&parser->variables);
+            expr->variable = variable_list_list_last(&parser->variables);
+            variable_list_list_append(&parser->variables_stack, expr->variable);
+            expr->closure = closure_new();
+            closure_list_append(&parser->closures, expr->closure);
+            closure_list_append(&parser->closures_stack, expr->closure);
+        }
+
+        expr_add
+        check_call(suite(parser, expr_next), goto err;)
+
+        result = SN_Status_Success;
+    }
+    parser->scope_type = _scope_type;
+    variable_list_list_resize(&parser->variables_stack, variable_stack_size);
+    closure_list_resize(&parser->closures_stack, closure_stack_size);
+    if (result != SN_Status_Success) {
+        node_clear(expr);
+        node_list_resize(&parser->nodes, nodes_count);
+        closure_list_resize(&parser->closures, closure_count);
+        variable_list_list_resize(&parser->variables, variable_count);
+        parser->data_pos = current_pointing;
+    }
+    return result;
+analyze_end
+}
+
 int if_stmt(struct parser_st *parser, struct node_st *expr) {
     analyze_start
     {
@@ -458,33 +526,6 @@ int do_while_stmt(struct parser_st *parser, struct node_st *expr) {
     }
     return result;
 analyze_end_sub
-}
-
-int class_stmt(struct parser_st *parser, struct node_st *expr) {
-    analyze_start
-    {
-        parser_end goto eof;
-        parser_get
-        if (token->type != TokenType_KeyWords || token->sub_type != KeyWord_CLASS) goto end;
-        parser->data_pos++;
-
-        expr->type = MainType_Stmt;
-        expr->sub_type = StmtType_Class;
-
-        expr_add
-        check_call(ident_new_expr(parser, expr_next), goto err;)
-
-        parser_get
-        if (token->type == TokenType_Special && token->sub_type == Special_LSB) {
-            expr_add
-            check_call(extends_list(parser, expr_next), goto err;)
-        }
-
-        expr_add
-        check_call(suite(parser, expr_next), goto err;)
-        result = SN_Status_Success;
-    }
-analyze_end
 }
 
 int try_with_stmt(struct parser_st *parser, struct node_st *expr) {
