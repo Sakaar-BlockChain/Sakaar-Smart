@@ -100,9 +100,8 @@ size_t run_codespace(struct parser_st *parser, struct bytecode_st *code, size_t 
                         }
 
                         if (op_func->argument_size != data_s) {
-                            printf("Exit with %zu %zu\n", op_func->argument_size, data_s);
-                            // TODo error
-                            exit(2);
+                            error_set_msg(err, ErrorType_Convert, "Miss match arguments");
+                            return 0;
                         }
 
                         for (int i = 0; i < op_func->argument_size; i++) {
@@ -128,7 +127,8 @@ size_t run_codespace(struct parser_st *parser, struct bytecode_st *code, size_t 
                         object_free(obj1);
                         return 0;
                     } else {
-                        // TODO error
+                        error_set_msg(err, ErrorType_Convert, "variable is not callable");
+                        return 0;
                     }
                 }
                 case BC_ClassEnd:

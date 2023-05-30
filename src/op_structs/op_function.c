@@ -66,8 +66,8 @@ void op_function_clear(struct op_function *res) {
 }
 int op_function_cmp(const struct op_function *obj1, const struct op_function *obj2) {
     if (obj1 == NULL || obj2 == NULL || obj1->function_body != obj2->function_body ||
-        obj1->func != obj2->func) return 2;
-    return 0;
+        obj1->func != obj2->func) return CMP_NEQ;
+    return CMP_EQ;
 }
 
 void op_function_define(struct op_function *res, struct node_st *node, struct parser_st *parser) {

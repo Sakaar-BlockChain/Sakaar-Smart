@@ -60,8 +60,8 @@ void op_object_clear(struct op_object *res) {
     res->class_body = 0;
 }
 int op_object_cmp(const struct op_object *obj1, const struct op_object *obj2) {
-    if (obj1 == NULL || obj2 == NULL || obj1->class_body != obj2->class_body) return 2;
-    return 0;
+    if (obj1 == NULL || obj2 == NULL || obj1->class_body != obj2->class_body) return CMP_NEQ;
+    return CMP_EQ;
 }
 
 void op_object_define(struct op_object *res, struct op_class *class) {
