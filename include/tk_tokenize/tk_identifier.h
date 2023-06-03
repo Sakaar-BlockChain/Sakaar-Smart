@@ -1,7 +1,7 @@
 #ifndef TK_IDENTIFIER_H
 #define TK_IDENTIFIER_H
 
-#include "sc_structs.h"
+#include "smart.h"
 
 
 #define SpaceChar(c) ((c) == ' ' || (c) == '\t' || (c) == '\n')

@@ -1,7 +1,7 @@
 #ifndef AN_STMT_H
 #define AN_STMT_H
 
-#include "sc_structs.h"
+#include "smart.h"
 
 
 #define StmtType_Annot          0x01

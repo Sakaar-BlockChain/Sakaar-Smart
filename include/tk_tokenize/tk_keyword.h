@@ -1,7 +1,7 @@
 #ifndef TK_KEYWORD_H
 #define TK_KEYWORD_H
 
-#include "sc_structs.h"
+#include "smart.h"
 
 
 // Not Defined Keyword

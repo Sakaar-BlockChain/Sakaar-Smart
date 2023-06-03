@@ -1,7 +1,7 @@
 #ifndef TK_SPECIAL_H
 #define TK_SPECIAL_H
 
-#include "sc_structs.h"
+#include "smart.h"
 
 
 // Special Chars

@@ -1,7 +1,7 @@
 #ifndef SN_IMPORT_H
 #define SN_IMPORT_H
 
-#include "sc_structs.h"
+#include "smart.h"
 
 #define ImprType_Name           0x01
 #define ImprType_Module_As      0x02

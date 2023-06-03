@@ -1,7 +1,7 @@
 #ifndef TK_INTEGER_H
 #define TK_INTEGER_H
 
-#include "sc_structs.h"
+#include "smart.h"
 
 void tokenize_integer(struct token_st *, struct parser_st *);
 

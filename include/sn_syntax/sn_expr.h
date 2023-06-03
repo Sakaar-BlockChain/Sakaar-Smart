@@ -1,7 +1,7 @@
 #ifndef AN_EXPR_H
 #define AN_EXPR_H
 
-#include "sc_structs.h"
+#include "smart.h"
 
 #define PrimType_List           0x01
 #define PrimType_Ident_get      0x02

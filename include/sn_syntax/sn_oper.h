@@ -1,7 +1,7 @@
 #ifndef AN_OPER_H
 #define AN_OPER_H
 
-#include "sc_structs.h"
+#include "smart.h"
 
 #define ExprType_U              0x01
 #define ExprType_M              0x02
