@@ -319,12 +319,10 @@ int function_body_stmt(struct parser_st *parser, struct node_st *expr) {
         expr->sub_type = StmtType_Func_Body;
 
         {
-            variable_list_list_add_new(&parser->variables);
-            expr->variable = variable_list_list_last(&parser->variables);
-            variable_list_list_append(&parser->variables_stack, expr->variable);
-            expr->closure = closure_new();
-            closure_list_append(&parser->closures, expr->closure);
-            closure_list_append(&parser->closures_stack, expr->closure);
+            expr->variable = variable_list_list_add_new(&parser->variables);
+            variable_list_list_append(&parser->variables_stack, variable_list_list_last(&parser->variables));
+            expr->closure = closure_list_add_new(&parser->closures);
+            closure_list_append(&parser->closures_stack, closure_list_last(&parser->closures));
         }
 
         expr_add
@@ -390,12 +388,10 @@ int class_body_stmt(struct parser_st *parser, struct node_st *expr) {
         expr->sub_type = StmtType_Class_Body;
 
         {
-            variable_list_list_add_new(&parser->variables);
-            expr->variable = variable_list_list_last(&parser->variables);
-            variable_list_list_append(&parser->variables_stack, expr->variable);
-            expr->closure = closure_new();
-            closure_list_append(&parser->closures, expr->closure);
-            closure_list_append(&parser->closures_stack, expr->closure);
+            expr->variable = variable_list_list_add_new(&parser->variables);
+            variable_list_list_append(&parser->variables_stack, variable_list_list_last(&parser->variables));
+            expr->closure = closure_list_add_new(&parser->closures);
+            closure_list_append(&parser->closures_stack, closure_list_last(&parser->closures));
         }
 
         expr_add
@@ -639,10 +635,8 @@ int token_analyzer(struct parser_st *parser, struct node_st *expr) {
         expr->type = MainType_Stmt;
         expr->sub_type = StmtType_List;
         {
-            variable_list_list_add_new(&parser->variables);
-            expr->variable = variable_list_list_last(&parser->variables);
-            variable_list_list_append(&parser->variables_stack, expr->variable);
-            closure_list_append(&parser->closures_stack, NULL);
+            expr->variable = variable_list_list_add_new(&parser->variables);
+            variable_list_list_append(&parser->variables_stack, variable_list_list_last(&parser->variables));
         }
 
         while (parser->data_pos < parser->tokens.size) {

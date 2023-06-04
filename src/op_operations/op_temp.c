@@ -4,14 +4,12 @@
 
 size_t run_codespace(struct parser_st *parser, struct bytecode_st *code, size_t position) {
     char command;
-    void *data;
     size_t data_s;
     size_t var_start_pos = parser->var_start_pos;
     struct list_st *const_objects = parser->const_objects;
     struct list_st *temp_stack = parser->temp_stack;
     struct list_st *var_stack = parser->var_stack;
 
-    struct object_st **temp;
     struct object_st *res = NULL;
     struct object_st *obj1 = NULL;
     struct object_st *obj2 = NULL;
@@ -26,8 +24,7 @@ size_t run_codespace(struct parser_st *parser, struct bytecode_st *code, size_t 
 
     while (position < code->size) {
         command = code->command[position];
-        data = code->data[position];
-        data_s = (size_t) data;
+        data_s = code->data[position];
         if ((command & 0xF0) == BC_Basics) {
             switch (command) {
                 case BC_Init: // Done
@@ -78,7 +75,7 @@ size_t run_codespace(struct parser_st *parser, struct bytecode_st *code, size_t 
                     if (obj1->type == OP_CLASS_TYPE) {
                         list_append(temp_stack, obj1);
                         op_clas = obj1->data;
-                        parser_store_vars(parser, op_clas->argument->size, position);
+                        parser_store_vars(parser, parser->variables.variable_lists[op_clas->argument]->size, position);
                         for (size_t i = 0; i < op_clas->closure->attrib.size; i++) {
                             var_stack->data[parser->var_start_pos +
                                     op_clas->closure->attrib.variables[i]->position] = object_copy_obj(
@@ -92,7 +89,7 @@ size_t run_codespace(struct parser_st *parser, struct bytecode_st *code, size_t 
                         return 0;
                     } else if (obj1->type == OP_FUNCTION_TYPE) {
                         op_func = obj1->data;
-                        parser_store_vars(parser, op_func->argument->size, position + 1);
+                        parser_store_vars(parser, parser->variables.variable_lists[op_func->argument]->size, position + 1);
                         for (size_t i = 0; i < op_func->closure->attrib.size; i++) {
                             var_stack->data[parser->var_start_pos +
                                     op_func->closure->attrib.variables[i]->position] = object_copy_obj(
@@ -114,7 +111,7 @@ size_t run_codespace(struct parser_st *parser, struct bytecode_st *code, size_t 
                     } else if (obj1->type == OP_OBJECT_TYPE) {
                         list_append(temp_stack, obj1);
                         op_obj = obj1->data;
-                        parser_store_vars(parser, op_obj->argument->size, position);
+                        parser_store_vars(parser, parser->variables.variable_lists[op_obj->argument]->size, position);
                         for (size_t i = 0; i < op_obj->closure->attrib.size; i++) {
                             var_stack->data[parser->var_start_pos +
                                     op_obj->closure->attrib.variables[i]->position] = object_copy_obj(
@@ -264,7 +261,7 @@ size_t run_codespace(struct parser_st *parser, struct bytecode_st *code, size_t 
         } // Done
         else if ((command & 0xF0) == BC_Jump) {
             if (command == BC_Jump) {
-                position = (size_t) data;
+                position = data_s;
                 continue;
             } else {
                 struct object_st *obj = temp_stack->data[temp_stack->size - 1];
@@ -272,7 +269,7 @@ size_t run_codespace(struct parser_st *parser, struct bytecode_st *code, size_t 
 
                 if ((bool && command == BC_IfTrueOrPop) || (!bool && command == BC_IfFalseOrPop) ||
                     (!bool && command == BC_IfFalse_Jump)) {
-                    position = (size_t) data;
+                    position = data_s;
                     object_free(list_pop(temp_stack));
                     continue;
                 } else if (command == BC_IfFalse_Jump) object_free(list_pop(temp_stack));
@@ -284,16 +281,16 @@ size_t run_codespace(struct parser_st *parser, struct bytecode_st *code, size_t 
             switch (command) {
                 case BC_MakeClass:
                     object_set_type(obj1, OP_CLASS_TYPE);
-                    op_class_define(obj1->data, data, parser);
+                    op_class_define(obj1->data, data_s, parser);
                     break;
                 case BC_MakeFunc:
                     object_set_type(obj1, OP_FUNCTION_TYPE);
-                    op_function_define(obj1->data, data, parser);
+                    op_function_define(obj1->data, data_s, parser);
                     break;
                 case BC_MakeList:
                     object_set_type(obj1, LIST_TYPE);
                     obj2 = NULL;
-                    for (size_t i = 0; i < (size_t) data; i++) {
+                    for (size_t i = 0; i < data_s; i++) {
                         obj2 = list_pop(temp_stack);
                         list_append(obj1->data, obj2);
                         object_free(obj2);

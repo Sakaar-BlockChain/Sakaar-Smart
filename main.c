@@ -46,7 +46,7 @@ void print_obj(const struct object_st *res, int size) {
         printf("None\n");
         return;
     }
-    printf("object : (%d) %p\n", res->counter, res);
+    printf("object : (%zu) %p\n", res->counter, res);
     PRINT_PREF
     PRINT_NEXT(0)
     for(size_t i=0;i<printing_pos;i++) {
@@ -68,7 +68,7 @@ void print_obj(const struct object_st *res, int size) {
     printing[--printing_pos] = NULL;
 }
 
-void print_code(char command, void *data) {
+void print_code(char command, size_t data) {
     switch (command) {
         case BC_Init:
             printf("BC_Init         ");
@@ -166,21 +166,21 @@ void print_code(char command, void *data) {
             printf("BC_Continue     ");
             break;
     }
-    printf("\t%p", data);
+    printf("\t%zu", data);
 }
 
 void print_bytecode(const struct bytecode_st *res, int size) {
-    printf("bytecode (%d) : (%p)\n", res->size, res);
+    printf("bytecode (%lu) : (%p)\n", res->size, res);
     for(size_t i=0;i<res->size;i++){
         PRINT_PREF
         PRINT_NEXT(i + 1 < res->size)
-        printf("%.4x\t", i);
+        printf("%.4zx\t", i);
         print_code(res->command[i], res->data[i]);
         printf("\t%p\n", &res->data[i]);
     }
 }
 void print_bytecode_list(const struct bytecode_list_st *res, int size) {
-    printf("bytecode_list (%d) : (%p)\n", res->size, res);
+    printf("bytecode_list (%zu) : (%p)\n", res->size, res);
     for (int i = 0; i < res->size; i++) {
         PRINT_PREF
         PRINT_NEXT(i + 1 < res->size)
@@ -666,29 +666,29 @@ void print_node(const struct node_st *res, int size) {
     if (res->type == MainType_Expr && (res->sub_type == PrimType_Ident_get || res->sub_type == PrimType_Ident_new ||
                                        res->sub_type == PrimType_Attrib || res->sub_type == PrimType_Literal)) {
         PRINT_PREF
-        PRINT_NEXT(res->tokens.size != 0 || res->nodes.size != 0 || res->variable != NULL || res->closure != NULL)
+        PRINT_NEXT(res->tokens.size != 0 || res->nodes.size != 0 || res->variable != 0 || res->closure != 0)
         printf("data : %zu\n", res->data);
     }
     if (res->tokens.size != 0) {
         PRINT_PREF
-        PRINT_NEXT(res->nodes.size != 0 || res->variable != NULL || res->closure != NULL)
+        PRINT_NEXT(res->nodes.size != 0 || res->variable != 0 || res->closure != 0)
         print_token_list(&res->tokens, size + 2);
     }
     if (res->nodes.size != 0) {
         PRINT_PREF
-        PRINT_NEXT(res->variable != NULL || res->closure != NULL)
+        PRINT_NEXT(res->variable != 0 || res->closure != 0)
         print_node_list(&res->nodes, size + 2);
     }
-    if (res->variable != NULL) {
-        PRINT_PREF
-        PRINT_NEXT(res->closure != NULL)
-        print_variable_list(res->variable, size + 2);
-    }
-    if (res->closure != NULL) {
-        PRINT_PREF
-        PRINT_NEXT(0)
-        print_closure(res->closure, size + 2);
-    }
+//    if (res->variable != NULL) {
+//        PRINT_PREF
+//        PRINT_NEXT(res->closure != NULL)
+//        print_variable_list(res->variable, size + 2);
+//    }
+//    if (res->closure != NULL) {
+//        PRINT_PREF
+//        PRINT_NEXT(0)
+//        print_closure(res->closure, size + 2);
+//    }
 }
 void print_node_list(const struct node_list_st *res, int size) {
     printf("node_list (%zu):\n", res->size);
@@ -758,7 +758,7 @@ int main(int args, char *argv[]) {
 
     clock_t begin = clock();
 
-    parser_store_vars(&parser, parser.nodes.nodes[0]->variable->size, 0);
+    parser_store_vars(&parser, parser.variables.variable_lists[parser.nodes.nodes[0]->variable]->size, 0);
     run_smart_contract(&parser, codespace);
 
     clock_t end = clock();
