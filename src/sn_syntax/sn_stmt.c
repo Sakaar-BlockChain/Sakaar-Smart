@@ -627,7 +627,10 @@ int suite(struct parser_st *parser, struct node_st *expr) {
 analyze_end
 }
 
-int token_analyzer(struct parser_st *parser, struct node_st *expr) {
+void token_analyzer(struct parser_st *parser) {
+    node_list_add_new(&parser->nodes);
+    struct node_st *expr = parser->nodes.nodes[0];
+
     parser->data_pos = 0;
     analyze_start
     size_t variable_count = parser->variables.size;
@@ -654,7 +657,7 @@ int token_analyzer(struct parser_st *parser, struct node_st *expr) {
         variable_list_list_resize(&parser->variables, variable_count);
         parser->data_pos = current_pointing;
     }
-    return result;
+    return;
 analyze_end_sub
 }
 

@@ -5,7 +5,7 @@ void tokenize_string(struct token_st *token, struct parser_st *parser){
 
     size_t pos = parser->data_pos + 1;
     if (parser->data_str[parser->data_pos] == '"') {
-        for (;pos < parser->data_size; pos++) {
+        for (size_t size = parser->data_size; pos < size; pos++) {
             if ((pos == 0 || parser->data_str[pos - 1] != '\\') && parser->data_str[pos] == '"') break;
         }
         if (parser->data_size == pos) {
@@ -14,7 +14,7 @@ void tokenize_string(struct token_st *token, struct parser_st *parser){
             return;
         }
     } else {
-        for (;pos < parser->data_size; pos++) {
+        for (size_t size = parser->data_size; pos < size; pos++) {
             if ((pos == 0 || parser->data_str[pos - 1] != '\\') && parser->data_str[pos] == '\'') break;
         }
         if (parser->data_size == pos) {

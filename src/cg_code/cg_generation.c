@@ -7,7 +7,7 @@ size_t cg_generate_code_function(struct parser_st *parser, struct node_st *node)
     code->variable = node->variable;
     
     cg_generate_code(parser, node->nodes.nodes[1], code);
-    for (size_t i = 0; i < code->size; i++) {
+    for (size_t i = 0, size = code->size; i < size; i++) {
         if (code->command[i] == BC_Return && code->data[i] == 0) {
             code->command[i] = BC_Jump;
             code->data[i] = code->size;
@@ -79,7 +79,7 @@ void cg_generate_code_oper(struct parser_st *parser, struct node_st *node, struc
         char type = BC_IfFalseOrPop;
         size_t *array = skr_malloc(sizeof(size_t) * (node->nodes.size - 1));
         if (node->sub_type == ExprType_OrTest) type = BC_IfTrueOrPop;
-        for (size_t i = 0; i < node->nodes.size - 1; i++) {
+        for (size_t i = 0, size = node->nodes.size - 1; i < size; i++) {
             cg_generate_code(parser, node->nodes.nodes[i], code);
             if (node->nodes.nodes[i]->type != MainType_Oper || node->nodes.nodes[i]->sub_type < ExprType_Comp)
                 bytecode_append(code, BC_Convert_Bool, 0);
@@ -92,7 +92,7 @@ void cg_generate_code_oper(struct parser_st *parser, struct node_st *node, struc
             node->nodes.nodes[node->nodes.size - 1]->sub_type < ExprType_Comp)
             bytecode_append(code, BC_Convert_Bool, 0);
 
-        for (size_t i = 0; i < node->nodes.size - 1; i++) {
+        for (size_t i = 0, size = node->nodes.size - 1; i < size; i++) {
             code->data[array[i]] = code->size;
         }
         skr_free(array);
@@ -106,7 +106,7 @@ void cg_generate_code_oper(struct parser_st *parser, struct node_st *node, struc
         is_bool = 1;
 
 
-    for (size_t i = 0; i < node->nodes.size; i++) {
+    for (size_t i = 0, size = node->nodes.size; i < size; i++) {
         cg_generate_code(parser, node->nodes.nodes[i], code);
         if (is_bool && (node->nodes.nodes[i]->type != MainType_Oper || node->nodes.nodes[i]->sub_type < ExprType_Comp))
             bytecode_append(code, BC_Convert_Bool, 0);
@@ -126,7 +126,7 @@ void cg_generate_code_oper(struct parser_st *parser, struct node_st *node, struc
 void cg_generate_code_stmt(struct parser_st *parser, struct node_st *node, struct bytecode_st *code) {
     switch (node->sub_type) {
         case StmtType_Assign: {
-            for (size_t i = 0; i < node->nodes.size; i++)
+            for (size_t i = 0, size = node->nodes.size; i < size; i++)
                 cg_generate_code(parser, node->nodes.nodes[i], code);
             for (size_t i = node->tokens.size; i > 0; i--)
                 bytecode_append(code, BC_ArithmeticSet, node->tokens.tokens[i - 1]->sub_type);
@@ -155,7 +155,7 @@ void cg_generate_code_stmt(struct parser_st *parser, struct node_st *node, struc
         case StmtType_If: {
             size_t *array = skr_malloc(sizeof(size_t) * (node->nodes.size / 2));
             size_t pos;
-            for (size_t i = 1; i < node->nodes.size; i += 2) {
+            for (size_t i = 1, size = node->nodes.size; i < size; i += 2) {
                 cg_generate_code(parser, node->nodes.nodes[i - 1], code);
                 if (node->nodes.nodes[i - 1]->type != MainType_Oper || node->nodes.nodes[i- 1]->sub_type < ExprType_Comp)
                     bytecode_append(code, BC_Convert_Bool, 0);
@@ -172,7 +172,7 @@ void cg_generate_code_stmt(struct parser_st *parser, struct node_st *node, struc
             if (node->nodes.size % 2 == 1) {
                 cg_generate_code(parser, node->nodes.nodes[node->nodes.size - 1], code);
             }
-            for (size_t i = 1; i < node->nodes.size; i += 2) {
+            for (size_t i = 1, size = node->nodes.size; i < size; i += 2) {
                 if ((node->nodes.size % 2 == 1) || i + 2 < node->nodes.size) {
                     code->data[array[i / 2]] = code->size;
                 }
@@ -192,7 +192,7 @@ void cg_generate_code_stmt(struct parser_st *parser, struct node_st *node, struc
             cg_generate_code(parser, node->nodes.nodes[1], code);
             bytecode_append(code, BC_Jump, pos_start);
             code->data[pos_fins] = code->size;
-            for (size_t i = pos_start; i < code->size; i++) {
+            for (size_t i = pos_start, size = code->size; i < size; i++) {
                 if (code->command[i] == BC_Break && code->data[i] == 0) {
                     code->command[i] = BC_Jump;
                     code->data[i] = code->size;
@@ -218,7 +218,7 @@ void cg_generate_code_stmt(struct parser_st *parser, struct node_st *node, struc
             cg_generate_code(parser, node->nodes.nodes[0], code);
             bytecode_append(code, BC_Jump, pos_start);
             code->data[pos_fins] = code->size;
-            for (size_t i = pos_start; i < code->size; i++) {
+            for (size_t i = pos_start, size = code->size; i < size; i++) {
                 if (code->command[i] == BC_Break && code->data[i] == 0) {
                     code->command[i] = BC_Jump;
                     code->data[i] = code->size;
@@ -248,7 +248,7 @@ void cg_generate_code_stmt(struct parser_st *parser, struct node_st *node, struc
 //            break;
         }
         case StmtType_Annot: {
-            for (size_t i = 0; i < node->nodes.size; i++)
+            for (size_t i = 0, size = node->nodes.size; i < size; i++)
                 cg_generate_code(parser, node->nodes.nodes[i], code);
             for (size_t i = node->nodes.size; i > 0; i--)
                 if (node->nodes.nodes[i - 1]->type == MainType_Expr &&
@@ -259,7 +259,7 @@ void cg_generate_code_stmt(struct parser_st *parser, struct node_st *node, struc
             break;
         }
         case StmtType_List: {
-            for (size_t i = 0; i < node->nodes.size; i++)
+            for (size_t i = 0, size = node->nodes.size; i < size; i++)
                 cg_generate_code(parser, node->nodes.nodes[i], code);
             break;
         }
@@ -268,7 +268,7 @@ void cg_generate_code_stmt(struct parser_st *parser, struct node_st *node, struc
             break;
         }
         case StmtType_Func: {
-            for (size_t i = 0; i < node->nodes.size; i++)
+            for (size_t i = 0, size = node->nodes.size; i < size; i++)
                 cg_generate_code(parser, node->nodes.nodes[i], code);
             bytecode_append(code, BC_Set, 0);
             bytecode_append(code, BC_Pop, 0);
@@ -279,7 +279,7 @@ void cg_generate_code_stmt(struct parser_st *parser, struct node_st *node, struc
             break;
         }
         case StmtType_Class: {
-            for (size_t i = 0; i < node->nodes.size; i++)
+            for (size_t i = 0, size = node->nodes.size; i < size; i++)
                 cg_generate_code(parser, node->nodes.nodes[i], code);
             bytecode_append(code, BC_Set, 0);
             bytecode_append(code, BC_Pop, 0);
@@ -292,6 +292,13 @@ void cg_generate_code(struct parser_st *parser, struct node_st *node, struct byt
     if (node->type == MainType_Expr) cg_generate_code_expr(parser, node, code);
     else if (node->type == MainType_Oper) cg_generate_code_oper(parser, node, code);
     else if (node->type == MainType_Stmt) cg_generate_code_stmt(parser, node, code);
+}
+
+void cg_generate(struct parser_st *parser) {
+    size_t code = parser_codespace(parser);
+    cg_generate_code(parser, parser->nodes.nodes[0], parser->codes.bytecodes[code]);
+    node_list_clear(&parser->nodes);
+    token_list_clear(&parser->tokens);
 }
 //// Stack---------------For Functions
 ////      SomeData

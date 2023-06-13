@@ -165,6 +165,8 @@ void print_code(char command, size_t data) {
         case BC_Continue:
             printf("BC_Continue     ");
             break;
+        default:
+            break;
     }
     printf("\t%zu", data);
 }
@@ -729,9 +731,7 @@ int main(int args, char *argv[]) {
         exit(1);
     }
 
-    node_list_add_new(&parser.nodes);
-    int res = token_analyzer(&parser, parser.nodes.nodes[0]); // Make simple AST Tree
-
+    token_analyzer(&parser); // Make simple AST Tree
     if (parser.error->present) {
         printf("%s: %s\n", parser.error->type.data, parser.error->msg.data);
         printf("Line %zu: \n", parser.error->line_num + 1);
@@ -750,16 +750,13 @@ int main(int args, char *argv[]) {
     }
     print_node(parser.nodes.nodes[0], 0);
 
-
-    size_t codespace = parser_codespace(&parser);
-    cg_generate_code(&parser, parser.nodes.nodes[0], parser.codes.bytecodes[codespace]);
+    cg_generate(&parser);
     print_bytecode_list(&parser.codes, 0);
-
 
     clock_t begin = clock();
 
-    parser_store_vars(&parser, parser.variables.variable_lists[parser.nodes.nodes[0]->variable]->size, 0);
-    run_smart_contract(&parser, codespace);
+    sc_first_run(&parser);
+
 
     clock_t end = clock();
     double time_spent = (double)(end - begin) / CLOCKS_PER_SEC;

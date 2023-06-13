@@ -12,6 +12,6 @@
 #define SN_Status_EOF           2
 #define SN_Status_Error         3
 
-int token_analyzer(struct parser_st *, struct node_st *);
+void token_analyzer(struct parser_st *);
 
 #endif //AN_ANALIZE_H

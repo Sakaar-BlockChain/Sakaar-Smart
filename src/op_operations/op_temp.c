@@ -42,7 +42,7 @@ size_t run_codespace(struct parser_st *parser, struct bytecode_st *code, size_t 
                     obj1 = object_copy_obj(temp_stack->data[temp_stack->size - 1]);
                     res = object_attrib(err, obj1, const_objects->data[data_s]->data);
 
-                    if (err->present) return 0;
+                    if (err == NULL && err->present) return 0;
                     else list_append(temp_stack, res);
                     object_free(res);
                     object_free(obj1);
@@ -52,7 +52,7 @@ size_t run_codespace(struct parser_st *parser, struct bytecode_st *code, size_t 
                     obj1 = list_pop(temp_stack);
                     res = object_attrib(err, obj1, const_objects->data[data_s]->data);
 
-                    if (err->present) return 0;
+                    if (err == NULL && err->present) return 0;
                     else list_append(temp_stack, res);
                     object_free(res);
                     object_free(obj1);
@@ -63,7 +63,7 @@ size_t run_codespace(struct parser_st *parser, struct bytecode_st *code, size_t 
                     obj2 = list_pop(temp_stack);
                     res = object_subscript(err, obj1, obj2);
 
-                    if (err->present) return 0;
+                    if (err == NULL && err->present) return 0;
                     else list_append(temp_stack, res);
                     object_free(res);
                     object_free(obj1);
@@ -76,7 +76,7 @@ size_t run_codespace(struct parser_st *parser, struct bytecode_st *code, size_t 
                         list_append(temp_stack, obj1);
                         op_clas = obj1->data;
                         parser_store_vars(parser, parser->variables.variable_lists[op_clas->argument]->size, position);
-                        for (size_t i = 0; i < op_clas->closure->attrib.size; i++) {
+                        for (size_t i = 0, size = op_clas->closure->attrib.size; i < size; i++) {
                             var_stack->data[parser->var_start_pos +
                                     op_clas->closure->attrib.variables[i]->position] = object_copy_obj(
                                     op_clas->closure->data.data[i]);
@@ -90,7 +90,7 @@ size_t run_codespace(struct parser_st *parser, struct bytecode_st *code, size_t 
                     } else if (obj1->type == OP_FUNCTION_TYPE) {
                         op_func = obj1->data;
                         parser_store_vars(parser, parser->variables.variable_lists[op_func->argument]->size, position + 1);
-                        for (size_t i = 0; i < op_func->closure->attrib.size; i++) {
+                        for (size_t i = 0, size = op_func->closure->attrib.size; i < size; i++) {
                             var_stack->data[parser->var_start_pos +
                                     op_func->closure->attrib.variables[i]->position] = object_copy_obj(
                                     op_func->closure->data.data[i]);
@@ -101,7 +101,7 @@ size_t run_codespace(struct parser_st *parser, struct bytecode_st *code, size_t 
                             return 0;
                         }
 
-                        for (int i = 0; i < op_func->argument_size; i++) {
+                        for (size_t i = 0, size = op_func->argument_size; i < size; i++) {
                             var_stack->data[parser->var_start_pos + i + 1] = list_pop(temp_stack);
                         }
                         bytecode_list_append(&parser->codes_stack, code);
@@ -112,7 +112,7 @@ size_t run_codespace(struct parser_st *parser, struct bytecode_st *code, size_t 
                         list_append(temp_stack, obj1);
                         op_obj = obj1->data;
                         parser_store_vars(parser, parser->variables.variable_lists[op_obj->argument]->size, position);
-                        for (size_t i = 0; i < op_obj->closure->attrib.size; i++) {
+                        for (size_t i = 0, size = op_obj->closure->attrib.size; i < size; i++) {
                             var_stack->data[parser->var_start_pos +
                                     op_obj->closure->attrib.variables[i]->position] = object_copy_obj(
                                     op_obj->closure->data.data[i]);
@@ -131,7 +131,6 @@ size_t run_codespace(struct parser_st *parser, struct bytecode_st *code, size_t 
                 case BC_ClassEnd:
                     obj1 = object_new();
                     obj2 = list_pop(temp_stack);
-                    print_obj(obj2, 0);
 
                     object_set_type(obj1, OP_OBJECT_TYPE);
 
@@ -163,7 +162,7 @@ size_t run_codespace(struct parser_st *parser, struct bytecode_st *code, size_t 
             else if (command == BC_Convert_Float) object__float(res, err, obj1);
             else if (command == BC_Convert_Str) object__str(res, err, obj1);
 
-            if (err->present) return 0;
+            if (err == NULL && err->present) return 0;
             else list_append(temp_stack, res);
             object_free(res);
             object_free(obj1);
@@ -175,7 +174,7 @@ size_t run_codespace(struct parser_st *parser, struct bytecode_st *code, size_t 
             if (command == BC_Negate) {
                 object__neg(res, err, obj2);
 
-                if (err->present) return 0;
+                if (err == NULL && err->present) return 0;
                 else list_append(temp_stack, res);
             } else if (command == BC_NegateBool) {
                 object_set_type(res, INTEGER_TYPE);
@@ -216,7 +215,7 @@ size_t run_codespace(struct parser_st *parser, struct bytecode_st *code, size_t 
                             break;
                         }
 
-                        if (err->present) return 0;
+                        if (err == NULL && err->present) return 0;
                         else list_append(temp_stack, res);
                         break;
                     case BC_ArithmeticSet:
@@ -232,7 +231,7 @@ size_t run_codespace(struct parser_st *parser, struct bytecode_st *code, size_t 
                         else if (data_s == Special_EQ_RSHIFT) object__rs(res, err, obj1, obj2);
                         else if (data_s == Special_EQ) object_set(res, obj2);
 
-                        if (err->present) return 0;
+                        if (err == NULL && err->present) return 0;
                         else {
                             object_set(obj1, res);
                             list_append(temp_stack, obj1);
@@ -308,15 +307,43 @@ size_t run_codespace(struct parser_st *parser, struct bytecode_st *code, size_t 
     return 0;
 }
 
-void run_smart_contract(struct parser_st *parser, size_t codespace) {
+void run_smart_contract(struct parser_st *parser) {
     struct bytecode_list_st *codes_stack = &parser->codes_stack;
     struct bytecode_st *code;
 
-    bytecode_list_append(codes_stack, parser->codes.bytecodes[codespace]);
     size_t position = 0;
     while (codes_stack->size > 0 && !parser->error->present) {
         code = bytecode_list_pop(codes_stack);
         position = run_codespace(parser, code, position);
     }
-    print_list(parser->var_stack, 0);
+}
+
+void sc_first_run(struct parser_st *parser) {
+    parser_store_vars(parser, parser->variables.variable_lists[0]->size, 0);
+    bytecode_list_append(&parser->codes_stack, parser->codes.bytecodes[0]);
+    run_smart_contract(parser);
+}
+
+struct object_st *sc_run_function(struct parser_st *parser, struct object_st *func, struct list_st *params) {
+    if (func->type != OP_FUNCTION_TYPE) return NULL;
+
+    struct op_function *op_func = func->data;
+    parser_store_vars(parser, parser->variables.variable_lists[op_func->argument]->size, 0);
+    for (size_t i = 0, size = op_func->closure->attrib.size; i < size; i++) {
+        parser->var_stack->data[parser->var_start_pos +
+                        op_func->closure->attrib.variables[i]->position] = object_copy_obj(
+                op_func->closure->data.data[i]);
+    }
+
+    if (op_func->argument_size != params->size) {
+        error_set_msg(parser->error, ErrorType_Convert, "Miss match arguments");
+        return NULL;
+    }
+
+    for (size_t i = 0, size = op_func->argument_size; i < size; i++) {
+        parser->var_stack->data[parser->var_start_pos + i + 1] = object_copy_obj(params->data[i]);
+    }
+    bytecode_list_append(&parser->codes_stack, parser->codes.bytecodes[op_func->function_body]);
+    run_smart_contract(parser);
+    return list_pop(parser->temp_stack);
 }
