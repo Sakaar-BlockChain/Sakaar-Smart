@@ -77,7 +77,7 @@ void cg_generate_code_expr(struct parser_st *parser, struct node_st *node, struc
 void cg_generate_code_oper(struct parser_st *parser, struct node_st *node, struct bytecode_st *code) {
     if (node->sub_type == ExprType_OrTest || node->sub_type == ExprType_AndTest) {
         char type = BC_IfFalseOrPop;
-        size_t *array = skr_malloc(sizeof(size_t) * (node->nodes.size - 1));
+        size_t *array = malloc(sizeof(size_t) * (node->nodes.size - 1));
         if (node->sub_type == ExprType_OrTest) type = BC_IfTrueOrPop;
         for (size_t i = 0, size = node->nodes.size - 1; i < size; i++) {
             cg_generate_code(parser, node->nodes.nodes[i], code);
@@ -95,7 +95,7 @@ void cg_generate_code_oper(struct parser_st *parser, struct node_st *node, struc
         for (size_t i = 0, size = node->nodes.size - 1; i < size; i++) {
             code->data[array[i]] = code->size;
         }
-        skr_free(array);
+        free(array);
         return;
     }
     size_t count = 2;
@@ -153,7 +153,7 @@ void cg_generate_code_stmt(struct parser_st *parser, struct node_st *node, struc
             break;
         }
         case StmtType_If: {
-            size_t *array = skr_malloc(sizeof(size_t) * (node->nodes.size / 2));
+            size_t *array = malloc(sizeof(size_t) * (node->nodes.size / 2));
             size_t pos;
             for (size_t i = 1, size = node->nodes.size; i < size; i += 2) {
                 cg_generate_code(parser, node->nodes.nodes[i - 1], code);
@@ -177,7 +177,7 @@ void cg_generate_code_stmt(struct parser_st *parser, struct node_st *node, struc
                     code->data[array[i / 2]] = code->size;
                 }
             }
-            skr_free(array);
+            free(array);
             break;
         }
         case StmtType_While: {

@@ -22,7 +22,7 @@ void tokenize_integer(struct token_st *token, struct parser_st *parser) {
                 while(c == '_') GetChar
                 size_t zero_end = pos;
                 while(CharInt_bin(c)) GetChar
-                if(IdentifierStart(c)) ErrInt
+                if (IdentifierStart(c)) ErrInt
 
                 token->type = TokenType_Int;
                 token->sub_type = IntType_bin;
@@ -35,7 +35,7 @@ void tokenize_integer(struct token_st *token, struct parser_st *parser) {
                 while(c == '_') GetChar
                 size_t zero_end = pos;
                 while(CharInt_oct(c)) GetChar
-                if(IdentifierStart(c)) ErrInt
+                if (IdentifierStart(c)) ErrInt
 
                 token->type = TokenType_Int;
                 token->sub_type = IntType_oct;
@@ -48,7 +48,7 @@ void tokenize_integer(struct token_st *token, struct parser_st *parser) {
                 while(c == '_') GetChar
                 size_t zero_end = pos;
                 while(CharInt_hex(c)) GetChar
-                if(IdentifierStart(c)) ErrInt
+                if (IdentifierStart(c)) ErrInt
 
                 token->type = TokenType_Int;
                 token->sub_type = IntType_hex;
@@ -68,7 +68,7 @@ void tokenize_integer(struct token_st *token, struct parser_st *parser) {
                 } else {
                     token->sub_type = IntType_dec;
                 }
-                if(IdentifierStart(c)) ErrInt
+                if (IdentifierStart(c)) ErrInt
 
                 token->type = TokenType_Int;
 
@@ -85,7 +85,7 @@ void tokenize_integer(struct token_st *token, struct parser_st *parser) {
             } else {
                 token->sub_type = IntType_dec;
             }
-            if(IdentifierStart(c)) ErrInt
+            if (IdentifierStart(c)) ErrInt
 
             token->type = TokenType_Int;
 

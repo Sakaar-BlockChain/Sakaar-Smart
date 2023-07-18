@@ -333,6 +333,7 @@ int function_body_stmt(struct parser_st *parser, struct node_st *expr) {
 
         result = SN_Status_Success;
     }
+    end:
     parser->scope_type = _scope_type;
     variable_list_list_resize(&parser->variables_stack, variable_stack_size);
     closure_list_resize(&parser->closures_stack, closure_stack_size);
@@ -344,7 +345,7 @@ int function_body_stmt(struct parser_st *parser, struct node_st *expr) {
         parser->data_pos = current_pointing;
     }
     return result;
-analyze_end
+analyze_end_sub
 }
 
 int class_stmt(struct parser_st *parser, struct node_st *expr) {
@@ -640,6 +641,7 @@ void token_analyzer(struct parser_st *parser) {
         {
             expr->variable = variable_list_list_add_new(&parser->variables);
             variable_list_list_append(&parser->variables_stack, variable_list_list_last(&parser->variables));
+            closure_list_append(&parser->closures_stack, NULL);
         }
 
         while (parser->data_pos < parser->tokens.size) {

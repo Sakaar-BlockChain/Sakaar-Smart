@@ -13,7 +13,6 @@ target_include_directories(${PROJECT_NAME}_lib PUBLIC
         PRIVATE src)
 MESSAGE(STATUS "Created: ${PROJECT_NAME}_lib")
 
-target_link_libraries(${PROJECT_NAME}_lib PUBLIC Sakaar_Memory_lib)
 target_link_libraries(${PROJECT_NAME}_lib PUBLIC Sakaar_Struct_lib)
 target_link_libraries(${PROJECT_NAME}_lib PUBLIC Sakaar_Network_lib)
 target_link_libraries(${PROJECT_NAME}_lib PUBLIC Sakaar_HashCode_lib)

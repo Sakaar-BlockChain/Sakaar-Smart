@@ -5,21 +5,25 @@
 #include "sys/time.h"
 
 #define PRINT_PREF for(int _i=0;_i<size;_i++)printf("%c",prefix[_i]);
-#define PRINT_NEXT(expr) if(expr){printf("\t├- ");prefix[size + 1] = '|';}else{printf("\t└- ");prefix[size + 1] = ' ';}prefix[size] = '\t';
+#define PRINT_NEXT(expr) if (expr) {printf("\t├- ");prefix[size + 1] = '|';}else{printf("\t└- ");prefix[size + 1] = ' ';}prefix[size] = '\t';
 
 char prefix[100];
 void *printing[100];
 size_t printing_pos;
+
+void print_op_function(const struct op_function *res, int size);
 
 void print_int(const struct integer_st *res) {
     printf("integer : ");
 #ifdef USE_GMP
     gmp_printf("%Zd", res->mpz_int);
 #else
-    struct string_st *str = string_new();
-    integer_get_str(res, str);
-    for(int i=0;i<str->size;i++)printf("%c", str->data[i]);
-    string_free(str);
+    struct string_st str;
+    string_data_init(&str);
+
+    integer_get_str(res, &str);
+    for(int i=0;i<str.size;i++)printf("%c", str.data[i]);
+    string_data_free(&str);
 #endif
     printf("\n");
 }
@@ -63,7 +67,7 @@ void print_obj(const struct object_st *res, int size) {
     else if (res->type == OBJECT_TYPE) print_obj(res->data, size + 2);
     else if (res->type == LIST_TYPE) print_list(res->data, size + 2);
     else if (res->type == OP_CLASS_TYPE) printf("OP_CLASS\n");
-    else if (res->type == OP_FUNCTION_TYPE) printf("OP_FUNCTION\n");
+    else if (res->type == OP_FUNCTION_TYPE) print_op_function(res->data, size + 2);
     else if (res->type == OP_OBJECT_TYPE) printf("OP_OBJECT\n");
     printing[--printing_pos] = NULL;
 }
@@ -173,7 +177,7 @@ void print_code(char command, size_t data) {
 
 void print_bytecode(const struct bytecode_st *res, int size) {
     printf("bytecode (%lu) : (%p)\n", res->size, res);
-    for(size_t i=0;i<res->size;i++){
+    for(size_t i=0;i<res->size;i++) {
         PRINT_PREF
         PRINT_NEXT(i + 1 < res->size)
         printf("%.4zx\t", i);
@@ -701,10 +705,36 @@ void print_node_list(const struct node_list_st *res, int size) {
     }
 }
 
+void print_op_function(const struct op_function *res, int size) {
+    printf("OP Function : \n");
+    PRINT_PREF
+    PRINT_NEXT(1)
+    print_frame(res->closure, size + 2);
+    PRINT_PREF
+    PRINT_NEXT(1)
+    printf("argument: %zu\n", res->argument);
+    PRINT_PREF
+    PRINT_NEXT(1)
+    printf("argument_size: %zu\n", res->argument_size);
+    PRINT_PREF
+    PRINT_NEXT(0)
+    printf("function_body: %zu\n", res->function_body);
+//    if (res->variable != NULL) {
+//        PRINT_PREF
+//        PRINT_NEXT(res->closure != NULL)
+//        print_variable_list(res->variable, size + 2);
+//    }
+//    if (res->closure != NULL) {
+//        PRINT_PREF
+//        PRINT_NEXT(0)
+//        print_closure(res->closure, size + 2);
+//    }
+}
+
 
 int main(int args, char *argv[]) {
     struct parser_st parser;
-    parser_data_inti(&parser);
+    parser_data_init(&parser);
 
     parser_set_file(&parser, argv[1]); // Open File
     if (parser.error->present) {
@@ -726,8 +756,6 @@ int main(int args, char *argv[]) {
         printf("^\n");
 
         parser_data_free(&parser);
-
-        printf("%zu\n", mem_ctx.filled);
         exit(1);
     }
 
@@ -744,8 +772,6 @@ int main(int args, char *argv[]) {
         printf("^\n");
 
         parser_data_free(&parser);
-
-        printf("%zu\n", mem_ctx.filled);
         exit(1);
     }
     print_node(parser.nodes.nodes[0], 0);
@@ -757,21 +783,20 @@ int main(int args, char *argv[]) {
 
     sc_first_run(&parser);
 
-
     clock_t end = clock();
     double time_spent = (double)(end - begin) / CLOCKS_PER_SEC;
 
+    print_variable_list_list(&parser.variables, 0);
+    print_closure_list(&parser.closures, 0);
+
     if (parser.error->present) {
         printf("%s: %s\n", parser.error->type.data, parser.error->msg.data);
-
-        printf("%zu\n", mem_ctx.filled);
         exit(1);
     }
     printf("Time : %f\n", time_spent);
 
     parser_data_free(&parser);
-    printf("%zu\n", mem_ctx.filled);
-
+    memory_clear();
 }
 
 // Сделать сериализацию обектов

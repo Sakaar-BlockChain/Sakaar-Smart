@@ -1,6 +1,6 @@
 #include "tk_tokenize.h"
 
-void tokenize_parse(struct token_st *token, struct parser_st *parser){
+void tokenize_parse(struct token_st *token, struct parser_st *parser) {
     tokenize_special(token, parser);
     if (token->type != TokenType_None) return;
     tokenize_string(token, parser);

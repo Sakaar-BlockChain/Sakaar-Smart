@@ -1,6 +1,6 @@
 #include "tk_tokenize.h"
 
-void tokenize_identifier(struct token_st *token, struct parser_st *parser){
+void tokenize_identifier(struct token_st *token, struct parser_st *parser) {
     if (IdentifierStart(parser->data_str[parser->data_pos])) {
         size_t pos = parser->data_pos;
         for (size_t size = parser->data_size; pos < size; pos++) {

@@ -33,9 +33,17 @@ size_t run_codespace(struct parser_st *parser, struct bytecode_st *code, size_t 
                     else
                         var_stack->data[var_start_pos + data_s] = object_new();
                 case BC_Load: // Done
+                    if (var_stack->data[var_start_pos + data_s] == NULL) {
+                        error_set_msg(err, ErrorType_RunTime, "Memory Over Flow");
+                        return 0;
+                    }
                     list_append(temp_stack, var_stack->data[var_start_pos + data_s]);
                     break;
                 case BC_LoadConst: // Done
+                    if (const_objects->data[data_s] == NULL) {
+                        error_set_msg(err, ErrorType_RunTime, "Memory Over Flow");
+                        return 0;
+                    }
                     list_append(temp_stack, const_objects->data[data_s]);
                     break;
                 case BC_Attrib: {
@@ -76,6 +84,7 @@ size_t run_codespace(struct parser_st *parser, struct bytecode_st *code, size_t 
                         list_append(temp_stack, obj1);
                         op_clas = obj1->data;
                         parser_store_vars(parser, parser->variables.variable_lists[op_clas->argument]->size, position);
+                        if (err == NULL && err->present) return 0;
                         for (size_t i = 0, size = op_clas->closure->attrib.size; i < size; i++) {
                             var_stack->data[parser->var_start_pos +
                                     op_clas->closure->attrib.variables[i]->position] = object_copy_obj(
@@ -90,6 +99,7 @@ size_t run_codespace(struct parser_st *parser, struct bytecode_st *code, size_t 
                     } else if (obj1->type == OP_FUNCTION_TYPE) {
                         op_func = obj1->data;
                         parser_store_vars(parser, parser->variables.variable_lists[op_func->argument]->size, position + 1);
+                        if (err == NULL && err->present) return 0;
                         for (size_t i = 0, size = op_func->closure->attrib.size; i < size; i++) {
                             var_stack->data[parser->var_start_pos +
                                     op_func->closure->attrib.variables[i]->position] = object_copy_obj(
@@ -112,6 +122,7 @@ size_t run_codespace(struct parser_st *parser, struct bytecode_st *code, size_t 
                         list_append(temp_stack, obj1);
                         op_obj = obj1->data;
                         parser_store_vars(parser, parser->variables.variable_lists[op_obj->argument]->size, position);
+                        if (err == NULL && err->present) return 0;
                         for (size_t i = 0, size = op_obj->closure->attrib.size; i < size; i++) {
                             var_stack->data[parser->var_start_pos +
                                     op_obj->closure->attrib.variables[i]->position] = object_copy_obj(
@@ -130,6 +141,10 @@ size_t run_codespace(struct parser_st *parser, struct bytecode_st *code, size_t 
                 }
                 case BC_ClassEnd:
                     obj1 = object_new();
+                    if (obj1 == NULL) {
+                        error_set_msg(err, ErrorType_RunTime, "Memory Over Flow");
+                        return 0;
+                    }
                     obj2 = list_pop(temp_stack);
 
                     object_set_type(obj1, OP_OBJECT_TYPE);
@@ -156,6 +171,10 @@ size_t run_codespace(struct parser_st *parser, struct bytecode_st *code, size_t 
         else if ((command & 0xF0) == BC_Convert) {
             obj1 = list_pop(temp_stack);
             res = object_new();
+            if (res == NULL) {
+                error_set_msg(err, ErrorType_RunTime, "Memory Over Flow");
+                return 0;
+            }
 
             if (command == BC_Convert_Bool) object__bool(res, err, obj1);
             else if (command == BC_Convert_Int) object__int(res, err, obj1);
@@ -170,6 +189,10 @@ size_t run_codespace(struct parser_st *parser, struct bytecode_st *code, size_t 
         else if ((command & 0xF0) == BC_Operations) {
             obj2 = list_pop(temp_stack);
             res = object_new();
+            if (res == NULL) {
+                error_set_msg(err, ErrorType_RunTime, "Memory Over Flow");
+                return 0;
+            }
 
             if (command == BC_Negate) {
                 object__neg(res, err, obj2);
@@ -277,6 +300,10 @@ size_t run_codespace(struct parser_st *parser, struct bytecode_st *code, size_t 
 
         else if ((command & 0xF0) == BC_Make) {
             obj1 = object_new();
+            if (obj1 == NULL) {
+                error_set_msg(err, ErrorType_RunTime, "Memory Over Flow");
+                return 0;
+            }
             switch (command) {
                 case BC_MakeClass:
                     object_set_type(obj1, OP_CLASS_TYPE);
@@ -320,6 +347,7 @@ void run_smart_contract(struct parser_st *parser) {
 
 void sc_first_run(struct parser_st *parser) {
     parser_store_vars(parser, parser->variables.variable_lists[0]->size, 0);
+    if (parser->error == NULL && parser->error->present) return;
     bytecode_list_append(&parser->codes_stack, parser->codes.bytecodes[0]);
     run_smart_contract(parser);
 }
@@ -329,6 +357,7 @@ struct object_st *sc_run_function(struct parser_st *parser, struct object_st *fu
 
     struct op_function *op_func = func->data;
     parser_store_vars(parser, parser->variables.variable_lists[op_func->argument]->size, 0);
+    if (parser->error == NULL && parser->error->present) return NULL;
     for (size_t i = 0, size = op_func->closure->attrib.size; i < size; i++) {
         parser->var_stack->data[parser->var_start_pos +
                         op_func->closure->attrib.variables[i]->position] = object_copy_obj(

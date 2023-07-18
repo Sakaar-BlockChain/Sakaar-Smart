@@ -114,10 +114,15 @@ int bool_expr(struct parser_st *parser, struct node_st *expr) {
     expr->type = MainType_Expr;
     {
         struct object_st *obj = object_new();
+        if (obj == NULL) {
+            error_set_msg(parser->error, ErrorType_Syntax, "Memory Over Flow");
+            return SN_Status_Error;
+        }
         object_set_type(obj, INTEGER_TYPE);
         if (token->sub_type == KeyWord_FALSE) integer_set_ui(obj->data, 0);
         else integer_set_ui(obj->data, 1);
         expr->data = parser_const_obj(parser, obj);
+        object_free(obj);
     }
     return SN_Status_Success;
 }
@@ -135,6 +140,10 @@ int number_expr(struct parser_st *parser, struct node_st *expr) {
     expr->type = MainType_Expr;
     {
         struct object_st *obj = object_new();
+        if (obj == NULL) {
+            error_set_msg(parser->error, ErrorType_Syntax, "Memory Over Flow");
+            return SN_Status_Error;
+        }
         switch (token->sub_type) {
             case IntType_bin: {
                 object_set_type(obj, INTEGER_TYPE);
@@ -163,6 +172,7 @@ int number_expr(struct parser_st *parser, struct node_st *expr) {
             }
         }
         expr->data = parser_const_obj(parser, obj);
+        object_free(obj);
     }
     return SN_Status_Success;
 }
@@ -180,9 +190,14 @@ int string_expr(struct parser_st *parser, struct node_st *expr) {
     expr->type = MainType_Expr;
     {
         struct object_st *obj = object_new();
+        if (obj == NULL) {
+            error_set_msg(parser->error, ErrorType_Syntax, "Memory Over Flow");
+            return SN_Status_Error;
+        }
         object_set_type(obj, STRING_TYPE);
         string_set(obj->data, &token->data);
         expr->data = parser_const_obj(parser, obj);
+        object_free(obj);
     }
     return SN_Status_Success;
 }
@@ -244,9 +259,14 @@ int primary_expr(struct parser_st *parser, struct node_st *expr) {
 
                 {
                     struct object_st *obj = object_new();
+                    if (obj == NULL) {
+                        error_set_msg(parser->error, ErrorType_RunTime, "Memory Over Flow");
+                        goto err;
+                    }
                     object_set_type(obj, STRING_TYPE);
                     string_set_str(obj->data, token->data.data, token->data.size);
                     expr->data = parser_const_obj(parser, obj);
+                    object_free(obj);
                 }
                 continue;
             } else if (token->type == TokenType_Special && token->sub_type == Special_LSQB) {

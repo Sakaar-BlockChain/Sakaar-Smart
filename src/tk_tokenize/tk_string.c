@@ -1,7 +1,7 @@
 #include "tk_tokenize.h"
 
-void tokenize_string(struct token_st *token, struct parser_st *parser){
-    if(parser->data_str[parser->data_pos] != '"' && parser->data_str[parser->data_pos] != '\'') return;
+void tokenize_string(struct token_st *token, struct parser_st *parser) {
+    if (parser->data_str[parser->data_pos] != '"' && parser->data_str[parser->data_pos] != '\'') return;
 
     size_t pos = parser->data_pos + 1;
     if (parser->data_str[parser->data_pos] == '"') {
