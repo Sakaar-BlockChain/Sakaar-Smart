@@ -1,6 +1,6 @@
 #include "tk_tokenize.h"
 
-int tokenize_keyword_cmp(struct parser_st *parser, const char *data, size_t size) {
+int8_t tokenize_keyword_cmp(struct parser_st *parser, const char *data, size_t size) {
     if (parser->data_size - parser->data_pos < size) return CHECK_FALSE;
     if (memcmp(&parser->data_str[parser->data_pos], data, size) != 0) return CHECK_FALSE;
     if (parser->data_size - parser->data_pos >= size + 1 && IdentifierChar(parser->data_str[parser->data_pos + size]))

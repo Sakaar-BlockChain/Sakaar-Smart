@@ -24,7 +24,7 @@ size_t nodes_count = parser->nodes.size;        \
 size_t current_pointing = parser->data_pos;     \
 struct node_st *expr_next = expr;               \
 struct token_st *token = NULL;                  \
-int result = SN_Status_Nothing, sub_result;
+int8_t result = SN_Status_Nothing, sub_result;
 
 #define analyze_end_sub                                                             \
 sub:        result = sub_result; goto end;                                          \
@@ -43,7 +43,7 @@ analyze_end_sub
 #define check_call(call, check) {sub_result = call; if (sub_result == SN_Status_Nothing) check if (sub_result != SN_Status_Success) goto sub;}
 
 
-int annotated_stmt(struct parser_st *parser, struct node_st *expr) {
+int8_t annotated_stmt(struct parser_st *parser, struct node_st *expr) {
     analyze_start
     {
         parser_end goto eof;
@@ -76,7 +76,7 @@ int annotated_stmt(struct parser_st *parser, struct node_st *expr) {
 analyze_end
 }
 
-int assignment_stmt(struct parser_st *parser, struct node_st *expr) {
+int8_t assignment_stmt(struct parser_st *parser, struct node_st *expr) {
     analyze_start
     {
         expr_add
@@ -132,7 +132,7 @@ int assignment_stmt(struct parser_st *parser, struct node_st *expr) {
 analyze_end
 }
 
-int return_stmt(struct parser_st *parser, struct node_st *expr) {
+int8_t return_stmt(struct parser_st *parser, struct node_st *expr) {
     analyze_start
     {
         parser_end goto eof;
@@ -162,7 +162,7 @@ analyze_end
     goto end;
 }
 
-int break_stmt(struct parser_st *parser, struct node_st *expr) {
+int8_t break_stmt(struct parser_st *parser, struct node_st *expr) {
     analyze_start
     {
         parser_end goto eof;
@@ -182,7 +182,7 @@ analyze_end
     goto end;
 }
 
-int continue_stmt(struct parser_st *parser, struct node_st *expr) {
+int8_t continue_stmt(struct parser_st *parser, struct node_st *expr) {
     analyze_start
     {
         parser_end goto eof;
@@ -202,7 +202,7 @@ analyze_end
     goto end;
 }
 
-int simple_oper(struct parser_st *parser, struct node_st *expr) {
+int8_t simple_oper(struct parser_st *parser, struct node_st *expr) {
     analyze_start
     {
         expr_add
@@ -214,8 +214,8 @@ int simple_oper(struct parser_st *parser, struct node_st *expr) {
 analyze_end
 }
 
-int simple_stmt(struct parser_st *parser, struct node_st *expr) {
-    int result = return_stmt(parser, expr);
+int8_t simple_stmt(struct parser_st *parser, struct node_st *expr) {
+    int8_t result = return_stmt(parser, expr);
     if (result != SN_Status_Nothing) return result;
     result = break_stmt(parser, expr);
     if (result != SN_Status_Nothing) return result;
@@ -233,7 +233,7 @@ int simple_stmt(struct parser_st *parser, struct node_st *expr) {
     return result;
 }
 
-int stmt_list(struct parser_st *parser, struct node_st *expr) {
+int8_t stmt_list(struct parser_st *parser, struct node_st *expr) {
     analyze_start
     {
         int times = 0;
@@ -262,7 +262,7 @@ int stmt_list(struct parser_st *parser, struct node_st *expr) {
 analyze_end
 }
 
-int parameter_list(struct parser_st *parser, struct node_st *expr) {
+int8_t parameter_list(struct parser_st *parser, struct node_st *expr) {
     analyze_start
     {
         check_call(list_ident(parser, expr), goto end;)
@@ -273,7 +273,7 @@ int parameter_list(struct parser_st *parser, struct node_st *expr) {
 analyze_end
 }
 
-int extends_list(struct parser_st *parser, struct node_st *expr) {
+int8_t extends_list(struct parser_st *parser, struct node_st *expr) {
     analyze_start
     {
         check_call(list_oper(parser, expr, Special_LSB, Special_RSB), goto end;)
@@ -284,7 +284,7 @@ int extends_list(struct parser_st *parser, struct node_st *expr) {
 analyze_end
 }
 
-int function_stmt(struct parser_st *parser, struct node_st *expr) {
+int8_t function_stmt(struct parser_st *parser, struct node_st *expr) {
     analyze_start
     {
         parser_end goto eof;
@@ -306,9 +306,9 @@ int function_stmt(struct parser_st *parser, struct node_st *expr) {
 analyze_end
 }
 
-int function_body_stmt(struct parser_st *parser, struct node_st *expr) {
+int8_t function_body_stmt(struct parser_st *parser, struct node_st *expr) {
     analyze_start
-    int _scope_type = parser->scope_type;
+    int8_t _scope_type = parser->scope_type;
     parser->scope_type = ScopeType_Func;
     size_t variable_count = parser->variables.size;
     size_t variable_stack_size = parser->variables_stack.size;
@@ -348,7 +348,7 @@ int function_body_stmt(struct parser_st *parser, struct node_st *expr) {
 analyze_end_sub
 }
 
-int class_stmt(struct parser_st *parser, struct node_st *expr) {
+int8_t class_stmt(struct parser_st *parser, struct node_st *expr) {
     analyze_start
     {
         parser_end goto eof;
@@ -376,9 +376,9 @@ int class_stmt(struct parser_st *parser, struct node_st *expr) {
 analyze_end
 }
 
-int class_body_stmt(struct parser_st *parser, struct node_st *expr) {
+int8_t class_body_stmt(struct parser_st *parser, struct node_st *expr) {
     analyze_start
-    int _scope_type = parser->scope_type;
+    int8_t _scope_type = parser->scope_type;
     parser->scope_type = ScopeType_Class;
     size_t variable_count = parser->variables.size;
     size_t variable_stack_size = parser->variables_stack.size;
@@ -414,7 +414,7 @@ int class_body_stmt(struct parser_st *parser, struct node_st *expr) {
 analyze_end
 }
 
-int if_stmt(struct parser_st *parser, struct node_st *expr) {
+int8_t if_stmt(struct parser_st *parser, struct node_st *expr) {
     analyze_start
     {
         parser_end goto eof;
@@ -456,9 +456,9 @@ int if_stmt(struct parser_st *parser, struct node_st *expr) {
 analyze_end
 }
 
-int while_stmt(struct parser_st *parser, struct node_st *expr) {
+int8_t while_stmt(struct parser_st *parser, struct node_st *expr) {
     analyze_start
-    int scope_type = parser->scope_type;
+    int8_t scope_type = parser->scope_type;
     {
         parser_end goto eof;
         parser_get
@@ -487,9 +487,9 @@ int while_stmt(struct parser_st *parser, struct node_st *expr) {
 analyze_end_sub
 }
 
-int do_while_stmt(struct parser_st *parser, struct node_st *expr) {
+int8_t do_while_stmt(struct parser_st *parser, struct node_st *expr) {
     analyze_start
-    int scope_type = parser->scope_type;
+    int8_t scope_type = parser->scope_type;
     {
         parser_end goto eof;
         parser_get
@@ -525,7 +525,7 @@ int do_while_stmt(struct parser_st *parser, struct node_st *expr) {
 analyze_end_sub
 }
 
-int try_with_stmt(struct parser_st *parser, struct node_st *expr) {
+int8_t try_with_stmt(struct parser_st *parser, struct node_st *expr) {
     analyze_start
     {
         parser_end goto eof;
@@ -552,8 +552,8 @@ int try_with_stmt(struct parser_st *parser, struct node_st *expr) {
 analyze_end
 }
 
-int compound_stmt(struct parser_st *parser, struct node_st *expr) {
-    int result = function_stmt(parser, expr);
+int8_t compound_stmt(struct parser_st *parser, struct node_st *expr) {
+    int8_t result = function_stmt(parser, expr);
     if (result != SN_Status_Nothing) return result;
     result = if_stmt(parser, expr);
     if (result != SN_Status_Nothing) return result;
@@ -567,8 +567,8 @@ int compound_stmt(struct parser_st *parser, struct node_st *expr) {
     return result;
 }
 
-int statement(struct parser_st *parser, struct node_st *expr) {
-    int res = compound_stmt(parser, expr);
+int8_t statement(struct parser_st *parser, struct node_st *expr) {
+    int8_t res = compound_stmt(parser, expr);
     if (res != SN_Status_Nothing) return res;
     analyze_start
     {
@@ -587,8 +587,8 @@ int statement(struct parser_st *parser, struct node_st *expr) {
 analyze_end
 }
 
-int suite(struct parser_st *parser, struct node_st *expr) {
-    int res = statement(parser, expr);
+int8_t suite(struct parser_st *parser, struct node_st *expr) {
+    int8_t res = statement(parser, expr);
     if (res != SN_Status_Nothing) return res;
     analyze_start
     {

@@ -21,7 +21,7 @@ size_t nodes_count = parser->nodes.size;        \
 size_t current_pointing = parser->data_pos;     \
 struct node_st *expr_next = expr;               \
 struct token_st *token = NULL;                  \
-int result = SN_Status_Nothing, sub_result;
+int8_t result = SN_Status_Nothing, sub_result;
 
 #define analyze_end_sub                                                             \
 sub:        result = sub_result; goto end;                                          \
@@ -40,7 +40,7 @@ analyze_end_sub
 #define check_call(call, check) {sub_result = call; if (sub_result == SN_Status_Nothing) check if (sub_result != SN_Status_Success) goto sub;}
 
 
-int scopes_expr(struct parser_st *parser, struct node_st *expr) {
+int8_t scopes_expr(struct parser_st *parser, struct node_st *expr) {
     analyze_start
     {
         parser_end goto eof;
@@ -61,11 +61,11 @@ int scopes_expr(struct parser_st *parser, struct node_st *expr) {
 analyze_end
 }
 
-int list_expr(struct parser_st *parser, struct node_st *expr) {
+int8_t list_expr(struct parser_st *parser, struct node_st *expr) {
     return list_oper(parser, expr, Special_LSQB, Special_RSQB);
 }
 
-int ident_get_expr(struct parser_st *parser, struct node_st *expr) {
+int8_t ident_get_expr(struct parser_st *parser, struct node_st *expr) {
     parser_end {
         parser_set_error_token(parser, ErrorType_Syntax, "Unexpected end of file", parser->data_pos - 1);
         return SN_Status_EOF;
@@ -85,7 +85,7 @@ int ident_get_expr(struct parser_st *parser, struct node_st *expr) {
     return SN_Status_Success;
 }
 
-int ident_new_expr(struct parser_st *parser, struct node_st *expr) {
+int8_t ident_new_expr(struct parser_st *parser, struct node_st *expr) {
     parser_end {
         parser_set_error_token(parser, ErrorType_Syntax, "Unexpected end of file", parser->data_pos - 1);
         return SN_Status_EOF;
@@ -100,7 +100,7 @@ int ident_new_expr(struct parser_st *parser, struct node_st *expr) {
     return SN_Status_Success;
 }
 
-int bool_expr(struct parser_st *parser, struct node_st *expr) {
+int8_t bool_expr(struct parser_st *parser, struct node_st *expr) {
     parser_end {
         parser_set_error_token(parser, ErrorType_Syntax, "Unexpected end of file", parser->data_pos - 1);
         return SN_Status_EOF;
@@ -127,7 +127,7 @@ int bool_expr(struct parser_st *parser, struct node_st *expr) {
     return SN_Status_Success;
 }
 
-int number_expr(struct parser_st *parser, struct node_st *expr) {
+int8_t number_expr(struct parser_st *parser, struct node_st *expr) {
     parser_end {
         parser_set_error_token(parser, ErrorType_Syntax, "Unexpected end of file", parser->data_pos - 1);
         return SN_Status_EOF;
@@ -177,7 +177,7 @@ int number_expr(struct parser_st *parser, struct node_st *expr) {
     return SN_Status_Success;
 }
 
-int string_expr(struct parser_st *parser, struct node_st *expr) {
+int8_t string_expr(struct parser_st *parser, struct node_st *expr) {
     parser_end {
         parser_set_error_token(parser, ErrorType_Syntax, "Unexpected end of file", parser->data_pos - 1);
         return SN_Status_EOF;
@@ -202,7 +202,7 @@ int string_expr(struct parser_st *parser, struct node_st *expr) {
     return SN_Status_Success;
 }
 
-int null_expr(struct parser_st *parser, struct node_st *expr) {
+int8_t null_expr(struct parser_st *parser, struct node_st *expr) {
     parser_end {
         parser_set_error_token(parser, ErrorType_Syntax, "Unexpected end of file", parser->data_pos - 1);
         return SN_Status_EOF;
@@ -217,8 +217,8 @@ int null_expr(struct parser_st *parser, struct node_st *expr) {
     return SN_Status_Success;
 }
 
-int literal_expr(struct parser_st *parser, struct node_st *expr) {
-    int result = null_expr(parser, expr);
+int8_t literal_expr(struct parser_st *parser, struct node_st *expr) {
+    int8_t result = null_expr(parser, expr);
     if (result != SN_Status_Nothing) return result;
     result = string_expr(parser, expr);
     if (result != SN_Status_Nothing) return result;
@@ -230,8 +230,8 @@ int literal_expr(struct parser_st *parser, struct node_st *expr) {
     return result;
 }
 
-int atom_expr(struct parser_st *parser, struct node_st *expr) {
-    int result = ident_get_expr(parser, expr);
+int8_t atom_expr(struct parser_st *parser, struct node_st *expr) {
+    int8_t result = ident_get_expr(parser, expr);
     if (result != SN_Status_Nothing) return result;
     result = literal_expr(parser, expr);
     if (result != SN_Status_Nothing) return result;
@@ -239,7 +239,7 @@ int atom_expr(struct parser_st *parser, struct node_st *expr) {
     return result;
 }
 
-int primary_expr(struct parser_st *parser, struct node_st *expr) {
+int8_t primary_expr(struct parser_st *parser, struct node_st *expr) {
     analyze_start
     {
         check_call(atom_expr(parser, expr_next), goto end;)

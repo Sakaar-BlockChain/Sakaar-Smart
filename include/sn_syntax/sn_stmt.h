@@ -27,30 +27,30 @@
 
 #define StmtType_List           0x51
 
-int annotated_stmt(struct parser_st *, struct node_st *);
-int assignment_stmt(struct parser_st *, struct node_st *);
-int return_stmt(struct parser_st *, struct node_st *);
-int break_stmt(struct parser_st *, struct node_st *);
-int continue_stmt(struct parser_st *, struct node_st *);
-int simple_stmt(struct parser_st *, struct node_st *);
-int stmt_list(struct parser_st *, struct node_st *);
+int8_t annotated_stmt(struct parser_st *, struct node_st *);
+int8_t assignment_stmt(struct parser_st *, struct node_st *);
+int8_t return_stmt(struct parser_st *, struct node_st *);
+int8_t break_stmt(struct parser_st *, struct node_st *);
+int8_t continue_stmt(struct parser_st *, struct node_st *);
+int8_t simple_stmt(struct parser_st *, struct node_st *);
+int8_t stmt_list(struct parser_st *, struct node_st *);
 
-int parameter_list(struct parser_st *, struct node_st *);
-int extends_list(struct parser_st *, struct node_st *);
+int8_t parameter_list(struct parser_st *, struct node_st *);
+int8_t extends_list(struct parser_st *, struct node_st *);
 
-int function_stmt(struct parser_st *, struct node_st *);
-int function_body_stmt(struct parser_st *, struct node_st *);
+int8_t function_stmt(struct parser_st *, struct node_st *);
+int8_t function_body_stmt(struct parser_st *, struct node_st *);
 
-int class_stmt(struct parser_st *, struct node_st *);
-int class_body_stmt(struct parser_st *, struct node_st *);
+int8_t class_stmt(struct parser_st *, struct node_st *);
+int8_t class_body_stmt(struct parser_st *, struct node_st *);
 
-int if_stmt(struct parser_st *, struct node_st *);
-int while_stmt(struct parser_st *, struct node_st *);
-int do_while_stmt(struct parser_st *, struct node_st *);
-int try_with_stmt(struct parser_st *, struct node_st *);
-int compound_stmt(struct parser_st *, struct node_st *);
+int8_t if_stmt(struct parser_st *, struct node_st *);
+int8_t while_stmt(struct parser_st *, struct node_st *);
+int8_t do_while_stmt(struct parser_st *, struct node_st *);
+int8_t try_with_stmt(struct parser_st *, struct node_st *);
+int8_t compound_stmt(struct parser_st *, struct node_st *);
 
-int statement(struct parser_st *, struct node_st *);
-int suite(struct parser_st *parser, struct node_st *expr);
+int8_t statement(struct parser_st *, struct node_st *);
+int8_t suite(struct parser_st *parser, struct node_st *expr);
 
 #endif //AN_STMT_H

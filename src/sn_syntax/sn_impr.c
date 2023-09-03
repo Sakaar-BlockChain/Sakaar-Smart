@@ -24,7 +24,7 @@ size_t nodes_count = parser->nodes.size;        \
 size_t current_pointing = parser->data_pos;     \
 struct node_st *expr_next = expr;               \
 struct token_st *token = NULL;                  \
-int result = SN_Status_Nothing, sub_result;
+int8_t result = SN_Status_Nothing, sub_result;
 
 #define analyze_end_sub                                                             \
 sub:        result = sub_result; goto end;                                          \
@@ -43,7 +43,7 @@ analyze_end_sub
 #define check_call(call, check) {sub_result = call; if (sub_result == SN_Status_Nothing) check if (sub_result != SN_Status_Success) goto sub;}
 
 
-int name_impr(struct parser_st *parser, struct node_st *expr) {
+int8_t name_impr(struct parser_st *parser, struct node_st *expr) {
     parser_end {
         parser_set_error_token(parser, ErrorType_Syntax, "Unexpected end of file", parser->data_pos - 1);
         return SN_Status_EOF;
@@ -58,7 +58,7 @@ int name_impr(struct parser_st *parser, struct node_st *expr) {
     return SN_Status_Success;
 }
 
-int module_impr(struct parser_st *parser, struct node_st *expr) {
+int8_t module_impr(struct parser_st *parser, struct node_st *expr) {
     analyze_start
     {
         check_call(name_impr(parser, expr_next), goto end;)
@@ -80,7 +80,7 @@ int module_impr(struct parser_st *parser, struct node_st *expr) {
 analyze_end
 }
 
-int module_as_impr(struct parser_st *parser, struct node_st *expr) {
+int8_t module_as_impr(struct parser_st *parser, struct node_st *expr) {
     analyze_start
     {
         parser_end goto eof;
@@ -113,7 +113,7 @@ int module_as_impr(struct parser_st *parser, struct node_st *expr) {
 analyze_end
 }
 
-int from_impr(struct parser_st *parser, struct node_st *expr) {
+int8_t from_impr(struct parser_st *parser, struct node_st *expr) {
     analyze_start
     {
         parser_end goto eof;
@@ -136,7 +136,7 @@ int from_impr(struct parser_st *parser, struct node_st *expr) {
 analyze_end
 }
 
-int import_impr(struct parser_st *parser, struct node_st *expr) {
+int8_t import_impr(struct parser_st *parser, struct node_st *expr) {
     analyze_start
     {
         parser_end goto eof;

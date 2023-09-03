@@ -230,13 +230,13 @@ void cg_generate_code_stmt(struct parser_st *parser, struct node_st *node, struc
             break;
         }
         case StmtType_TryWith: {
-//            block_list_add_new(&parser->blocks);
-//            struct block_expr_st *block_temp_try = block_list_last(&parser->blocks);
+//            hash_time_list_add_new(&parser->blocks);
+//            struct block_expr_st *block_temp_try = hash_time_list_last(&parser->blocks);
 //            block_temp_try->sub_type = ScopeType_Try;
 //            block_temp_try->node = node->nodes.nodes[0];
 //
-//            block_list_add_new(&parser->blocks);
-//            struct block_expr_st *block_temp_with = block_list_last(&parser->blocks);
+//            hash_time_list_add_new(&parser->blocks);
+//            struct block_expr_st *block_temp_with = hash_time_list_last(&parser->blocks);
 //            block_temp_with->sub_type = ScopeType_Try;
 //            block_temp_with->node = node->nodes.nodes[0];
 //

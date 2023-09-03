@@ -9,14 +9,14 @@
 #define ImprType_From           0x04
 #define ImprType_Import         0x05
 
-int name_impr(struct parser_st *, struct node_st *);
+int8_t name_impr(struct parser_st *, struct node_st *);
 
-int module_impr(struct parser_st *, struct node_st *);
+int8_t module_impr(struct parser_st *, struct node_st *);
 
-int module_as_impr(struct parser_st *, struct node_st *);
+int8_t module_as_impr(struct parser_st *, struct node_st *);
 
-int from_impr(struct parser_st *, struct node_st *);
+int8_t from_impr(struct parser_st *, struct node_st *);
 
-int import_impr(struct parser_st *, struct node_st *);
+int8_t import_impr(struct parser_st *, struct node_st *);
 
 #endif //SN_IMPORT_H
